@@ -6,13 +6,13 @@ CURRENT STATE
 - Repository: https://github.com/daggerok/AAM
 - Branch: feat/aam-etfs; PR: none (GitHub REST verified 2026-10-01).
 - Reconciliation: clean baseline HEAD/main/origin/main = 7bf2d91; no concurrent changes or existing PRs. Original baseline prose archived below, full original plan preserved.
-- Last confirmed pushed SHA: e65f3f4563c424c799d3a8655d522b05dcf3e2f7 (verified against remote before this checkpoint; containing commit identifiable via git log).
-- Completed: baseline recovery/branch/reference pins plus live catalog/detail/Excel/chart research; Bun 1.4.2 installed.
-- Active: preparing minimal dated fixtures and Bun-only scaffold.
-- Remaining: scaffold/helpers/parsers/tests; updater orchestration; isolated repeated live acceptance; parity UI/browser tests; CI/dependabot; README/metadata; PR.
+- Last confirmed pushed SHA: a691b2cce763530aee903ec6487b9f6e91fb9168 (verified against remote before this checkpoint; containing commit identifiable via git log).
+- Completed: recovery + complete live research; exact pinned Bun types/lockfile; 10 offline shared-helper/config tests passing; pinned sibling baseline 116/0.
+- Active: issuer HTML and bounded CFB/BIFF8 parsers with dated fixtures.
+- Remaining: issuer parsers/financial helpers tests; orchestration/fallback/retention/pagination; repeated isolated live acceptance; parity UI/browser; CI; README/metadata; PR.
 - Blockers: none
-- Exact next action after this checkpoint is pushed: create package.json + bun.lock with pinned types; copy shared output/SEC/chart/metrics helpers with correctly placed Bun reference; add dated issuer fragments/XLS fixtures and offline parser tests.
-- Status: Research verified; implementation pending.
+- Exact next action after this checkpoint is pushed: add safe dated catalog/detail fragments + complete XLS fixtures; implement HTML headline/NAV performance/distribution parsing and strict observed-dialect XLS holdings reader; test independently checked counts/weights and invalid inputs.
+- Status: Bun scaffold/shared helpers validated (provider CLI not implemented yet).
 
 INITIAL HANDOFF PROMPTS (preserved)
 ===================================
@@ -153,6 +153,17 @@ CHRONOLOGICAL JOURNAL
 - Pacing reference pinned: WisdomTree 232d5d680b56009709369fdc8e4f188fb6e4547a, paceRequests lines 636-642: independent lane timestamps, reserve the chosen lane before awaiting. Use CONCURRENCY=2 / REQUEST_SLEEP=1 defaults; no issuer proxy needed.
 - JPMorgan UI pin already contains shared hidden summary panel, selection-only subtitle, Frequency None correction and checkbox-only catalog selection; copy without header redesign. Pinned updater has a misplaced Bun reference and shallow timestamp comparison: explicitly use correct second-line reference and recursive writer (Aberdeen helper shape), not those known defects.
 - Next implementation begins with explicit SPDV/PFLD/CLOC only; full unbounded live updater run prohibited before acceptance. Raw research is not production data. Dated safe public fixture extracts and binary hashes will be tracked in next checkpoint.
+
+### 2026-10-01 — Bun scaffold and shared infrastructure (completed, CLI still pending)
+- Prior research checkpoint a691b2cce763530aee903ec6487b9f6e91fb9168 push verified.
+- Pinned JPMorgan baseline executed offline before copying: bun test scripts/update-data.test.ts -> 116 pass / 0 fail / 437 expectations (evidence/baseline.txt). Target baseline has no tests.
+- Added package.json, real Bun-generated bun.lock, sibling .gitignore, scripts/update-data.ts, update-data.config.json, update-data.test.ts, evidence/baseline.txt.
+- Runtime dependencies remain {}; ONLY exact @types/bun=1.4.2 and @types/node=26.6.2 devDependencies. bun install resolved successfully with Bun 1.4.2. No TypeScript compiler or tsconfig added.
+- Copied shared output helper shape with alias imports and report digest; control characters removed; null omitted, real zero/false kept. Strict known-control config rejects bad numbers, malformed/inverted min:max, bad tickers, nonscalar/unknown fields and control characters before requests/writes. Unfiltered conservative defaults in tracked config; nonblank environment and AAM_ aliases override.
+- Added recursive timestamp-insensitive atomic JSON writer (including nested array timestamps), independent reserved request lanes from pinned WisdomTree shape, and generic per-key queue storing Promise<void> via work.then(() => undefined, () => undefined), while returning original Promise<T>.
+- Commands: bun install; bun test -> 10 pass / 0 fail / 56 expectations; bun build --target=bun scripts/update-data.ts --outfile=/dev/null -> exit 0; git diff --check -> clean.
+- Type review: Bun reference is literal second line before any import; generic queue completion types are normalized in BOTH outcomes; strict config uses concrete primitive types. Tests/build are runtime/transpilation only, not a semantic TS check; no IDE diagnostics available here, no tsc used.
+- This is a coherent helper module checkpoint, not a claim of an operational provider CLI or completed app. Next: dated fixtures + issuer parsers.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN
