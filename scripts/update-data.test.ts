@@ -139,3 +139,84 @@ test('Excel date serials are dates, not inferred from name/coupon; leap-day conv
   expect(excelSerialDate(1)).toBe('1900-01-01');expect(excelSerialDate(61)).toBe('1900-03-01');expect(excelSerialDate(50333)).toBe('2037-10-20');
   expect(excelSerialDate('-')).toBe('');expect(()=>excelSerialDate(-1)).toThrow();
 });
+
+import { parseChart, chartUrl, priceReturns, annualizedToTotal, totalToAnnualized, indicatedYield, inferDistributionFrequency, deriveCatalogMetrics, annualizedSinceInception, fundFilterReasons, parseFundTickerMap, parseCompanyTickerMap, parseNport, nportMatches, parseNportAccessions, parseEdgarAtomFilings, nportUrlFor, createTransport, buildPages, writePages, readPreviousSheet, mergeHistory, mergeDividends, batchSelection } from './update-data';
+
+test('Yahoo parser rounds adjusted-close jitter, retains zero volume, skips missing quote, sorts dividends',()=>{
+  const payload={chart:{result:[{meta:{longName:'AAM sample'},timestamp:[1751241600,1751328000,1751414400],indicators:{quote:[{close:[25,26,null],volume:[0,100,null]}],adjclose:[{adjclose:[24.910001,25.989999,null]}]},events:{dividends:{b:{date:1751328000,amount:.1},a:{date:1751241600,amount:.2}}}}]}};
+  const c=parseChart(payload);expect(c.days).toEqual([{date:'2025-06-30',close:25,adjClose:24.91,volume:0},{date:'2025-07-01',close:26,adjClose:25.99,volume:100}]);expect(c.dividends.map(d=>d.amount)).toEqual([.2,.1]);
+  expect(()=>parseChart({chart:{result:[]}})).toThrow();
+  expect(chartUrl('SPDV',readConfig(),1000000)).toContain('period1=0&period2=1000&interval=1d');
+});
+test('derived cumulative/annualized metrics and indicated yield preserve units and nulls',()=>{
+  expect(annualizedToTotal(10,3)).toBe(33.1);expect(totalToAnnualized(33.1,3)).toBe(10);expect(annualizedToTotal(null,5)).toBeNull();
+  expect(indicatedYield(.1,12,24)).toBe(5);expect(indicatedYield(.1,12,0)).toBeNull();
+  const official={ytd:0,yr1:-5,yr3:10,yr5:null,yr10:null,sinceInception:7};
+  const derived={asOfDate:'2026-06-30',ytd:99,yr1:99,cagr3y:99,cagr5y:5,cagr10y:null,siAnn:99,mo1:null,qtd:null};
+  const m=deriveCatalogMetrics(official,derived,null,0,.1,12,24);
+  expect(m).toMatchObject({ytd:0,tr1y:-5,cagr3y:10,cagr5y:5,tr3y:33.1,secYield:0,dividendYield:5});expect(m.returnsBasis).toContain('official AAM');
+  expect(annualizedSinceInception(3.68,'2025-10-22','2026-06-30')).toBeNull();expect(annualizedSinceInception(5,'2020-01-01','2026-06-30')).toBe(5);
+});
+test('cadence inference and official frequency labels do not depend on wall clock',()=>{
+  const ds=[0,31,61,92].map(day=>({epoch:day*86400,amount:.1}));expect(inferDistributionFrequency(ds)).toEqual({frequency:'Monthly',paymentsPerYear:12});
+  expect(inferDistributionFrequency([{epoch:0,amount:.1}]).frequency).toBe('Unknown');
+});
+test('price-return windows require coverage; no 3Y return from one year',()=>{
+  const days=[{date:'2024-12-31',close:10,adjClose:10,volume:1},{date:'2025-06-30',close:10,adjClose:10,volume:1},{date:'2025-12-31',close:11,adjClose:11,volume:1},{date:'2026-06-30',close:12,adjClose:12,volume:1}];
+  const r=priceReturns(days,new Date('2026-06-30T00:00:00Z'));expect(r.yr1).toBe(20);expect(r.cagr3y).toBeNull();expect(r.ytd).toBe(9.09);
+  const limited=priceReturns(days,new Date('2026-06-30T00:00:00Z'),'2025-12-31');expect(limited.yr1).toBeNull();
+});
+test('all filter families are AND, unknown values fail bounded ranges, true zero passes',()=>{
+  const c=readConfig({TICKERS:'SPDV',AUM:'10M:2B',TER:':.5',DIVIDEND_YIELD:'0:10',SEC_YIELD:'0:8',PERFORMANCE_3Y:'0:20',TOTAL_RETURN_5Y:'0:100'});
+  const f={ticker:'SPDV',aumValue:100e6,terValue:0,metrics:{dividendYield:0,secYield:0,cagr3y:0,tr5y:0}};
+  expect(fundFilterReasons(f,c)).toEqual([]);
+  expect(fundFilterReasons({...f,ticker:'PFLD',aumValue:null,terValue:1,metrics:{}},c)).toEqual(['TICKERS','AUM','TER','SEC_YIELD','DIVIDEND_YIELD','PERFORMANCE_3Y','TOTAL_RETURN_5Y']);
+});
+test('SEC public ticker schemas, exact trust + series match; no first-filing guess',async()=>{
+  const table=parseFundTickerMap({fields:['symbol','cik','seriesId','classId'],data:[['SPDV',1540305,'S000000001','C1'],['BAD',0,'','']]});
+  expect(table.get('SPDV')).toEqual({cik:'0001540305',seriesId:'S000000001',classId:'C1'});expect(table.has('BAD')).toBe(false);
+  expect(parseCompanyTickerMap({0:{ticker:'MSFT',title:'Microsoft Corp'}}).get('MICROSOFT')).toBe('MSFT');
+  const parsed=parseNport(await fixtureText('nport.xml')),fund=parseCatalog(await fixtureText('catalog.html')).find(f=>f.ticker==='SPDV')!;
+  expect(parsed).toMatchObject({regCik:'1540305',seriesId:'S000000001',repPdDate:'2026-06-30',netAssets:100000000});expect(parsed.holdings.length).toBe(3);
+  expect(parsed.holdings[1].Identifier).toBe('US0000000001');expect(parsed.holdings[2]['Market Value']).toBe('');expect(parsed.holdings[2].Weight).toBe('');
+  expect(nportMatches(fund,parsed,table.get('SPDV'))).toBe(true);expect(nportMatches(fund,parsed)).toBe(true);
+  expect(nportMatches(fund,{...parsed,regCik:'999'})).toBe(false);expect(nportMatches(fund,{...parsed,seriesName:'Other AAM Fund'})).toBe(false);
+  expect(nportMatches(fund,{...parsed,seriesId:'S2'},table.get('SPDV'))).toBe(false);
+});
+test('SEC accessions/Atom translate to raw primary_doc XML, not presentation XSL',()=>{
+  const url='https://www.sec.gov/Archives/edgar/data/1540305/000119312526000001/primary_doc.xml';
+  expect(nportUrlFor('0001540305','0001193125-26-000001')).toBe(url);
+  expect(parseNportAccessions({cik:'1540305',filings:{recent:{form:['8-K','NPORT-P'],accessionNumber:['x','0001193125-26-000001'],filingDate:['','2026-08-01'],reportDate:['','2026-06-30']}}})[0].url).toBe(url);
+  expect(parseEdgarAtomFilings('<feed><entry><filing-type>NPORT-P</filing-type><accession-number>0001193125-26-000001</accession-number><filing-href>https://www.sec.gov/Archives/edgar/data/1540305/a</filing-href><filing-date>2026-08-01</filing-date></entry></feed>')[0].url).toBe(url);
+});
+test('transport retries transient/network errors only; 403/404 do not get retried',async()=>{
+  const cfg=readConfig({REQUEST_SLEEP:'0',MAX_RETRIES:'2'});let count=0;const waits:number[]=[];
+  const retry=createTransport(cfg,async()=>{count++;return new Response(count===3?'ok':'busy',{status:count===3?200:503});},async ms=>{waits.push(ms);});
+  expect(await (await retry('fixture://url','test')).text()).toBe('ok');expect(count).toBe(3);expect(waits).toEqual([1000,2000]);
+  for(const status of [403,404]){let n=0;const denied=createTransport(cfg,async()=>{n++;return new Response('',{status});},async()=>{});await expect(denied('fixture://url','test')).rejects.toThrow('HTTP '+status);expect(n).toBe(1);}
+  let n=0;const network=createTransport(cfg,async()=>{if(++n<2)throw new Error('connection');return new Response('ok');},async()=>{});expect(await (await network('fixture://url','test')).text()).toBe('ok');expect(n).toBe(2);
+});
+test('page builder numbers 001+, counts exact, empty means no fake page',()=>{
+  const r=[{Name:'A'},{Name:'B'},{Name:'C'}];const p=buildPages('SPDV','holdings',['Name'],r,2);
+  expect(p.map(x=>x.name)).toEqual(['holdings/001.json','holdings/002.json']);expect(p[1].payload).toMatchObject({page:2,totalRows:3,rows:[{Name:'C'}]});
+  expect(buildPages('SPDV','history',[],[],1000)).toEqual([]);expect(()=>buildPages('SPDV','history',[],r,0)).toThrow();
+});
+test('real pagination removes stale owned pages, round-trips manifest, refuses corrupt retention',async()=>{
+  const dir=await mkdtemp(tmpdir()+'/aam-pages-');const url=pathToFileURL(dir+'/');const rows=[{Name:'A'},{Name:'B'},{Name:'C'}];
+  try{
+    const manifest=await writePages(url,'SPDV','holdings',['Name'],rows,1);expect(manifest.pages.length).toBe(3);expect((await readPreviousSheet(url,'holdings',manifest)).rows).toEqual(rows);
+    const smaller=await writePages(url,'SPDV','holdings',['Name'],rows.slice(0,1),2);expect(smaller.totalRows).toBe(1);expect(await Bun.file(new URL('holdings/002.json',url)).exists()).toBe(false);
+    await expect(readPreviousSheet(url,'holdings',manifest)).rejects.toThrow();await expect(readPreviousSheet(url,'holdings',{pages:['../meta.json'],pageSize:1,totalRows:1})).rejects.toThrow('Unsafe');
+  }finally{await rm(dir,{recursive:true,force:true});}
+});
+test('limited fresh history merges without losing old rows; official events beat Yahoo amounts',()=>{
+  const old=[{Date:'Jun 30 2025',Close:'10','Adj Close':'9',Volume:'1'}];const days=[{date:'2026-06-30',close:20,adjClose:19.000001,volume:0}];
+  expect(mergeHistory(old,days)).toEqual([...old,{Date:'Jun 30 2026',Close:'20','Adj Close':'19',Volume:'0'}]);expect(mergeHistory(old,[])).toEqual(old);
+  const e=1751241600;const merged=mergeDividends([{epoch:1,amount:.01}],[{epoch:e,amount:.11}],[{epoch:e,amount:.115,exDate:'2025-06-30',recordDate:'2025-06-30',payDate:'2025-07-02'}]);
+  expect(merged.length).toBe(2);expect(merged[1].amount).toBe(.115);expect(merged[1].payDate).toBe('2025-07-02');
+});
+test('bounded cursor rotates sorted selected set, full pass ignores cursor',async()=>{
+  const f=parseCatalog(await fixtureText('catalog.html'));const c=readConfig({TICKERS:'SPDV PFLD CLOC',MAX_FETCHES:'2'});
+  expect(batchSelection(f,c,null).map(f=>f.ticker)).toEqual(['CLOC','PFLD']);expect(batchSelection(f,c,'PFLD').map(f=>f.ticker)).toEqual(['SPDV','CLOC']);
+  expect(batchSelection(f,{...c,maxFetches:0},'PFLD').map(f=>f.ticker)).toEqual(['CLOC','PFLD','SPDV']);
+});

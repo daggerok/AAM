@@ -6,13 +6,13 @@ CURRENT STATE
 - Repository: https://github.com/daggerok/AAM
 - Branch: feat/aam-etfs; PR: none (GitHub REST verified 2026-10-01).
 - Reconciliation: clean baseline HEAD/main/origin/main = 7bf2d91; no concurrent changes or existing PRs. Original baseline prose archived below, full original plan preserved.
-- Last confirmed pushed SHA: 0e63189c31698e91a8b7ff16712322c278889ccf (verified against remote before this checkpoint; containing commit identifiable via git log).
-- Completed: research/scaffold + AAM HTML/postback and bounded XLS parsers; 23 offline tests passing (complete 55/338/61 portfolios checked).
-- Active: SEC/chart/metrics, retention and pagination helpers.
-- Remaining: provider adapters/metrics + orchestration integration tests; isolated live acceptance twice; parity UI/browser; CI; README/metadata; PR.
+- Last confirmed pushed SHA: afd8659143a14bbd0d3013ce527c02c26a17ef21 (verified against remote before this checkpoint; containing commit identifiable via git log).
+- Completed: dated issuer parsers plus SEC identity/XML and Yahoo/return helpers, strict filters, deterministic manifests/cache merges; 35 offline tests passing.
+- Active: actual CLI provider orchestration and integration retention tests.
+- Remaining: wire CLI + seeded static catalog; offline integration/failure tests; isolated live acceptance twice; parity UI/browser; CI; README/metadata; PR.
 - Blockers: none
-- Exact next action after this checkpoint is pushed: copy pinned SEC/adjusted-chart/derived-metric helpers, add exact-series fallback validation, deterministic pages/manifest and cache-preserving merge tests before wiring the actual CLI.
-- Status: Issuer parser layer validated offline against dated live-source fixtures; orchestration pending.
+- Exact next action after this checkpoint is pushed: wire catalog/detail POST export -> exact-series SEC fallback -> published holdings; Yahoo -> previous history, using output reporter and continue-on-error workers; seed all 9 catalog rows explicitly as unrefreshed; test real CLI shape with offline fixtures before the mandatory isolated live subset.
+- Status: Parser/metrics/filter/transport/page helpers validated; actual CLI assembly pending.
 
 INITIAL HANDOFF PROMPTS (preserved)
 ===================================
@@ -174,6 +174,17 @@ CHRONOLOGICAL JOURNAL
 - Numeric return header mapper returns Exclude<keyof OfficialReturnRow, 'asOfDate'> | null. Tested all tenors, reordered headers, zero, negative, missing/dash cells, unknown/date headers and preservation of string date. No broad keyof assignment, any/assertion/widening/ignore used for these slots.
 - First test run: 22 pass / 1 fail due to test changing only the anchor ID, leaving a valid export event intact. Corrected test to replace all occurrences (actual unsupported event). No financial data changed to silence it.
 - Final commands: bun test -> 23 pass / 0 fail / 138 expectations; bun build --target=bun scripts/update-data.ts --outfile=/dev/null -> exit 0; git diff --check -> clean. This remains offline parser validation, NOT live acceptance of the actual CLI.
+
+### 2026-10-01 — Shared financial/fallback and deterministic feed helpers (completed)
+- Previous issuer-parser checkpoint afd8659143a14bbd0d3013ce527c02c26a17ef21 push verified.
+- Copied pinned JPMorgan SEC ticker/company maps, accession/Atom/XML parsing, company-name normalization, Yahoo daily chart parsing (adjusted close rounded to 2 decimals), annualized/cumulative conversions, cadence/indicated yield, price returns and catalog metrics. AAM provenance strings substituted. Added missing SEC_YIELD filter alongside all AND filters.
+- AAM SEC adapter requires registrant CIK 0001540305 and exact series id (when authoritative ref exists) or exact normalized fund name. Synthetic XML fixture is explicitly marked non-live; its invented test series id is NOT researched provider data. AAM missing filed position numbers stay blank rather than become fabricated zeros; known numerical values retain original shared units.
+- Live fetch URL period bounds are separate from stable persisted query-free Yahoo provenance. Request transport retries network/408/425/429/5xx only, with exponential backoff, 30s timeout and independent lanes; 403/404 are not hammered.
+- Implemented sibling-shape pages, manifests, stale-owned-page cleanup and complete-manifest cached reads. Bad/missing cached pages fail closed, not silently empty; limited fresh history merges with older history and official distribution amounts beat overlapping Yahoo events. Sorted ticker cursor selection is deterministic.
+- Commands: bun test -> 35 pass / 0 fail / 202 expectations; bun build --target=bun scripts/update-data.ts --outfile=/dev/null -> exit 0; git diff --check -> clean.
+- Added offline coverage for chart jitter/null quote/zero volume, official return precedence, cumulative-vs-annualized units, young-fund SI handling, all filter families, SEC trust/series mismatch, raw XML URLs, request retries/denials, pagination/cache corruption/stale pages and resumable scoped selection. No provider network in these tests.
+- Type review continues: mixed return metadata remains excluded from numeric slots; generic queue normalization retained. Shared provider boundary/output records preserve sibling flexible shape. Build does not perform semantic TS checking. No tsc/dependency/config introduced.
+- Actual updater CLI, seeded API and live acceptance remain unfinished; next checkpoint implements orchestration, not UI redesign.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN
