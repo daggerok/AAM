@@ -4,15 +4,15 @@ CURRENT STATE
 - Hard constraints: no tsc/tsconfig/typescript package; runtime dependencies {}; only exact @types/bun/@types/node devDependencies; preserve source provenance and cached data; no fabricated financial values; small scoped commits + verified push after each completed step.
 - Authority: user authorized implementation, commits/pushes on feat/aam-etfs and opening an AAM PR against main; embedded plan authorizes AAM About/homepage/topics. NO merges, force-pushes, protection bypasses or edits/PRs in other repositories. Cross-repository README additions remain out of scope.
 - Repository: https://github.com/daggerok/AAM
-- Branch: feat/aam-etfs; PR: none (GitHub REST verified 2026-10-01).
+- Branch: feat/aam-etfs; PR: https://github.com/daggerok/AAM/pull/1.
 - Reconciliation: clean baseline HEAD/main/origin/main = 7bf2d91; no concurrent changes or existing PRs. Original baseline prose archived below, full original plan preserved.
-- Last confirmed pushed SHA: ae0968aa36722e34003754778e7a70022bad99b5 (verified against remote before this checkpoint; containing commit identifiable via git log).
-- Completed: API9/1162/7623; exact UI/browser hashes49checks; CI/docs/metadata; frozen install,71offline tests/590expectations; builds/feed/security allpass.
-- Active: open PR main<-feat/aam-etfs and inspect GitHub offline checks.
-- Remaining: PR creation; remote check-status inspection; final worklog/checkpoint/push/verify, no merge.
+- Last confirmed pushed SHA: 2752c41023a11653b695fa2e4130ac3b2bf0731a (verified against remote before this checkpoint; containing commit identifiable via git log).
+- Completed: implementation/data/UI/CI/docs/metadata/local validation complete;71tests/590expectations,49browserchecks; verified PR#1 head/base/open/unmerged.
+- Active: inspect final PR-head offline GitHub checks and handoff; no further implementation unless a check fails.
+- Remaining: remote check inspection; final factual worklog checkpoint/push/verify; handoff (no merge).
 - Blockers: none
-- Exact next action after this checkpoint is pushed: POST AAM PR (base main, head feat/aam-etfs) with truthful verification/caveats and config25+2 adaptation; GET verify PRhead/base/status; await offline checks only and record final status in worklog.
-- Status: Final local verification passed; implementation ready for PR to main (not yet opened).
+- Exact next action after this checkpoint is pushed: wait for GitHub offline PR check for latest branch head, record actual conclusion or explicit pending/blocked status; verify PR remains open/unmerged, remoteSHA/clean tree and unchanged main; final handoff.
+- Status: PR#1 OPEN against main, not merged; final GitHub offline-check inspection pending.
 
 INITIAL HANDOFF PROMPTS (preserved)
 ===================================
@@ -354,6 +354,13 @@ CHRONOLOGICAL JOURNAL
 - Manual semantic-risk review: numeric-slot union excludes string metadata; queue tails completion-only void and callerT retained. No semantic compiler/IDE proof claimed; runtime fixtures/transpilation explicitly distinct from live acquisition evidence.
 - Material caveats retained: documented1cent Yahoo provider change, no live byte-identity claim for changed input; SEC series fallback not proven live; Pages404/pending, defaultmain docs-only until authorized merge. Source/Scope acceptance was>=3actualtickers twice, allprovider paths enabled with default pacing, retained unrequested/production smoke isolation.
 - AAM-only authorization kept: no cross-repo changes, no force/rebase/check bypass, no PR merge, no deployment or language override. Next: create PR against main and inspect remote offline check status.
+
+### 2026-10-01 — PR opened against main (completed; no merge)
+- Previous final-verification checkpoint2752c41023a11653b695fa2e4130ac3b2bf0731a push verified; fetched/reconciled branch/main before PR. No concurrent implementation or existing same-head PR found.
+- POST and GET verified PR#1: https://github.com/daggerok/AAM/pull/1 at 2026-10-01T15:02:25.501127+00:00; title=feat(aam): add AAM ETF holdings-to-watchlist app; base=main (7bf2d916756e50b9feaf7ec9132a1be8d6267cf2); head=feat/aam-etfs (2752c41023a11653b695fa2e4130ac3b2bf0731a); state=open, merged=false. Never called merge endpoint.
+- PR body summarizes exact UI/source/data/config25+2 adaptation,71offline/49browser checks, source acquisition/scope, runtime-vs-semantic distinction and explicit Yahoo/SEC/Pages/cross-repo limits; requests review, no auto-merge. No misleading byte-identity or live-SEC/Pages claim.
+- Initial check-runs query returned empty immediately after creation; mergeable initially null (GitHub computation pending), neither treated as success/failure. No data updater workflow dispatched. Next inspect offline PR check on latest branch head after this journal push.
+- Receipt evidence/pr.json is nonsensitive; no credentials/headers retained. AAM only; main baseline unchanged and no cross-repo PRs.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN
