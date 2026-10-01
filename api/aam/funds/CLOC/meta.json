@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-01T05:39:17.891Z",
+ "generatedAt": "2026-10-01T21:58:30.308Z",
  "ticker": "CLOC",
  "name": "AAM Crescent CLO ETF",
  "category": "Fixed Income",
@@ -10,9 +10,9 @@
   "category": "Fixed Income",
   "fundPage": "https://www.aamlive.com/ETF/Detail/CLOC",
   "inception": "2025-10-22",
-  "secYield": 5.77,
-  "nav": 25.03,
-  "asOfDate": "2026-09-29"
+  "secYield": 5.8,
+  "nav": 24.9,
+  "asOfDate": "2026-09-30"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/CLOC",
@@ -41,50 +41,50 @@
   "net": 0.18
  },
  "nav": {
-  "display": "$25.03",
-  "value": 25.03,
-  "asOfDate": "Sep 29 2026"
+  "display": "$24.90",
+  "value": 24.9,
+  "asOfDate": "Sep 30 2026"
  },
  "marketPrice": {
-  "display": "$25.16",
-  "value": 25.16,
-  "asOfDate": "Sep 29 2026"
+  "display": "$25.01",
+  "value": 25.01,
+  "asOfDate": "Sep 30 2026"
  },
  "premiumDiscount": {
-  "display": "0.52%",
-  "value": 0.52
+  "display": "0.44%",
+  "value": 0.44
  },
  "aum": {
   "display": "$61.01 M",
-  "value": 61010390,
-  "asOfDate": "Sep 29 2026",
+  "value": 61008430,
+  "asOfDate": "Sep 30 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
-  "dividendYield": 6.2,
-  "dividendYieldText": "6.20%",
+  "dividendYield": 6.24,
+  "dividendYieldText": "6.24%",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
-  "secYield": 5.77,
-  "secYieldText": "5.77%",
+  "secYield": 5.8,
+  "secYieldText": "5.80%",
   "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
-  "subsidizedSecYield": 6.08,
-  "unsubsidizedSecYield": 5.77
+  "subsidizedSecYield": 6.11,
+  "unsubsidizedSecYield": 5.8
  },
  "officialReturns": {
-  "asOfDate": "2026-06-30",
-  "ytd": 2.68,
+  "asOfDate": "2026-09-30",
+  "ytd": 4.5,
   "yr1": null,
   "yr3": null,
   "yr5": null,
   "yr10": null,
-  "sinceInception": 3.68
+  "sinceInception": 5.52
  },
  "returns": {
   "monthEnd": {
-   "asOfDate": "Jun 30 2026",
-   "mo1": 0.2,
+   "asOfDate": "Sep 30 2026",
+   "mo1": 0.64,
    "qtd": 1.87,
-   "ytd": 2.68,
+   "ytd": 4.5,
    "yr1": null,
    "yr3": null,
    "yr5": null,
@@ -92,13 +92,13 @@
    "sinceInception": null
   },
   "quarterEnd": {
-   "ytd": 2.68,
+   "ytd": 4.5,
    "yr1": null,
    "yr3": null,
    "yr5": null,
    "yr10": null,
    "sinceInception": null,
-   "asOfDate": "Jun 30 2026"
+   "asOfDate": "Sep 30 2026"
   },
   "derivedFrom": "official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date"
  },
@@ -276,8 +276,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 235,
-  "asOf": "Sep 30 2026",
+  "totalRows": 236,
+  "asOf": "Oct 01 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

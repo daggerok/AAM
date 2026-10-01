@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-01T05:40:08.697Z",
+ "generatedAt": "2026-10-01T21:58:30.308Z",
  "ticker": "BDIV",
  "name": "AAM Brentview Dividend Growth ETF",
  "category": "Equity",
@@ -10,9 +10,9 @@
   "category": "Equity",
   "fundPage": "https://www.aamlive.com/ETF/Detail/BDIV",
   "inception": "2024-07-30",
-  "secYield": 1.25,
-  "nav": 24.38,
-  "asOfDate": "2026-09-29"
+  "secYield": 1.26,
+  "nav": 24.2,
+  "asOfDate": "2026-09-30"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/BDIV",
@@ -41,64 +41,64 @@
   "net": 0.49
  },
  "nav": {
-  "display": "$24.38",
-  "value": 24.38,
-  "asOfDate": "Sep 29 2026"
+  "display": "$24.20",
+  "value": 24.2,
+  "asOfDate": "Sep 30 2026"
  },
  "marketPrice": {
-  "display": "$24.37",
-  "value": 24.37,
-  "asOfDate": "Sep 29 2026"
+  "display": "$24.24",
+  "value": 24.24,
+  "asOfDate": "Sep 30 2026"
  },
  "premiumDiscount": {
-  "display": "-0.04%",
-  "value": -0.04
+  "display": "0.17%",
+  "value": 0.17
  },
  "aum": {
-  "display": "$6.82 M",
-  "value": 6820632,
-  "asOfDate": "Sep 29 2026",
+  "display": "$6.77 M",
+  "value": 6774824,
+  "asOfDate": "Sep 30 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
-  "dividendYield": 0.98,
-  "dividendYieldText": "0.98%",
+  "dividendYield": 0.99,
+  "dividendYieldText": "0.99%",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
-  "secYield": 1.25,
-  "secYieldText": "1.25%",
+  "secYield": 1.26,
+  "secYieldText": "1.26%",
   "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
-  "subsidizedSecYield": 1.25,
-  "unsubsidizedSecYield": 1.25
+  "subsidizedSecYield": 1.26,
+  "unsubsidizedSecYield": 1.26
  },
  "officialReturns": {
-  "asOfDate": "2026-06-30",
-  "ytd": 7.95,
-  "yr1": 17.76,
+  "asOfDate": "2026-09-30",
+  "ytd": 7.22,
+  "yr1": 8.8,
   "yr3": null,
   "yr5": null,
   "yr10": null,
-  "sinceInception": 16.11
+  "sinceInception": 13.76
  },
  "returns": {
   "monthEnd": {
-   "asOfDate": "Jun 30 2026",
-   "mo1": 0.83,
-   "qtd": 7.64,
-   "ytd": 7.95,
-   "yr1": 17.76,
+   "asOfDate": "Sep 30 2026",
+   "mo1": -3.19,
+   "qtd": 0.04,
+   "ytd": 7.22,
+   "yr1": 8.8,
    "yr3": null,
    "yr5": null,
    "yr10": null,
-   "sinceInception": 16.11
+   "sinceInception": 13.76
   },
   "quarterEnd": {
-   "ytd": 7.95,
-   "yr1": 17.76,
+   "ytd": 7.22,
+   "yr1": 8.8,
    "yr3": null,
    "yr5": null,
    "yr10": null,
-   "sinceInception": 16.11,
-   "asOfDate": "Jun 30 2026"
+   "sinceInception": 13.76,
+   "asOfDate": "Sep 30 2026"
   },
   "derivedFrom": "official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date"
  },
@@ -471,8 +471,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 543,
-  "asOf": "Sep 30 2026",
+  "totalRows": 544,
+  "asOf": "Oct 01 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

@@ -2,7 +2,7 @@
  "ticker": "SPDV",
  "page": 1,
  "pageSize": 1000,
- "totalRows": 2220,
+ "totalRows": 2221,
  "headers": [
   "Date",
   "Close",

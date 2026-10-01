@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-01T05:40:08.697Z",
+ "generatedAt": "2026-10-01T21:58:30.308Z",
  "ticker": "SAWS",
  "name": "AAM Sawgrass U.S. Small Cap Quality Growth ETF",
  "category": "Equity",
@@ -11,8 +11,8 @@
   "fundPage": "https://www.aamlive.com/ETF/Detail/SAWS",
   "inception": "2024-07-30",
   "secYield": -0.04,
-  "nav": 22.92,
-  "asOfDate": "2026-09-29"
+  "nav": 22.83,
+  "asOfDate": "2026-09-30"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/SAWS",
@@ -41,23 +41,23 @@
   "net": 0.55
  },
  "nav": {
-  "display": "$22.92",
-  "value": 22.92,
-  "asOfDate": "Sep 29 2026"
+  "display": "$22.83",
+  "value": 22.83,
+  "asOfDate": "Sep 30 2026"
  },
  "marketPrice": {
-  "display": "$22.92",
-  "value": 22.92,
-  "asOfDate": "Sep 29 2026"
+  "display": "$22.86",
+  "value": 22.86,
+  "asOfDate": "Sep 30 2026"
  },
  "premiumDiscount": {
-  "display": "0.00%",
-  "value": 0
+  "display": "0.13%",
+  "value": 0.13
  },
  "aum": {
-  "display": "$7.56 M",
-  "value": 7563666,
-  "asOfDate": "Sep 29 2026",
+  "display": "$7.53 M",
+  "value": 7533933,
+  "asOfDate": "Sep 30 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
@@ -71,34 +71,34 @@
   "unsubsidizedSecYield": -0.04
  },
  "officialReturns": {
-  "asOfDate": "2026-06-30",
-  "ytd": 23.3,
-  "yr1": 32.24,
+  "asOfDate": "2026-09-30",
+  "ytd": 8.21,
+  "yr1": 7.66,
   "yr3": null,
   "yr5": null,
   "yr10": null,
-  "sinceInception": 18
+  "sinceInception": 8.99
  },
  "returns": {
   "monthEnd": {
-   "asOfDate": "Jun 30 2026",
-   "mo1": 12.09,
-   "qtd": 21.67,
-   "ytd": 23.3,
-   "yr1": 32.24,
+   "asOfDate": "Sep 30 2026",
+   "mo1": -2.76,
+   "qtd": -11.19,
+   "ytd": 8.21,
+   "yr1": 7.66,
    "yr3": null,
    "yr5": null,
    "yr10": null,
-   "sinceInception": 18
+   "sinceInception": 8.99
   },
   "quarterEnd": {
-   "ytd": 23.3,
-   "yr1": 32.24,
+   "ytd": 8.21,
+   "yr1": 7.66,
    "yr3": null,
    "yr5": null,
    "yr10": null,
-   "sinceInception": 18,
-   "asOfDate": "Jun 30 2026"
+   "sinceInception": 8.99,
+   "asOfDate": "Sep 30 2026"
   },
   "derivedFrom": "official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date"
  },
@@ -159,8 +159,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 544,
-  "asOf": "Sep 30 2026",
+  "totalRows": 545,
+  "asOf": "Oct 01 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

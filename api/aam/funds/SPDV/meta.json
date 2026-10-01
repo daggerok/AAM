@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-01T05:39:17.891Z",
+ "generatedAt": "2026-10-01T21:58:30.308Z",
  "ticker": "SPDV",
  "name": "AAM S&P 500 High Dividend Value ETF",
  "category": "Equity",
@@ -10,9 +10,9 @@
   "category": "Equity",
   "fundPage": "https://www.aamlive.com/ETF/Detail/SPDV",
   "inception": "2017-11-28",
-  "secYield": 3.6,
-  "nav": 39.2,
-  "asOfDate": "2026-09-29"
+  "secYield": 3.64,
+  "nav": 38.76,
+  "asOfDate": "2026-09-30"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/SPDV",
@@ -41,64 +41,64 @@
   "net": 0.29
  },
  "nav": {
-  "display": "$39.20",
-  "value": 39.2,
-  "asOfDate": "Sep 29 2026"
+  "display": "$38.76",
+  "value": 38.76,
+  "asOfDate": "Sep 30 2026"
  },
  "marketPrice": {
-  "display": "$39.19",
-  "value": 39.19,
-  "asOfDate": "Sep 29 2026"
+  "display": "$38.84",
+  "value": 38.84,
+  "asOfDate": "Sep 30 2026"
  },
  "premiumDiscount": {
-  "display": "-0.03%",
-  "value": -0.03
+  "display": "0.21%",
+  "value": 0.21
  },
  "aum": {
-  "display": "$100.65 M",
-  "value": 100651085,
-  "asOfDate": "Sep 29 2026",
+  "display": "$99.81 M",
+  "value": 99811120,
+  "asOfDate": "Sep 30 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
-  "dividendYield": 3.52,
-  "dividendYieldText": "3.52%",
+  "dividendYield": 3.55,
+  "dividendYieldText": "3.55%",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
-  "secYield": 3.6,
-  "secYieldText": "3.60%",
+  "secYield": 3.64,
+  "secYieldText": "3.64%",
   "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
-  "subsidizedSecYield": 3.6,
-  "unsubsidizedSecYield": 3.6
+  "subsidizedSecYield": 3.64,
+  "unsubsidizedSecYield": 3.64
  },
  "officialReturns": {
-  "asOfDate": "2026-06-30",
-  "ytd": 13.21,
-  "yr1": 23.18,
-  "yr3": 14.99,
-  "yr5": 8.91,
+  "asOfDate": "2026-09-30",
+  "ytd": 14.87,
+  "yr1": 15.64,
+  "yr3": 16.76,
+  "yr5": 9.65,
   "yr10": null,
-  "sinceInception": 9.16
+  "sinceInception": 9.06
  },
  "returns": {
   "monthEnd": {
-   "asOfDate": "Jun 30 2026",
-   "mo1": -1.6,
-   "qtd": 5,
-   "ytd": 13.21,
-   "yr1": 23.18,
-   "yr3": 14.99,
-   "yr5": 8.91,
+   "asOfDate": "Sep 30 2026",
+   "mo1": -6.36,
+   "qtd": 1.65,
+   "ytd": 14.87,
+   "yr1": 15.64,
+   "yr3": 16.76,
+   "yr5": 9.65,
    "yr10": null,
-   "sinceInception": 9.16
+   "sinceInception": 9.06
   },
   "quarterEnd": {
-   "ytd": 13.21,
-   "yr1": 23.18,
-   "yr3": 14.99,
-   "yr5": 8.91,
+   "ytd": 14.87,
+   "yr1": 15.64,
+   "yr3": 16.76,
+   "yr5": 9.65,
    "yr10": null,
-   "sinceInception": 9.16,
-   "asOfDate": "Jun 30 2026"
+   "sinceInception": 9.06,
+   "asOfDate": "Sep 30 2026"
   },
   "derivedFrom": "official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date"
  },
@@ -1513,8 +1513,8 @@
    "history/003.json"
   ],
   "pageSize": 1000,
-  "totalRows": 2220,
-  "asOf": "Sep 30 2026",
+  "totalRows": 2221,
+  "asOf": "Oct 01 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

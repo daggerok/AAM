@@ -2,7 +2,7 @@
  "ticker": "PFLD",
  "page": 2,
  "pageSize": 1000,
- "totalRows": 1723,
+ "totalRows": 1724,
  "headers": [
   "Date",
   "Close",
@@ -865,7 +865,7 @@
   {
    "Date": "Jun 06 2024",
    "Close": "21.16",
-   "Adj Close": "18.3",
+   "Adj Close": "18.31",
    "Volume": "53100"
   },
   {
@@ -4347,6 +4347,12 @@
    "Close": "19.08",
    "Adj Close": "19.08",
    "Volume": "49700"
+  },
+  {
+   "Date": "Oct 01 2026",
+   "Close": "19.1",
+   "Adj Close": "19.1",
+   "Volume": "105700"
   }
  ]
 }

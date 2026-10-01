@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-01T05:40:36.723Z",
+ "generatedAt": "2026-10-01T21:58:30.308Z",
  "ticker": "TRFM",
  "name": "AAM Transformers ETF",
  "category": "Equity",
@@ -11,8 +11,8 @@
   "fundPage": "https://www.aamlive.com/ETF/Detail/TRFM",
   "inception": "2022-07-11",
   "secYield": 0.13,
-  "nav": 59.16,
-  "asOfDate": "2026-09-29"
+  "nav": 59.03,
+  "asOfDate": "2026-09-30"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/TRFM",
@@ -41,23 +41,23 @@
   "net": 0.49
  },
  "nav": {
-  "display": "$59.16",
-  "value": 59.16,
-  "asOfDate": "Sep 29 2026"
+  "display": "$59.03",
+  "value": 59.03,
+  "asOfDate": "Sep 30 2026"
  },
  "marketPrice": {
-  "display": "$59.19",
-  "value": 59.19,
-  "asOfDate": "Sep 29 2026"
+  "display": "$59.10",
+  "value": 59.1,
+  "asOfDate": "Sep 30 2026"
  },
  "premiumDiscount": {
-  "display": "0.05%",
-  "value": 0.05
+  "display": "0.12%",
+  "value": 0.12
  },
  "aum": {
-  "display": "$292.82 M",
-  "value": 292820715,
-  "asOfDate": "Sep 29 2026",
+  "display": "$292.18 M",
+  "value": 292178700,
+  "asOfDate": "Sep 30 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
@@ -71,34 +71,34 @@
   "unsubsidizedSecYield": 0.13
  },
  "officialReturns": {
-  "asOfDate": "2026-06-30",
-  "ytd": 32.74,
-  "yr1": 46.75,
-  "yr3": 30.27,
+  "asOfDate": "2026-09-30",
+  "ytd": 24.09,
+  "yr1": 22.13,
+  "yr3": 29.92,
   "yr5": null,
   "yr10": null,
-  "sinceInception": 27.64
+  "sinceInception": 23.81
  },
  "returns": {
   "monthEnd": {
-   "asOfDate": "Jun 30 2026",
-   "mo1": 3.9,
-   "qtd": 33.35,
-   "ytd": 32.74,
-   "yr1": 46.75,
-   "yr3": 30.27,
+   "asOfDate": "Sep 30 2026",
+   "mo1": -0.91,
+   "qtd": -5.03,
+   "ytd": 24.09,
+   "yr1": 22.13,
+   "yr3": 29.92,
    "yr5": null,
    "yr10": null,
-   "sinceInception": 27.64
+   "sinceInception": 23.81
   },
   "quarterEnd": {
-   "ytd": 32.74,
-   "yr1": 46.75,
-   "yr3": 30.27,
+   "ytd": 24.09,
+   "yr1": 22.13,
+   "yr3": 29.92,
    "yr5": null,
    "yr10": null,
-   "sinceInception": 27.64,
-   "asOfDate": "Jun 30 2026"
+   "sinceInception": 23.81,
+   "asOfDate": "Sep 30 2026"
   },
   "derivedFrom": "official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date"
  },
@@ -174,8 +174,8 @@
    "history/002.json"
   ],
   "pageSize": 1000,
-  "totalRows": 1060,
-  "asOf": "Sep 30 2026",
+  "totalRows": 1061,
+  "asOf": "Oct 01 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

@@ -2,7 +2,7 @@
  "ticker": "PFLD",
  "page": 1,
  "pageSize": 1000,
- "totalRows": 1723,
+ "totalRows": 1724,
  "headers": [
   "Date",
   "Close",

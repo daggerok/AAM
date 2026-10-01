@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-01T05:40:36.723Z",
+ "generatedAt": "2026-10-01T21:58:30.308Z",
  "ticker": "TIIV",
  "name": "AAM Todd International Intrinsic Value ETF",
  "category": "Equity",
@@ -10,9 +10,9 @@
   "category": "Equity",
   "fundPage": "https://www.aamlive.com/ETF/Detail/TIIV",
   "inception": "2025-07-24",
-  "secYield": 2.47,
-  "nav": 30.13,
-  "asOfDate": "2026-09-29"
+  "secYield": 2.25,
+  "nav": 29.92,
+  "asOfDate": "2026-09-30"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/TIIV",
@@ -41,64 +41,64 @@
   "net": 0.54
  },
  "nav": {
-  "display": "$30.13",
-  "value": 30.13,
-  "asOfDate": "Sep 29 2026"
+  "display": "$29.92",
+  "value": 29.92,
+  "asOfDate": "Sep 30 2026"
  },
  "marketPrice": {
-  "display": "$30.10",
-  "value": 30.1,
-  "asOfDate": "Sep 29 2026"
+  "display": "$29.98",
+  "value": 29.98,
+  "asOfDate": "Sep 30 2026"
  },
  "premiumDiscount": {
-  "display": "-0.10%",
-  "value": -0.1
+  "display": "0.20%",
+  "value": 0.2
  },
  "aum": {
-  "display": "$32.36 M",
-  "value": 32359761.66,
-  "asOfDate": "Sep 29 2026",
+  "display": "$32.14 M",
+  "value": 32140526.01,
+  "asOfDate": "Sep 30 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
   "dividendYield": 2.13,
   "dividendYieldText": "2.13%",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
-  "secYield": 2.47,
-  "secYieldText": "2.47%",
+  "secYield": 2.25,
+  "secYieldText": "2.25%",
   "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
-  "subsidizedSecYield": 2.47,
-  "unsubsidizedSecYield": 2.47
+  "subsidizedSecYield": 2.25,
+  "unsubsidizedSecYield": 2.25
  },
  "officialReturns": {
-  "asOfDate": "2026-06-30",
-  "ytd": 9.58,
-  "yr1": null,
+  "asOfDate": "2026-09-30",
+  "ytd": 12.67,
+  "yr1": 18.13,
   "yr3": null,
   "yr5": null,
   "yr10": null,
-  "sinceInception": 20.44
+  "sinceInception": 19.75
  },
  "returns": {
   "monthEnd": {
-   "asOfDate": "Jun 30 2026",
-   "mo1": 0.24,
-   "qtd": 4.74,
-   "ytd": 9.58,
-   "yr1": null,
+   "asOfDate": "Sep 30 2026",
+   "mo1": -1.61,
+   "qtd": 3.13,
+   "ytd": 12.67,
+   "yr1": 18.13,
    "yr3": null,
    "yr5": null,
    "yr10": null,
-   "sinceInception": null
+   "sinceInception": 19.75
   },
   "quarterEnd": {
-   "ytd": 9.58,
-   "yr1": null,
+   "ytd": 12.67,
+   "yr1": 18.13,
    "yr3": null,
    "yr5": null,
    "yr10": null,
-   "sinceInception": null,
-   "asOfDate": "Jun 30 2026"
+   "sinceInception": 19.75,
+   "asOfDate": "Sep 30 2026"
   },
   "derivedFrom": "official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date"
  },
@@ -159,8 +159,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 298,
-  "asOf": "Sep 30 2026",
+  "totalRows": 299,
+  "asOf": "Oct 01 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

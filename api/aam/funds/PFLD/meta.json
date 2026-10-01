@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-01T05:39:17.891Z",
+ "generatedAt": "2026-10-01T21:58:30.308Z",
  "ticker": "PFLD",
  "name": "AAM Low Duration Preferred & Income Securities ETF",
  "category": "Preferred & Hybrid Securities",
@@ -10,9 +10,9 @@
   "category": "Preferred & Hybrid Securities",
   "fundPage": "https://www.aamlive.com/ETF/Detail/PFLD",
   "inception": "2019-11-19",
-  "secYield": 5.86,
-  "nav": 19.24,
-  "asOfDate": "2026-09-29"
+  "secYield": 5.89,
+  "nav": 19.15,
+  "asOfDate": "2026-09-30"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/PFLD",
@@ -41,64 +41,64 @@
   "net": 0.45
  },
  "nav": {
-  "display": "$19.24",
-  "value": 19.24,
-  "asOfDate": "Sep 29 2026"
+  "display": "$19.15",
+  "value": 19.15,
+  "asOfDate": "Sep 30 2026"
  },
  "marketPrice": {
-  "display": "$19.18",
-  "value": 19.18,
-  "asOfDate": "Sep 29 2026"
+  "display": "$19.08",
+  "value": 19.08,
+  "asOfDate": "Sep 30 2026"
  },
  "premiumDiscount": {
-  "display": "-0.31%",
-  "value": -0.31
+  "display": "-0.37%",
+  "value": -0.37
  },
  "aum": {
   "display": "$378.17 M",
-  "value": 378167075,
-  "asOfDate": "Sep 29 2026",
+  "value": 378171025,
+  "asOfDate": "Sep 30 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
-  "dividendYield": 5.63,
-  "dividendYieldText": "5.63%",
+  "dividendYield": 5.66,
+  "dividendYieldText": "5.66%",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
-  "secYield": 5.86,
-  "secYieldText": "5.86%",
+  "secYield": 5.89,
+  "secYieldText": "5.89%",
   "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
-  "subsidizedSecYield": 5.86,
-  "unsubsidizedSecYield": 5.86
+  "subsidizedSecYield": 5.89,
+  "unsubsidizedSecYield": 5.89
  },
  "officialReturns": {
-  "asOfDate": "2026-06-30",
-  "ytd": 2.52,
-  "yr1": 6.04,
-  "yr3": 4.62,
-  "yr5": 0.91,
+  "asOfDate": "2026-09-30",
+  "ytd": 1.62,
+  "yr1": 2.72,
+  "yr3": 3.9,
+  "yr5": 0.73,
   "yr10": null,
-  "sinceInception": 2.22
+  "sinceInception": 2.01
  },
  "returns": {
   "monthEnd": {
-   "asOfDate": "Jun 30 2026",
-   "mo1": 0.36,
-   "qtd": 1.85,
-   "ytd": 2.52,
-   "yr1": 6.04,
-   "yr3": 4.62,
-   "yr5": 0.91,
+   "asOfDate": "Sep 30 2026",
+   "mo1": -1.75,
+   "qtd": -1.24,
+   "ytd": 1.62,
+   "yr1": 2.72,
+   "yr3": 3.9,
+   "yr5": 0.73,
    "yr10": null,
-   "sinceInception": 2.22
+   "sinceInception": 2.01
   },
   "quarterEnd": {
-   "ytd": 2.52,
-   "yr1": 6.04,
-   "yr3": 4.62,
-   "yr5": 0.91,
+   "ytd": 1.62,
+   "yr1": 2.72,
+   "yr3": 3.9,
+   "yr5": 0.73,
    "yr10": null,
-   "sinceInception": 2.22,
-   "asOfDate": "Jun 30 2026"
+   "sinceInception": 2.01,
+   "asOfDate": "Sep 30 2026"
   },
   "derivedFrom": "official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date"
  },
@@ -1201,8 +1201,8 @@
    "history/002.json"
   ],
   "pageSize": 1000,
-  "totalRows": 1723,
-  "asOf": "Sep 30 2026",
+  "totalRows": 1724,
+  "asOf": "Oct 01 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }
