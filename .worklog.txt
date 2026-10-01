@@ -1,3 +1,20 @@
+CURRENT STATE
+=============
+- Goal/acceptance: AAM holdings-to-watchlist app with copied sibling UI, Bun-only zero-runtime-dependency updater, deterministic paginated static API, offline fixtures, >=3-fund isolated live acceptance twice, scheduled/manual CI, parity README and AAM metadata, PR against main.
+- Hard constraints: no tsc/tsconfig/typescript package; runtime dependencies {}; only exact @types/bun/@types/node devDependencies; preserve source provenance and cached data; no fabricated financial values; small scoped commits + verified push after each completed step.
+- Authority: user authorized implementation, commits/pushes on feat/aam-etfs and opening an AAM PR against main; embedded plan authorizes AAM About/homepage/topics. NO merges, force-pushes, protection bypasses or edits/PRs in other repositories. Cross-repository README additions remain out of scope.
+- Repository: https://github.com/daggerok/AAM
+- Branch: feat/aam-etfs; PR: none (GitHub REST verified 2026-10-01).
+- Reconciliation: clean baseline HEAD/main/origin/main = 7bf2d91; no concurrent changes or existing PRs. Original baseline prose archived below, full original plan preserved.
+- Last confirmed pushed SHA: 7bf2d91 (origin/main baseline). Current checkpoint is not yet claimed pushed; identify containing commit via git log. Each next checkpoint records the previous verified push.
+- Completed: full 823-line worklog read in non-truncated chunks; Git/remote/PR audit; feature branch created; pinned sibling references; issuer catalog and SPDV/PFLD/CLOC HTTP 200; SEC submissions HTTP 200.
+- Active: endpoint/Excel completeness research and Bun setup.
+- Remaining: complete source research; scaffold/helpers/parsers + offline tests; updater orchestration; isolated live runs/evidence; UI copy/parity/browser checks; CI/dependabot; README/metadata; PR.
+- Blockers: none. Authentication available at runtime only; never persist credentials.
+- Exact next action after this checkpoint is pushed: verify Excel postback response/full holdings and dated fixtures, inspect pinned updater helpers/schema, install Bun, checkpoint research before implementation.
+
+INITIAL HANDOFF PROMPTS (preserved)
+===================================
 === 1st PROMPT: COPY-PASTE THIS TO THE IMPLEMENTING AGENT (WITH YOUR GITHUB ACCESS TOKEN) ===
 
 Read .worklog.txt in the repository root. It is the canonical, self-contained handoff file containing the complete mandatory recovery protocol, architecture rules, and brand-specific research.
@@ -61,6 +78,8 @@ GitHub Personal Access Token: <PASTE_YOUR_TOKEN_HERE>
 ==============================================================================================
 
 ================================================================
+INITIAL BASELINE STATE (historical, not active)
+==============================================
 CURRENT STATE
 =============
 - Goal: Implement AAM (Advisors Asset Management) ETFs holdings-to-watchlist web application in daggerok/AAM matching sibling parity (Bun-only, zero runtime dependencies, static client app + update-data feed).
@@ -103,6 +122,20 @@ CHRONOLOGICAL JOURNAL
 - Verified SEC EDGAR filing registrant CIK: CONFIRMED: 'ETF Series Solutions', CIK 0001540305 (series for SPDV, PFLD, TRFM, BDIV, CLOC, etc.)..
 - Assembled self-contained plan integrating the full generic build requirements (PART 1) and brand-specific research (PART 2).
 - Committed initialized .worklog.txt to main branch. Repository is ready for implementing agent.
+
+### 2026-10-01 — Recovery audit and reference pins (completed)
+- Read every line of the original .worklog.txt (1-180, 181-340, 341-500, 501-660, 661-823); an initially truncated cat was NOT treated as a complete read.
+- Commands: git clone; git fetch origin --prune; git status --short --branch; git branch -avv; git log -8; GitHub GET repository and all PRs; git switch -c feat/aam-etfs.
+- Actual target baseline is docs plus MIT LICENSE/minimal README (not strictly only LICENSE+README): main and origin/main both 7bf2d91; working tree clean; PR list empty; no implementation exists.
+- Runtime-only authentication confirms AAM push/admin access. No credentials written to disk or Git configuration.
+- Pinned JPMorgan main 8ce0ddca58b5459dd7df98f22463fb31afa82f2b for UI, README, output/SEC/metrics helpers and workflow shape. Pinned Aberdeen default branch 10a6be3f5cab48aad80b52634e3bdd8123748f7d for HTML-oriented updater structure. Only named reference repositories were read; neither is authorized for edits.
+- Both pin @types/bun=1.4.2 and @types/node=26.6.2 with dependencies={}; will match exact versions.
+- Initial live probes: https://www.aamlive.com/ETF (254383 bytes), /ETF/Detail/SPDV (244195), /PFLD (258262), /CLOC (244242): HTTP 200 HTML without WAF. https://data.sec.gov/submissions/CIK0001540305.json HTTP 200 JSON.
+- Catalog actually has 9 funds (including TIIV); detail holdings/distributions grids are paginated (10 rows visible). Export to Excel is ASP.NET __doPostBack, not an observed direct query URL. Complete exports must be verified before using top holdings as complete.
+- Selected live acceptance subset: SPDV (equity), PFLD (preferred/income), CLOC (CLO/fixed income), explicit TICKERS throughout first implementation validation.
+- Read pinned sibling About: shared description pattern, homepage https://daggerok.github.io/JPMorgan/, 20 standard/brand topics. Target About initially description=null, homepage=null, topics=[]. No metadata mutation yet.
+- Local tool baseline: Git/Python available; Bun/gh/ripgrep absent. gh is not required (REST helper); use grep instead of ripgrep. Bun installation pending. No baseline tests exist in target.
+- Publication scope clarified: only daggerok/AAM; open PR but DO NOT merge. Embedded cross-sibling doc PR step requires separate authorization and is explicitly deferred, not silently performed.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN
