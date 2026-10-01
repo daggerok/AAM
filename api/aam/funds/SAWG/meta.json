@@ -1,0 +1,48 @@
+{
+ "ticker": "SAWG",
+ "name": "AAM Sawgrass U.S. Large Cap Quality Growth ETF",
+ "category": "Equity",
+ "categoryPath": "Equity",
+ "providerIds": {
+  "ticker": "SAWG",
+  "name": "AAM Sawgrass U.S. Large Cap Quality Growth ETF",
+  "category": "Equity",
+  "fundPage": "https://www.aamlive.com/ETF/Detail/SAWG",
+  "inception": "2024-07-30",
+  "secYield": 0.26,
+  "nav": 24.55,
+  "asOfDate": "2026-09-29"
+ },
+ "source": {
+  "fundPage": "https://www.aamlive.com/ETF/Detail/SAWG",
+  "catalog": "https://www.aamlive.com/ETF",
+  "provider": "AAM official catalog; per-fund source refresh pending"
+ },
+ "inception": {
+  "fundInceptionDate": "2024-07-30"
+ },
+ "nav": {
+  "display": "$24.55",
+  "value": 24.55,
+  "asOfDate": "Sep 29 2026"
+ },
+ "yields": {
+  "secYield": 0.26,
+  "secYieldText": "0.26%"
+ },
+ "holdings": {
+  "pages": [],
+  "pageSize": 250,
+  "totalRows": 0,
+  "asOfDate": null,
+  "source": "not yet refreshed",
+  "status": "unavailable"
+ },
+ "history": {
+  "pages": [],
+  "pageSize": 1000,
+  "totalRows": 0,
+  "source": "not yet refreshed",
+  "status": "unavailable"
+ }
+}

@@ -1,0 +1,48 @@
+{
+ "ticker": "BDIV",
+ "name": "AAM Brentview Dividend Growth ETF",
+ "category": "Equity",
+ "categoryPath": "Equity",
+ "providerIds": {
+  "ticker": "BDIV",
+  "name": "AAM Brentview Dividend Growth ETF",
+  "category": "Equity",
+  "fundPage": "https://www.aamlive.com/ETF/Detail/BDIV",
+  "inception": "2024-07-30",
+  "secYield": 1.25,
+  "nav": 24.38,
+  "asOfDate": "2026-09-29"
+ },
+ "source": {
+  "fundPage": "https://www.aamlive.com/ETF/Detail/BDIV",
+  "catalog": "https://www.aamlive.com/ETF",
+  "provider": "AAM official catalog; per-fund source refresh pending"
+ },
+ "inception": {
+  "fundInceptionDate": "2024-07-30"
+ },
+ "nav": {
+  "display": "$24.38",
+  "value": 24.38,
+  "asOfDate": "Sep 29 2026"
+ },
+ "yields": {
+  "secYield": 1.25,
+  "secYieldText": "1.25%"
+ },
+ "holdings": {
+  "pages": [],
+  "pageSize": 250,
+  "totalRows": 0,
+  "asOfDate": null,
+  "source": "not yet refreshed",
+  "status": "unavailable"
+ },
+ "history": {
+  "pages": [],
+  "pageSize": 1000,
+  "totalRows": 0,
+  "source": "not yet refreshed",
+  "status": "unavailable"
+ }
+}

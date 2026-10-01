@@ -1,0 +1,48 @@
+{
+ "ticker": "CLOC",
+ "name": "AAM Crescent CLO ETF",
+ "category": "Fixed Income",
+ "categoryPath": "Fixed Income",
+ "providerIds": {
+  "ticker": "CLOC",
+  "name": "AAM Crescent CLO ETF",
+  "category": "Fixed Income",
+  "fundPage": "https://www.aamlive.com/ETF/Detail/CLOC",
+  "inception": "2025-10-22",
+  "secYield": 5.77,
+  "nav": 25.03,
+  "asOfDate": "2026-09-29"
+ },
+ "source": {
+  "fundPage": "https://www.aamlive.com/ETF/Detail/CLOC",
+  "catalog": "https://www.aamlive.com/ETF",
+  "provider": "AAM official catalog; per-fund source refresh pending"
+ },
+ "inception": {
+  "fundInceptionDate": "2025-10-22"
+ },
+ "nav": {
+  "display": "$25.03",
+  "value": 25.03,
+  "asOfDate": "Sep 29 2026"
+ },
+ "yields": {
+  "secYield": 5.77,
+  "secYieldText": "5.77%"
+ },
+ "holdings": {
+  "pages": [],
+  "pageSize": 250,
+  "totalRows": 0,
+  "asOfDate": null,
+  "source": "not yet refreshed",
+  "status": "unavailable"
+ },
+ "history": {
+  "pages": [],
+  "pageSize": 1000,
+  "totalRows": 0,
+  "source": "not yet refreshed",
+  "status": "unavailable"
+ }
+}

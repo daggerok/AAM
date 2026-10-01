@@ -220,3 +220,107 @@ test('bounded cursor rotates sorted selected set, full pass ignores cursor',asyn
   expect(batchSelection(f,c,null).map(f=>f.ticker)).toEqual(['CLOC','PFLD']);expect(batchSelection(f,c,'PFLD').map(f=>f.ticker)).toEqual(['SPDV','CLOC']);
   expect(batchSelection(f,{...c,maxFetches:0},'PFLD').map(f=>f.ticker)).toEqual(['CLOC','PFLD','SPDV']);
 });
+
+import { initializeCatalogSeed, validatePortfolioPreview, main } from './update-data';
+import { readdir } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import type { Fetcher } from './update-data';
+
+const integrationEnv={TICKERS:'SPDV PFLD CLOC',REQUEST_SLEEP:'0',MAX_RETRIES:'0',VERBOSE:'false'}; // OFFLINE only
+const fixedNow=new Date('2026-10-01T05:00:00Z');
+async function snapshot(dir: string):Promise<Record<string,string>> {
+  const files:Record<string,string>={};
+  const visit=async(path:string)=>{for(const e of await readdir(path,{withFileTypes:true})){if(e.isDirectory())await visit(path+'/'+e.name);else files[(path+'/'+e.name).slice(dir.length+1)]=createHash('sha256').update(await readFile(path+'/'+e.name)).digest('hex');}};
+  await visit(dir);return files;
+}
+async function offlineIssuer(deny: (url:string,init?:RequestInit)=>boolean=()=>false):Promise<{fetcher:Fetcher;seen:string[]}> {
+  const seen:string[]=[],catalog=await fixtureText('catalog.html'),texts=new Map<string,string>(),bytes=new Map<string,Uint8Array>();
+  for(const t of ['SPDV','PFLD','CLOC']){texts.set(t,await fixtureText(t+'.html'));bytes.set(t,await fixtureBytes(t+'.xls'));}
+  const fetcher:Fetcher=async(url,init)=>{
+    seen.push((init?.method??'GET')+' '+url);if(deny(url,init))return new Response('offline denial',{status:403});
+    if(url==='https://www.aamlive.com/ETF')return new Response(catalog);
+    const ticker=/\/ETF\/Detail\/([A-Z]+)$/.exec(url)?.[1];
+    if(ticker&&texts.has(ticker))return init?.method==='POST'?new Response(bytes.get(ticker),{headers:{'Content-Type':'application/vnd.ms-excel'}}):new Response(texts.get(ticker));
+    const symbol=/finance\/chart\/([A-Z]+)\?/.exec(url)?.[1];
+    if(symbol)return Response.json({chart:{result:[{meta:{regularMarketPrice:25,regularMarketTime:1790726400,firstTradeDate:1500000000,exchangeName:'NYSE'},timestamp:[1751241600,1767139200,1782777600],indicators:{quote:[{close:[24,25,26],volume:[0,1,2]}],adjclose:[{adjclose:[23.919999,24.989999,25.999999]}]},events:{dividends:{old:{date:1751241600,amount:.1}}}}]}});
+    // No real network, including SEC: return deterministic denial unless overridden in explicit fixture test.
+    return new Response('offline fixture has no matching provider route',{status:403});
+  };
+  return {fetcher,seen};
+}
+async function testFeed(action:(dir:string,root:URL,fetcher:Fetcher)=>Promise<void>):Promise<void> {
+  const dir=await mkdtemp(tmpdir()+'/aam-integration-'),root=pathToFileURL(dir+'/'),{fetcher}=await offlineIssuer();
+  try {await initializeCatalogSeed(root,parseCatalog(await fixtureText('catalog.html')),fixedNow);await action(dir,root,fetcher);}
+  finally {await rm(dir,{recursive:true,force:true});}
+}
+
+test('CLI assembly processes explicit subset, preserves 6 unrequested funds/files, second fixture run byte-stable',async()=>{
+  await testFeed(async(dir,root,fetcher)=>{
+    const before=await snapshot(dir),old=await Bun.file(new URL('index.json',root)).json();
+    const summary=await main(integrationEnv,{root,fetcher,now:fixedNow});
+    expect(summary.processed).toEqual(['CLOC','PFLD','SPDV']);expect(summary.failed).toEqual([]);expect(summary.counts).toEqual({funds:9,holdings:454,history:9});
+    for(const t of summary.processed)expect(summary.providers[t]).toMatchObject({detail:'fresh',holdings:'official',history:'yahoo',warnings:[]});
+    const after=await snapshot(dir),index=await Bun.file(new URL('index.json',root)).json();
+    for(const f of old.funds.filter((f:{ticker:string})=>!['SPDV','PFLD','CLOC'].includes(f.ticker))){expect(index.funds.find((r:{ticker:string})=>r.ticker===f.ticker)).toEqual(f);expect(after[`funds/${f.ticker}/meta.json`]).toBe(before[`funds/${f.ticker}/meta.json`]);}
+    expect((await Bun.file(new URL('funds/CLOC/meta.json',root)).json()).returns.monthEnd.sinceInception).toBeNull();
+    expect((await Bun.file(new URL('funds/CLOC/meta.json',root)).json()).yields.secYield).toBe(5.77);
+    const second=await main(integrationEnv,{root,fetcher,now:new Date('2026-10-01T06:00:00Z')});expect(second.failed).toEqual([]);expect(await snapshot(dir)).toEqual(after);
+  });
+});
+test('real cached retention on all provider denials; no empty portfolio/history/index replacement',async()=>{
+  await testFeed(async(dir,root,fetcher)=>{
+    await main(integrationEnv,{root,fetcher,now:fixedNow});const before=await snapshot(dir);
+    const denied:Fetcher=async()=>new Response('offline unavailable',{status:403});const result=await main(integrationEnv,{root,fetcher:denied,now:new Date('2026-10-02T05:00:00Z')});
+    expect(result.counts).toEqual({funds:9,holdings:454,history:9});expect(result.failed).toEqual([]);expect(result.providers.SPDV).toMatchObject({detail:'cached',holdings:'cached',history:'cached'});expect(result.providers.SPDV.warnings.length).toBeGreaterThan(0);expect(await snapshot(dir)).toEqual(before);
+  });
+});
+test('bounded runs advance in queue order; AND filters skip without modifying cached fund files',async()=>{
+  await testFeed(async(dir,root,fetcher)=>{
+    const a=await main({...integrationEnv,MAX_FETCHES:'2'},{root,fetcher,now:fixedNow});expect(a.processed).toEqual(['CLOC','PFLD']);
+    expect((await Bun.file(new URL('update-state.json',root)).json()).cursor).toBe('PFLD');
+    const b=await main({...integrationEnv,MAX_FETCHES:'1'},{root,fetcher,now:fixedNow});expect(b.processed).toEqual(['SPDV']);
+    const before=await snapshot(dir);const skip=await main({...integrationEnv,MAX_FETCHES:'0',TER:':0'},{root,fetcher,now:fixedNow});expect(skip.skipped).toEqual(['CLOC','PFLD','SPDV']);
+    const after=await snapshot(dir);for(const [file,hash]of Object.entries(before))if(file.startsWith('funds/'))expect(after[file]).toBe(hash);expect(await Bun.file(new URL('update-state.json',root)).exists()).toBe(false);
+  });
+});
+test('one corrupt cached fund fails but other workers continue; failing batch cursor not advanced',async()=>{
+  await testFeed(async(dir,root,fetcher)=>{
+    await main(integrationEnv,{root,fetcher,now:fixedNow});
+    await rm(new URL('funds/PFLD/holdings/001.json',root));
+    await writeIfChanged(new URL('update-state.json',root),{cursor:'SPDV'});
+    const result=await main({...integrationEnv,MAX_FETCHES:'2'},{root,fetcher,now:fixedNow});
+    expect(result.failed).toEqual(['PFLD']);expect(result.processed).toEqual(['CLOC']);expect((await Bun.file(new URL('update-state.json',root)).json()).cursor).toBe('SPDV');
+    const index=await Bun.file(new URL('index.json',root)).json();expect(index.funds.length).toBe(9);expect(index.funds.find((f:{ticker:string})=>f.ticker==='PFLD').holdings).toBe(338);
+  });
+});
+test('strict invalid controls fail without ANY fixture fetch; unknown ticker fails before per-fund calls',async()=>{
+  const source=await offlineIssuer();await expect(main({MAX_FETCHES:'garbage'},{fetcher:source.fetcher})).rejects.toThrow();expect(source.seen).toEqual([]);
+  await testFeed(async(_dir,root,fetcher)=>{await expect(main({...integrationEnv,TICKERS:'NOTREAL'},{root,fetcher,now:fixedNow})).rejects.toThrow('TICKERS not in catalog');});
+});
+test('XLS/preview validates one snapshot rather than silently accepting partial/wrong workbook',async()=>{
+  const d=parseDetail(await fixtureText('SPDV.html'),'SPDV'),rows=parseHoldingsWorkbook(await fixtureBytes('SPDV.xls'));
+  expect(()=>validatePortfolioPreview(rows,d.previewRows)).not.toThrow();expect(()=>validatePortfolioPreview(rows.slice(0,9),d.previewRows)).toThrow();
+  expect(()=>validatePortfolioPreview([{...rows[0],Weight:'99'},...rows.slice(1)],d.previewRows)).toThrow('mismatch');
+});
+test('SEC fallback fixture resolves correct trust/series; common-stock tickers never applied to bonds',async()=>{
+  await testFeed(async(_dir,root,base)=>{
+    const xml=await fixtureText('nport.xml');const mock:Fetcher=async(url,init)=>{
+      if(init?.method==='POST')return new Response('invalid XLS');
+      if(url.endsWith('company_tickers_mf.json'))return Response.json({fields:['symbol','cik','seriesId','classId'],data:[['SPDV',1540305,'S000000001','C1']]});
+      if(url.includes('browse-edgar'))return new Response('<feed><entry><filing-type>NPORT-P</filing-type><accession-number>0001193125-26-000001</accession-number><filing-href>https://www.sec.gov/Archives/edgar/data/1540305/a</filing-href></entry></feed>');
+      if(url.endsWith('primary_doc.xml'))return new Response(xml);
+      if(url.endsWith('company_tickers.json'))return Response.json({0:{title:'Microsoft Corp',ticker:'MSFT'},1:{title:'Bond Issuer 6% 2035',ticker:'WRONG'}});
+      return base(url,init);
+    };
+    const result=await main({...integrationEnv,TICKERS:'SPDV'},{root,fetcher:mock,now:fixedNow});expect(result.providers.SPDV.holdings).toBe('sec');
+    const page=await Bun.file(new URL('funds/SPDV/holdings/001.json',root)).json();expect(page.rows.find((r:{Name:string})=>r.Name==='Microsoft Corp').Ticker).toBe('MSFT');expect(page.rows.find((r:{Name:string})=>r.Name.startsWith('Bond')).Ticker).toBe('-');
+  });
+});
+test('older record/pay dates survive chart updates after leaving official recent-page window',()=>{
+  const d=mergeDividends([{epoch:1751241600,amount:.1,recordDate:'2025-06-30',payDate:'2025-07-02'}],[{epoch:1751241600,amount:.100001}],[]);
+  expect(d[0].payDate).toBe('2025-07-02');
+});
+test('zero price anchors cannot yield infinite derived financial returns',()=>{
+  const d=priceReturns([{date:'2025-06-30',close:0,adjClose:0,volume:0},{date:'2026-06-30',close:1,adjClose:1,volume:0}],new Date('2026-06-30T00:00:00Z'));
+  expect(d.yr1).toBeNull();expect(d.siAnn).toBeNull();
+});

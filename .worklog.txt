@@ -6,13 +6,13 @@ CURRENT STATE
 - Repository: https://github.com/daggerok/AAM
 - Branch: feat/aam-etfs; PR: none (GitHub REST verified 2026-10-01).
 - Reconciliation: clean baseline HEAD/main/origin/main = 7bf2d91; no concurrent changes or existing PRs. Original baseline prose archived below, full original plan preserved.
-- Last confirmed pushed SHA: afd8659143a14bbd0d3013ce527c02c26a17ef21 (verified against remote before this checkpoint; containing commit identifiable via git log).
-- Completed: dated issuer parsers plus SEC identity/XML and Yahoo/return helpers, strict filters, deterministic manifests/cache merges; 35 offline tests passing.
-- Active: actual CLI provider orchestration and integration retention tests.
-- Remaining: wire CLI + seeded static catalog; offline integration/failure tests; isolated live acceptance twice; parity UI/browser; CI; README/metadata; PR.
+- Last confirmed pushed SHA: 3cc4d4966ea6f8cbfc224f0d297bbd18a72ea8ae (verified against remote before this checkpoint; containing commit identifiable via git log).
+- Completed: real CLI/fallback/retention workers + help/config; seeded 9 real catalog identities/headlines with explicit unavailable portfolios; 44 offline tests passing.
+- Active: mandatory isolated actual-CLI acceptance for SPDV/PFLD/CLOC twice with conservative defaults.
+- Remaining: commit isolated live evidence; separately bootstrap initial application data in explicit bounded publication batches (not copying smoke data); parity UI/browser; CI; README/metadata; PR.
 - Blockers: none
-- Exact next action after this checkpoint is pushed: wire catalog/detail POST export -> exact-series SEC fallback -> published holdings; Yahoo -> previous history, using output reporter and continue-on-error workers; seed all 9 catalog rows explicitly as unrefreshed; test real CLI shape with offline fixtures before the mandatory isolated live subset.
-- Status: Parser/metrics/filter/transport/page helpers validated; actual CLI assembly pending.
+- Exact next action after this checkpoint is pushed: create isolated copy of scripts/config plus current api/aam seed; execute TICKERS="SPDV PFLD CLOC" VERBOSE=1 bun scripts/update-data.ts twice with REQUEST_SLEEP=1/CONCURRENCY=2/MAX_RETRIES=2 and no SKIP flags; capture tracked logs/manifests/byte hashes and check unrequested entries/files/production seed unchanged.
+- Status: Actual updater CLI implemented and offline-integrated; production catalog seed only; live acceptance pending.
 
 INITIAL HANDOFF PROMPTS (preserved)
 ===================================
@@ -185,6 +185,19 @@ CHRONOLOGICAL JOURNAL
 - Added offline coverage for chart jitter/null quote/zero volume, official return precedence, cumulative-vs-annualized units, young-fund SI handling, all filter families, SEC trust/series mismatch, raw XML URLs, request retries/denials, pagination/cache corruption/stale pages and resumable scoped selection. No provider network in these tests.
 - Type review continues: mixed return metadata remains excluded from numeric slots; generic queue normalization retained. Shared provider boundary/output records preserve sibling flexible shape. Build does not perform semantic TS checking. No tsc/dependency/config introduced.
 - Actual updater CLI, seeded API and live acceptance remain unfinished; next checkpoint implements orchestration, not UI redesign.
+
+### 2026-10-01 — Operational updater, retention integration, catalog seed (completed)
+- Previous helper checkpoint 3cc4d4966ea6f8cbfc224f0d297bbd18a72ea8ae push verified.
+- Wired actual CLI: public catalog -> identity-checked detail -> fresh WebForms full XLS with HTML/Excel snapshot consistency -> exact-series SEC fallback -> previously published holdings. Yahoo daily history/dividends -> previous history/events. Independent paced workers continue after a per-fund failure and output the shared reporter lines.
+- Added positive VERBOSE provider lines for fresh detail/full XLS/Yahoo counts so acceptance cannot mistake cached exit-0 for successful live fetching. Default SEC contact is truthful repository-issues identification (no invented email); SEC_UA allows real operator contact override. Never persist request headers or live period-bound chart URLs.
+- Cached manifests are completely read/validated before writes; failure retains prior index entry and cursor. Filters are AND and run headline filters before portfolio/history downloads, all remaining metric filters before any writes. Scoped TICKERS preserves unselected index rows/files. Missing requested tickers are errors, not silent zero-work success. Bounded cursor follows sorted queue order, not worker finish order.
+- Kept official gross expense and unsubsidized SEC yield primary, separate net/subsidized values preserved. Performance latest-published date (06/30) anchors missing Yahoo-derived metrics at the same date; under-1-year published SI cumulative is not mislabeled annualized. Market-price history remains explicitly not NAV. Added guard for zero-price anchors and preserved older official record/pay dates across Yahoo merges.
+- Added explicit initial static catalog seed in api/aam: all 9 real issuer identities/headlines from the dated public catalog fixture, holdings/history totalRows=0 with status=unavailable/source=not yet refreshed, no fabricated portfolios or metrics. No offline chart or synthetic SEC data was copied into production.
+- Publication scope: a truthful initial static API is part of the authorized app deliverable. Live smoke stays isolated; after validated acceptance, initial portfolios/history will be generated separately by the real CLI in explicit bounded batches. No unbounded discovery refresh or copy-back of smoke output.
+- Offline integration: fixtures inject ALL provider requests (no network); second replay byte-stable; 6 unrequested funds unchanged; all-provider denial retains every published byte; corrupt cached PFLD fails while CLOC continues; failed cursor stays unchanged; data filters skip without modifying fund files; positive SEC fixture validates trust/series and avoids bond common-stock symbol injection. Synthetic SEC fixture is not live acceptance.
+- Commands: bun test -> 44 pass / 0 fail / 267 expectations (tracked evidence/offline-orchestration.log); bun install --frozen-lockfile -> exit 0; bun build --target=bun scripts/update-data.ts --outfile=/dev/null -> exit 0; bun scripts/update-data.ts --help -> all 28 canonical controls/defaults/examples; git diff --check -> clean.
+- Type review: numeric return slots still concrete union; generic queue retains caller Promise<T>; runtime schema/date/manifest guards reviewed manually. Tests/transpilation are NOT a semantic TS proof; no IDE diagnostic service present. Bun-only policy kept.
+- LIVE ACCEPTANCE NOT YET RUN. UI, complete production bootstrap, CI/docs/metadata and PR remain pending.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN

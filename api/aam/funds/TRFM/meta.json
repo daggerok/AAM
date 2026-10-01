@@ -1,0 +1,48 @@
+{
+ "ticker": "TRFM",
+ "name": "AAM Transformers ETF",
+ "category": "Equity",
+ "categoryPath": "Equity",
+ "providerIds": {
+  "ticker": "TRFM",
+  "name": "AAM Transformers ETF",
+  "category": "Equity",
+  "fundPage": "https://www.aamlive.com/ETF/Detail/TRFM",
+  "inception": "2022-07-11",
+  "secYield": 0.13,
+  "nav": 59.16,
+  "asOfDate": "2026-09-29"
+ },
+ "source": {
+  "fundPage": "https://www.aamlive.com/ETF/Detail/TRFM",
+  "catalog": "https://www.aamlive.com/ETF",
+  "provider": "AAM official catalog; per-fund source refresh pending"
+ },
+ "inception": {
+  "fundInceptionDate": "2022-07-11"
+ },
+ "nav": {
+  "display": "$59.16",
+  "value": 59.16,
+  "asOfDate": "Sep 29 2026"
+ },
+ "yields": {
+  "secYield": 0.13,
+  "secYieldText": "0.13%"
+ },
+ "holdings": {
+  "pages": [],
+  "pageSize": 250,
+  "totalRows": 0,
+  "asOfDate": null,
+  "source": "not yet refreshed",
+  "status": "unavailable"
+ },
+ "history": {
+  "pages": [],
+  "pageSize": 1000,
+  "totalRows": 0,
+  "source": "not yet refreshed",
+  "status": "unavailable"
+ }
+}

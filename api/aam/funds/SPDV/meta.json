@@ -1,0 +1,48 @@
+{
+ "ticker": "SPDV",
+ "name": "AAM S&P 500 High Dividend Value ETF",
+ "category": "Equity",
+ "categoryPath": "Equity",
+ "providerIds": {
+  "ticker": "SPDV",
+  "name": "AAM S&P 500 High Dividend Value ETF",
+  "category": "Equity",
+  "fundPage": "https://www.aamlive.com/ETF/Detail/SPDV",
+  "inception": "2017-11-28",
+  "secYield": 3.6,
+  "nav": 39.2,
+  "asOfDate": "2026-09-29"
+ },
+ "source": {
+  "fundPage": "https://www.aamlive.com/ETF/Detail/SPDV",
+  "catalog": "https://www.aamlive.com/ETF",
+  "provider": "AAM official catalog; per-fund source refresh pending"
+ },
+ "inception": {
+  "fundInceptionDate": "2017-11-28"
+ },
+ "nav": {
+  "display": "$39.20",
+  "value": 39.2,
+  "asOfDate": "Sep 29 2026"
+ },
+ "yields": {
+  "secYield": 3.6,
+  "secYieldText": "3.60%"
+ },
+ "holdings": {
+  "pages": [],
+  "pageSize": 250,
+  "totalRows": 0,
+  "asOfDate": null,
+  "source": "not yet refreshed",
+  "status": "unavailable"
+ },
+ "history": {
+  "pages": [],
+  "pageSize": 1000,
+  "totalRows": 0,
+  "source": "not yet refreshed",
+  "status": "unavailable"
+ }
+}

@@ -1,0 +1,168 @@
+{
+ "generatedAt": "2026-10-01T05:30:51.562Z",
+ "source": {
+  "provider": "AAM official catalog seed (portfolios/history pending)",
+  "site": "https://www.aamlive.com",
+  "catalog": "https://www.aamlive.com/ETF"
+ },
+ "counts": {
+  "funds": 9,
+  "holdings": 0,
+  "history": 0
+ },
+ "funds": [
+  {
+   "ticker": "BDIV",
+   "name": "AAM Brentview Dividend Growth ETF",
+   "category": "Equity",
+   "fundPage": "https://www.aamlive.com/ETF/Detail/BDIV",
+   "dataFile": "./funds/BDIV/meta.json",
+   "nav": "$24.38",
+   "navValue": 24.38,
+   "asOfDate": "Sep 29 2026",
+   "inceptionDate": "Jul 30 2024",
+   "metrics": {
+    "secYield": 1.25,
+    "secYieldText": "1.25%"
+   },
+   "holdings": 0,
+   "history": 0
+  },
+  {
+   "ticker": "CLOC",
+   "name": "AAM Crescent CLO ETF",
+   "category": "Fixed Income",
+   "fundPage": "https://www.aamlive.com/ETF/Detail/CLOC",
+   "dataFile": "./funds/CLOC/meta.json",
+   "nav": "$25.03",
+   "navValue": 25.03,
+   "asOfDate": "Sep 29 2026",
+   "inceptionDate": "Oct 22 2025",
+   "metrics": {
+    "secYield": 5.77,
+    "secYieldText": "5.77%"
+   },
+   "holdings": 0,
+   "history": 0
+  },
+  {
+   "ticker": "LODI",
+   "name": "AAM SLC Low Duration Income ETF",
+   "category": "Fixed Income",
+   "fundPage": "https://www.aamlive.com/ETF/Detail/LODI",
+   "dataFile": "./funds/LODI/meta.json",
+   "nav": "$24.94",
+   "navValue": 24.94,
+   "asOfDate": "Sep 29 2026",
+   "inceptionDate": "Dec 03 2024",
+   "metrics": {
+    "secYield": 5.17,
+    "secYieldText": "5.17%"
+   },
+   "holdings": 0,
+   "history": 0
+  },
+  {
+   "ticker": "PFLD",
+   "name": "AAM Low Duration Preferred & Income Securities ETF",
+   "category": "Preferred & Hybrid Securities",
+   "fundPage": "https://www.aamlive.com/ETF/Detail/PFLD",
+   "dataFile": "./funds/PFLD/meta.json",
+   "nav": "$19.24",
+   "navValue": 19.24,
+   "asOfDate": "Sep 29 2026",
+   "inceptionDate": "Nov 19 2019",
+   "metrics": {
+    "secYield": 5.86,
+    "secYieldText": "5.86%"
+   },
+   "holdings": 0,
+   "history": 0
+  },
+  {
+   "ticker": "SAWG",
+   "name": "AAM Sawgrass U.S. Large Cap Quality Growth ETF",
+   "category": "Equity",
+   "fundPage": "https://www.aamlive.com/ETF/Detail/SAWG",
+   "dataFile": "./funds/SAWG/meta.json",
+   "nav": "$24.55",
+   "navValue": 24.55,
+   "asOfDate": "Sep 29 2026",
+   "inceptionDate": "Jul 30 2024",
+   "metrics": {
+    "secYield": 0.26,
+    "secYieldText": "0.26%"
+   },
+   "holdings": 0,
+   "history": 0
+  },
+  {
+   "ticker": "SAWS",
+   "name": "AAM Sawgrass U.S. Small Cap Quality Growth ETF",
+   "category": "Equity",
+   "fundPage": "https://www.aamlive.com/ETF/Detail/SAWS",
+   "dataFile": "./funds/SAWS/meta.json",
+   "nav": "$22.92",
+   "navValue": 22.92,
+   "asOfDate": "Sep 29 2026",
+   "inceptionDate": "Jul 30 2024",
+   "metrics": {
+    "secYield": -0.04,
+    "secYieldText": "-0.04%"
+   },
+   "holdings": 0,
+   "history": 0
+  },
+  {
+   "ticker": "SPDV",
+   "name": "AAM S&P 500 High Dividend Value ETF",
+   "category": "Equity",
+   "fundPage": "https://www.aamlive.com/ETF/Detail/SPDV",
+   "dataFile": "./funds/SPDV/meta.json",
+   "nav": "$39.20",
+   "navValue": 39.2,
+   "asOfDate": "Sep 29 2026",
+   "inceptionDate": "Nov 28 2017",
+   "metrics": {
+    "secYield": 3.6,
+    "secYieldText": "3.60%"
+   },
+   "holdings": 0,
+   "history": 0
+  },
+  {
+   "ticker": "TIIV",
+   "name": "AAM Todd International Intrinsic Value ETF",
+   "category": "Equity",
+   "fundPage": "https://www.aamlive.com/ETF/Detail/TIIV",
+   "dataFile": "./funds/TIIV/meta.json",
+   "nav": "$30.13",
+   "navValue": 30.13,
+   "asOfDate": "Sep 29 2026",
+   "inceptionDate": "Jul 24 2025",
+   "metrics": {
+    "secYield": 2.47,
+    "secYieldText": "2.47%"
+   },
+   "holdings": 0,
+   "history": 0
+  },
+  {
+   "ticker": "TRFM",
+   "name": "AAM Transformers ETF",
+   "category": "Equity",
+   "fundPage": "https://www.aamlive.com/ETF/Detail/TRFM",
+   "dataFile": "./funds/TRFM/meta.json",
+   "nav": "$59.16",
+   "navValue": 59.16,
+   "asOfDate": "Sep 29 2026",
+   "inceptionDate": "Jul 11 2022",
+   "metrics": {
+    "secYield": 0.13,
+    "secYieldText": "0.13%"
+   },
+   "holdings": 0,
+   "history": 0
+  }
+ ]
+}

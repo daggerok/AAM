@@ -1020,7 +1020,7 @@ export function priceReturns(days: ChartDay[], now = new Date(), coveredFrom: st
   const last = days[days.length - 1];
   // A window is derivable only when its anchor day lies inside the span the
   // adjusted series covers (see reinvestmentCoverageStart).
-  const anchored = (day: ChartDay | null): day is ChartDay => day !== null && day.date < last.date && (coveredFrom === null || day.date >= coveredFrom);
+  const anchored = (day: ChartDay | null): day is ChartDay => day !== null && day.date < last.date && day.adjClose > 0 && last.adjClose > 0 && (coveredFrom === null || day.date >= coveredFrom);
   const lastEpoch = Date.parse(`${last.date}T00:00:00Z`) / 1000;
   const atOrBefore = (iso: string): ChartDay | null => {
     const target = Date.parse(`${iso}T00:00:00Z`) / 1000;
@@ -1251,9 +1251,9 @@ export function mergeHistory(previous:SheetRow[],fresh:ChartDay[]):SheetRow[] {
 function daysFromRows(rows:SheetRow[]):ChartDay[] {
   return rows.flatMap(row=>{const date=rowDate(row),close=numberOrNull(row.Close),adjClose=numberOrNull(row['Adj Close']);return date&&close!==null&&adjClose!==null?[{date,close,adjClose,volume:numberOrNull(row.Volume)??0}]:[];});
 }
-export function mergeDividends(previous:Array<{epoch:number;amount:number}>,chart:Array<{epoch:number;amount:number}>,official:DistributionEvent[]):DistributionEvent[] {
+export function mergeDividends(previous:Array<{epoch:number;amount:number;recordDate?:string;payDate?:string}>,chart:Array<{epoch:number;amount:number}>,official:DistributionEvent[]):DistributionEvent[] {
   const events=new Map<number,DistributionEvent>();
-  for(const d of [...previous,...chart])if(Number.isFinite(d.epoch)&&Number.isFinite(d.amount))events.set(d.epoch,{epoch:d.epoch,amount:round(d.amount,6),exDate:epochToIsoDate(d.epoch),recordDate:'',payDate:''});
+  for(const d of [...previous,...chart])if(Number.isFinite(d.epoch)&&Number.isFinite(d.amount))events.set(d.epoch,{epoch:d.epoch,amount:round(d.amount,6),exDate:epochToIsoDate(d.epoch),recordDate:('recordDate' in d?d.recordDate:undefined)??events.get(d.epoch)?.recordDate??'',payDate:('payDate' in d?d.payDate:undefined)??events.get(d.epoch)?.payDate??''});
   for(const d of official)events.set(d.epoch,d); // issuer wins overlapping events, retaining full older Yahoo schedule
   return [...events.values()].sort((a,b)=>a.epoch-b.epoch);
 }
@@ -1262,4 +1262,234 @@ export function batchSelection(funds:CatalogFund[],config:UpdaterConfig,cursor:s
   if(!config.maxFetches)return selected;
   const i=selected.findIndex(f=>f.ticker===cursor),ordered=i<0?selected:selected.slice(i+1).concat(selected.slice(0,i+1));
   return ordered.slice(0,config.maxFetches);
+}
+
+// ---------------------------------------------------------------------------
+// Provider adapters and fund assembly (sibling schema; cached data last resort).
+// ---------------------------------------------------------------------------
+type Portfolio = { rows:SheetRow[];headers:string[];asOfDate:string|null;source:string;status:string;netAssets?:number|null };
+type ProviderState = { detail:'fresh'|'cached'|'unavailable';holdings:'official'|'sec'|'cached'|'unavailable';history:'yahoo'|'cached'|'unavailable';warnings:string[] };
+export type RunSummary = {processed:string[];skipped:string[];failed:string[];providers:Record<string,ProviderState>;counts:{funds:number;holdings:number;history:number};config:UpdaterConfig};
+const percent=(v:number|null|undefined):string=>v==null?'—':`${v.toFixed(2)}%`;
+const money=(v:number|null|undefined):string=>v==null?'—':`$${v.toFixed(2)}`;
+
+/** Explicit initial seed: real catalog headlines, UNKNOWN portfolios/metrics. */
+export async function initializeCatalogSeed(root:URL,funds:CatalogFund[],now=new Date()):Promise<void> {
+  if(await readJson(new URL('index.json',root)))throw new Error('Seed refuses to overwrite an existing feed');
+  const rows:JsonRecord[]=[];
+  for(const fund of funds) {
+    const meta={ticker:fund.ticker,name:fund.name,category:fund.category,categoryPath:fund.category,providerIds:fund,
+      source:{fundPage:fund.fundPage,catalog:CATALOG_URL,provider:'AAM official catalog; per-fund source refresh pending'},
+      inception:{fundInceptionDate:fund.inception},nav:{display:money(fund.nav),value:fund.nav,asOfDate:fund.asOfDate?formatEdgarDate(fund.asOfDate):'—'},
+      yields:{secYield:fund.secYield,secYieldText:percent(fund.secYield)},
+      holdings:{pages:[],pageSize:250,totalRows:0,asOfDate:null,source:'not yet refreshed',status:'unavailable'},
+      history:{pages:[],pageSize:1000,totalRows:0,source:'not yet refreshed',status:'unavailable'}};
+    await writeIfChanged(new URL(`funds/${fund.ticker}/meta.json`,root),meta);
+    rows.push({ticker:fund.ticker,name:fund.name,category:fund.category,fundPage:fund.fundPage,dataFile:`./funds/${fund.ticker}/meta.json`,nav:meta.nav.display,navValue:fund.nav,
+      asOfDate:meta.nav.asOfDate,inceptionDate:fund.inception?formatEdgarDate(fund.inception):'—',metrics:{secYield:fund.secYield,secYieldText:percent(fund.secYield)},holdings:0,history:0});
+  }
+  await writeIfChanged(new URL('index.json',root),{generatedAt:now.toISOString(),source:{provider:'AAM official catalog seed (portfolios/history pending)',site:AAM_SITE,catalog:CATALOG_URL},counts:{funds:rows.length,holdings:0,history:0},funds:rows.sort((a,b)=>a.ticker.localeCompare(b.ticker))});
+}
+
+export function validatePortfolioPreview(rows:SheetRow[],preview:string[][]):void {
+  if(!rows.length||rows.length<preview.length)throw new Error('AAM full Excel portfolio incomplete');
+  for(const r of preview) {
+    const match=rows.find(row=>row.Name===r[0]&&(row.Ticker===r[1]||row.CUSIP===r[1]||r[1]==='Cash&Other'));
+    const weight=numberOrNull(r[5]),actual=match?numberOrNull(match.Weight):null;
+    if(!match||weight===null||actual===null||Math.abs(weight-actual)>.011)throw new Error('AAM Excel/HTML snapshot mismatch');
+  }
+}
+
+function providerClient(config:UpdaterConfig,fetcher:Fetcher) {
+  const request=createTransport(config,fetcher);
+  const text=async(url:string,label:string,headers:Record<string,string>)=>(await request(url,label,{headers})).text();
+  const json=async(url:string,label:string,headers:Record<string,string>):Promise<JsonRecord>=>JSON.parse(await text(url,label,headers));
+  let fundTickerPromise:Promise<Map<string,SecSeriesRef>>|undefined,companyTickerPromise:Promise<Map<string,string>>|undefined,submissionsPromise:Promise<JsonRecord>|undefined;
+  let archivesDenied=false;
+  async function loadFundTickerTable():Promise<Map<string,SecSeriesRef>> {
+    return fundTickerPromise??=json(SEC_FUND_TICKERS_URL,'SEC fund ticker table',secHeaders(config)).then(parseFundTickerMap).catch(error=>{outputNote(`[ edgar    ] ticker table unavailable: ${errorMessage(error)}`);return new Map();});
+  }
+  async function loadCompanyTickerTable():Promise<Map<string,string>> {
+    return companyTickerPromise??=json(SEC_COMPANY_TICKERS_URL,'SEC company ticker table',secHeaders(config)).then(parseCompanyTickerMap).catch(error=>{outputNote(`[ edgar    ] company ticker table unavailable: ${errorMessage(error)}`);return new Map();});
+  }
+  async function resolveNportFiling(fund:CatalogFund):Promise<Portfolio|null> {
+    const ref=(await loadFundTickerTable()).get(fund.ticker);
+    if(ref&&ref.cik.replace(/^0+/,'')!==AAM_CIK.replace(/^0+/,''))throw new Error('SEC ticker table registrant mismatch');
+    let candidates:NportAccession[]=[];
+    if(ref?.seriesId) {
+      try{candidates=parseEdgarAtomFilings(await text(edgarSeriesFilingsUrl(ref.seriesId),'SEC series filings',secHeaders(config)));}
+      catch(error){outputNote(`[ edgar    ] ${fund.ticker} series: ${errorMessage(error)}`);}
+    }
+    if(!candidates.length) {
+      submissionsPromise??=json(`${SEC_DATA_HOST}/submissions/CIK${AAM_CIK}.json`,'SEC trust submissions',secHeaders(config));
+      candidates=parseNportAccessions(await submissionsPromise);
+    }
+    // This is a large shared trust. Bounded search, never take its first filing.
+    for(const accession of candidates.slice(0,40)) {
+      if(archivesDenied)throw new Error('SEC Archives denied this run; retaining cached holdings');
+      try {
+        const parsed=parseNport(await text(accession.url,'SEC NPORT-P XML',secHeaders(config)));
+        if(!nportMatches(fund,parsed,ref)||!parsed.holdings.length)continue;
+        const names=await loadCompanyTickerTable();
+        const rows:SheetRow[]=parsed.holdings.map(row=>{
+          // Bond/preferred/debt filings must not receive an issuer's common-stock ticker.
+          const ticker=row['Asset Category']==='EC'?(names.get(normalizeHoldingName(row.Name))||names.get(normalizeHoldingNameCore(row.Name))||'-'):'-';
+          return {Name:String(row.Name),Ticker:ticker,Identifier:String(row.Identifier),Weight:String(row.Weight),'Market Value':String(row['Market Value']),'Shares Held':String(row['Shares Held']),'Asset Category':String(row['Asset Category'])};
+        }).sort((a,b)=>(numberOrNull(b.Weight)??0)-(numberOrNull(a.Weight)??0)||a.Name.localeCompare(b.Name)||a.Identifier.localeCompare(b.Identifier));
+        return {rows,headers:HOLDINGS_HEADERS.slice(0,7),asOfDate:parsed.repPdDate||null,source:accession.url,status:'available',netAssets:parsed.netAssets};
+      }catch(error){if(error instanceof HttpError&&[403,429].includes(error.status))archivesDenied=true;outputNote(`[ edgar    ] ${fund.ticker}: ${errorMessage(error)}`);}
+    }
+    return null;
+  }
+  return {
+    catalog:async()=>parseCatalog(await text(CATALOG_URL,'AAM catalog',issuerHeaders())),
+    detail:async(fund:CatalogFund)=>{const html=await text(fund.fundPage,`AAM ${fund.ticker} detail`,issuerHeaders());return {html,detail:parseDetail(html,fund.ticker)};},
+    holdings:async(fund:CatalogFund,html:string,detail:Detail):Promise<Portfolio>=>{
+      const response=await request(fund.fundPage,`AAM ${fund.ticker} Excel export`,{method:'POST',headers:{...issuerHeaders(),'Content-Type':'application/x-www-form-urlencoded',Referer:fund.fundPage},body:exportPostbackBody(html).toString()});
+      const rows=parseHoldingsWorkbook(new Uint8Array(await response.arrayBuffer()));validatePortfolioPreview(rows,detail.previewRows);
+      return {rows,headers:HOLDINGS_HEADERS,asOfDate:detail.holdingsAsOfDate,source:'aamlive.com full holdings XLS (fresh WebForms export POST)',status:'available'};
+    },
+    sec:resolveNportFiling,
+    chart:async(ticker:string,now:Date)=>parseChart(await json(chartUrl(ticker,config,now.getTime()),`Yahoo ${ticker} chart`,yahooHeaders())),
+  };
+}
+
+function officialRowFromOld(old:JsonRecord):OfficialReturnRow|null {
+  if(old.officialReturns)return old.officialReturns;
+  if(!old.returns?.monthEnd||!String(old.returns?.derivedFrom??'').startsWith('official AAM'))return null;
+  const m=old.returns.monthEnd,date=Date.parse(String(m.asOfDate??''));
+  return {asOfDate:Number.isFinite(date)?new Date(date).toISOString().slice(0,10):null,ytd:numberOrNull(m.ytd),yr1:numberOrNull(m.yr1),yr3:numberOrNull(m.yr3),yr5:numberOrNull(m.yr5),yr10:numberOrNull(m.yr10),sinceInception:numberOrNull(m.sinceInception)};
+}
+async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRecord,root:URL,client:ReturnType<typeof providerClient>,now:Date):Promise<{row:JsonRecord|null;providers:ProviderState;reason?:string}> {
+  const dir=new URL(`funds/${fund.ticker}/`,root),old=await readJson(new URL('meta.json',dir))??{};
+  // Validate every cached manifest before any write. A missing page is not zero holdings.
+  const oldHoldings=await readPreviousSheet(dir,'holdings',old.holdings),oldHistory=await readPreviousSheet(dir,'history',old.history);
+  const providers:ProviderState={detail:old.ticker?'cached':'unavailable',holdings:oldHoldings.rows.length?'cached':'unavailable',history:oldHistory.rows.length?'cached':'unavailable',warnings:[]};
+  const optional=async<T>(label:string,action:()=>Promise<T>):Promise<T|null>=>{
+    try{return await action();}catch(error){const message=`${label}: ${errorMessage(error)}`;providers.warnings.push(message);outputNote(`[ fallback ] ${message}`);return null;}
+  };
+  const response=config.skipAam?null:await optional(`${fund.ticker} detail`,()=>client.detail(fund));
+  const detail=response?.detail??null;if(detail){providers.detail='fresh';outputNote(`[ product  ] ${fund.ticker}: fresh official detail`);}
+  const aum=detail?.netAssets??numberOrNull(old.aum?.value)??numberOrNull(oldIndex.aumValue),ter=detail?.grossExpense??numberOrNull(old.expenseRatio?.value)??numberOrNull(oldIndex.terValue),sec=detail?.secYield??fund.secYield??numberOrNull(old.yields?.secYield);
+  if(!inRange(aum,config.aumRange)||!inRange(ter,config.terRange)||!inRange(sec,config.secYieldRange))return {row:null,providers,reason:'AUM/TER/SEC_YIELD'};
+  let holdings=response?await optional(`${fund.ticker} official holdings`,()=>client.holdings(fund,response.html,response.detail)):null;
+  if(holdings){providers.holdings='official';outputNote(`[ holdings ] ${fund.ticker}: ${holdings.rows.length} complete official XLS rows`);}
+  if(!holdings&&config.edgarFallback){holdings=await optional(`${fund.ticker} SEC holdings`,()=>client.sec(fund));if(holdings){providers.holdings='sec';outputNote(`[ edgar    ] ${fund.ticker}: ${holdings.rows.length} identity-verified N-PORT rows`);}}
+  const chart=config.skipYahoo?null:await optional(`${fund.ticker} Yahoo history`,()=>client.chart(fund.ticker,now));
+  if(chart?.days.length){providers.history='yahoo';outputNote(`[ chart    ] ${fund.ticker}: ${chart.days.length} fresh Yahoo daily bars`);}
+  if(!detail&&!holdings&&!chart?.days.length) {
+    if(!oldIndex.ticker)throw new Error(`${fund.ticker}: no usable per-fund sources or published data`);
+    const reasons=fundFilterReasons({ticker:fund.ticker,aumValue:aum,terValue:ter,metrics:oldIndex.metrics??{}},config);
+    return {row:reasons.length?null:oldIndex,providers,reason:reasons.join(',')||'no fresh per-fund source; published data retained'};
+  }
+  holdings??={rows:oldHoldings.rows,headers:oldHoldings.headers.length?oldHoldings.headers:HOLDINGS_HEADERS,asOfDate:old.holdings?.asOfDate??null,source:old.holdings?.source??'unavailable from official/SEC providers',status:oldHoldings.rows.length?'available':'unavailable'};
+  const history=chart?.days.length?mergeHistory(oldHistory.rows,chart.days):oldHistory.rows,days=daysFromRows(history);
+  const priorEvents=Array.isArray(old.distributions?.events)?old.distributions.events:[];
+  const dividends=mergeDividends(priorEvents,chart?.dividends??[],detail?.dividends??[]),latest=dividends.at(-1)??null;
+  const frequency=decodeDividendFrequency(detail?.frequency??old.distributions?.frequency)??(dividends.length?inferDistributionFrequency(dividends):{frequency:'—',paymentsPerYear:null});
+  const nav=detail?.nav??fund.nav??numberOrNull(old.nav?.value),price=detail?.marketPrice??chart?.regularMarketPrice??numberOrNull(old.marketPrice?.value);
+  const navDate=detail?.priceAsOfDate??fund.asOfDate??null;
+  const priceDate=detail?.marketPrice!==null&&detail?.marketPrice!==undefined?detail.priceAsOfDate:chart?.regularMarketTime?epochToIsoDate(chart.regularMarketTime):null;
+  const premium=nav!==null&&nav>0&&price!==null&&navDate&&navDate===priceDate?round((price/nav-1)*100,2):numberOrNull(old.premiumDiscount?.value);
+  const inception=detail?.inception??fund.inception??old.inception?.fundInceptionDate??null;
+  const hasFreshReturns=Boolean(detail?.returns.asOfDate&&Object.entries(detail.returns).some(([k,v])=>k!=='asOfDate'&&v!==null));
+  const rawOfficial=hasFreshReturns?detail!.returns:officialRowFromOld(old);
+  const {asOfDate:officialDate,...official}=rawOfficial??{asOfDate:null,ytd:null,yr1:null,yr3:null,yr5:null,yr10:null,sinceInception:null};
+  official.sinceInception=annualizedSinceInception(official.sinceInception,inception,officialDate);
+  // Missing official metrics are derived at the SAME date as published NAV returns.
+  const anchor=officialDate??days.at(-1)?.date??null,usable=anchor?days.filter(d=>d.date<=anchor):[];
+  const derived=usable.length?priceReturns(usable,new Date(anchor!+'T00:00:00Z')):{...EMPTY_PRICE_RETURNS};
+  if(!inception||!usable.length||!annualizedSinceInception(1,inception,anchor)||Date.parse(usable[0].date)-Date.parse(inception)>7*86400000)derived.siAnn=null;
+  const metric=deriveCatalogMetrics(official,derived,null,sec,latest?.amount,frequency.paymentsPerYear,price);
+  if(!latest&&old.yields?.dividendYield!==undefined){metric.dividendYield=numberOrNull(old.yields.dividendYield);metric.dividendYieldText=percent(metric.dividendYield);}
+  const reasons=fundFilterReasons({ticker:fund.ticker,aumValue:aum??holdings.netAssets,terValue:ter,metrics:metric},config);
+  if(reasons.length)return {row:null,providers,reason:reasons.join(',')};
+  const returnBasis=rawOfficial?'official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date':'derived from Yahoo adjusted market-price closes, not official NAV returns';
+  const monthEnd={asOfDate:anchor?formatEdgarDate(anchor):null,mo1:derived.mo1,qtd:derived.qtd,ytd:metric.ytd,yr1:metric.tr1y,yr3:metric.cagr3y,yr5:metric.cagr5y,yr10:metric.cagr10y,sinceInception:metric.siAnn};
+  const quarterEnd=officialDate&&/-(03-31|06-30|09-30|12-31)$/.test(officialDate)?{...official,asOfDate:formatEdgarDate(officialDate)}:old.returns?.quarterEnd??null;
+  const historySource=chart?.days.length?'Yahoo Finance daily market-price closes / adjusted closes (not official NAV)':old.history?.source??'unavailable';
+  const holdingsManifest=await writePages(dir,fund.ticker,'holdings',holdings.headers,holdings.rows,config.holdingsPageSize);
+  const historyManifest=await writePages(dir,fund.ticker,'history',chart?.days.length?['Date','Close','Adj Close','Volume']:oldHistory.headers.length?oldHistory.headers:['Date','Close','Adj Close','Volume'],history,config.historyPageSize);
+  const assets=aum??holdings.netAssets??null;
+  const meta={
+    generatedAt:now.toISOString(),ticker:fund.ticker,name:detail?.name||fund.name,category:fund.category,categoryPath:fund.category,
+    providerIds:fund,source:{fundPage:fund.fundPage,catalog:CATALOG_URL,holdingsDownload:fund.fundPage,holdingsMethod:'POST WebForms __EVENTTARGET=btnETFHoldingsExport (no direct query URL)',yahooChart:`${YAHOO_CHART_URL}/${fund.ticker}`,holdingsSource:holdings.source,historySource,provider:'AAM official catalog/detail HTML and full XLS exports; SEC EDGAR N-PORT-P holdings fallback; Yahoo Finance market history/dividends'},
+    identifiers:{cusip:detail?.cusip??old.identifiers?.cusip??null,isin:detail?.isin??old.identifiers?.isin??null,indexTicker:old.identifiers?.indexTicker??null},
+    inception:{fundInceptionDate:inception,shareClassInceptionDate:old.inception?.shareClassInceptionDate??null,exchange:detail?.exchange||chart?.exchangeName||old.inception?.exchange||''},
+    expenseRatio:{display:percent(ter),value:ter,gross:detail?.grossExpense??old.expenseRatio?.gross??null,net:detail?.netExpense??old.expenseRatio?.net??null},
+    nav:{display:money(nav),value:nav,asOfDate:navDate?formatEdgarDate(navDate):old.nav?.asOfDate??'—'},
+    marketPrice:{display:money(price),value:price,asOfDate:priceDate?formatEdgarDate(priceDate):old.marketPrice?.asOfDate??'—'},premiumDiscount:{display:percent(premium),value:premium},
+    aum:{display:assets===null?'—':formatAumDisplay(assets),value:assets,asOfDate:detail?.aumAsOfDate?formatEdgarDate(detail.aumAsOfDate):old.aum?.asOfDate??(holdings.netAssets?holdings.asOfDate:null),source:detail?.netAssets!==null&&detail?.netAssets!==undefined?'aamlive.com official fund net assets':old.aum?.source??holdings.source},
+    yields:{dividendYield:metric.dividendYield,dividendYieldText:metric.dividendYieldText,dividendYieldKind:'indicated: latest distribution x payments per year / market price (not trailing yield)',secYield:sec,secYieldText:percent(sec),secYieldKind:'30-day SEC yield, unsubsidized where separately published',subsidizedSecYield:detail?.subsidizedSecYield??old.yields?.subsidizedSecYield??null,unsubsidizedSecYield:detail?.unsubsidizedSecYield??old.yields?.unsubsidizedSecYield??null},
+    officialReturns:rawOfficial,returns:{monthEnd,quarterEnd,derivedFrom:returnBasis},
+    distributions:{frequency:frequency.frequency,paymentsPerYear:frequency.paymentsPerYear,source:'aamlive.com recent distributions (first paginated grid page), merged with Yahoo full-history events and previous published events; issuer amounts win',headers:['Ex-Date','Amount','Record Date','Payable Date'],rows:dividends.map(d=>[formatUsDate(d.epoch),String(round(d.amount,6)),d.recordDate,d.payDate]),events:dividends},
+    holdings:{...holdingsManifest,asOfDate:holdings.asOfDate,asOf:holdings.asOfDate?formatEdgarDate(holdings.asOfDate):'—',source:holdings.source,status:holdings.status},
+    history:{...historyManifest,asOf:days.length?formatEdgarDate(days.at(-1)!.date):old.history?.asOf??'—',source:historySource,status:history.length?'available':'unavailable'},
+  };
+  await writeIfChanged(new URL('meta.json',dir),meta);
+  const row={ticker:fund.ticker,name:meta.name,category:fund.category,fundPage:fund.fundPage,dataFile:`./funds/${fund.ticker}/meta.json`,cusip:meta.identifiers.cusip,isin:meta.identifiers.isin,
+    ter:meta.expenseRatio.display,terValue:ter,nav:meta.nav.display,navValue:nav,aum:meta.aum.display,aumValue:assets,asOfDate:meta.nav.asOfDate,inceptionDate:inception?formatEdgarDate(inception):'—',exchange:meta.inception.exchange,
+    closePrice:meta.marketPrice.display,closePriceValue:price,premiumDiscount:meta.premiumDiscount.display,premiumDiscountValue:premium,distributions:{frequency:frequency.frequency,exDate:latest?formatUsDate(latest.epoch):'—',dividend:latest?String(round(latest.amount,6)):'—'},returns:meta.returns,metrics:metric,holdings:holdings.rows.length,history:history.length};
+  return {row,providers};
+}
+
+async function runtimeControls(env:Record<string,string|undefined>):Promise<Record<string,string>> {
+  const file=await readJson(new URL('./update-data.config.json',import.meta.url));return resolveControls(file??{},env);
+}
+export async function main(env:Record<string,string|undefined>=process.env,options:{root?:URL;fetcher?:Fetcher;now?:Date}={}):Promise<RunSummary> {
+  const controls=await runtimeControls(env),config=readConfig(controls),root=options.root??API_ROOT,now=options.now??new Date();
+  process.env.VERBOSE=controls.VERBOSE;outputPrintConfig('AAM',config);
+  const index=await readJson(new URL('index.json',root)),oldFunds=new Map<string,JsonRecord>((index?.funds??[]).map((f:JsonRecord)=>[f.ticker,f]));
+  const client=providerClient(config,options.fetcher??fetch);
+  let catalog:CatalogFund[]|null=null;
+  if(!config.skipAam)try{catalog=await client.catalog();}catch(error){console.warn(`[ catalog  ] AAM unavailable: ${errorMessage(error)} — using published catalog`);}
+  if(!catalog) {
+    catalog=[];
+    for(const [ticker,row] of oldFunds) {
+      const meta=await readJson(new URL(`funds/${ticker}/meta.json`,root));
+      if(meta?.providerIds)catalog.push(meta.providerIds);
+      else catalog.push({ticker,name:row.name,category:row.category??'ETF',fundPage:row.fundPage??`${AAM_SITE}/ETF/Detail/${ticker}`,inception:meta?.inception?.fundInceptionDate??null,nav:numberOrNull(row.navValue),secYield:numberOrNull(row.metrics?.secYield),asOfDate:meta?.providerIds?.asOfDate??null});
+    }
+  }
+  if(!catalog.length)throw new Error('No official or published catalog; refusing empty success');
+  const missing=config.tickers.filter(t=>!catalog!.some(f=>f.ticker===t));if(missing.length)throw new Error(`TICKERS not in catalog: ${missing.join(', ')}`);
+  console.log(`[ catalog  ] ${catalog.length} AAM ETFs (aamlive.com / published catalog fallback)`);
+  const state=await readJson(new URL('update-state.json',root)),queue=batchSelection(catalog,config,state?.cursor??null);
+  const deferred=Boolean(config.aumRange||config.terRange||config.dividendYieldRange||config.secYieldRange||Object.keys(config.performanceRanges).length||Object.keys(config.totalReturnRanges).length);
+  outputPrintFilter(queue.length,catalog.length,deferred);
+  const reporter=outputCreateReporter(root,queue.length),results=new Map(oldFunds),summary:RunSummary={processed:[],skipped:[],failed:[],providers:{},counts:{funds:0,holdings:0,history:0},config};
+  let next=0;
+  async function worker():Promise<void> {
+    for(;;) {
+      const i=next++;if(i>=queue.length)return;const fund=queue[i],before=await reporter.before(fund.ticker);
+      try {
+        const result=await processFund(fund,config,oldFunds.get(fund.ticker)??{},root,client,now);summary.providers[fund.ticker]=result.providers;
+        if(result.row){results.set(fund.ticker,result.row);summary.processed.push(fund.ticker);}else summary.skipped.push(fund.ticker);
+        await reporter.result(fund.ticker,before,result.row?undefined:'skipped',result.reason);
+      }catch(error){summary.failed.push(fund.ticker);await reporter.result(fund.ticker,before,'failed',errorMessage(error));}
+    }
+  }
+  await Promise.all(Array.from({length:Math.min(config.concurrency,queue.length)},worker));
+  if(!results.size)throw new Error('No publishable funds; refusing empty index');
+  const funds=[...results.values()].sort((a,b)=>a.ticker.localeCompare(b.ticker));
+  summary.counts={funds:funds.length,holdings:funds.reduce((s,f)=>s+(numberOrNull(f.holdings)??0),0),history:funds.reduce((s,f)=>s+(numberOrNull(f.history)??0),0)};
+  // Filtered runs preserve every unselected fund entry BYTE-for-value, and all files.
+  await writeIfChanged(new URL('index.json',root),{generatedAt:now.toISOString(),catalogReadAt:now.toISOString(),source:{provider:'AAM ETFs',site:AAM_SITE,catalog:CATALOG_URL,holdings:'official full XLS exports; SEC EDGAR N-PORT-P fallback',history:'Yahoo adjusted market-price chart; published cache last resort'},counts:summary.counts,funds});
+  if(config.maxFetches&&!summary.failed.length&&queue.length)await writeIfChanged(new URL('update-state.json',root),{cursor:queue.at(-1)!.ticker});
+  else if(!config.maxFetches&&!summary.failed.length)await rm(new URL('update-state.json',root),{force:true});
+  summary.processed.sort();summary.skipped.sort();summary.failed.sort();
+  console.log(`[ done     ] ${summary.processed.length} funds updated, ${summary.failed.length} failures (${summary.skipped.length} skipped)`);
+  console.log(`[ done     ] counts: ${summary.counts.funds} funds / ${summary.counts.holdings} holdings rows / ${summary.counts.history} history rows`);
+  return summary;
+}
+async function printHelp():Promise<void> {
+  const controls=await runtimeControls(process.env);readConfig(controls);
+  console.log('AAM ETF updater — bun scripts/update-data.ts\nFile defaults: scripts/update-data.config.json; nonblank env wins; AAM_ aliases accepted.');
+  for(const key of CONTROL_NAMES)console.log(`  ${key}=${CONTROL_DEFAULTS[key]||'(all)'}${controls[key]!==CONTROL_DEFAULTS[key]?` (effective: ${controls[key]})`:''}`);
+  console.log('MAX_FETCHES=0: full pass/reset cursor; positive: resume bounded batches.\nTICKERS: space/comma/semicolon allowlist, AND with every filter; unselected funds retained.\nRanges: inclusive min:max / min: / :max / :; AUM K/M/B/T or nano/micro/small/mid/large.\nPERFORMANCE_*: annualized for 3Y+; TOTAL_RETURN_*: cumulative. Missing values fail bounded filters.\nREQUEST_SLEEP: seconds between request starts PER lane; CONCURRENCY: parallel fund workers.\nMAX_RETRIES: retries after first request (network/408/425/429/5xx only).\nHOLDINGS_PAGE_SIZE/HISTORY_PAGE_SIZE: generated rows/page. HISTORY_RANGE: max or Ny (old rows retained).\nSEC_UA: identifying User-Agent/contact, EDGAR_FALLBACK: holdings only. SKIP_AAM/SKIP_YAHOO: opt-out, retain cache.\nVERBOSE=1: retry/fallback detail. No dry-run: actual CLI writes data.');
+  console.log('Examples:\n  TICKERS="SPDV PFLD CLOC" VERBOSE=1 bun scripts/update-data.ts\n  MAX_FETCHES=3 bun scripts/update-data.ts\n  AUM="10M:2B" TER=":0.5" bun scripts/update-data.ts\n  PERFORMANCE_1Y="15:" bun scripts/update-data.ts');
+}
+if(import.meta.main) {
+  try{if(process.argv.some(a=>a==='--help'||a==='-h'))await printHelp();else if((await main()).failed.length)process.exitCode=1;}
+  catch(error){console.error(`[ done     ] ${errorMessage(error)}`);process.exitCode=1;}
 }

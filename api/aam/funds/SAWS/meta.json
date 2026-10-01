@@ -1,0 +1,48 @@
+{
+ "ticker": "SAWS",
+ "name": "AAM Sawgrass U.S. Small Cap Quality Growth ETF",
+ "category": "Equity",
+ "categoryPath": "Equity",
+ "providerIds": {
+  "ticker": "SAWS",
+  "name": "AAM Sawgrass U.S. Small Cap Quality Growth ETF",
+  "category": "Equity",
+  "fundPage": "https://www.aamlive.com/ETF/Detail/SAWS",
+  "inception": "2024-07-30",
+  "secYield": -0.04,
+  "nav": 22.92,
+  "asOfDate": "2026-09-29"
+ },
+ "source": {
+  "fundPage": "https://www.aamlive.com/ETF/Detail/SAWS",
+  "catalog": "https://www.aamlive.com/ETF",
+  "provider": "AAM official catalog; per-fund source refresh pending"
+ },
+ "inception": {
+  "fundInceptionDate": "2024-07-30"
+ },
+ "nav": {
+  "display": "$22.92",
+  "value": 22.92,
+  "asOfDate": "Sep 29 2026"
+ },
+ "yields": {
+  "secYield": -0.04,
+  "secYieldText": "-0.04%"
+ },
+ "holdings": {
+  "pages": [],
+  "pageSize": 250,
+  "totalRows": 0,
+  "asOfDate": null,
+  "source": "not yet refreshed",
+  "status": "unavailable"
+ },
+ "history": {
+  "pages": [],
+  "pageSize": 1000,
+  "totalRows": 0,
+  "source": "not yet refreshed",
+  "status": "unavailable"
+ }
+}

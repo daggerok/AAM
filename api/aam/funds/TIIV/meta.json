@@ -1,0 +1,48 @@
+{
+ "ticker": "TIIV",
+ "name": "AAM Todd International Intrinsic Value ETF",
+ "category": "Equity",
+ "categoryPath": "Equity",
+ "providerIds": {
+  "ticker": "TIIV",
+  "name": "AAM Todd International Intrinsic Value ETF",
+  "category": "Equity",
+  "fundPage": "https://www.aamlive.com/ETF/Detail/TIIV",
+  "inception": "2025-07-24",
+  "secYield": 2.47,
+  "nav": 30.13,
+  "asOfDate": "2026-09-29"
+ },
+ "source": {
+  "fundPage": "https://www.aamlive.com/ETF/Detail/TIIV",
+  "catalog": "https://www.aamlive.com/ETF",
+  "provider": "AAM official catalog; per-fund source refresh pending"
+ },
+ "inception": {
+  "fundInceptionDate": "2025-07-24"
+ },
+ "nav": {
+  "display": "$30.13",
+  "value": 30.13,
+  "asOfDate": "Sep 29 2026"
+ },
+ "yields": {
+  "secYield": 2.47,
+  "secYieldText": "2.47%"
+ },
+ "holdings": {
+  "pages": [],
+  "pageSize": 250,
+  "totalRows": 0,
+  "asOfDate": null,
+  "source": "not yet refreshed",
+  "status": "unavailable"
+ },
+ "history": {
+  "pages": [],
+  "pageSize": 1000,
+  "totalRows": 0,
+  "source": "not yet refreshed",
+  "status": "unavailable"
+ }
+}

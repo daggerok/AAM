@@ -1,0 +1,48 @@
+{
+ "ticker": "LODI",
+ "name": "AAM SLC Low Duration Income ETF",
+ "category": "Fixed Income",
+ "categoryPath": "Fixed Income",
+ "providerIds": {
+  "ticker": "LODI",
+  "name": "AAM SLC Low Duration Income ETF",
+  "category": "Fixed Income",
+  "fundPage": "https://www.aamlive.com/ETF/Detail/LODI",
+  "inception": "2024-12-03",
+  "secYield": 5.17,
+  "nav": 24.94,
+  "asOfDate": "2026-09-29"
+ },
+ "source": {
+  "fundPage": "https://www.aamlive.com/ETF/Detail/LODI",
+  "catalog": "https://www.aamlive.com/ETF",
+  "provider": "AAM official catalog; per-fund source refresh pending"
+ },
+ "inception": {
+  "fundInceptionDate": "2024-12-03"
+ },
+ "nav": {
+  "display": "$24.94",
+  "value": 24.94,
+  "asOfDate": "Sep 29 2026"
+ },
+ "yields": {
+  "secYield": 5.17,
+  "secYieldText": "5.17%"
+ },
+ "holdings": {
+  "pages": [],
+  "pageSize": 250,
+  "totalRows": 0,
+  "asOfDate": null,
+  "source": "not yet refreshed",
+  "status": "unavailable"
+ },
+ "history": {
+  "pages": [],
+  "pageSize": 1000,
+  "totalRows": 0,
+  "source": "not yet refreshed",
+  "status": "unavailable"
+ }
+}
