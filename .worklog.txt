@@ -6,13 +6,13 @@ CURRENT STATE
 - Repository: https://github.com/daggerok/AAM
 - Branch: feat/aam-etfs; PR: none (GitHub REST verified 2026-10-01).
 - Reconciliation: clean baseline HEAD/main/origin/main = 7bf2d91; no concurrent changes or existing PRs. Original baseline prose archived below, full original plan preserved.
-- Last confirmed pushed SHA: a691b2cce763530aee903ec6487b9f6e91fb9168 (verified against remote before this checkpoint; containing commit identifiable via git log).
-- Completed: recovery + complete live research; exact pinned Bun types/lockfile; 10 offline shared-helper/config tests passing; pinned sibling baseline 116/0.
-- Active: issuer HTML and bounded CFB/BIFF8 parsers with dated fixtures.
-- Remaining: issuer parsers/financial helpers tests; orchestration/fallback/retention/pagination; repeated isolated live acceptance; parity UI/browser; CI; README/metadata; PR.
+- Last confirmed pushed SHA: 0e63189c31698e91a8b7ff16712322c278889ccf (verified against remote before this checkpoint; containing commit identifiable via git log).
+- Completed: research/scaffold + AAM HTML/postback and bounded XLS parsers; 23 offline tests passing (complete 55/338/61 portfolios checked).
+- Active: SEC/chart/metrics, retention and pagination helpers.
+- Remaining: provider adapters/metrics + orchestration integration tests; isolated live acceptance twice; parity UI/browser; CI; README/metadata; PR.
 - Blockers: none
-- Exact next action after this checkpoint is pushed: add safe dated catalog/detail fragments + complete XLS fixtures; implement HTML headline/NAV performance/distribution parsing and strict observed-dialect XLS holdings reader; test independently checked counts/weights and invalid inputs.
-- Status: Bun scaffold/shared helpers validated (provider CLI not implemented yet).
+- Exact next action after this checkpoint is pushed: copy pinned SEC/adjusted-chart/derived-metric helpers, add exact-series fallback validation, deterministic pages/manifest and cache-preserving merge tests before wiring the actual CLI.
+- Status: Issuer parser layer validated offline against dated live-source fixtures; orchestration pending.
 
 INITIAL HANDOFF PROMPTS (preserved)
 ===================================
@@ -164,6 +164,16 @@ CHRONOLOGICAL JOURNAL
 - Commands: bun install; bun test -> 10 pass / 0 fail / 56 expectations; bun build --target=bun scripts/update-data.ts --outfile=/dev/null -> exit 0; git diff --check -> clean.
 - Type review: Bun reference is literal second line before any import; generic queue completion types are normalized in BOTH outcomes; strict config uses concrete primitive types. Tests/build are runtime/transpilation only, not a semantic TS check; no IDE diagnostics available here, no tsc used.
 - This is a coherent helper module checkpoint, not a claim of an operational provider CLI or completed app. Next: dated fixtures + issuer parsers.
+
+### 2026-10-01 — Dated issuer fixtures and complete holdings parsers (completed)
+- Prior scaffold checkpoint 0e63189c31698e91a8b7ff16712322c278889ccf push verified.
+- Added safe public catalog/SPDV/PFLD/CLOC HTML fragments and full issuer .xls binaries in scripts/fixtures; sources.json records source URLs, extraction notes, SHA256, byte sizes and independently checked counts/weights. Actual hidden WebForms state was NOT persisted: fixtures use harmless synthetic literals. No cookies/auth headers.
+- Implemented server-rendered catalog group/category parser, identity-checked detail facts, gross/net expenses and both SEC yield variants, dated NAV-only performance, recent distribution total $/Share/ex-date/pay-date, and exact fresh-state export POST body.
+- Complete XLS parsing follows observed one-sheet OLE2/BIFF8 dialect: bounded FAT/directory chains, LABEL/NUMBER cells, explicit date decoding, DIMENSIONS completeness checks, malformed/unsupported dialect failure rather than partial publication. Tests reject HTML masquerading as XLS, truncation, cyclic FAT, unexpected headers and unsupported string records.
+- Issuer fixture portfolios: SPDV=55 / PFLD=338 / CLOC=61; weights exactly preserve 100.00 / 101.73 / 100.03%; preview HTML has only 10 rows. Bond CUSIPs remain identifiers; no invented market values, no inferred bond common-stock ticker. Excel's published maturity column is decoded independently of dates in the security name (PFLD's first record is 2200-12-31 in the actual XLS).
+- Numeric return header mapper returns Exclude<keyof OfficialReturnRow, 'asOfDate'> | null. Tested all tenors, reordered headers, zero, negative, missing/dash cells, unknown/date headers and preservation of string date. No broad keyof assignment, any/assertion/widening/ignore used for these slots.
+- First test run: 22 pass / 1 fail due to test changing only the anchor ID, leaving a valid export event intact. Corrected test to replace all occurrences (actual unsupported event). No financial data changed to silence it.
+- Final commands: bun test -> 23 pass / 0 fail / 138 expectations; bun build --target=bun scripts/update-data.ts --outfile=/dev/null -> exit 0; git diff --check -> clean. This remains offline parser validation, NOT live acceptance of the actual CLI.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN
