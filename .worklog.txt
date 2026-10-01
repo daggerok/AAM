@@ -6,13 +6,13 @@ CURRENT STATE
 - Repository: https://github.com/daggerok/AAM
 - Branch: feat/aam-etfs; PR: none (GitHub REST verified 2026-10-01).
 - Reconciliation: clean baseline HEAD/main/origin/main = 7bf2d91; no concurrent changes or existing PRs. Original baseline prose archived below, full original plan preserved.
-- Last confirmed pushed SHA: c454a0a958ee1a94f695944bbbb837b455212840 (verified against remote before this checkpoint; containing commit identifiable via git log).
-- Completed: 9-fund API + copied UI/browser; valid config-backed CI; pinned README generic intro/headings/commands/TypeScript/tables retained,27 controls truthful;67 offline tests.
-- Active: authorized AAM About/homepage/topics verification/update and truthful Pages check.
-- Remaining: AAM metadata; final offline/feed/security checks; PR against main (do not merge) and inspect remote checks.
+- Last confirmed pushed SHA: cfe1358faa1d665422364effdcdcccc679170dab (verified against remote before this checkpoint; containing commit identifiable via git log).
+- Completed: 9-fund API/UI/browser, valid config-backed CI, README parity,67offline tests; exact AAM About/homepage/20topics verified; Pages pending.
+- Active: final clean/offline/feed/security/type-risk review and PR creation against main (no merge).
+- Remaining: final checks + tracked verification; create PR, inspect remote checks, record PR/check status and final confirmed pushes.
 - Blockers: none
-- Exact next action after this checkpoint is pushed: GET pinned-family/target current metadata, PATCH only AAM exact shared description/homepage + PUT20topics, GET verify; authenticated Pages API and homepage HTTP check; record before/after/limit-status (do not claim live/deploy or change default branch).
-- Status: README parity/source limitations/control defaults completed; 67 offline tests pass. Metadata/final PR remain.
+- Exact next action after this checkpoint is pushed: run frozen install/all offline tests/updater+browser Bun build/full feed verifier/diff/security scan, review numeric slots and queue normalization; checkpoint then POST PR to main, inspect check runs (no data workflow dispatch/full refresh), final worklog/push/verify.
+- Status: Authorized AAM metadata verified exactly; implementation complete, final verification and PR still pending.
 
 INITIAL HANDOFF PROMPTS (preserved)
 ===================================
@@ -319,6 +319,16 @@ CHRONOLOGICAL JOURNAL
 - New3 offline README guards compare hash/common heading order (ignore fences), intro/Using Bun/TypeScript equality, all original table rows+sorted AAM, documented controls/defaults/examples and material caveats. First doc test failure was match-array destructuring (whole match mistaken for control name), corrected test only, no source/data changed.
 - Improved config-file regression to allow EDITABLE valid JSON defaults instead of freezing them to built-in constants; tests verify changed sleep2/concurrency1 and actual isolated CLI --help with modified contact/VERBOSE (no network), preserving the requested configuration mechanism. Documentation defaults compare against real JSON.
 - Commands: bun test ->67 pass/0 fail/547 expectations; updater/browser Bun build exit0; git diff --check clean. No provider refresh/metadata/PR action yet in this step, no semantic TS-check claim.
+
+### 2026-10-01 — Authorized AAM About/homepage/topics (completed; Pages pending)
+- Previous README checkpoint cfe1358faa1d665422364effdcdcccc679170dab push verified.
+- Re-read current pinned-family JPMorgan About pattern/homepage/topics and current AAM metadata at 2026-10-01T14:40:33.082144+00:00. AAM BEFORE: description=null, homepage=null, topics=[], default_branch=main, language=null. No concurrent metadata change observed.
+- PATCH only AAM description/homepage and PUT its topics; authenticated GET confirms exact values. No other repository modified and no branch/default-branch/Pages/Linguist setting changed.
+- AFTER description (289 chars): AAM ETF. A single-file client-side tool reading ./api/aam (aamlive.com HTML/full XLS, SEC EDGAR N-PORT-P holdings fallback, Yahoo Finance market history/dividends) into a searchable ETF/asset-class catalog with per-fund tabs, watchlist, CSV/TXT export. TailwindCSS, dark mode, Bun updater.
+- AFTER homepage: https://daggerok.github.io/AAM/ (exact repository case). AFTER topics: aam, aam-etfs, css, csv, dark-mode, edgar, etf, finance, github-pages, holdings, html, json, nport, single-file, static-api, tailwindcss, txt, typescript, watchlist, yahoo-finance (18 standard + aam/aam-etfs=20).
+- Authenticated Pages API HTTP404, prescribed public homepage HTTP404; report deployment PENDING/not accessible, never claim published live. No Pages configuration/deployment attempted and no PR merged. language remains null because default main still docs-only; not faked via About/Linguist.
+- Full nonsensitive before/after/verification evidence: evidence/metadata.json. Runtime credential read from process environment only; no token/header/cookie/source URL credential or Git auth setting persisted.
+- Source/data/UI code unchanged. Next: final local verification and PR only.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN

@@ -1,0 +1,82 @@
+{
+  "checkedAt": "2026-10-01T14:40:33.082144+00:00",
+  "reference": {
+    "repo": "daggerok/JPMorgan",
+    "metadata": {
+      "description": "JPMorgan ETF. A single-file client-side tool reading ./api/jpmorgan (JPMorgan ETF explorer, product-data and historical-data JSON, SEC EDGAR and Yahoo Finance fallbacks) into a searchable ETF/asset-class catalog with per-fund tabs, watchlist, CSV/TXT export. TailwindCSS, dark mode, Bun updater.",
+      "homepage": "https://daggerok.github.io/JPMorgan/",
+      "topics": [
+        "css",
+        "csv",
+        "dark-mode",
+        "edgar",
+        "etf",
+        "finance",
+        "github-pages",
+        "holdings",
+        "html",
+        "jpmorgan",
+        "jpmorgan-etfs",
+        "json",
+        "nport",
+        "single-file",
+        "static-api",
+        "tailwindcss",
+        "txt",
+        "typescript",
+        "watchlist",
+        "yahoo-finance"
+      ],
+      "default_branch": "main",
+      "language": "TypeScript"
+    }
+  },
+  "target": "daggerok/AAM",
+  "before": {
+    "description": null,
+    "homepage": null,
+    "topics": [],
+    "default_branch": "main",
+    "language": null
+  },
+  "after": {
+    "description": "AAM ETF. A single-file client-side tool reading ./api/aam (aamlive.com HTML/full XLS, SEC EDGAR N-PORT-P holdings fallback, Yahoo Finance market history/dividends) into a searchable ETF/asset-class catalog with per-fund tabs, watchlist, CSV/TXT export. TailwindCSS, dark mode, Bun updater.",
+    "homepage": "https://daggerok.github.io/AAM/",
+    "topics": [
+      "aam",
+      "aam-etfs",
+      "css",
+      "csv",
+      "dark-mode",
+      "edgar",
+      "etf",
+      "finance",
+      "github-pages",
+      "holdings",
+      "html",
+      "json",
+      "nport",
+      "single-file",
+      "static-api",
+      "tailwindcss",
+      "txt",
+      "typescript",
+      "watchlist",
+      "yahoo-finance"
+    ],
+    "default_branch": "main",
+    "language": null
+  },
+  "descriptionLength": 289,
+  "verifiedExactly": true,
+  "pagesApiStatus": 404,
+  "pagesApiResult": {
+    "message": "Not Found",
+    "status": null,
+    "html_url": null,
+    "source": null
+  },
+  "homepageHttpStatus": 404,
+  "deployment": "pending/not accessible at prescribed homepage as checked; no Pages configuration/default-branch/language manipulation or merge",
+  "authority": "AAM About/homepage/topics authorized by canonical embedded plan; no other repository changed"
+}
