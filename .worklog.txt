@@ -6,13 +6,13 @@ CURRENT STATE
 - Repository: https://github.com/daggerok/AAM
 - Branch: feat/aam-etfs; PR: none (GitHub REST verified 2026-10-01).
 - Reconciliation: clean baseline HEAD/main/origin/main = 7bf2d91; no concurrent changes or existing PRs. Original baseline prose archived below, full original plan preserved.
-- Last confirmed pushed SHA: 36e2a0dd6a34fc9f0cf303432987f8dfbd3e0c2c (verified against remote before this checkpoint; containing commit identifiable via git log).
-- Completed: 9-fund feed; exact substitution parity; browser header/selection/all/clear/restore/blacklist/watchlist/paging/exports/theme/mobile/upload verified with screenshots; API bytes unchanged.
-- Active: scheduled/manual Bun data-update workflow and Dependabot/offline checks.
-- Remaining: CI/dependabot; pinned README/common format + offline structure test; AAM metadata; final verification/PR (no merge).
-- Blockers: none
-- Exact next action after this checkpoint is pushed: copy pinned JPMorgan updater workflow then mirror ALL canonical controls, use v7 checkout/v2 setup-bun/Bun1.4.2; Sunday cron/manual only; run offline tests before refresh and after; scoped api/aam commit/push; add workflow/config/help/docs parity regression; add Dependabot.
-- Status: Copied parity UI verified in actual Chromium: 49 browser checks and 59 offline tests pass. CI/docs/metadata/PR pending.
+- Last confirmed pushed SHA: 49dba4685a2635a7871de922047fb4735ae9a55e (verified against remote before this checkpoint; containing commit identifiable via git log).
+- Completed: 9-fund real API; 59 offline tests; 49 actual Chromium checks; live source/scope audit with documented Yahoo cent variance; GitHub CI limit researched.
+- Active: user clarification: valid single-workflow grouping vs split direct-input manual workflows.
+- Remaining: valid CI/dependabot after clarification; README; AAM metadata; final verification/PR.
+- Blockers: GitHub Docs maximum workflow_dispatch inputs=25, AAM controls=27. Embedded plan demands 1:1 top-level manual inputs; cannot silently publish an invalid workflow or drop controls.
+- Exact next action after this checkpoint is pushed: ask one workflow-shape question; after choice record authorized narrow deviation/self-contained control mapping and implement valid workflows, then finish docs/metadata/PR.
+- Status: Data/UI/browser done; CI design blocked on GitHub 25-input cap vs required 27-control 1:1 manual inputs.
 
 INITIAL HANDOFF PROMPTS (preserved)
 ===================================
@@ -276,6 +276,14 @@ CHRONOLOGICAL JOURNAL
 - Narrow 390x844: source panel x=16,width=358; selection-only text, no page-level horizontal overflow; original sticky Use control remains x=38 at scrollLeft=900 and1800. Test setup corrections, NOT UI changes: focus must first leave an already-focused badge, Watchlist id is lowercase, rank column is intentionally non-sticky before Use reaches its pinned edge.
 - One permitted category-7 EQUIVALENT DETAIL VALUE literal corrected during source inspection: inherited indicated-yield suffix /NAV -> /market price, matching actual AAM computation and meta yield basis. No calculation, row, order, header or renderer logic changed. Exact manifest/diff/result hashes updated; archive unchanged, parity full-file equality passes. Tested working-tree UI hashes stored alongside revision36e2a0d+explicit overlay in browser results.
 - Commands after browser: bun test -> 59 pass / 0 fail / 355 expectations; Bun browser build -> exit 0; git diff --check clean. No semantic TS validation claim.
+
+### 2026-10-01 — Workflow platform constraint research (completed; clarification needed)
+- Previous browser checkpoint 49dba4685a2635a7871de922047fb4735ae9a55e push verified.
+- Read pinned JPMorgan workflow/README/Dependabot and the embedded workflow/README/metadata requirements. Target still has no CI implementation (did not emit invalid YAML).
+- Current official GitHub Docs explicitly says maximum top-level workflow_dispatch inputs=25, payload<=65,535 chars. Live retrieved https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#onworkflow_dispatchinputs; tracked evidence/workflow-limit.txt.
+- AAM has exactly 27 canonical configuration controls (not 28; prior orchestration journal count was a documentation typo). Embedded plan requests 1:1 input per ENV control; impossible in a single 27-field dispatch. Need user choice of a narrow valid adaptation: one workflow with a structured advanced group, or split manual entry points with direct fields across workflows. No control removed and no invalid workflow pushed.
+- Also re-read current pinned-family About: JPMorgan shared exact description/homepage/20 topics; AAM still description=null, homepage=null, topics=[], default_branch=main. Anonymous Pages API returned404 (not treated as authoritative deployment verification); authenticated check and actual homepage HTTP verification still planned during authorized metadata step. No metadata changed yet.
+- Data/UI baseline unchanged; only this factual journal/evidence checkpoint. No unbounded/live refresh performed.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN
