@@ -6,13 +6,13 @@ CURRENT STATE
 - Repository: https://github.com/daggerok/AAM
 - Branch: feat/aam-etfs; PR: none (GitHub REST verified 2026-10-01).
 - Reconciliation: clean baseline HEAD/main/origin/main = 7bf2d91; no concurrent changes or existing PRs. Original baseline prose archived below, full original plan preserved.
-- Last confirmed pushed SHA: 2c2b92eba435207d6b27b1bc15768aec94506493 (verified against remote before this checkpoint; containing commit identifiable via git log).
-- Completed: real complete static feed; pinned JPMorgan app.tsx/index.html/favicon copy with only documented source/brand substitutions; 59 offline tests passing; unchanged UI logic/structure.
-- Active: browser checks of actual copied app with generated AAM API.
-- Remaining: browser header/selection/watchlist/export/dark/narrow/upload checks; scheduled/manual CI/dependabot; pinned README/metadata; final verification/PR.
+- Last confirmed pushed SHA: 36e2a0dd6a34fc9f0cf303432987f8dfbd3e0c2c (verified against remote before this checkpoint; containing commit identifiable via git log).
+- Completed: 9-fund feed; exact substitution parity; browser header/selection/all/clear/restore/blacklist/watchlist/paging/exports/theme/mobile/upload verified with screenshots; API bytes unchanged.
+- Active: scheduled/manual Bun data-update workflow and Dependabot/offline checks.
+- Remaining: CI/dependabot; pinned README/common format + offline structure test; AAM metadata; final verification/PR (no merge).
 - Blockers: none
-- Exact next action after this checkpoint is pushed: start Bun static server bound 0.0.0.0 and test actual original index.html + app.tsx in Chromium (CDN Babel/Tailwind, AAM API); retain browser evidence for header hover/focus/Escape/touch, zero/some/all/clear/restored/blacklist and checkbox-only selection.
-- Status: Complete nine-fund feed and copied parity UI validated offline; browser/CI/docs/PR pending.
+- Exact next action after this checkpoint is pushed: copy pinned JPMorgan updater workflow then mirror ALL canonical controls, use v7 checkout/v2 setup-bun/Bun1.4.2; Sunday cron/manual only; run offline tests before refresh and after; scoped api/aam commit/push; add workflow/config/help/docs parity regression; add Dependabot.
+- Status: Copied parity UI verified in actual Chromium: 49 browser checks and 59 offline tests pass. CI/docs/metadata/PR pending.
 
 INITIAL HANDOFF PROMPTS (preserved)
 ===================================
@@ -264,6 +264,18 @@ CHRONOLOGICAL JOURNAL
 - Shared hidden rich header panel, visible ONLY sorted selected ticker links, checkbox-only selection and Frequency placeholder correction were already in pinned UI; retained VERBATIM. Exact Frequency requirement: missing/whitespace/dash -> 00 - None; explicit Unknown -> 00 - Unknown; all other mappings untouched, presentation only, provider/API values unchanged.
 - Offline tests copy pinned Frequency/queue/header regressions; add full-file expected-substitution equality (catches any unapproved UI logic/style change), tooltip key order, overview section/metric sequence, no row-click toggle and brand namespace/source guards.
 - Commands: bun test -> 59 pass / 0 fail / 355 expectations; bun build --target=browser app.tsx --outfile=/dev/null -> exit 0; git diff --check -> clean. Header panel keeps original source link nodes/click handlers in tests; source still needs real browser checks (next action), not merely fixtures.
+
+### 2026-10-01 — Actual-browser parity validation (completed)
+- Previous UI-copy checkpoint 36e2a0dd6a34fc9f0cf303432987f8dfbd3e0c2c push verified.
+- Started Bun static server bound 0.0.0.0:3000, accepts preview host; live preview label AAM ETF app. Process aam-etf-app-57440842 (ephemeral, not a persistent requirement).
+- Browser tools installed ONLY in /home/user/.cache/browser-tools (Playwright 1.63.0 + Chromium 153.0.8010.12); initial launch lacked libnspr4, resolved OS libraries with Bun Playwright install-deps chromium. No app npm dependency/compiler/config introduced. Added .cache/ ignore for disposable tests/isolated copies.
+- Executed actual ORIGINAL index.html (CDN Babel/Tailwind), copied app.tsx, real production AAM static API — no network interception, mocked fetch, altered schema, or rebuilt alternate UI. Evidence/browser/check.mjs reproducible external-tool command, results.json and 4 screenshots tracked. Runtime was 2026-10-01T05:53:47.155Z..05:54:02.324Z.
+- 49 checks pass: initial nine rows/title; no-selection empty visible subtitle; hidden rich badge panel; hover, true keyboard focus, Escape, clickable original API link/popup, mobile touch and viewport bounds. Some/all/clear/restored/blacklisted selection; alphabetical links and active highlight, never deselect on header activation; fund-name row click does NOT select; only Use controls do.
+- Actual Watchlist: 454 positions -> 448 deduped securities for CLOC/PFLD/SPDV; second PFLD page fetched. Copy/CSV/TXT contain full deduped rows with aam-watchlist filenames, not DOM chunk. All 9 -> 1094 deduped entries, mounted DOM bounded to 251 rows, more-row grows chunk. Shared sort/search persistence, theme/dark/restoration, source/overview/distribution/history pages exercised.
+- Browser also verified synthetic XML upload/session-only override (3 positions), reload restores static data, invalid XML visible error, no uncaught JavaScript errors. Only expected caught invalid-upload console.error. All published API bytes unchanged before/after browser actions.
+- Narrow 390x844: source panel x=16,width=358; selection-only text, no page-level horizontal overflow; original sticky Use control remains x=38 at scrollLeft=900 and1800. Test setup corrections, NOT UI changes: focus must first leave an already-focused badge, Watchlist id is lowercase, rank column is intentionally non-sticky before Use reaches its pinned edge.
+- One permitted category-7 EQUIVALENT DETAIL VALUE literal corrected during source inspection: inherited indicated-yield suffix /NAV -> /market price, matching actual AAM computation and meta yield basis. No calculation, row, order, header or renderer logic changed. Exact manifest/diff/result hashes updated; archive unchanged, parity full-file equality passes. Tested working-tree UI hashes stored alongside revision36e2a0d+explicit overlay in browser results.
+- Commands after browser: bun test -> 59 pass / 0 fail / 355 expectations; Bun browser build -> exit 0; git diff --check clean. No semantic TS validation claim.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN

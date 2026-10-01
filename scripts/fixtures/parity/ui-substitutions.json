@@ -188,6 +188,15 @@
       "from": "when aamlive.com publishes no daily holdings",
       "to": "when aamlive.com publishes no complete daily holdings",
       "matches": 1
+    },
+    {
+      "files": [
+        "app.tsx"
+      ],
+      "category": 7,
+      "from": "latest distribution x frequency / NAV",
+      "to": "latest distribution x frequency / market price",
+      "matches": 1
     }
   ],
   "sourceSha256": {
@@ -195,7 +204,7 @@
     "index.html": "c85aaa1210e6e75e5fc4c2358be18b4be36cdd0280a07ed6ca7ba871d07a8e3d"
   },
   "resultSha256": {
-    "app.tsx": "54bd727173656424bb85a541cfec8adca74eaf930ad32557891c63eaf5f86881",
+    "app.tsx": "b23e04027c0823420e003ee50fc27b6a06d9b1e1b9728ef2717a28f87682c31f",
     "index.html": "49a158d8f6a143e56c82b5a3c92153c8f8fcd2bfb64b487c0e7b325aeec920b0"
   }
 }
