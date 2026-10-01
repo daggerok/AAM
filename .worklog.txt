@@ -6,13 +6,13 @@ CURRENT STATE
 - Repository: https://github.com/daggerok/AAM
 - Branch: feat/aam-etfs; PR: none (GitHub REST verified 2026-10-01).
 - Reconciliation: clean baseline HEAD/main/origin/main = 7bf2d91; no concurrent changes or existing PRs. Original baseline prose archived below, full original plan preserved.
-- Last confirmed pushed SHA: 4159de127130150f1ab81f6614d7a51c433e6c1e (verified against remote before this checkpoint; containing commit identifiable via git log).
-- Completed: live scoped acceptance (provider variance documented); initial production batch fresh official portfolios/Yahoo; 47 offline tests pass; shared feed validator.
-- Active: checkpoint production batch 1; next explicit BDIV/SAWG/SAWS initial refresh.
-- Remaining: 2 remaining production bootstrap batches; parity UI/browser; CI; README/metadata; PR.
+- Last confirmed pushed SHA: fd0f602d0aa4c3d746d26bf8b9981d6b2d2fecdc (verified against remote before this checkpoint; containing commit identifiable via git log).
+- Completed: live acceptance audit; two explicit production batches: 9 catalog funds / 607 holdings / 5809 history, all requested source paths fresh and scope preserved.
+- Active: last explicit production bootstrap: LODI/TIIV/TRFM.
+- Remaining: final 3-fund production batch + full feed verification; parity UI/browser; CI; README/metadata; PR.
 - Blockers: none
-- Exact next action after this checkpoint is pushed: after verified push run bun scripts/bootstrap-batch.ts "BDIV SAWG SAWS" with normal defaults; inspect all three fresh provider logs, counts, and unrequested hash/row checks, then checkpoint/push.
-- Status: Live acceptance audited; production bootstrap 1/3 published locally (CLOC/PFLD/SPDV), remaining 6 still explicitly pending.
+- Exact next action after this checkpoint is pushed: run bun scripts/bootstrap-batch.ts "LODI TIIV TRFM" with conservative defaults; inspect complete exports/history and unrequested scope, then bun scripts/verify-feed.ts --require-complete, checkpoint/push.
+- Status: Initial production bootstrap 2/3 validated (6 fully refreshed, 3 pending).
 
 INITIAL HANDOFF PROMPTS (preserved)
 ===================================
@@ -237,6 +237,15 @@ CHRONOLOGICAL JOURNAL
 - Publication logs/results tracked in evidence/bootstrap/CLOC-PFLD-SPDV. api/aam changed only selected fund metadata/pages and index. Remaining six still explicit pending seeds; not claiming a complete nine-fund app yet.
 - Tests: bun test -> 47 pass / 0 fail / 276 expectations; bootstrap and updater Bun build -> exit 0; git diff --check -> clean. Added offline feed validator regression (pending vs complete counts).
 - Next batch is explicitly BDIV/SAWG/SAWS; do NOT run an unbounded refresh.
+
+### 2026-10-01 — Initial production bootstrap, batch 2/3 (completed)
+- Prior batch-1 checkpoint fd0f602d0aa4c3d746d26bf8b9981d6b2d2fecdc push verified.
+- Actual separate CLI: TICKERS="BDIV SAWG SAWS" VERBOSE=1 bun scripts/update-data.ts, code revision fd0f602d0aa4c3d746d26bf8b9981d6b2d2fecdc, 2026-10-01T05:40:08.678Z..2026-10-01T05:40:13.596Z, exit 0. All 3 fresh official detail/XLS/Yahoo, processed=3, skipped=0, failed=0; normal default pacing/providers, no unbounded run.
+- BDIV 36 holdings / 543 history / 26 distributions; SAWG 44/544/2; SAWS 73/544/2. Preserved SAWS negative SEC yield (-0.04%) as published, not clamped to zero.
+- Verified feed now 9 funds / 607 holdings / 5809 history. Six unrequested fund rows/files retained; complete manifest/count reconciliation passed. LODI/TIIV/TRFM remain explicit pending seeds.
+- Tracked evidence/bootstrap/BDIV-SAWG-SAWS logs and publication.json. Data-only change; shared code/tests unchanged. git diff --check clean.
+- Correction to preceding journal expectation count: actual batch-1 test output was 47 pass / 0 fail / 275 expectations (not 276); status/pass count was correct.
+- Next explicit last batch: LODI TIIV TRFM, then require-complete validation.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN
