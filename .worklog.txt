@@ -6,13 +6,13 @@ CURRENT STATE
 - Repository: https://github.com/daggerok/AAM
 - Branch: feat/aam-etfs; PR: none (GitHub REST verified 2026-10-01).
 - Reconciliation: clean baseline HEAD/main/origin/main = 7bf2d91; no concurrent changes or existing PRs. Original baseline prose archived below, full original plan preserved.
-- Last confirmed pushed SHA: 29a547f4546dd9a91f23a7f6e6c225c70dbda836 (verified against remote before this checkpoint; containing commit identifiable via git log).
-- Completed: API/UI/browser/CI/docs/metadata done; zero/date/cache edge guards covered;71offline tests/590expectations.
-- Active: final local verification and PR/check-status handoff.
-- Remaining: final verification evidence checkpoint; open PR; inspect remote checks; final worklog/push/remote verification.
+- Last confirmed pushed SHA: ae0968aa36722e34003754778e7a70022bad99b5 (verified against remote before this checkpoint; containing commit identifiable via git log).
+- Completed: API9/1162/7623; exact UI/browser hashes49checks; CI/docs/metadata; frozen install,71offline tests/590expectations; builds/feed/security allpass.
+- Active: open PR main<-feat/aam-etfs and inspect GitHub offline checks.
+- Remaining: PR creation; remote check-status inspection; final worklog/checkpoint/push/verify, no merge.
 - Blockers: none
-- Exact next action after this checkpoint is pushed: run final frozen/test/build/feed/security checks without provider refresh; commit verification, then open main PR and inspect checks.
-- Status: Final retention edge regressions complete;71offline tests pass; ready to open PR after final verification.
+- Exact next action after this checkpoint is pushed: POST AAM PR (base main, head feat/aam-etfs) with truthful verification/caveats and config25+2 adaptation; GET verify PRhead/base/status; await offline checks only and record final status in worklog.
+- Status: Final local verification passed; implementation ready for PR to main (not yet opened).
 
 INITIAL HANDOFF PROMPTS (preserved)
 ===================================
@@ -345,6 +345,15 @@ CHRONOLOGICAL JOURNAL
 - Actual complete published API and UI unchanged; no provider refresh. Positive live-source paths unaffected by these absent/zero-field cases.
 - Commands: bun test ->71pass/0fail/590expectations; updater Bun build exit0; git diff --check clean.
 - Correction to preceding journal's expectation-count typo: the actual69-test run had587 expectations, not589. Pass/fail counts were correct. This entry derives numbers directly from the recorded Bun log rather than guessing.
+
+### 2026-10-01 — Final local verification before PR (completed)
+- Previous cache-field checkpointae0968aa36722e34003754778e7a70022bad99b5 push verified.
+- Commands: frozen install exit0; bun test ->71pass/0fail/590expectations; Bun updater and browser builds exit0 (transpilation only); complete feed validator exit0 (9funds/1162holdings/7623history); actualCLI --help printed27controls; git diff --check clean. Tracked evidence/final contains exact logs/config-help/feed/verification record.
+- Security/toolchain scan: no literal GitHub/auth credentials in tracked files; dependencies{}, exact @types/bun1.4.2/@types/node26.6.2 only; no tsconfig/TypeScript package/compiler command or ts-ignore/nocheck suppression. All executable/test helper Bun references first/second line before imports. Auth remains runtime-only, public Git remote.
+- Final app.tsx/index.html hashes EXACTLY match49-check browser evidence and audited substitution manifest. No post-browser UI redesign/text drift. Source/dates/catalog totals/provenance manifests reconciled. No new provider/full refresh in this step.
+- Manual semantic-risk review: numeric-slot union excludes string metadata; queue tails completion-only void and callerT retained. No semantic compiler/IDE proof claimed; runtime fixtures/transpilation explicitly distinct from live acquisition evidence.
+- Material caveats retained: documented1cent Yahoo provider change, no live byte-identity claim for changed input; SEC series fallback not proven live; Pages404/pending, defaultmain docs-only until authorized merge. Source/Scope acceptance was>=3actualtickers twice, allprovider paths enabled with default pacing, retained unrequested/production smoke isolation.
+- AAM-only authorization kept: no cross-repo changes, no force/rebase/check bypass, no PR merge, no deployment or language override. Next: create PR against main and inspect remote offline check status.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN

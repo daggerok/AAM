@@ -1,0 +1,43 @@
+AAM ETF updater — bun scripts/update-data.ts
+File defaults: scripts/update-data.config.json; nonblank env wins; AAM_ aliases accepted.
+  MAX_FETCHES=0
+  REQUEST_SLEEP=1
+  CONCURRENCY=2
+  HOLDINGS_PAGE_SIZE=250
+  HISTORY_PAGE_SIZE=1000
+  MAX_RETRIES=2
+  TICKERS=(all)
+  HISTORY_RANGE=max
+  EDGAR_FALLBACK=true
+  SKIP_AAM=false
+  SKIP_YAHOO=false
+  SEC_UA=AAM static feed https://github.com/daggerok/AAM (contact via repository issues)
+  AUM=:
+  TER=:
+  DIVIDEND_YIELD=:
+  SEC_YIELD=:
+  PERFORMANCE_YTD=:
+  PERFORMANCE_1Y=:
+  PERFORMANCE_3Y=:
+  PERFORMANCE_5Y=:
+  PERFORMANCE_10Y=:
+  TOTAL_RETURN_YTD=:
+  TOTAL_RETURN_1Y=:
+  TOTAL_RETURN_3Y=:
+  TOTAL_RETURN_5Y=:
+  TOTAL_RETURN_10Y=:
+  VERBOSE=false
+MAX_FETCHES=0: full pass/reset cursor; positive: resume bounded batches.
+TICKERS: space/comma/semicolon allowlist, AND with every filter; unselected funds retained.
+Ranges: inclusive min:max / min: / :max / :; AUM K/M/B/T or nano/micro/small/mid/large.
+PERFORMANCE_*: annualized for 3Y+; TOTAL_RETURN_*: cumulative. Missing values fail bounded filters.
+REQUEST_SLEEP: seconds between request starts PER lane; CONCURRENCY: parallel fund workers.
+MAX_RETRIES: retries after first request (network/408/425/429/5xx only).
+HOLDINGS_PAGE_SIZE/HISTORY_PAGE_SIZE: generated rows/page. HISTORY_RANGE: max or Ny (old rows retained).
+SEC_UA: identifying User-Agent/contact, EDGAR_FALLBACK: holdings only. SKIP_AAM/SKIP_YAHOO: opt-out, retain cache.
+VERBOSE=1: retry/fallback detail. No dry-run: actual CLI writes data.
+Examples:
+  TICKERS="SPDV PFLD CLOC" VERBOSE=1 bun scripts/update-data.ts
+  MAX_FETCHES=3 bun scripts/update-data.ts
+  AUM="10M:2B" TER=":0.5" bun scripts/update-data.ts
+  PERFORMANCE_1Y="15:" bun scripts/update-data.ts

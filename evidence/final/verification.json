@@ -1,0 +1,25 @@
+{
+  "checkedAt": "2026-10-01T14:58:18.059885+00:00",
+  "revision": "ae0968aa36722e34003754778e7a70022bad99b5",
+  "bunVersion": "1.4.2",
+  "runtimeDependencies": {},
+  "devDependencies": {
+    "@types/bun": "1.4.2",
+    "@types/node": "26.6.2"
+  },
+  "credentialScan": "No GitHub tokens or literal auth credentials in tracked files; no sensitive values printed",
+  "bunDirectives": "all scripts/*.ts line1/2 before imports",
+  "forbiddenCompilerCommands": "none in package/workflows; no tsconfig/TypeScript dependency or suppressions",
+  "uiHashesMatchBrowserEvidence": true,
+  "browserChecks": 49,
+  "feed": {
+    "funds": 9,
+    "holdings": 1162,
+    "history": 7623
+  },
+  "typeReview": "manual numeric-slot/void-queue inspection and exhaustive runtime regressions only; Bun builds are transpilation, NOT semantic TS validation; no IDE diagnostics available",
+  "liveVariance": "identified PFLD2023-07-03 adjusted-close16.91->16.92, documented; NOT falsely claiming live byte identity",
+  "SEC": "complete issuer exports succeeded; live series-fallback unproven, synthetic offline tests only",
+  "Pages": "verified HTTP404; pending; no merge/deployment/default-branch mutation",
+  "publicationScope": "AAM only; no cross-repository edits or unauthorized merges"
+}
