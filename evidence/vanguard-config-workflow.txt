@@ -1,0 +1,29 @@
+2026-10-01 — User-requested Vanguard configuration/workflow inspection
+Read-only pin: daggerok/Vanguard main c423d47fed3df82c6ce5840c618ed48839783c80
+Files inspected at that immutable commit:
+  scripts/update-data.config.json
+  scripts/update-data.ts (bootstrap lines 1–12, runtime controls/run)
+  .github/workflows/update-data.yml
+  scripts/update-data.test.ts, README.md, .github/dependabot.yml
+
+Actual pattern:
+  JSON file supplies defaults. Each nonblank process.env[key] wins;
+  missing/whitespace environment values are filled from the checked-in JSON.
+  Config file has 21 keys; workflow_dispatch has 20 direct inputs with blank
+  string defaults. Each input maps to matching uppercase job ENV.
+  VERBOSE is a config-file-only workflow setting (still an environment override
+  for direct CLI use); no JSON bundle, extra dispatch workflow, or config-path input.
+  Schedule is Sunday 0 0 * * 0; no push refresh trigger.
+  checkout@v7; setup-bun@v2; frozen install; offline tests; actual updater;
+  stage api/vanguard, exit when no staged diff, ordinary commit/push.
+
+AAM equivalent would be exactly 25 direct operational dispatch inputs;
+SEC_UA and VERBOSE remain checked-in JSON defaults/direct CLI environment
+settings. This mirrors current JPMorgan's omission of SEC_UA/VERBOSE too.
+All 27 AAM controls would remain supported; no hidden deletion.
+This is not literal one-UI-field-per-all-27-controls. Awaiting confirmation
+of the narrow exception before changing the canonical plan.
+
+Do NOT copy Vanguard's REQUEST_SLEEP=0 / CONCURRENCY=4 defaults or late Bun
+reference directive. AAM keeps conservative 1/2 pacing and line-2 directive.
+Vanguard README defaults differ from actual JSON; AAM docs will match real file.

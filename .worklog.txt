@@ -6,13 +6,13 @@ CURRENT STATE
 - Repository: https://github.com/daggerok/AAM
 - Branch: feat/aam-etfs; PR: none (GitHub REST verified 2026-10-01).
 - Reconciliation: clean baseline HEAD/main/origin/main = 7bf2d91; no concurrent changes or existing PRs. Original baseline prose archived below, full original plan preserved.
-- Last confirmed pushed SHA: 49dba4685a2635a7871de922047fb4735ae9a55e (verified against remote before this checkpoint; containing commit identifiable via git log).
-- Completed: 9-fund real API; 59 offline tests; 49 actual Chromium checks; live source/scope audit with documented Yahoo cent variance; GitHub CI limit researched.
-- Active: user clarification: valid single-workflow grouping vs split direct-input manual workflows.
-- Remaining: valid CI/dependabot after clarification; README; AAM metadata; final verification/PR.
-- Blockers: GitHub Docs maximum workflow_dispatch inputs=25, AAM controls=27. Embedded plan demands 1:1 top-level manual inputs; cannot silently publish an invalid workflow or drop controls.
-- Exact next action after this checkpoint is pushed: ask one workflow-shape question; after choice record authorized narrow deviation/self-contained control mapping and implement valid workflows, then finish docs/metadata/PR.
-- Status: Data/UI/browser done; CI design blocked on GitHub 25-input cap vs required 27-control 1:1 manual inputs.
+- Last confirmed pushed SHA: 57088a530657397119d1ca3674dbe910932cb5cd (verified against remote before this checkpoint; containing commit identifiable via git log).
+- Completed: 9-fund API/UI/browser complete; read-only Vanguard pin c423d47 shows JSON defaults + nonblank ENV precedence, 20 manual inputs/21 config keys; AAM equivalent25direct +2config-only.
+- Active: confirm exact Vanguard/JPMorgan pattern: SEC_UA and VERBOSE file-default/CLI settings, 25 direct operational dispatch inputs.
+- Remaining: CI/Dependabot; pinned README/common regression; AAM metadata; final verification/PR.
+- Blockers: GitHub25 dispatch cap vs original27 direct-field requirement. Existing siblings intentionally leave contact/diagnostic settings config-only; narrow exception not yet explicitly confirmed.
+- Exact next action after this checkpoint is pushed: confirm adopting observed sibling config-default pattern without JSON bundle or extra update workflow; then implement valid CI and finish docs/metadata/PR.
+- Status: Vanguard configuration/workflow inspection complete; valid family-pattern adaptation identified, awaiting narrow confirmation.
 
 INITIAL HANDOFF PROMPTS (preserved)
 ===================================
@@ -284,6 +284,18 @@ CHRONOLOGICAL JOURNAL
 - AAM has exactly 27 canonical configuration controls (not 28; prior orchestration journal count was a documentation typo). Embedded plan requests 1:1 input per ENV control; impossible in a single 27-field dispatch. Need user choice of a narrow valid adaptation: one workflow with a structured advanced group, or split manual entry points with direct fields across workflows. No control removed and no invalid workflow pushed.
 - Also re-read current pinned-family About: JPMorgan shared exact description/homepage/20 topics; AAM still description=null, homepage=null, topics=[], default_branch=main. Anonymous Pages API returned404 (not treated as authoritative deployment verification); authenticated check and actual homepage HTTP verification still planned during authorized metadata step. No metadata changed yet.
 - Data/UI baseline unchanged; only this factual journal/evidence checkpoint. No unbounded/live refresh performed.
+
+### 2026-10-01 — Vanguard config/workflow inspected per user correction (completed)
+- Previous dispatch-limit checkpoint 57088a530657397119d1ca3674dbe910932cb5cd push verified.
+- User requested checking actual ETF repositories, specifically Vanguard configuration-file usage in the updater and Actions workflow, instead of choosing a new group/split design sight unseen.
+- Read-only Vanguard main pin c423d47fed3df82c6ce5840c618ed48839783c80. Fetched script/config/workflow/tests/README/Dependabot only (no full data clone, no sibling edits). Evidence/vanguard-config-workflow.txt contains complete relevant findings.
+- Script lines1–12 load ./update-data.config.json and fill process.env only when missing/blank. Nonblank ENV wins. AAM resolveControls/runtimeControls already matches this precedence, with stricter validation and AAM_ aliases.
+- Actual Vanguard JSON has21 keys; workflow has20 direct inputs (all default empty strings) and matching uppercase env mappings. VERBOSE is file-default/CLI-env only, not a manual field. No advanced JSON bundle, config-path field, or second updater workflow. Pinned JPMorgan similarly leaves SEC_UA/VERBOSE out of its form.
+- Exactly the same AAM pattern would use25 direct operational inputs, with SEC_UA and VERBOSE kept in checked-in JSON and direct CLI environment overrides. All27 settings remain supported. This is a narrow exception to literal1:1 all27 manual fields, not a false claim that all27 are present. Asking confirmation of that observed-family pattern before CI implementation.
+- Vanguard schedule Sunday 0 0 * *0/manual only; checkoutv7/setup-bunv2; frozen install/tests/actual updater; git add api/vanguard BEFORE cached-diff check (includes newly added pages); ordinary commit/push. No push refresh.
+- Will not copy unrelated Vanguard0-second sleep/4workers defaults, misplaced Bun directive atline13, stale README defaults or shallow writer. AAM keeps conservative1/2 lanes, line2 directive, recursive deterministic writer and truthful docs.
+- Recovery after ask_user pause: snapshot excluded .git/config and .cache; restored public origin URL/fetchspec and author (no credentials in config), fetched/reconciled remote; HEAD/remote feature57088a5 and main7bf2d91 unchanged, PR list still empty. Snapshot also dropped updater executable mode; restored committed0755, no source-content changes. Bun/browser cache is absent and must be reinstalled before subsequent validation.
+- First research-checkpoint command failed at remote verification before editing worklog/commit because origin config was excluded. No commit/push occurred and no concurrent content changes were overwritten. This checkpoint completes the previously staged evidence plus factual journal only.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN
