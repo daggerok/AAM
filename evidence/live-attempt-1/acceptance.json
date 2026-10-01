@@ -1,0 +1,310 @@
+{
+  "revision": "660e0b5cb4c8baeb8a2406197d0c067b1b1ad9f0",
+  "codeSha256": "8bb34071cb86a407b303cedfd7a6729f654161df9056064aa62c5c81b7e75226",
+  "command": "TICKERS=\"SPDV PFLD CLOC\" VERBOSE=1 bun scripts/update-data.ts",
+  "effectiveDefaults": {
+    "MAX_FETCHES": "0",
+    "REQUEST_SLEEP": "1",
+    "CONCURRENCY": "2",
+    "HOLDINGS_PAGE_SIZE": "250",
+    "HISTORY_PAGE_SIZE": "1000",
+    "MAX_RETRIES": "2",
+    "TICKERS": "SPDV PFLD CLOC",
+    "HISTORY_RANGE": "max",
+    "EDGAR_FALLBACK": "true",
+    "SKIP_AAM": "false",
+    "SKIP_YAHOO": "false",
+    "SEC_UA": "AAM static feed https://github.com/daggerok/AAM (contact via repository issues)",
+    "AUM": ":",
+    "TER": ":",
+    "DIVIDEND_YIELD": ":",
+    "SEC_YIELD": ":",
+    "PERFORMANCE_YTD": ":",
+    "PERFORMANCE_1Y": ":",
+    "PERFORMANCE_3Y": ":",
+    "PERFORMANCE_5Y": ":",
+    "PERFORMANCE_10Y": ":",
+    "TOTAL_RETURN_YTD": ":",
+    "TOTAL_RETURN_1Y": ":",
+    "TOTAL_RETURN_3Y": ":",
+    "TOTAL_RETURN_5Y": ":",
+    "TOTAL_RETURN_10Y": ":",
+    "VERBOSE": "1"
+  },
+  "isolatedCopy": ".cache/live-acceptance-* (disposable; production api never used as output)",
+  "beforeProduction": {
+    "funds/BDIV/meta.json": "6f17a5c4849f5778113ea3c3e21958b1b60727662b8b1de18d622278bfd10264",
+    "funds/CLOC/meta.json": "e3d3e5dfab147a1a752f804f4ace3bd4eac61bffb632252f0c59f533c4c47ed8",
+    "funds/LODI/meta.json": "33746a43d8670efcf4c764ce503de7d5b9ab516fcb4cdb09bdb80b0ed1f9d7b8",
+    "funds/PFLD/meta.json": "a16d81382f62aaac886e1a4065f80d7ad434e0a0c85349e36f2eda4ecb3f8e92",
+    "funds/SAWG/meta.json": "215561643da998fcaeff92f278076fe4cad86decd57f7d380d06aa165a4a676e",
+    "funds/SAWS/meta.json": "e70bca9245ae6c5fcbc6a2de34e6a6c62868c9565ba3c9fe1a162103591e0ae0",
+    "funds/SPDV/meta.json": "be40abc2819bf8ce3cc34bc224c156d0c777256f056419b18028423e6866dc4f",
+    "funds/TIIV/meta.json": "e1fd63e2c943e73097edd655b7929a72a4b1d706172125bab506ebb63de537cb",
+    "funds/TRFM/meta.json": "9aa5ea91cc18af2783778ade6ed0aff5392b6aaac178df4221b2ea3c99873fb0",
+    "index.json": "f8c185c1671d5c96cdef511e9e5ee10689b4c5d372fd44679c5777fa7b0060f0"
+  },
+  "productionAfter": {
+    "funds/BDIV/meta.json": "6f17a5c4849f5778113ea3c3e21958b1b60727662b8b1de18d622278bfd10264",
+    "funds/CLOC/meta.json": "e3d3e5dfab147a1a752f804f4ace3bd4eac61bffb632252f0c59f533c4c47ed8",
+    "funds/LODI/meta.json": "33746a43d8670efcf4c764ce503de7d5b9ab516fcb4cdb09bdb80b0ed1f9d7b8",
+    "funds/PFLD/meta.json": "a16d81382f62aaac886e1a4065f80d7ad434e0a0c85349e36f2eda4ecb3f8e92",
+    "funds/SAWG/meta.json": "215561643da998fcaeff92f278076fe4cad86decd57f7d380d06aa165a4a676e",
+    "funds/SAWS/meta.json": "e70bca9245ae6c5fcbc6a2de34e6a6c62868c9565ba3c9fe1a162103591e0ae0",
+    "funds/SPDV/meta.json": "be40abc2819bf8ce3cc34bc224c156d0c777256f056419b18028423e6866dc4f",
+    "funds/TIIV/meta.json": "e1fd63e2c943e73097edd655b7929a72a4b1d706172125bab506ebb63de537cb",
+    "funds/TRFM/meta.json": "9aa5ea91cc18af2783778ade6ed0aff5392b6aaac178df4221b2ea3c99873fb0",
+    "index.json": "f8c185c1671d5c96cdef511e9e5ee10689b4c5d372fd44679c5777fa7b0060f0"
+  },
+  "initialIsolatedHashes": {
+    "funds/BDIV/meta.json": "6f17a5c4849f5778113ea3c3e21958b1b60727662b8b1de18d622278bfd10264",
+    "funds/CLOC/meta.json": "e3d3e5dfab147a1a752f804f4ace3bd4eac61bffb632252f0c59f533c4c47ed8",
+    "funds/LODI/meta.json": "33746a43d8670efcf4c764ce503de7d5b9ab516fcb4cdb09bdb80b0ed1f9d7b8",
+    "funds/PFLD/meta.json": "a16d81382f62aaac886e1a4065f80d7ad434e0a0c85349e36f2eda4ecb3f8e92",
+    "funds/SAWG/meta.json": "215561643da998fcaeff92f278076fe4cad86decd57f7d380d06aa165a4a676e",
+    "funds/SAWS/meta.json": "e70bca9245ae6c5fcbc6a2de34e6a6c62868c9565ba3c9fe1a162103591e0ae0",
+    "funds/SPDV/meta.json": "be40abc2819bf8ce3cc34bc224c156d0c777256f056419b18028423e6866dc4f",
+    "funds/TIIV/meta.json": "e1fd63e2c943e73097edd655b7929a72a4b1d706172125bab506ebb63de537cb",
+    "funds/TRFM/meta.json": "9aa5ea91cc18af2783778ade6ed0aff5392b6aaac178df4221b2ea3c99873fb0",
+    "index.json": "f8c185c1671d5c96cdef511e9e5ee10689b4c5d372fd44679c5777fa7b0060f0"
+  },
+  "runs": [
+    {
+      "run": 1,
+      "startedAt": "2026-10-01T05:32:07.961Z",
+      "finishedAt": "2026-10-01T05:32:12.992Z",
+      "exitCode": 0,
+      "processed": [
+        "CLOC",
+        "PFLD",
+        "SPDV"
+      ],
+      "skipped": [],
+      "failed": [],
+      "counts": {
+        "funds": 9,
+        "holdings": 454,
+        "history": 4178
+      },
+      "funds": [
+        {
+          "ticker": "CLOC",
+          "holdings": 61,
+          "history": 235,
+          "distributions": 21,
+          "holdingsPages": [
+            "holdings/001.json"
+          ],
+          "historyPages": [
+            "history/001.json"
+          ],
+          "weightSum": 100.03,
+          "holdingsAsOf": "2026-10-01",
+          "navAsOf": "Sep 29 2026",
+          "returnsAsOf": "2026-06-30",
+          "holdingsSource": "aamlive.com full holdings XLS (fresh WebForms export POST)",
+          "historySource": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
+          "yahooChart": "https://query1.finance.yahoo.com/v8/finance/chart/CLOC",
+          "secYield": 5.77,
+          "grossExpense": 0.49,
+          "netExpense": 0.18,
+          "siAnnualized": null
+        },
+        {
+          "ticker": "PFLD",
+          "holdings": 338,
+          "history": 1723,
+          "distributions": 92,
+          "holdingsPages": [
+            "holdings/001.json",
+            "holdings/002.json"
+          ],
+          "historyPages": [
+            "history/001.json",
+            "history/002.json"
+          ],
+          "weightSum": 101.73,
+          "holdingsAsOf": "2026-10-01",
+          "navAsOf": "Sep 29 2026",
+          "returnsAsOf": "2026-06-30",
+          "holdingsSource": "aamlive.com full holdings XLS (fresh WebForms export POST)",
+          "historySource": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
+          "yahooChart": "https://query1.finance.yahoo.com/v8/finance/chart/PFLD",
+          "secYield": 5.86,
+          "grossExpense": 0.45,
+          "netExpense": 0.45,
+          "siAnnualized": 2.22
+        },
+        {
+          "ticker": "SPDV",
+          "holdings": 55,
+          "history": 2220,
+          "distributions": 116,
+          "holdingsPages": [
+            "holdings/001.json"
+          ],
+          "historyPages": [
+            "history/001.json",
+            "history/002.json",
+            "history/003.json"
+          ],
+          "weightSum": 100,
+          "holdingsAsOf": "2026-10-01",
+          "navAsOf": "Sep 29 2026",
+          "returnsAsOf": "2026-06-30",
+          "holdingsSource": "aamlive.com full holdings XLS (fresh WebForms export POST)",
+          "historySource": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
+          "yahooChart": "https://query1.finance.yahoo.com/v8/finance/chart/SPDV",
+          "secYield": 3.6,
+          "grossExpense": 0.29,
+          "netExpense": 0.29,
+          "siAnnualized": 9.16
+        }
+      ],
+      "hashes": {
+        "funds/BDIV/meta.json": "6f17a5c4849f5778113ea3c3e21958b1b60727662b8b1de18d622278bfd10264",
+        "funds/CLOC/history/001.json": "d1cf7813e60a2ac73addef9ce66963d19133259214750d30e9df139ad6d8cc4b",
+        "funds/CLOC/holdings/001.json": "b9e81815a22d023576089719ab75120bc6fa2e9db02f0f1ddd03c90680c2393f",
+        "funds/CLOC/meta.json": "6b5998bccf3d73449ea57518341ee42cf63e15bf32e0cf77269327079cc38cd6",
+        "funds/LODI/meta.json": "33746a43d8670efcf4c764ce503de7d5b9ab516fcb4cdb09bdb80b0ed1f9d7b8",
+        "funds/PFLD/history/001.json": "5799821ec7b92f524e9385468fca8b9f496219a6b5a3a93cedd05ab3f262d179",
+        "funds/PFLD/history/002.json": "dc5dcfa738b3237dd92097f52b017e72e493eb1cd5b06040f2d3f0a53901852d",
+        "funds/PFLD/holdings/001.json": "31450e8b17bbf51bc5348dbc0649d29a518cf4ebdf47503e27be09039f5f5d7f",
+        "funds/PFLD/holdings/002.json": "15096c086986270b7f7a08c64a3f3b4e73763082db3e40ce8f7a78742e2b3cbc",
+        "funds/PFLD/meta.json": "ce06c9d959c0c829181e1975d3aab229771b34fa74da42e8de3ae534270cdad0",
+        "funds/SAWG/meta.json": "215561643da998fcaeff92f278076fe4cad86decd57f7d380d06aa165a4a676e",
+        "funds/SAWS/meta.json": "e70bca9245ae6c5fcbc6a2de34e6a6c62868c9565ba3c9fe1a162103591e0ae0",
+        "funds/SPDV/history/001.json": "13d038e81d89cf3fdc56bfd5de1a84e4aad9fc9bf6a8fb51a93ccda88213b477",
+        "funds/SPDV/history/002.json": "6877d8bb7a3b67bd696e6d9400dccd52b9e89885395330d0f6a9b4aee6c203a9",
+        "funds/SPDV/history/003.json": "9a4fa91a7021c2f64ff7894924ac7bf80566feb6d04d3cb26db8173267fed5ed",
+        "funds/SPDV/holdings/001.json": "4b16a2e1dbdcf2fd3714d11c1bc1c82dbdb57e719c0c4a00e327c9d2102c29e9",
+        "funds/SPDV/meta.json": "cb8733aaf983e975ed21db3f87e3545f2d3152b03906077ab219be198e01d1ab",
+        "funds/TIIV/meta.json": "e1fd63e2c943e73097edd655b7929a72a4b1d706172125bab506ebb63de537cb",
+        "funds/TRFM/meta.json": "9aa5ea91cc18af2783778ade6ed0aff5392b6aaac178df4221b2ea3c99873fb0",
+        "index.json": "864f88df6481a2ad42feeb688f629db39cdcc1e2eba569acc65438fcf45ab590"
+      },
+      "providerWarnings": []
+    },
+    {
+      "run": 2,
+      "startedAt": "2026-10-01T05:32:12.992Z",
+      "finishedAt": "2026-10-01T05:32:18.046Z",
+      "exitCode": 0,
+      "processed": [
+        "CLOC",
+        "PFLD",
+        "SPDV"
+      ],
+      "skipped": [],
+      "failed": [],
+      "counts": {
+        "funds": 9,
+        "holdings": 454,
+        "history": 4178
+      },
+      "funds": [
+        {
+          "ticker": "CLOC",
+          "holdings": 61,
+          "history": 235,
+          "distributions": 21,
+          "holdingsPages": [
+            "holdings/001.json"
+          ],
+          "historyPages": [
+            "history/001.json"
+          ],
+          "weightSum": 100.03,
+          "holdingsAsOf": "2026-10-01",
+          "navAsOf": "Sep 29 2026",
+          "returnsAsOf": "2026-06-30",
+          "holdingsSource": "aamlive.com full holdings XLS (fresh WebForms export POST)",
+          "historySource": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
+          "yahooChart": "https://query1.finance.yahoo.com/v8/finance/chart/CLOC",
+          "secYield": 5.77,
+          "grossExpense": 0.49,
+          "netExpense": 0.18,
+          "siAnnualized": null
+        },
+        {
+          "ticker": "PFLD",
+          "holdings": 338,
+          "history": 1723,
+          "distributions": 92,
+          "holdingsPages": [
+            "holdings/001.json",
+            "holdings/002.json"
+          ],
+          "historyPages": [
+            "history/001.json",
+            "history/002.json"
+          ],
+          "weightSum": 101.73,
+          "holdingsAsOf": "2026-10-01",
+          "navAsOf": "Sep 29 2026",
+          "returnsAsOf": "2026-06-30",
+          "holdingsSource": "aamlive.com full holdings XLS (fresh WebForms export POST)",
+          "historySource": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
+          "yahooChart": "https://query1.finance.yahoo.com/v8/finance/chart/PFLD",
+          "secYield": 5.86,
+          "grossExpense": 0.45,
+          "netExpense": 0.45,
+          "siAnnualized": 2.22
+        },
+        {
+          "ticker": "SPDV",
+          "holdings": 55,
+          "history": 2220,
+          "distributions": 116,
+          "holdingsPages": [
+            "holdings/001.json"
+          ],
+          "historyPages": [
+            "history/001.json",
+            "history/002.json",
+            "history/003.json"
+          ],
+          "weightSum": 100,
+          "holdingsAsOf": "2026-10-01",
+          "navAsOf": "Sep 29 2026",
+          "returnsAsOf": "2026-06-30",
+          "holdingsSource": "aamlive.com full holdings XLS (fresh WebForms export POST)",
+          "historySource": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
+          "yahooChart": "https://query1.finance.yahoo.com/v8/finance/chart/SPDV",
+          "secYield": 3.6,
+          "grossExpense": 0.29,
+          "netExpense": 0.29,
+          "siAnnualized": 9.16
+        }
+      ],
+      "hashes": {
+        "funds/BDIV/meta.json": "6f17a5c4849f5778113ea3c3e21958b1b60727662b8b1de18d622278bfd10264",
+        "funds/CLOC/history/001.json": "d1cf7813e60a2ac73addef9ce66963d19133259214750d30e9df139ad6d8cc4b",
+        "funds/CLOC/holdings/001.json": "b9e81815a22d023576089719ab75120bc6fa2e9db02f0f1ddd03c90680c2393f",
+        "funds/CLOC/meta.json": "6b5998bccf3d73449ea57518341ee42cf63e15bf32e0cf77269327079cc38cd6",
+        "funds/LODI/meta.json": "33746a43d8670efcf4c764ce503de7d5b9ab516fcb4cdb09bdb80b0ed1f9d7b8",
+        "funds/PFLD/history/001.json": "5799821ec7b92f524e9385468fca8b9f496219a6b5a3a93cedd05ab3f262d179",
+        "funds/PFLD/history/002.json": "dc5dcfa738b3237dd92097f52b017e72e493eb1cd5b06040f2d3f0a53901852d",
+        "funds/PFLD/holdings/001.json": "31450e8b17bbf51bc5348dbc0649d29a518cf4ebdf47503e27be09039f5f5d7f",
+        "funds/PFLD/holdings/002.json": "15096c086986270b7f7a08c64a3f3b4e73763082db3e40ce8f7a78742e2b3cbc",
+        "funds/PFLD/meta.json": "ce06c9d959c0c829181e1975d3aab229771b34fa74da42e8de3ae534270cdad0",
+        "funds/SAWG/meta.json": "215561643da998fcaeff92f278076fe4cad86decd57f7d380d06aa165a4a676e",
+        "funds/SAWS/meta.json": "e70bca9245ae6c5fcbc6a2de34e6a6c62868c9565ba3c9fe1a162103591e0ae0",
+        "funds/SPDV/history/001.json": "13d038e81d89cf3fdc56bfd5de1a84e4aad9fc9bf6a8fb51a93ccda88213b477",
+        "funds/SPDV/history/002.json": "43f19c82f4b6af8a71cce5ecceef9290854d3fc7eddb65ff1c34e708164d8fb5",
+        "funds/SPDV/history/003.json": "9a4fa91a7021c2f64ff7894924ac7bf80566feb6d04d3cb26db8173267fed5ed",
+        "funds/SPDV/holdings/001.json": "4b16a2e1dbdcf2fd3714d11c1bc1c82dbdb57e719c0c4a00e327c9d2102c29e9",
+        "funds/SPDV/meta.json": "cb8733aaf983e975ed21db3f87e3545f2d3152b03906077ab219be198e01d1ab",
+        "funds/TIIV/meta.json": "e1fd63e2c943e73097edd655b7929a72a4b1d706172125bab506ebb63de537cb",
+        "funds/TRFM/meta.json": "9aa5ea91cc18af2783778ade6ed0aff5392b6aaac178df4221b2ea3c99873fb0",
+        "index.json": "864f88df6481a2ad42feeb688f629db39cdcc1e2eba569acc65438fcf45ab590"
+      },
+      "providerWarnings": []
+    }
+  ],
+  "secondRunChangedFiles": [
+    "funds/SPDV/history/002.json"
+  ],
+  "byteStable": false,
+  "productionUnchanged": true
+}

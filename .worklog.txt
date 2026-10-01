@@ -6,13 +6,13 @@ CURRENT STATE
 - Repository: https://github.com/daggerok/AAM
 - Branch: feat/aam-etfs; PR: none (GitHub REST verified 2026-10-01).
 - Reconciliation: clean baseline HEAD/main/origin/main = 7bf2d91; no concurrent changes or existing PRs. Original baseline prose archived below, full original plan preserved.
-- Last confirmed pushed SHA: 3cc4d4966ea6f8cbfc224f0d297bbd18a72ea8ae (verified against remote before this checkpoint; containing commit identifiable via git log).
-- Completed: real CLI/fallback/retention workers + help/config; seeded 9 real catalog identities/headlines with explicit unavailable portfolios; 44 offline tests passing.
-- Active: mandatory isolated actual-CLI acceptance for SPDV/PFLD/CLOC twice with conservative defaults.
-- Remaining: commit isolated live evidence; separately bootstrap initial application data in explicit bounded publication batches (not copying smoke data); parity UI/browser; CI; README/metadata; PR.
-- Blockers: none
-- Exact next action after this checkpoint is pushed: create isolated copy of scripts/config plus current api/aam seed; execute TICKERS="SPDV PFLD CLOC" VERBOSE=1 bun scripts/update-data.ts twice with REQUEST_SLEEP=1/CONCURRENCY=2/MAX_RETRIES=2 and no SKIP flags; capture tracked logs/manifests/byte hashes and check unrequested entries/files/production seed unchanged.
-- Status: Actual updater CLI implemented and offline-integrated; production catalog seed only; live acceptance pending.
+- Last confirmed pushed SHA: 660e0b5cb4c8baeb8a2406197d0c067b1b1ad9f0 (verified against remote before this checkpoint; containing commit identifiable via git log).
+- Completed: actual CLI twice live at revision 660e0b5: all 3 fresh detail/full XLS/Yahoo; complete 454 holdings / 4178 history; 6 unrequested funds and production seed unchanged; offline 44/0.
+- Active: fix calendar ex-date dividend deduplication and extend acceptance evidence with per-file value diffs before rerun.
+- Remaining: resolve acceptance findings + rerun/commit evidence; separate production bootstrap batches; parity UI/browser; CI; README/metadata; PR.
+- Blockers: Acceptance not yet passed: one SPDV history page changed; exact value delta not captured by first harness. Calendar-date duplicate distributions found (Yahoo exchange-time epoch vs AAM midnight epoch). No production portfolios published.
+- Exact next action after this checkpoint is pushed: deduplicate distributions by ISO ex-date instead of raw epoch, normalize stored epochs and retain issuer priority; add different-hour regression. Extend harness to archive run snapshots and report exact non-timestamp value diffs/upstream variations, preserving first failed attempt evidence; then rerun real CLI acceptance.
+- Status: Live sources validated for 3 funds; acceptance checkpoint FAILED repeat-stability guard and dividend-date merge needs fix.
 
 INITIAL HANDOFF PROMPTS (preserved)
 ===================================
@@ -198,6 +198,17 @@ CHRONOLOGICAL JOURNAL
 - Commands: bun test -> 44 pass / 0 fail / 267 expectations (tracked evidence/offline-orchestration.log); bun install --frozen-lockfile -> exit 0; bun build --target=bun scripts/update-data.ts --outfile=/dev/null -> exit 0; bun scripts/update-data.ts --help -> all 28 canonical controls/defaults/examples; git diff --check -> clean.
 - Type review: numeric return slots still concrete union; generic queue retains caller Promise<T>; runtime schema/date/manifest guards reviewed manually. Tests/transpilation are NOT a semantic TS proof; no IDE diagnostic service present. Bun-only policy kept.
 - LIVE ACCEPTANCE NOT YET RUN. UI, complete production bootstrap, CI/docs/metadata and PR remain pending.
+
+### 2026-10-01 — First mandatory isolated live attempt (sources successful, acceptance guard FAILED)
+- Previous operational updater checkpoint 660e0b5cb4c8baeb8a2406197d0c067b1b1ad9f0 push verified.
+- Added scripts/live-acceptance.ts (real CLI in isolated copied scripts/config/api seed; no mock fetch; credentials/updater overrides removed from child environment; production api never output). Evidence preserved under evidence/live-attempt-1/.
+- Executed actual command twice: TICKERS="SPDV PFLD CLOC" VERBOSE=1 bun scripts/update-data.ts, code revision 660e0b5, defaults MAX_FETCHES=0, REQUEST_SLEEP=1, CONCURRENCY=2, MAX_RETRIES=2, all ranges=:, EDGAR_FALLBACK=true, SKIP_AAM=false, SKIP_YAHOO=false. Bun 1.4.2.
+- Run 1: 2026-10-01T05:32:07.961Z..05:32:12.992Z, CLI exit 0. Run 2: 05:32:12.992Z..05:32:18.046Z, CLI exit 0. Both selected/processed CLOC/PFLD/SPDV, skipped=0, failed=0. All fresh-provider positive logs present; no provider fallback/retry warnings.
+- Verified per run: CLOC 61 holdings / 235 history (1/1 pages); PFLD 338 / 1723 (2/2); SPDV 55 / 2220 (1/3). Counts keep all 9 funds, 454 holdings, 4178 history. Holdings dates 2026-10-01; NAV Sep 29; performance Jun 30; weights unchanged 100.03/101.73/100.00. CLOC SI annualized=null. Query-free Yahoo provenance.
+- Both runs preserve six unrequested index rows and every unrequested file; production hashes unchanged (recorded acceptance.json). SEC live holdings fallback was not exercised because complete official holdings succeeded; SEC limitation remains honestly documented.
+- Harness exit 1 because second run changed exactly funds/SPDV/history/002.json (CLOC/PFLD and every meta/index/other page byte-identical). This is NOT timestamp-only (pages have no timestamps), but first harness recorded hashes not first-run page bodies, so exact upstream value delta is not yet established. DO NOT claim successful byte stability. Next harness must retain run snapshots and exact value diffs, document upstream changes rather than force cached values back.
+- Also audited distribution events: 10 calendar ex-dates appear twice because Yahoo uses exchange-opening-hour epoch (e.g. 1790775000) and AAM uses UTC midnight (1790726400) for 2026-09-30. Counts 116 SPDV / 92 PFLD / 21 CLOC include these duplicates. This is an implementation defect, isolated only; fix by calendar-date keys with issuer priority and add regression.
+- The CLI source paths did run live successfully, but acceptance is UNFINISHED and financial event merge needs correction. No smoke portfolio or history has been copied into production. Disposables: .cache/live-acceptance-awkzBK; resumable evidence is tracked, not dependent on cache survival.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN

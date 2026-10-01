@@ -1,0 +1,35 @@
+[ config   ] AAM updater:
+              MAX_FETCHES=0
+              REQUEST_SLEEP=1
+              CONCURRENCY=2
+              AUM=:
+              DIVIDEND_YIELD=:
+              EDGAR_FALLBACK=true
+              HISTORY_PAGE_SIZE=1000
+              HISTORY_RANGE=max
+              HOLDINGS_PAGE_SIZE=250
+              MAX_RETRIES=2
+              PERFORMANCE_10Y=:
+              PERFORMANCE_1Y=:
+              PERFORMANCE_3Y=:
+              PERFORMANCE_5Y=:
+              PERFORMANCE_YTD=:
+              SEC_UA=AAM static feed https://github.com/daggerok/AAM (contact via repository issues)
+              SEC_YIELD=:
+              SKIP_AAM=false
+              SKIP_YAHOO=false
+              TER=:
+              TICKERS=CLOC,PFLD,SPDV
+              TOTAL_RETURN_10Y=:
+              TOTAL_RETURN_1Y=:
+              TOTAL_RETURN_3Y=:
+              TOTAL_RETURN_5Y=:
+              TOTAL_RETURN_YTD=:
+              VERBOSE=true
+[ catalog  ] 9 AAM ETFs (aamlive.com / published catalog fallback)
+[ filter   ] 3 of 9 funds pass filters
+[  1/3   ] CLOC  updated   history=235 holdings=61 divs=21 netAssets=$61.0M div=6.2 sec=5.77
+[  2/3   ] PFLD  updated   history=1723 holdings=338 divs=92 netAssets=$378.2M div=5.63 sec=5.86
+[  3/3   ] SPDV  updated   history=2220 holdings=55 divs=116 netAssets=$100.7M div=3.52 sec=3.6
+[ done     ] 3 funds updated, 0 failures (0 skipped)
+[ done     ] counts: 9 funds / 454 holdings rows / 4178 history rows
