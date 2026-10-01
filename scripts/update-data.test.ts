@@ -336,3 +336,12 @@ test('Yahoo cent-boundary variance remains a real cent change; equal inputs stay
   expect(low.days[0].adjClose).toBe(16.91);expect(high.days[0].adjClose).toBe(16.92);
   expect(parseChart(payload(16.915002822875977))).toEqual(high);
 });
+import { verifyFeed } from './verify-feed';
+test('offline feed validator reconciles seeded and refreshed index/page counts; incomplete production is explicit',async()=>{
+  await testFeed(async(_dir,root,fetcher)=>{
+    expect((await verifyFeed(root)).counts).toEqual({funds:9,holdings:0,history:0});
+    await expect(verifyFeed(root,true)).rejects.toThrow('incomplete');
+    await main(integrationEnv,{root,fetcher,now:fixedNow});
+    expect((await verifyFeed(root)).counts).toEqual({funds:9,holdings:454,history:9});
+  });
+});

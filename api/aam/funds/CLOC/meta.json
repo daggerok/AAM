@@ -1,4 +1,5 @@
 {
+ "generatedAt": "2026-10-01T05:39:17.891Z",
  "ticker": "CLOC",
  "name": "AAM Crescent CLO ETF",
  "category": "Fixed Income",
@@ -16,33 +17,268 @@
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/CLOC",
   "catalog": "https://www.aamlive.com/ETF",
-  "provider": "AAM official catalog; per-fund source refresh pending"
+  "holdingsDownload": "https://www.aamlive.com/ETF/Detail/CLOC",
+  "holdingsMethod": "POST WebForms __EVENTTARGET=btnETFHoldingsExport (no direct query URL)",
+  "yahooChart": "https://query1.finance.yahoo.com/v8/finance/chart/CLOC",
+  "holdingsSource": "aamlive.com full holdings XLS (fresh WebForms export POST)",
+  "historySource": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
+  "provider": "AAM official catalog/detail HTML and full XLS exports; SEC EDGAR N-PORT-P holdings fallback; Yahoo Finance market history/dividends"
+ },
+ "identifiers": {
+  "cusip": "268961844",
+  "isin": "US2689618443",
+  "indexTicker": null
  },
  "inception": {
-  "fundInceptionDate": "2025-10-22"
+  "fundInceptionDate": "2025-10-22",
+  "shareClassInceptionDate": null,
+  "exchange": "NYSE Arca"
+ },
+ "expenseRatio": {
+  "display": "0.49%",
+  "value": 0.49,
+  "gross": 0.49,
+  "net": 0.18
  },
  "nav": {
   "display": "$25.03",
   "value": 25.03,
   "asOfDate": "Sep 29 2026"
  },
+ "marketPrice": {
+  "display": "$25.16",
+  "value": 25.16,
+  "asOfDate": "Sep 29 2026"
+ },
+ "premiumDiscount": {
+  "display": "0.52%",
+  "value": 0.52
+ },
+ "aum": {
+  "display": "$61.01 M",
+  "value": 61010390,
+  "asOfDate": "Sep 29 2026",
+  "source": "aamlive.com official fund net assets"
+ },
  "yields": {
+  "dividendYield": 6.2,
+  "dividendYieldText": "6.20%",
+  "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
   "secYield": 5.77,
-  "secYieldText": "5.77%"
+  "secYieldText": "5.77%",
+  "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
+  "subsidizedSecYield": 6.08,
+  "unsubsidizedSecYield": 5.77
+ },
+ "officialReturns": {
+  "asOfDate": "2026-06-30",
+  "ytd": 2.68,
+  "yr1": null,
+  "yr3": null,
+  "yr5": null,
+  "yr10": null,
+  "sinceInception": 3.68
+ },
+ "returns": {
+  "monthEnd": {
+   "asOfDate": "Jun 30 2026",
+   "mo1": 0.2,
+   "qtd": 1.87,
+   "ytd": 2.68,
+   "yr1": null,
+   "yr3": null,
+   "yr5": null,
+   "yr10": null,
+   "sinceInception": null
+  },
+  "quarterEnd": {
+   "ytd": 2.68,
+   "yr1": null,
+   "yr3": null,
+   "yr5": null,
+   "yr10": null,
+   "sinceInception": null,
+   "asOfDate": "Jun 30 2026"
+  },
+  "derivedFrom": "official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date"
+ },
+ "distributions": {
+  "frequency": "Monthly",
+  "paymentsPerYear": 12,
+  "source": "aamlive.com recent distributions (first paginated grid page), merged with Yahoo full-history events and previous published events; issuer amounts win",
+  "headers": [
+   "Ex-Date",
+   "Amount",
+   "Record Date",
+   "Payable Date"
+  ],
+  "rows": [
+   [
+    "11/26/2025",
+    "0.12",
+    "",
+    ""
+   ],
+   [
+    "12/31/2025",
+    "0.16796",
+    "2025-12-31",
+    "2026-01-05"
+   ],
+   [
+    "01/30/2026",
+    "0.13",
+    "2026-01-30",
+    "2026-02-03"
+   ],
+   [
+    "02/27/2026",
+    "0.125",
+    "2026-02-27",
+    "2026-03-03"
+   ],
+   [
+    "03/31/2026",
+    "0.125",
+    "2026-03-31",
+    "2026-04-02"
+   ],
+   [
+    "04/30/2026",
+    "0.125",
+    "2026-04-30",
+    "2026-05-04"
+   ],
+   [
+    "05/29/2026",
+    "0.125",
+    "2026-05-29",
+    "2026-06-02"
+   ],
+   [
+    "06/30/2026",
+    "0.13",
+    "2026-06-30",
+    "2026-07-02"
+   ],
+   [
+    "07/31/2026",
+    "0.13",
+    "2026-07-31",
+    "2026-08-04"
+   ],
+   [
+    "08/28/2026",
+    "0.13",
+    "2026-08-28",
+    "2026-09-01"
+   ],
+   [
+    "09/30/2026",
+    "0.13",
+    "2026-09-30",
+    "2026-10-02"
+   ]
+  ],
+  "events": [
+   {
+    "epoch": 1764115200,
+    "amount": 0.12,
+    "exDate": "2025-11-26",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1767139200,
+    "amount": 0.16796,
+    "exDate": "2025-12-31",
+    "recordDate": "2025-12-31",
+    "payDate": "2026-01-05"
+   },
+   {
+    "epoch": 1769731200,
+    "amount": 0.13,
+    "exDate": "2026-01-30",
+    "recordDate": "2026-01-30",
+    "payDate": "2026-02-03"
+   },
+   {
+    "epoch": 1772150400,
+    "amount": 0.125,
+    "exDate": "2026-02-27",
+    "recordDate": "2026-02-27",
+    "payDate": "2026-03-03"
+   },
+   {
+    "epoch": 1774915200,
+    "amount": 0.125,
+    "exDate": "2026-03-31",
+    "recordDate": "2026-03-31",
+    "payDate": "2026-04-02"
+   },
+   {
+    "epoch": 1777507200,
+    "amount": 0.125,
+    "exDate": "2026-04-30",
+    "recordDate": "2026-04-30",
+    "payDate": "2026-05-04"
+   },
+   {
+    "epoch": 1780012800,
+    "amount": 0.125,
+    "exDate": "2026-05-29",
+    "recordDate": "2026-05-29",
+    "payDate": "2026-06-02"
+   },
+   {
+    "epoch": 1782777600,
+    "amount": 0.13,
+    "exDate": "2026-06-30",
+    "recordDate": "2026-06-30",
+    "payDate": "2026-07-02"
+   },
+   {
+    "epoch": 1785456000,
+    "amount": 0.13,
+    "exDate": "2026-07-31",
+    "recordDate": "2026-07-31",
+    "payDate": "2026-08-04"
+   },
+   {
+    "epoch": 1787875200,
+    "amount": 0.13,
+    "exDate": "2026-08-28",
+    "recordDate": "2026-08-28",
+    "payDate": "2026-09-01"
+   },
+   {
+    "epoch": 1790726400,
+    "amount": 0.13,
+    "exDate": "2026-09-30",
+    "recordDate": "2026-09-30",
+    "payDate": "2026-10-02"
+   }
+  ]
  },
  "holdings": {
-  "pages": [],
+  "pages": [
+   "holdings/001.json"
+  ],
   "pageSize": 250,
-  "totalRows": 0,
-  "asOfDate": null,
-  "source": "not yet refreshed",
-  "status": "unavailable"
+  "totalRows": 61,
+  "asOfDate": "2026-10-01",
+  "asOf": "Oct 01 2026",
+  "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
+  "status": "available"
  },
  "history": {
-  "pages": [],
+  "pages": [
+   "history/001.json"
+  ],
   "pageSize": 1000,
-  "totalRows": 0,
-  "source": "not yet refreshed",
-  "status": "unavailable"
+  "totalRows": 235,
+  "asOf": "Sep 30 2026",
+  "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
+  "status": "available"
  }
 }

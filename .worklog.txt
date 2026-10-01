@@ -6,13 +6,13 @@ CURRENT STATE
 - Repository: https://github.com/daggerok/AAM
 - Branch: feat/aam-etfs; PR: none (GitHub REST verified 2026-10-01).
 - Reconciliation: clean baseline HEAD/main/origin/main = 7bf2d91; no concurrent changes or existing PRs. Original baseline prose archived below, full original plan preserved.
-- Last confirmed pushed SHA: 665e33b0a00d421e9ee348c8f6f9302bee9878c6 (verified against remote before this checkpoint; containing commit identifiable via git log).
-- Completed: corrected ex-date merge; two actual live CLI runs at 665e33b all fresh/complete, production and 6 unrequested funds unchanged; exact provider delta/probes tracked; 46 offline tests pass with stable fixture bytes.
-- Active: separate bounded initial production data bootstrap after acceptance (no copy-back of smoke data).
-- Remaining: production initial feed in 3 explicit ticker batches; parity UI/browser; CI; README/metadata; PR.
-- Blockers: No implementation blocker. Live Yahoo can cross 2-decimal rounding boundary ($0.01 history variation); recorded honestly, not suppressed. SEC live holdings fallback denied/not exercised; offline fallback tested.
-- Exact next action after this checkpoint is pushed: generate initial production API separately with real CLI TICKERS="SPDV PFLD CLOC" VERBOSE=1 (defaults intact), record counts/provenance and scope checks; commit/push first batch before subsequent three-fund batches.
-- Status: Mandatory live source/scope acceptance audited successfully WITH documented Yahoo one-cent provider variance (NOT byte-identical).
+- Last confirmed pushed SHA: 4159de127130150f1ab81f6614d7a51c433e6c1e (verified against remote before this checkpoint; containing commit identifiable via git log).
+- Completed: live scoped acceptance (provider variance documented); initial production batch fresh official portfolios/Yahoo; 47 offline tests pass; shared feed validator.
+- Active: checkpoint production batch 1; next explicit BDIV/SAWG/SAWS initial refresh.
+- Remaining: 2 remaining production bootstrap batches; parity UI/browser; CI; README/metadata; PR.
+- Blockers: none
+- Exact next action after this checkpoint is pushed: after verified push run bun scripts/bootstrap-batch.ts "BDIV SAWG SAWS" with normal defaults; inspect all three fresh provider logs, counts, and unrequested hash/row checks, then checkpoint/push.
+- Status: Live acceptance audited; production bootstrap 1/3 published locally (CLOC/PFLD/SPDV), remaining 6 still explicitly pending.
 
 INITIAL HANDOFF PROMPTS (preserved)
 ===================================
@@ -228,6 +228,15 @@ CHRONOLOGICAL JOURNAL
 - Stable inputs separately validated: offline second fixture run identical bytes; literal cent-boundary regression retains new source cents while equal literal inputs parse identically. Commands: bun test -> 46 pass / 0 fail / 272 expectations; updater and live harness Bun build -> exit 0; git diff --check -> clean.
 - First failed attempt evidence is preserved in evidence/live-attempt-1, corrected evidence in evidence/live. SEC live holdings fallback remains unexercised/blocked; complete official holdings succeeded, SEC identity and cached-retention paths are tested offline.
 - Acceptance source acquisition/scope requirements are complete with above honest live variance caveat. Next: separate initial production bootstrap (authorized static app feed), never copying smoke files.
+
+### 2026-10-01 — Separate initial production bootstrap, batch 1/3 (completed)
+- Prior acceptance checkpoint 4159de127130150f1ab81f6614d7a51c433e6c1e push verified.
+- Added reusable Bun-only scripts/bootstrap-batch.ts and verify-feed.ts. Publisher invokes the actual CLI with exactly three explicit tickers/default pacing, writes separate publication evidence, checks unrequested hashes/index rows and verifies every page manifest/count. Validator can require all catalog funds to have data; seeded pending entries are not mislabeled complete.
+- Executed separately in production (NOT copying isolated smoke files): TICKERS="CLOC PFLD SPDV" VERBOSE=1 bun scripts/update-data.ts; actual CLI revision 4159de127130150f1ab81f6614d7a51c433e6c1e; 2026-10-01T05:39:17.870Z..2026-10-01T05:39:22.871Z; exit 0; all requested processed, skipped=0, failed=0. Normal REQUEST_SLEEP=1/CONCURRENCY=2/MAX_RETRIES=2 and providers enabled.
+- Fresh official detail/XLS/Yahoo for all three. Current feed: 9 funds / 454 holdings / 4178 history; CLOC 61/235/11 distributions, PFLD 338/1723/82, SPDV 55/2220/106. Six unrequested fund files/rows untouched; all requested manifests consistent.
+- Publication logs/results tracked in evidence/bootstrap/CLOC-PFLD-SPDV. api/aam changed only selected fund metadata/pages and index. Remaining six still explicit pending seeds; not claiming a complete nine-fund app yet.
+- Tests: bun test -> 47 pass / 0 fail / 276 expectations; bootstrap and updater Bun build -> exit 0; git diff --check -> clean. Added offline feed validator regression (pending vs complete counts).
+- Next batch is explicitly BDIV/SAWG/SAWS; do NOT run an unbounded refresh.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN

@@ -1,0 +1,9 @@
+[ product  ] CLOC: fresh official detail
+[ product  ] PFLD: fresh official detail
+[ holdings ] CLOC: 61 complete official XLS rows
+[ holdings ] PFLD: 338 complete official XLS rows
+[ chart    ] CLOC: 235 fresh Yahoo daily bars
+[ chart    ] PFLD: 1723 fresh Yahoo daily bars
+[ product  ] SPDV: fresh official detail
+[ holdings ] SPDV: 55 complete official XLS rows
+[ chart    ] SPDV: 2220 fresh Yahoo daily bars

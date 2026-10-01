@@ -1,4 +1,5 @@
 {
+ "generatedAt": "2026-10-01T05:39:17.891Z",
  "ticker": "SPDV",
  "name": "AAM S&P 500 High Dividend Value ETF",
  "category": "Equity",
@@ -16,33 +17,1505 @@
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/SPDV",
   "catalog": "https://www.aamlive.com/ETF",
-  "provider": "AAM official catalog; per-fund source refresh pending"
+  "holdingsDownload": "https://www.aamlive.com/ETF/Detail/SPDV",
+  "holdingsMethod": "POST WebForms __EVENTTARGET=btnETFHoldingsExport (no direct query URL)",
+  "yahooChart": "https://query1.finance.yahoo.com/v8/finance/chart/SPDV",
+  "holdingsSource": "aamlive.com full holdings XLS (fresh WebForms export POST)",
+  "historySource": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
+  "provider": "AAM official catalog/detail HTML and full XLS exports; SEC EDGAR N-PORT-P holdings fallback; Yahoo Finance market history/dividends"
+ },
+ "identifiers": {
+  "cusip": "26922A594",
+  "isin": "US26922A5948",
+  "indexTicker": null
  },
  "inception": {
-  "fundInceptionDate": "2017-11-28"
+  "fundInceptionDate": "2017-11-28",
+  "shareClassInceptionDate": null,
+  "exchange": "NYSE Arca"
+ },
+ "expenseRatio": {
+  "display": "0.29%",
+  "value": 0.29,
+  "gross": 0.29,
+  "net": 0.29
  },
  "nav": {
   "display": "$39.20",
   "value": 39.2,
   "asOfDate": "Sep 29 2026"
  },
+ "marketPrice": {
+  "display": "$39.19",
+  "value": 39.19,
+  "asOfDate": "Sep 29 2026"
+ },
+ "premiumDiscount": {
+  "display": "-0.03%",
+  "value": -0.03
+ },
+ "aum": {
+  "display": "$100.65 M",
+  "value": 100651085,
+  "asOfDate": "Sep 29 2026",
+  "source": "aamlive.com official fund net assets"
+ },
  "yields": {
+  "dividendYield": 3.52,
+  "dividendYieldText": "3.52%",
+  "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
   "secYield": 3.6,
-  "secYieldText": "3.60%"
+  "secYieldText": "3.60%",
+  "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
+  "subsidizedSecYield": 3.6,
+  "unsubsidizedSecYield": 3.6
+ },
+ "officialReturns": {
+  "asOfDate": "2026-06-30",
+  "ytd": 13.21,
+  "yr1": 23.18,
+  "yr3": 14.99,
+  "yr5": 8.91,
+  "yr10": null,
+  "sinceInception": 9.16
+ },
+ "returns": {
+  "monthEnd": {
+   "asOfDate": "Jun 30 2026",
+   "mo1": -1.6,
+   "qtd": 5,
+   "ytd": 13.21,
+   "yr1": 23.18,
+   "yr3": 14.99,
+   "yr5": 8.91,
+   "yr10": null,
+   "sinceInception": 9.16
+  },
+  "quarterEnd": {
+   "ytd": 13.21,
+   "yr1": 23.18,
+   "yr3": 14.99,
+   "yr5": 8.91,
+   "yr10": null,
+   "sinceInception": 9.16,
+   "asOfDate": "Jun 30 2026"
+  },
+  "derivedFrom": "official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date"
+ },
+ "distributions": {
+  "frequency": "Monthly",
+  "paymentsPerYear": 12,
+  "source": "aamlive.com recent distributions (first paginated grid page), merged with Yahoo full-history events and previous published events; issuer amounts win",
+  "headers": [
+   "Ex-Date",
+   "Amount",
+   "Record Date",
+   "Payable Date"
+  ],
+  "rows": [
+   [
+    "12/28/2017",
+    "0.073",
+    "",
+    ""
+   ],
+   [
+    "02/01/2018",
+    "0.046",
+    "",
+    ""
+   ],
+   [
+    "03/01/2018",
+    "0.099",
+    "",
+    ""
+   ],
+   [
+    "04/02/2018",
+    "0.054",
+    "",
+    ""
+   ],
+   [
+    "05/01/2018",
+    "0.041",
+    "",
+    ""
+   ],
+   [
+    "06/01/2018",
+    "0.092",
+    "",
+    ""
+   ],
+   [
+    "07/02/2018",
+    "0.068",
+    "",
+    ""
+   ],
+   [
+    "08/01/2018",
+    "0.054",
+    "",
+    ""
+   ],
+   [
+    "09/04/2018",
+    "0.104",
+    "",
+    ""
+   ],
+   [
+    "10/01/2018",
+    "0.051",
+    "",
+    ""
+   ],
+   [
+    "11/01/2018",
+    "0.039",
+    "",
+    ""
+   ],
+   [
+    "12/03/2018",
+    "0.077",
+    "",
+    ""
+   ],
+   [
+    "12/28/2018",
+    "0.135",
+    "",
+    ""
+   ],
+   [
+    "02/01/2019",
+    "0.047",
+    "",
+    ""
+   ],
+   [
+    "03/01/2019",
+    "0.07",
+    "",
+    ""
+   ],
+   [
+    "04/01/2019",
+    "0.09",
+    "",
+    ""
+   ],
+   [
+    "05/01/2019",
+    "0.026",
+    "",
+    ""
+   ],
+   [
+    "06/03/2019",
+    "0.046",
+    "",
+    ""
+   ],
+   [
+    "07/01/2019",
+    "0.092",
+    "",
+    ""
+   ],
+   [
+    "08/01/2019",
+    "0.093",
+    "",
+    ""
+   ],
+   [
+    "09/03/2019",
+    "0.092",
+    "",
+    ""
+   ],
+   [
+    "10/01/2019",
+    "0.093",
+    "",
+    ""
+   ],
+   [
+    "11/01/2019",
+    "0.096",
+    "",
+    ""
+   ],
+   [
+    "12/02/2019",
+    "0.11",
+    "",
+    ""
+   ],
+   [
+    "12/30/2019",
+    "0.116",
+    "",
+    ""
+   ],
+   [
+    "02/03/2020",
+    "0.104",
+    "",
+    ""
+   ],
+   [
+    "03/02/2020",
+    "0.089",
+    "",
+    ""
+   ],
+   [
+    "04/01/2020",
+    "0.092",
+    "",
+    ""
+   ],
+   [
+    "05/01/2020",
+    "0.068",
+    "",
+    ""
+   ],
+   [
+    "06/01/2020",
+    "0.08",
+    "",
+    ""
+   ],
+   [
+    "07/01/2020",
+    "0.084",
+    "",
+    ""
+   ],
+   [
+    "08/03/2020",
+    "0.084",
+    "",
+    ""
+   ],
+   [
+    "09/01/2020",
+    "0.087",
+    "",
+    ""
+   ],
+   [
+    "10/01/2020",
+    "0.073",
+    "",
+    ""
+   ],
+   [
+    "11/02/2020",
+    "0.047",
+    "",
+    ""
+   ],
+   [
+    "12/01/2020",
+    "0.065",
+    "",
+    ""
+   ],
+   [
+    "12/30/2020",
+    "0.088",
+    "",
+    ""
+   ],
+   [
+    "01/27/2021",
+    "0.076",
+    "",
+    ""
+   ],
+   [
+    "02/24/2021",
+    "0.085",
+    "",
+    ""
+   ],
+   [
+    "03/29/2021",
+    "0.089",
+    "",
+    ""
+   ],
+   [
+    "04/28/2021",
+    "0.087",
+    "",
+    ""
+   ],
+   [
+    "05/26/2021",
+    "0.083",
+    "",
+    ""
+   ],
+   [
+    "06/28/2021",
+    "0.088",
+    "",
+    ""
+   ],
+   [
+    "07/28/2021",
+    "0.061",
+    "",
+    ""
+   ],
+   [
+    "08/27/2021",
+    "0.082",
+    "",
+    ""
+   ],
+   [
+    "09/28/2021",
+    "0.024",
+    "",
+    ""
+   ],
+   [
+    "10/27/2021",
+    "0.059",
+    "",
+    ""
+   ],
+   [
+    "11/26/2021",
+    "0.113",
+    "",
+    ""
+   ],
+   [
+    "12/29/2021",
+    "0.106",
+    "",
+    ""
+   ],
+   [
+    "01/27/2022",
+    "0.097",
+    "",
+    ""
+   ],
+   [
+    "02/24/2022",
+    "0.096",
+    "",
+    ""
+   ],
+   [
+    "03/29/2022",
+    "0.091",
+    "",
+    ""
+   ],
+   [
+    "04/27/2022",
+    "0.086",
+    "",
+    ""
+   ],
+   [
+    "05/26/2022",
+    "0.086",
+    "",
+    ""
+   ],
+   [
+    "06/28/2022",
+    "0.087",
+    "",
+    ""
+   ],
+   [
+    "07/27/2022",
+    "0.086",
+    "",
+    ""
+   ],
+   [
+    "08/29/2022",
+    "0.095",
+    "",
+    ""
+   ],
+   [
+    "09/28/2022",
+    "0.061",
+    "",
+    ""
+   ],
+   [
+    "10/27/2022",
+    "0.075",
+    "",
+    ""
+   ],
+   [
+    "11/28/2022",
+    "0.095",
+    "",
+    ""
+   ],
+   [
+    "12/29/2022",
+    "0.133",
+    "",
+    ""
+   ],
+   [
+    "01/30/2023",
+    "0.095",
+    "",
+    ""
+   ],
+   [
+    "02/24/2023",
+    "0.095",
+    "",
+    ""
+   ],
+   [
+    "03/29/2023",
+    "0.09",
+    "",
+    ""
+   ],
+   [
+    "04/26/2023",
+    "0.09",
+    "",
+    ""
+   ],
+   [
+    "05/26/2023",
+    "0.09",
+    "",
+    ""
+   ],
+   [
+    "06/28/2023",
+    "0.09",
+    "",
+    ""
+   ],
+   [
+    "07/27/2023",
+    "0.09",
+    "",
+    ""
+   ],
+   [
+    "08/29/2023",
+    "0.09",
+    "",
+    ""
+   ],
+   [
+    "09/27/2023",
+    "0.085",
+    "",
+    ""
+   ],
+   [
+    "10/27/2023",
+    "0.084",
+    "",
+    ""
+   ],
+   [
+    "11/28/2023",
+    "0.095",
+    "",
+    ""
+   ],
+   [
+    "12/28/2023",
+    "0.171",
+    "",
+    ""
+   ],
+   [
+    "01/29/2024",
+    "0.095",
+    "",
+    ""
+   ],
+   [
+    "02/27/2024",
+    "0.095",
+    "",
+    ""
+   ],
+   [
+    "03/26/2024",
+    "0.095",
+    "",
+    ""
+   ],
+   [
+    "04/26/2024",
+    "0.095",
+    "",
+    ""
+   ],
+   [
+    "05/30/2024",
+    "0.095",
+    "",
+    ""
+   ],
+   [
+    "06/27/2024",
+    "0.095",
+    "",
+    ""
+   ],
+   [
+    "07/30/2024",
+    "0.095",
+    "",
+    ""
+   ],
+   [
+    "08/29/2024",
+    "0.095",
+    "",
+    ""
+   ],
+   [
+    "09/27/2024",
+    "0.095",
+    "",
+    ""
+   ],
+   [
+    "10/30/2024",
+    "0.034",
+    "",
+    ""
+   ],
+   [
+    "11/27/2024",
+    "0.11",
+    "",
+    ""
+   ],
+   [
+    "12/31/2024",
+    "0.151",
+    "",
+    ""
+   ],
+   [
+    "01/30/2025",
+    "0.11",
+    "",
+    ""
+   ],
+   [
+    "02/27/2025",
+    "0.11",
+    "",
+    ""
+   ],
+   [
+    "03/28/2025",
+    "0.11",
+    "",
+    ""
+   ],
+   [
+    "04/29/2025",
+    "0.11",
+    "",
+    ""
+   ],
+   [
+    "05/29/2025",
+    "0.11",
+    "",
+    ""
+   ],
+   [
+    "06/27/2025",
+    "0.11",
+    "",
+    ""
+   ],
+   [
+    "07/30/2025",
+    "0.105",
+    "",
+    ""
+   ],
+   [
+    "08/28/2025",
+    "0.105",
+    "",
+    ""
+   ],
+   [
+    "09/29/2025",
+    "0.105",
+    "",
+    ""
+   ],
+   [
+    "10/30/2025",
+    "0.105",
+    "",
+    ""
+   ],
+   [
+    "11/26/2025",
+    "0.105",
+    "",
+    ""
+   ],
+   [
+    "12/31/2025",
+    "0.14873",
+    "2025-12-31",
+    "2026-01-05"
+   ],
+   [
+    "01/30/2026",
+    "0.1",
+    "2026-01-30",
+    "2026-02-03"
+   ],
+   [
+    "02/27/2026",
+    "0.1",
+    "2026-02-27",
+    "2026-03-03"
+   ],
+   [
+    "03/31/2026",
+    "0.1",
+    "2026-03-31",
+    "2026-04-02"
+   ],
+   [
+    "04/30/2026",
+    "0.1",
+    "2026-04-30",
+    "2026-05-04"
+   ],
+   [
+    "05/29/2026",
+    "0.11",
+    "2026-05-29",
+    "2026-06-02"
+   ],
+   [
+    "06/30/2026",
+    "0.115",
+    "2026-06-30",
+    "2026-07-02"
+   ],
+   [
+    "07/31/2026",
+    "0.115",
+    "2026-07-31",
+    "2026-08-04"
+   ],
+   [
+    "08/28/2026",
+    "0.115",
+    "2026-08-28",
+    "2026-09-01"
+   ],
+   [
+    "09/30/2026",
+    "0.115",
+    "2026-09-30",
+    "2026-10-02"
+   ]
+  ],
+  "events": [
+   {
+    "epoch": 1514419200,
+    "amount": 0.073,
+    "exDate": "2017-12-28",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1517443200,
+    "amount": 0.046,
+    "exDate": "2018-02-01",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1519862400,
+    "amount": 0.099,
+    "exDate": "2018-03-01",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1522627200,
+    "amount": 0.054,
+    "exDate": "2018-04-02",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1525132800,
+    "amount": 0.041,
+    "exDate": "2018-05-01",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1527811200,
+    "amount": 0.092,
+    "exDate": "2018-06-01",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1530489600,
+    "amount": 0.068,
+    "exDate": "2018-07-02",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1533081600,
+    "amount": 0.054,
+    "exDate": "2018-08-01",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1536019200,
+    "amount": 0.104,
+    "exDate": "2018-09-04",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1538352000,
+    "amount": 0.051,
+    "exDate": "2018-10-01",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1541030400,
+    "amount": 0.039,
+    "exDate": "2018-11-01",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1543795200,
+    "amount": 0.077,
+    "exDate": "2018-12-03",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1545955200,
+    "amount": 0.135,
+    "exDate": "2018-12-28",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1548979200,
+    "amount": 0.047,
+    "exDate": "2019-02-01",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1551398400,
+    "amount": 0.07,
+    "exDate": "2019-03-01",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1554076800,
+    "amount": 0.09,
+    "exDate": "2019-04-01",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1556668800,
+    "amount": 0.026,
+    "exDate": "2019-05-01",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1559520000,
+    "amount": 0.046,
+    "exDate": "2019-06-03",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1561939200,
+    "amount": 0.092,
+    "exDate": "2019-07-01",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1564617600,
+    "amount": 0.093,
+    "exDate": "2019-08-01",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1567468800,
+    "amount": 0.092,
+    "exDate": "2019-09-03",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1569888000,
+    "amount": 0.093,
+    "exDate": "2019-10-01",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1572566400,
+    "amount": 0.096,
+    "exDate": "2019-11-01",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1575244800,
+    "amount": 0.11,
+    "exDate": "2019-12-02",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1577664000,
+    "amount": 0.116,
+    "exDate": "2019-12-30",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1580688000,
+    "amount": 0.104,
+    "exDate": "2020-02-03",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1583107200,
+    "amount": 0.089,
+    "exDate": "2020-03-02",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1585699200,
+    "amount": 0.092,
+    "exDate": "2020-04-01",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1588291200,
+    "amount": 0.068,
+    "exDate": "2020-05-01",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1590969600,
+    "amount": 0.08,
+    "exDate": "2020-06-01",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1593561600,
+    "amount": 0.084,
+    "exDate": "2020-07-01",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1596412800,
+    "amount": 0.084,
+    "exDate": "2020-08-03",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1598918400,
+    "amount": 0.087,
+    "exDate": "2020-09-01",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1601510400,
+    "amount": 0.073,
+    "exDate": "2020-10-01",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1604275200,
+    "amount": 0.047,
+    "exDate": "2020-11-02",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1606780800,
+    "amount": 0.065,
+    "exDate": "2020-12-01",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1609286400,
+    "amount": 0.088,
+    "exDate": "2020-12-30",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1611705600,
+    "amount": 0.076,
+    "exDate": "2021-01-27",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1614124800,
+    "amount": 0.085,
+    "exDate": "2021-02-24",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1616976000,
+    "amount": 0.089,
+    "exDate": "2021-03-29",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1619568000,
+    "amount": 0.087,
+    "exDate": "2021-04-28",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1621987200,
+    "amount": 0.083,
+    "exDate": "2021-05-26",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1624838400,
+    "amount": 0.088,
+    "exDate": "2021-06-28",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1627430400,
+    "amount": 0.061,
+    "exDate": "2021-07-28",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1630022400,
+    "amount": 0.082,
+    "exDate": "2021-08-27",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1632787200,
+    "amount": 0.024,
+    "exDate": "2021-09-28",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1635292800,
+    "amount": 0.059,
+    "exDate": "2021-10-27",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1637884800,
+    "amount": 0.113,
+    "exDate": "2021-11-26",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1640736000,
+    "amount": 0.106,
+    "exDate": "2021-12-29",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1643241600,
+    "amount": 0.097,
+    "exDate": "2022-01-27",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1645660800,
+    "amount": 0.096,
+    "exDate": "2022-02-24",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1648512000,
+    "amount": 0.091,
+    "exDate": "2022-03-29",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1651017600,
+    "amount": 0.086,
+    "exDate": "2022-04-27",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1653523200,
+    "amount": 0.086,
+    "exDate": "2022-05-26",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1656374400,
+    "amount": 0.087,
+    "exDate": "2022-06-28",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1658880000,
+    "amount": 0.086,
+    "exDate": "2022-07-27",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1661731200,
+    "amount": 0.095,
+    "exDate": "2022-08-29",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1664323200,
+    "amount": 0.061,
+    "exDate": "2022-09-28",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1666828800,
+    "amount": 0.075,
+    "exDate": "2022-10-27",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1669593600,
+    "amount": 0.095,
+    "exDate": "2022-11-28",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1672272000,
+    "amount": 0.133,
+    "exDate": "2022-12-29",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1675036800,
+    "amount": 0.095,
+    "exDate": "2023-01-30",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1677196800,
+    "amount": 0.095,
+    "exDate": "2023-02-24",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1680048000,
+    "amount": 0.09,
+    "exDate": "2023-03-29",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1682467200,
+    "amount": 0.09,
+    "exDate": "2023-04-26",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1685059200,
+    "amount": 0.09,
+    "exDate": "2023-05-26",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1687910400,
+    "amount": 0.09,
+    "exDate": "2023-06-28",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1690416000,
+    "amount": 0.09,
+    "exDate": "2023-07-27",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1693267200,
+    "amount": 0.09,
+    "exDate": "2023-08-29",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1695772800,
+    "amount": 0.085,
+    "exDate": "2023-09-27",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1698364800,
+    "amount": 0.084,
+    "exDate": "2023-10-27",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1701129600,
+    "amount": 0.095,
+    "exDate": "2023-11-28",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1703721600,
+    "amount": 0.171,
+    "exDate": "2023-12-28",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1706486400,
+    "amount": 0.095,
+    "exDate": "2024-01-29",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1708992000,
+    "amount": 0.095,
+    "exDate": "2024-02-27",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1711411200,
+    "amount": 0.095,
+    "exDate": "2024-03-26",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1714089600,
+    "amount": 0.095,
+    "exDate": "2024-04-26",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1717027200,
+    "amount": 0.095,
+    "exDate": "2024-05-30",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1719446400,
+    "amount": 0.095,
+    "exDate": "2024-06-27",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1722297600,
+    "amount": 0.095,
+    "exDate": "2024-07-30",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1724889600,
+    "amount": 0.095,
+    "exDate": "2024-08-29",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1727395200,
+    "amount": 0.095,
+    "exDate": "2024-09-27",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1730246400,
+    "amount": 0.034,
+    "exDate": "2024-10-30",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1732665600,
+    "amount": 0.11,
+    "exDate": "2024-11-27",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1735603200,
+    "amount": 0.151,
+    "exDate": "2024-12-31",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1738195200,
+    "amount": 0.11,
+    "exDate": "2025-01-30",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1740614400,
+    "amount": 0.11,
+    "exDate": "2025-02-27",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1743120000,
+    "amount": 0.11,
+    "exDate": "2025-03-28",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1745884800,
+    "amount": 0.11,
+    "exDate": "2025-04-29",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1748476800,
+    "amount": 0.11,
+    "exDate": "2025-05-29",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1750982400,
+    "amount": 0.11,
+    "exDate": "2025-06-27",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1753833600,
+    "amount": 0.105,
+    "exDate": "2025-07-30",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1756339200,
+    "amount": 0.105,
+    "exDate": "2025-08-28",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1759104000,
+    "amount": 0.105,
+    "exDate": "2025-09-29",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1761782400,
+    "amount": 0.105,
+    "exDate": "2025-10-30",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1764115200,
+    "amount": 0.105,
+    "exDate": "2025-11-26",
+    "recordDate": "",
+    "payDate": ""
+   },
+   {
+    "epoch": 1767139200,
+    "amount": 0.14873,
+    "exDate": "2025-12-31",
+    "recordDate": "2025-12-31",
+    "payDate": "2026-01-05"
+   },
+   {
+    "epoch": 1769731200,
+    "amount": 0.1,
+    "exDate": "2026-01-30",
+    "recordDate": "2026-01-30",
+    "payDate": "2026-02-03"
+   },
+   {
+    "epoch": 1772150400,
+    "amount": 0.1,
+    "exDate": "2026-02-27",
+    "recordDate": "2026-02-27",
+    "payDate": "2026-03-03"
+   },
+   {
+    "epoch": 1774915200,
+    "amount": 0.1,
+    "exDate": "2026-03-31",
+    "recordDate": "2026-03-31",
+    "payDate": "2026-04-02"
+   },
+   {
+    "epoch": 1777507200,
+    "amount": 0.1,
+    "exDate": "2026-04-30",
+    "recordDate": "2026-04-30",
+    "payDate": "2026-05-04"
+   },
+   {
+    "epoch": 1780012800,
+    "amount": 0.11,
+    "exDate": "2026-05-29",
+    "recordDate": "2026-05-29",
+    "payDate": "2026-06-02"
+   },
+   {
+    "epoch": 1782777600,
+    "amount": 0.115,
+    "exDate": "2026-06-30",
+    "recordDate": "2026-06-30",
+    "payDate": "2026-07-02"
+   },
+   {
+    "epoch": 1785456000,
+    "amount": 0.115,
+    "exDate": "2026-07-31",
+    "recordDate": "2026-07-31",
+    "payDate": "2026-08-04"
+   },
+   {
+    "epoch": 1787875200,
+    "amount": 0.115,
+    "exDate": "2026-08-28",
+    "recordDate": "2026-08-28",
+    "payDate": "2026-09-01"
+   },
+   {
+    "epoch": 1790726400,
+    "amount": 0.115,
+    "exDate": "2026-09-30",
+    "recordDate": "2026-09-30",
+    "payDate": "2026-10-02"
+   }
+  ]
  },
  "holdings": {
-  "pages": [],
+  "pages": [
+   "holdings/001.json"
+  ],
   "pageSize": 250,
-  "totalRows": 0,
-  "asOfDate": null,
-  "source": "not yet refreshed",
-  "status": "unavailable"
+  "totalRows": 55,
+  "asOfDate": "2026-10-01",
+  "asOf": "Oct 01 2026",
+  "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
+  "status": "available"
  },
  "history": {
-  "pages": [],
+  "pages": [
+   "history/001.json",
+   "history/002.json",
+   "history/003.json"
+  ],
   "pageSize": 1000,
-  "totalRows": 0,
-  "source": "not yet refreshed",
-  "status": "unavailable"
+  "totalRows": 2220,
+  "asOf": "Sep 30 2026",
+  "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
+  "status": "available"
  }
 }
