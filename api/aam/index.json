@@ -1,6 +1,6 @@
 {
- "generatedAt": "2026-10-01T05:40:08.697Z",
- "catalogReadAt": "2026-10-01T05:40:08.697Z",
+ "generatedAt": "2026-10-01T05:40:36.723Z",
+ "catalogReadAt": "2026-10-01T05:40:36.723Z",
  "source": {
   "provider": "AAM ETFs",
   "site": "https://www.aamlive.com",
@@ -10,8 +10,8 @@
  },
  "counts": {
   "funds": 9,
-  "holdings": 607,
-  "history": 5809
+  "holdings": 1162,
+  "history": 7623
  },
  "funds": [
   {
@@ -156,16 +156,67 @@
    "category": "Fixed Income",
    "fundPage": "https://www.aamlive.com/ETF/Detail/LODI",
    "dataFile": "./funds/LODI/meta.json",
+   "cusip": "26922B428",
+   "isin": "US26922B4288",
+   "ter": "0.39%",
+   "terValue": 0.39,
    "nav": "$24.94",
    "navValue": 24.94,
+   "aum": "$106.76 M",
+   "aumValue": 106756100,
    "asOfDate": "Sep 29 2026",
    "inceptionDate": "Dec 03 2024",
-   "metrics": {
-    "secYield": 5.17,
-    "secYieldText": "5.17%"
+   "exchange": "NYSE Arca",
+   "closePrice": "$24.97",
+   "closePriceValue": 24.97,
+   "premiumDiscount": "0.12%",
+   "premiumDiscountValue": 0.12,
+   "distributions": {
+    "frequency": "Monthly",
+    "exDate": "09/30/2026",
+    "dividend": "0.11"
    },
-   "holdings": 0,
-   "history": 0
+   "returns": {
+    "monthEnd": {
+     "asOfDate": "Jun 30 2026",
+     "mo1": 0.44,
+     "qtd": 1.26,
+     "ytd": 1.95,
+     "yr1": 5.08,
+     "yr3": null,
+     "yr5": null,
+     "yr10": null,
+     "sinceInception": 5.43
+    },
+    "quarterEnd": {
+     "ytd": 1.95,
+     "yr1": 5.08,
+     "yr3": null,
+     "yr5": null,
+     "yr10": null,
+     "sinceInception": 5.43,
+     "asOfDate": "Jun 30 2026"
+    },
+    "derivedFrom": "official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date"
+   },
+   "metrics": {
+    "ytd": 1.95,
+    "tr1y": 5.08,
+    "tr3y": null,
+    "tr5y": null,
+    "tr10y": null,
+    "cagr3y": null,
+    "cagr5y": null,
+    "cagr10y": null,
+    "siAnn": 5.43,
+    "dividendYield": 5.29,
+    "dividendYieldText": "5.29%",
+    "secYield": 5.17,
+    "secYieldText": "5.17%",
+    "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)"
+   },
+   "holdings": 218,
+   "history": 456
   },
   {
    "ticker": "PFLD",
@@ -445,16 +496,67 @@
    "category": "Equity",
    "fundPage": "https://www.aamlive.com/ETF/Detail/TIIV",
    "dataFile": "./funds/TIIV/meta.json",
+   "cusip": "268961802",
+   "isin": "US2689618021",
+   "ter": "0.54%",
+   "terValue": 0.54,
    "nav": "$30.13",
    "navValue": 30.13,
+   "aum": "$32.36 M",
+   "aumValue": 32359761.66,
    "asOfDate": "Sep 29 2026",
    "inceptionDate": "Jul 24 2025",
-   "metrics": {
-    "secYield": 2.47,
-    "secYieldText": "2.47%"
+   "exchange": "NYSE Arca",
+   "closePrice": "$30.10",
+   "closePriceValue": 30.1,
+   "premiumDiscount": "-0.10%",
+   "premiumDiscountValue": -0.1,
+   "distributions": {
+    "frequency": "Semi-annually",
+    "exDate": "06/30/2026",
+    "dividend": "0.32"
    },
-   "holdings": 0,
-   "history": 0
+   "returns": {
+    "monthEnd": {
+     "asOfDate": "Jun 30 2026",
+     "mo1": 0.24,
+     "qtd": 4.74,
+     "ytd": 9.58,
+     "yr1": null,
+     "yr3": null,
+     "yr5": null,
+     "yr10": null,
+     "sinceInception": null
+    },
+    "quarterEnd": {
+     "ytd": 9.58,
+     "yr1": null,
+     "yr3": null,
+     "yr5": null,
+     "yr10": null,
+     "sinceInception": null,
+     "asOfDate": "Jun 30 2026"
+    },
+    "derivedFrom": "official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date"
+   },
+   "metrics": {
+    "ytd": 9.58,
+    "tr1y": null,
+    "tr3y": null,
+    "tr5y": null,
+    "tr10y": null,
+    "cagr3y": null,
+    "cagr5y": null,
+    "cagr10y": null,
+    "siAnn": null,
+    "dividendYield": 2.13,
+    "dividendYieldText": "2.13%",
+    "secYield": 2.47,
+    "secYieldText": "2.47%",
+    "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)"
+   },
+   "holdings": 67,
+   "history": 298
   },
   {
    "ticker": "TRFM",
@@ -462,16 +564,67 @@
    "category": "Equity",
    "fundPage": "https://www.aamlive.com/ETF/Detail/TRFM",
    "dataFile": "./funds/TRFM/meta.json",
+   "cusip": "26922B683",
+   "isin": "US26922B6838",
+   "ter": "0.49%",
+   "terValue": 0.49,
    "nav": "$59.16",
    "navValue": 59.16,
+   "aum": "$292.82 M",
+   "aumValue": 292820715,
    "asOfDate": "Sep 29 2026",
    "inceptionDate": "Jul 11 2022",
-   "metrics": {
-    "secYield": 0.13,
-    "secYieldText": "0.13%"
+   "exchange": "NYSE Arca",
+   "closePrice": "$59.19",
+   "closePriceValue": 59.19,
+   "premiumDiscount": "0.05%",
+   "premiumDiscountValue": 0.05,
+   "distributions": {
+    "frequency": "Annually",
+    "exDate": "12/31/2025",
+    "dividend": "0.08101"
    },
-   "holdings": 0,
-   "history": 0
+   "returns": {
+    "monthEnd": {
+     "asOfDate": "Jun 30 2026",
+     "mo1": 3.9,
+     "qtd": 33.35,
+     "ytd": 32.74,
+     "yr1": 46.75,
+     "yr3": 30.27,
+     "yr5": null,
+     "yr10": null,
+     "sinceInception": 27.64
+    },
+    "quarterEnd": {
+     "ytd": 32.74,
+     "yr1": 46.75,
+     "yr3": 30.27,
+     "yr5": null,
+     "yr10": null,
+     "sinceInception": 27.64,
+     "asOfDate": "Jun 30 2026"
+    },
+    "derivedFrom": "official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date"
+   },
+   "metrics": {
+    "ytd": 32.74,
+    "tr1y": 46.75,
+    "tr3y": 121.07,
+    "tr5y": null,
+    "tr10y": null,
+    "cagr3y": 30.27,
+    "cagr5y": null,
+    "cagr10y": null,
+    "siAnn": 27.64,
+    "dividendYield": 0.14,
+    "dividendYieldText": "0.14%",
+    "secYield": 0.13,
+    "secYieldText": "0.13%",
+    "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)"
+   },
+   "holdings": 270,
+   "history": 1060
   }
  ]
 }

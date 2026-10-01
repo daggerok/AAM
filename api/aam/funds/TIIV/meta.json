@@ -1,4 +1,5 @@
 {
+ "generatedAt": "2026-10-01T05:40:36.723Z",
  "ticker": "TIIV",
  "name": "AAM Todd International Intrinsic Value ETF",
  "category": "Equity",
@@ -16,33 +17,151 @@
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/TIIV",
   "catalog": "https://www.aamlive.com/ETF",
-  "provider": "AAM official catalog; per-fund source refresh pending"
+  "holdingsDownload": "https://www.aamlive.com/ETF/Detail/TIIV",
+  "holdingsMethod": "POST WebForms __EVENTTARGET=btnETFHoldingsExport (no direct query URL)",
+  "yahooChart": "https://query1.finance.yahoo.com/v8/finance/chart/TIIV",
+  "holdingsSource": "aamlive.com full holdings XLS (fresh WebForms export POST)",
+  "historySource": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
+  "provider": "AAM official catalog/detail HTML and full XLS exports; SEC EDGAR N-PORT-P holdings fallback; Yahoo Finance market history/dividends"
+ },
+ "identifiers": {
+  "cusip": "268961802",
+  "isin": "US2689618021",
+  "indexTicker": null
  },
  "inception": {
-  "fundInceptionDate": "2025-07-24"
+  "fundInceptionDate": "2025-07-24",
+  "shareClassInceptionDate": null,
+  "exchange": "NYSE Arca"
+ },
+ "expenseRatio": {
+  "display": "0.54%",
+  "value": 0.54,
+  "gross": 0.54,
+  "net": 0.54
  },
  "nav": {
   "display": "$30.13",
   "value": 30.13,
   "asOfDate": "Sep 29 2026"
  },
+ "marketPrice": {
+  "display": "$30.10",
+  "value": 30.1,
+  "asOfDate": "Sep 29 2026"
+ },
+ "premiumDiscount": {
+  "display": "-0.10%",
+  "value": -0.1
+ },
+ "aum": {
+  "display": "$32.36 M",
+  "value": 32359761.66,
+  "asOfDate": "Sep 29 2026",
+  "source": "aamlive.com official fund net assets"
+ },
  "yields": {
+  "dividendYield": 2.13,
+  "dividendYieldText": "2.13%",
+  "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
   "secYield": 2.47,
-  "secYieldText": "2.47%"
+  "secYieldText": "2.47%",
+  "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
+  "subsidizedSecYield": 2.47,
+  "unsubsidizedSecYield": 2.47
+ },
+ "officialReturns": {
+  "asOfDate": "2026-06-30",
+  "ytd": 9.58,
+  "yr1": null,
+  "yr3": null,
+  "yr5": null,
+  "yr10": null,
+  "sinceInception": 20.44
+ },
+ "returns": {
+  "monthEnd": {
+   "asOfDate": "Jun 30 2026",
+   "mo1": 0.24,
+   "qtd": 4.74,
+   "ytd": 9.58,
+   "yr1": null,
+   "yr3": null,
+   "yr5": null,
+   "yr10": null,
+   "sinceInception": null
+  },
+  "quarterEnd": {
+   "ytd": 9.58,
+   "yr1": null,
+   "yr3": null,
+   "yr5": null,
+   "yr10": null,
+   "sinceInception": null,
+   "asOfDate": "Jun 30 2026"
+  },
+  "derivedFrom": "official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date"
+ },
+ "distributions": {
+  "frequency": "Semi-annually",
+  "paymentsPerYear": 2,
+  "source": "aamlive.com recent distributions (first paginated grid page), merged with Yahoo full-history events and previous published events; issuer amounts win",
+  "headers": [
+   "Ex-Date",
+   "Amount",
+   "Record Date",
+   "Payable Date"
+  ],
+  "rows": [
+   [
+    "12/31/2025",
+    "0.62926",
+    "2025-12-31",
+    "2026-01-05"
+   ],
+   [
+    "06/30/2026",
+    "0.32",
+    "2026-06-30",
+    "2026-07-02"
+   ]
+  ],
+  "events": [
+   {
+    "epoch": 1767139200,
+    "amount": 0.62926,
+    "exDate": "2025-12-31",
+    "recordDate": "2025-12-31",
+    "payDate": "2026-01-05"
+   },
+   {
+    "epoch": 1782777600,
+    "amount": 0.32,
+    "exDate": "2026-06-30",
+    "recordDate": "2026-06-30",
+    "payDate": "2026-07-02"
+   }
+  ]
  },
  "holdings": {
-  "pages": [],
+  "pages": [
+   "holdings/001.json"
+  ],
   "pageSize": 250,
-  "totalRows": 0,
-  "asOfDate": null,
-  "source": "not yet refreshed",
-  "status": "unavailable"
+  "totalRows": 67,
+  "asOfDate": "2026-10-01",
+  "asOf": "Oct 01 2026",
+  "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
+  "status": "available"
  },
  "history": {
-  "pages": [],
+  "pages": [
+   "history/001.json"
+  ],
   "pageSize": 1000,
-  "totalRows": 0,
-  "source": "not yet refreshed",
-  "status": "unavailable"
+  "totalRows": 298,
+  "asOf": "Sep 30 2026",
+  "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
+  "status": "available"
  }
 }
