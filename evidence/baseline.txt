@@ -1,7 +1,0 @@
-2026-10-01 baseline
-Target main/origin/main: 7bf2d91; no code/tests in target baseline.
-Reference: daggerok/JPMorgan main 8ce0ddca58b5459dd7df98f22463fb31afa82f2b
-Bun: 1.4.2
-Command in pinned reference: bun test scripts/update-data.test.ts
-Result: exit 0, 116 pass, 0 fail, 437 expect() calls, 81ms.
-No pre-existing reference test failure was observed; no sibling was modified.
