@@ -1,0 +1,13 @@
+[
+  {
+    "file": "funds/PFLD/history/001.json",
+    "differences": [
+      {
+        "path": "rows.908.Adj Close",
+        "previous": "16.91",
+        "current": "16.92",
+        "date": "Jul 03 2023"
+      }
+    ]
+  }
+]

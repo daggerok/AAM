@@ -1,0 +1,26 @@
+name: Offline checks
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - run: bun test
+      - run: bun scripts/verify-feed.ts --require-complete
+      # Transpilation only; this is NOT semantic TypeScript validation.
+      - run: bun build --target=bun scripts/update-data.ts --outfile=/dev/null
+      - run: bun build --target=browser app.tsx --outfile=/dev/null
+      - run: git diff --check

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!-- Synthetic offline fixture: schema matches public NPORT-P; series id is deliberately non-live. -->
+<edgarSubmission><formData>
+<genInfo><regName>ETF Series Solutions</regName><regCik>1540305</regCik><seriesName>AAM S&amp;P 500 High Dividend Value ETF</seriesName><seriesId>S000000001</seriesId><repPdDate>2026-06-30</repPdDate></genInfo>
+<fundInfo><netAssets>100000000</netAssets></fundInfo>
+<invstOrSecs>
+<invstOrSec><name>Microsoft Corp</name><cusip>594918104</cusip><balance>100</balance><valUSD>50000</valUSD><pctVal>0.05</pctVal><assetCat>EC</assetCat></invstOrSec>
+<invstOrSec><name>Bond Issuer 6% 2035</name><cusip>N/A</cusip><identifiers><isin value="US0000000001"/></identifiers><balance>100000</balance><valUSD>99000</valUSD><pctVal>0.099</pctVal><assetCat>DBT</assetCat></invstOrSec>
+<invstOrSec><name>Unknown private security</name><cusip>N/A</cusip><balance></balance><pctVal></pctVal><assetCat>OTHER</assetCat></invstOrSec>
+</invstOrSecs></formData></edgarSubmission>

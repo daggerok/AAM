@@ -1,0 +1,9 @@
+2026-10-01 — Workflow dispatch platform constraint
+Official source: https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#onworkflow_dispatchinputs
+Retrieved live (GitHub Docs HTML, not assumptions):
+  "The maximum number of top-level properties for inputs is 25."
+  "The maximum payload for inputs is 65,535 characters."
+AAM currently supports exactly 27 canonical controls (see scripts/update-data.config.json).
+The embedded plan asks one manual input per updater ENV variable (1:1). A single workflow_dispatch with all 27 top-level fields would be invalid.
+Awaiting user's choice: one workflow with 24 individual fields + one structured 3-control group; or split manual workflows preserving direct inputs across files.
+No invalid workflow was published, no settings removed, no provider skipped, no extra refresh performed.
