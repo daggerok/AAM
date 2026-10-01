@@ -6,12 +6,13 @@ CURRENT STATE
 - Repository: https://github.com/daggerok/AAM
 - Branch: feat/aam-etfs; PR: none (GitHub REST verified 2026-10-01).
 - Reconciliation: clean baseline HEAD/main/origin/main = 7bf2d91; no concurrent changes or existing PRs. Original baseline prose archived below, full original plan preserved.
-- Last confirmed pushed SHA: 7bf2d91 (origin/main baseline). Current checkpoint is not yet claimed pushed; identify containing commit via git log. Each next checkpoint records the previous verified push.
-- Completed: full 823-line worklog read in non-truncated chunks; Git/remote/PR audit; feature branch created; pinned sibling references; issuer catalog and SPDV/PFLD/CLOC HTTP 200; SEC submissions HTTP 200.
-- Active: endpoint/Excel completeness research and Bun setup.
-- Remaining: complete source research; scaffold/helpers/parsers + offline tests; updater orchestration; isolated live runs/evidence; UI copy/parity/browser checks; CI/dependabot; README/metadata; PR.
-- Blockers: none. Authentication available at runtime only; never persist credentials.
-- Exact next action after this checkpoint is pushed: verify Excel postback response/full holdings and dated fixtures, inspect pinned updater helpers/schema, install Bun, checkpoint research before implementation.
+- Last confirmed pushed SHA: e65f3f4563c424c799d3a8655d522b05dcf3e2f7 (verified against remote before this checkpoint; containing commit identifiable via git log).
+- Completed: baseline recovery/branch/reference pins plus live catalog/detail/Excel/chart research; Bun 1.4.2 installed.
+- Active: preparing minimal dated fixtures and Bun-only scaffold.
+- Remaining: scaffold/helpers/parsers/tests; updater orchestration; isolated repeated live acceptance; parity UI/browser tests; CI/dependabot; README/metadata; PR.
+- Blockers: none
+- Exact next action after this checkpoint is pushed: create package.json + bun.lock with pinned types; copy shared output/SEC/chart/metrics helpers with correctly placed Bun reference; add dated issuer fragments/XLS fixtures and offline parser tests.
+- Status: Research verified; implementation pending.
 
 INITIAL HANDOFF PROMPTS (preserved)
 ===================================
@@ -136,6 +137,22 @@ CHRONOLOGICAL JOURNAL
 - Read pinned sibling About: shared description pattern, homepage https://daggerok.github.io/JPMorgan/, 20 standard/brand topics. Target About initially description=null, homepage=null, topics=[]. No metadata mutation yet.
 - Local tool baseline: Git/Python available; Bun/gh/ripgrep absent. gh is not required (REST helper); use grep instead of ripgrep. Bun installation pending. No baseline tests exist in target.
 - Publication scope clarified: only daggerok/AAM; open PR but DO NOT merge. Embedded cross-sibling doc PR step requires separate authorization and is explicitly deferred, not silently performed.
+
+### 2026-10-01 — Source completeness and tooling research (completed)
+- Previous checkpoint e65f3f4563c424c799d3a8655d522b05dcf3e2f7 pushed and verified by exact HEAD vs ls-remote comparison.
+- Bun installed outside the repo under ~/.cache/bun (version 1.4.2). Target still has no tests/code; no baseline unit tests to run.
+- Issuer is ASP.NET WebForms/Telerik with server-rendered catalog and detail grids. Active catalog: BDIV, CLOC, LODI, PFLD, SAWG, SAWS, SPDV, TIIV, TRFM. Initial grid page is only 10 holdings / 10 distributions; never publish it as a complete portfolio.
+- Export verified with a real form POST to https://www.aamlive.com/ETF/Detail/{TICKER}, using fresh hidden __VIEWSTATE/__VIEWSTATEGENERATOR fields and __EVENTTARGET=ctl00$mainContentPlaceHolder$ResponsiveETFsDetailsControl$btnETFHoldingsExport, empty __EVENTARGUMENT. Responses HTTP 200, application/vnd.ms-excel, attachment "Top Holdings.xls", CFB/OLE2 BIFF8 (NOT XLSX).
+- Independently inspected CFB directory/FAT, BIFF DIMENSIONS and LABEL/NUMBER cells with standard-library research code: SPDV 55 positions, weights=100.00%; PFLD 338 positions, weights=101.73%; CLOC 61 positions, weights=100.03%. Source weights will NOT be rescaled. Full portfolios include cash/other; bond CUSIPs must remain identifiers, not guessed exchange symbols. No market values in export: leave unavailable values blank.
+- XLS stream uses BIFF8 inline Unicode LABEL (0x0204) and NUMBER (0x0203), one worksheet; no SST. Implement a bounded zero-dependency reader for this observed dialect, fail closed on unsupported cell formats or truncated/cyclic chains rather than invent data. Excel maturity values are serial days, not prices; decode separately.
+- Direct GET /ETF/Detail/SPDV?export=excel returned HTTP 200 text/html, no attachment (244221 bytes); actual export control is __doPostBack. No direct query-parameter download endpoint was found. Confirmed path is stateful form POST, not a guessed query URL.
+- Dated holdings: 10/01/2026. Headline NAV/AUM date: 09/29/2026. Published performance date: 06/30/2026 (stale quarter-end on otherwise current page); preserve this date/basis. NAV returns: SPDV YTD=13.21%, 1Y=23.18%, annualized3Y=14.99%,5Y=8.91%; CLOC YTD=2.68%, since-inception=3.68% cumulative (<1y, NOT SI annualized). Do not merge benchmark/share-price row values into NAV returns.
+- CLOC has distinct gross/net expenses (0.49% / 0.18%) and subsidized/unsubsidized SEC yields (6.08% / 5.77%). Catalog yield is unsubsidized; retain both source fields and use consistent primary basis in metrics.
+- Yahoo SPDV daily chart real GET HTTP 200: 2220 daily bars, 106 dividends. Use period1/period2 on fetch, stable query-free provenance URL, round adjusted closes to 2 decimals. History is market-price, not issuer NAV history.
+- SEC submissions for CIK 0001540305 confirm registrant ETF Series Solutions and current NPORT-P accessions. www.sec.gov/files/company_tickers_mf.json and efts search endpoints returned HTTP 403; this is a provider limitation, not an issuer WAF. SEC fallback must validate registrant + exact series identity and retain cache on denial, never take a trust's first unrelated filing.
+- Pacing reference pinned: WisdomTree 232d5d680b56009709369fdc8e4f188fb6e4547a, paceRequests lines 636-642: independent lane timestamps, reserve the chosen lane before awaiting. Use CONCURRENCY=2 / REQUEST_SLEEP=1 defaults; no issuer proxy needed.
+- JPMorgan UI pin already contains shared hidden summary panel, selection-only subtitle, Frequency None correction and checkbox-only catalog selection; copy without header redesign. Pinned updater has a misplaced Bun reference and shallow timestamp comparison: explicitly use correct second-line reference and recursive writer (Aberdeen helper shape), not those known defects.
+- Next implementation begins with explicit SPDV/PFLD/CLOC only; full unbounded live updater run prohibited before acceptance. Raw research is not production data. Dated safe public fixture extracts and binary hashes will be tracked in next checkpoint.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN
