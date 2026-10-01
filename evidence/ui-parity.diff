@@ -1,0 +1,299 @@
+--- pinned-JPMorgan/app.tsx
++++ AAM/app.tsx
+@@ -1,6 +1,6 @@
+ /**
+- * @file JPMorgan Watchlist Application
+- * Client-side static feed viewer for api/jpmorgan/** with multi-ETF Watchlist
++ * @file AAM Watchlist Application
++ * Client-side static feed viewer for api/aam/** with multi-ETF Watchlist
+  * aggregation. Same single-file approach as daggerok/Amplify: the paginated
+  * static API and lazy sheet loading follow daggerok/iShares.
+  *
+@@ -110,15 +110,15 @@
+   identifier: string;
+ };
+ 
+-const INDEX_URL = './api/jpmorgan/index.json';
+-const THEME_KEY = 'jpmorgan-theme';
+-const SELECTED_KEY = 'jpmorgan-selected-etfs';
+-const BLACKLIST_KEY = 'jpmorgan-blacklisted-etfs';
+-const ACTIVE_FUND_KEY = 'jpmorgan-active-fund';
+-const FILTERS_KEY = 'jpmorgan-tab-filters';
+-const LEGACY_FILTERS_KEY = 'jpmorgan-searches'; // pre-rename key, migrated at boot
+-const SORTS_KEY = 'jpmorgan-tab-sorts';
+-const SITE_STATE_KEY = 'jpmorgan-site-state';
++const INDEX_URL = './api/aam/index.json';
++const THEME_KEY = 'aam-theme';
++const SELECTED_KEY = 'aam-selected-etfs';
++const BLACKLIST_KEY = 'aam-blacklisted-etfs';
++const ACTIVE_FUND_KEY = 'aam-active-fund';
++const FILTERS_KEY = 'aam-tab-filters';
++const LEGACY_FILTERS_KEY = 'aam-searches'; // pre-rename key, migrated at boot
++const SORTS_KEY = 'aam-tab-sorts';
++const SITE_STATE_KEY = 'aam-site-state';
+ const HOLDINGS_CONCURRENCY = 6; // bounded whole-catalog aggregation workers
+ const WATCHLIST_CHUNK = 250; // rows per rendered Watchlist DOM chunk
+ const DEFAULT_SELECTED_TICKERS: string[] = []; // start clean: no pre-selected funds
+@@ -137,10 +137,10 @@
+   '#': 'Row index in current table view.',
+   Use: 'Use / Multi-ETF Selection — Check this box to include this ETF\'s underlying holdings in the combined Watchlist tab.',
+   Ticker: 'Ticker Symbol — Unique stock market identifier. For holdings: the exchange ticker resolved from public SEC / exchange data at data-build time. "—" when the position has no exchange ticker (bond, private debt) — then the Identifier is the key.',
+-  'Fund Name': 'Fund Name — Official legal name of the JPMorgan exchange-traded fund (ETF), as published in the am.jpmorgan.com ETF fund explorer.',
+-  Category: 'Category — am.jpmorgan.com groups its ETFs by asset class ("U.S. Equity", "Fixed Income Taxable", "International Equity"); the tab shows the asset class, the asset class plus benchmark is kept in meta.json.',
++  'Fund Name': 'Fund Name — Official legal name of the AAM exchange-traded fund (ETF), as published in the aamlive.com ETF fund explorer.',
++  Category: 'Category — aamlive.com groups its ETFs by asset class ("Equity", "Fixed Income", "Preferred & Hybrid Securities"); the tab shows the asset class, the source asset class is kept in meta.json.',
+   Name: 'Security Name — Full registered legal name of the company or underlying financial asset.',
+-  Identifier: 'CUSIP / SEDOL — Security identifier as published in the am.jpmorgan.com daily holdings (CUSIP for US securities, SEDOL for foreign ones; or taken from the N-PORT filing when that fallback supplied the sheet). Positions without an exchange ticker (bonds, cash, futures) are identified in the Watchlist by this.',
++  Identifier: 'CUSIP / SEDOL — Security identifier as published in the aamlive.com daily holdings (CUSIP when supplied, SEDOL otherwise; or taken from the N-PORT filing when that fallback supplied the sheet). Positions without an exchange ticker (bonds, cash, futures) are identified in the Watchlist by this.',
+   SEDOL: 'SEDOL — Stock Exchange Daily Official List identifier.',
+   TER: 'Gross Expense Ratio — Total annual fund operating expenses as a % of assets.',
+   NAV: 'NAV (Net Asset Value) — Per-share dollar value of the fund.',
+@@ -150,24 +150,24 @@
+   'Max Weight': 'Max Weight — Highest single-fund weight for this holding across selected ETFs (%).',
+   '# ETFs': 'Number of selected ETFs that currently hold this security.',
+   ETFs: 'Selected ETFs holding this security.',
+-  Type: 'Category — the am.jpmorgan.com asset class (see the Category column). Same source as the category tabs.',
++  Type: 'Category — the aamlive.com asset class (see the Category column). Same source as the category tabs.',
+   Expense: 'Gross Expense Ratio — Total annual fund operating expenses as a % of assets.',
+-  'Dividend Yield': 'Dividend Yield — the 12-month rolling dividend yield published by am.jpmorgan.com (product-data) when present; otherwise indicated (latest distribution per share x payments per year / market price) from the published dividend schedule.',
+-  'SEC Yield': 'SEC Yield (30-Day) — The 30-day SEC yield as published by am.jpmorgan.com (daily product-data figure, month-end fund-explorer figure otherwise; the 7-day SEC yield for the money market ETF); "—" when JPMorgan publishes none for the fund.',
+-  'YTD Return': 'YTD Return — Official JPMorgan NAV total return since the start of the year (month-end series); for funds without a published figure, derived from the official daily NAV history with distributions reinvested.',
+-  'TR 1Y': 'TR 1Y (1-Year Total Return) — Official JPMorgan NAV total return over the past year, including reinvested distributions (month-end series); derived from the daily NAV history only when JPMorgan publishes none.',
+-  'TR 3Y': 'TR 3Y (3-Year Total Return) — Cumulative NAV total return over 3 years as published by am.jpmorgan.com (cumulative returns block); otherwise derived exactly from the 3Y CAGR: (1 + CAGR 3Y)^3 - 1.',
+-  'TR 5Y': 'TR 5Y (5-Year Total Return) — Cumulative NAV total return over 5 years as published by am.jpmorgan.com (cumulative returns block); otherwise derived exactly from the 5Y CAGR: (1 + CAGR 5Y)^5 - 1.',
+-  'TR 10Y': 'TR 10Y (10-Year Total Return) — Cumulative NAV total return over 10 years as published by am.jpmorgan.com (cumulative returns block); otherwise derived exactly from the 10Y CAGR: (1 + CAGR 10Y)^10 - 1.',
+-  'CAGR 3Y': 'CAGR 3Y (3-Year Compound Annual Growth Rate) — Official JPMorgan annualized NAV total return over 3 years (month-end series).',
+-  'CAGR 5Y': 'CAGR 5Y (5-Year Compound Annual Growth Rate) — Official JPMorgan annualized NAV total return over 5 years (month-end series).',
+-  'CAGR 10Y': 'CAGR 10Y (10-Year Compound Annual Growth Rate) — Official JPMorgan annualized NAV total return over 10 years (month-end series).',
+-  YTD: 'YTD NAV total return, official JPMorgan month-end series (derived from the daily NAV history when unpublished).',
+-  '1Y': '1-year official JPMorgan NAV total return, month-end series.',
+-  '3Y': '3-year average annual NAV total return (CAGR), official JPMorgan month-end series.',
+-  '5Y': '5-year average annual NAV total return (CAGR), official JPMorgan month-end series.',
+-  '10Y': '10-year average annual NAV total return (CAGR), official JPMorgan month-end series.',
+-  'SI Ann.': 'Since-inception annualized NAV total return, official JPMorgan month-end series (blank for funds younger than one year: JPMorgan publishes their since-inception return cumulatively, not annualized).',
++  'Dividend Yield': 'Dividend Yield — the indicated dividend yield from aamlive.com (distribution schedule) when present; otherwise indicated (latest distribution per share x payments per year / market price) from the published dividend schedule.',
++  'SEC Yield': 'SEC Yield (30-Day) — The 30-day SEC yield as published by aamlive.com (unsubsidized where both subsidized and unsubsidized figures are published); "—" when AAM publishes none for the fund.',
++  'YTD Return': 'YTD Return — Official AAM NAV total return since the start of the year (month-end series); for funds without a published figure, derived from Yahoo adjusted market-price history.',
++  'TR 1Y': 'TR 1Y (1-Year Total Return) — Official AAM NAV total return over the past year, including reinvested distributions (month-end series); derived from Yahoo adjusted market-price history only when AAM publishes none.',
++  'TR 3Y': 'TR 3Y (3-Year Total Return) — Cumulative NAV total return over 3 years based on aamlive.com annualized returns (NAV performance table); otherwise derived exactly from the 3Y CAGR: (1 + CAGR 3Y)^3 - 1.',
++  'TR 5Y': 'TR 5Y (5-Year Total Return) — Cumulative NAV total return over 5 years based on aamlive.com annualized returns (NAV performance table); otherwise derived exactly from the 5Y CAGR: (1 + CAGR 5Y)^5 - 1.',
++  'TR 10Y': 'TR 10Y (10-Year Total Return) — Cumulative NAV total return over 10 years based on aamlive.com annualized returns (NAV performance table); otherwise derived exactly from the 10Y CAGR: (1 + CAGR 10Y)^10 - 1.',
++  'CAGR 3Y': 'CAGR 3Y (3-Year Compound Annual Growth Rate) — Official AAM annualized NAV total return over 3 years (month-end series).',
++  'CAGR 5Y': 'CAGR 5Y (5-Year Compound Annual Growth Rate) — Official AAM annualized NAV total return over 5 years (month-end series).',
++  'CAGR 10Y': 'CAGR 10Y (10-Year Compound Annual Growth Rate) — Official AAM annualized NAV total return over 10 years (month-end series).',
++  YTD: 'YTD NAV total return, official AAM month-end series (derived from Yahoo adjusted market-price history when unpublished).',
++  '1Y': '1-year official AAM NAV total return, month-end series.',
++  '3Y': '3-year average annual NAV total return (CAGR), official AAM month-end series.',
++  '5Y': '5-year average annual NAV total return (CAGR), official AAM month-end series.',
++  '10Y': '10-year average annual NAV total return (CAGR), official AAM month-end series.',
++  'SI Ann.': 'Since-inception annualized NAV total return, official AAM month-end series (blank for funds younger than one year: AAM publishes their since-inception return cumulatively, not annualized).',
+   'Return As Of': 'As-of date of the month-end return series.',
+   Inception: 'Fund inception date.',
+   Exchange: 'Primary listing exchange.',
+@@ -176,7 +176,7 @@
+   Holdings: 'Rows in the fund\'s latest daily holdings file.',
+   History: 'Rows in the fund\'s NAV history file.',
+   'As Of': 'NAV / AUM as-of date.',
+-  Frequency: 'Frequency — sortable payment cadence from the am.jpmorgan.com dividend-frequency code (MDEC = monthly, QDEC = quarterly, YDEC = annual), inferred from the published dividend schedule when no code exists: 01 - Monthly, 04 - Quarterly, 06 - Semi-annually, 12 - Annually; 00 denotes unavailable/unknown and 99 denotes irregular.',
++  Frequency: 'Frequency — sortable payment cadence from the aamlive.com distribution schedule (monthly, quarterly, annual), inferred from the published dividend schedule when no schedule exists: 01 - Monthly, 04 - Quarterly, 06 - Semi-annually, 12 - Annually; 00 denotes unavailable/unknown and 99 denotes irregular.',
+   'Ex-Date': 'Ex-dividend date of the latest distribution.',
+   Dividend: 'Latest dividend per share.',
+   Coupon: 'Bond annual coupon rate (%).',
+@@ -186,8 +186,8 @@
+   Metric: 'Metric — Overview metric name.',
+   Value: 'Overview metric value.',
+   Date: 'NAV history date.',
+-  'Market Price': 'Closing market price on that date, as published by am.jpmorgan.com.',
+-  'Premium/Discount': 'Premium / Discount — closing market price versus NAV on that date (%), as published by am.jpmorgan.com.',
++  'Market Price': 'Closing market price on that date, as published by aamlive.com.',
++  'Premium/Discount': 'Premium / Discount — closing market price versus NAV on that date (%), derived from aamlive.com closing price and NAV.',
+   'Shares Outstanding': 'Fund shares outstanding on that date.',
+   'Total Net Assets': 'Fund total net assets on that date (USD).',
+ };
+@@ -414,7 +414,7 @@
+ 
+ function exportFileName(scope: string, extension: string): string {
+   const stamp = new Date().toISOString().slice(0, 10);
+-  return `jpmorgan-${scope.toLowerCase().replace(/\s+/g, '-')}-${stamp}.${extension}`;
++  return `aam-${scope.toLowerCase().replace(/\s+/g, '-')}-${stamp}.${extension}`;
+ }
+ 
+ function setStatus(message: string, tone: 'info' | 'success' | 'error'): void {
+@@ -422,7 +422,7 @@
+ }
+ 
+ // =========================================================================
+-// 4. Static API loading & paginated sheets (api/jpmorgan/**, iShares-style)
++// 4. Static API loading & paginated sheets (api/aam/**, iShares-style)
+ // =========================================================================
+ 
+ async function fetchJson(url: string): Promise<any> {
+@@ -451,7 +451,7 @@
+     cagr10y: metrics.cagr10y ?? monthEnd.yr10 ?? null,
+     dividendYield: metrics.dividendYield ?? null,
+     dividendFrequency: formatDividendFrequency(fund.distributions && fund.distributions.frequency ? fund.distributions.frequency : '—'),
+-    secYield: metrics.secYield ?? null, // am.jpmorgan.com publishes it for nearly every fund.
++    secYield: metrics.secYield ?? null, // aamlive.com publishes it for nearly every fund.
+     returnAsOf: monthEnd.asOfDate ?? null,
+     searchIndex: '',
+   };
+@@ -465,7 +465,7 @@
+ }
+ 
+ async function loadCatalog(): Promise<void> {
+-  setStatus('Loading JPMorgan ETF data from api/jpmorgan/index.json…', 'info');
++  setStatus('Loading AAM ETF data from api/aam/index.json…', 'info');
+   const data = await fetchJson(INDEX_URL);
+   state.funds = (data.funds || [])
+     .map((fund: IndexFund) => normalizeFundRow(fund))
+@@ -513,7 +513,7 @@
+   }
+   const request = (async () => {
+     try {
+-      const meta = await fetchJson(`./api/jpmorgan/funds/${encodeURIComponent(ticker)}/meta.json`);
++      const meta = await fetchJson(`./api/aam/funds/${encodeURIComponent(ticker)}/meta.json`);
+       fundMetaCache.set(ticker, meta);
+       return meta;
+     } catch (error) {
+@@ -535,7 +535,7 @@
+ 
+ async function fetchPage(ticker: string, pagePath: string): Promise<{ headers: string[]; rows: string[][] }> {
+   const path = String(pagePath).replace(/^\.?\//, '');
+-  const page = await fetchJson(`./api/jpmorgan/funds/${encodeURIComponent(ticker)}/${path}`);
++  const page = await fetchJson(`./api/aam/funds/${encodeURIComponent(ticker)}/${path}`);
+   const headers: string[] = Array.isArray(page.headers) ? page.headers : [];
+   const rows: any[] = Array.isArray(page.rows) ? page.rows : [];
+   return { headers, rows: rows.map(row => headers.map(header => String(row[header] ?? ''))) };
+@@ -1352,7 +1352,7 @@
+     el.tableBody.innerHTML = `<tr><td colspan="8" class="py-12 text-center text-slate-400 dark:text-slate-500">${
+       loading
+         ? `Loading holdings of ${state.selected.size} selected ETF${state.selected.size === 1 ? '' : 's'}…`
+-        : 'Holdings data is not available yet. Run bun ./scripts/update-data.ts to refresh the JPMorgan feed.'
++        : 'Holdings data is not available yet. Run bun ./scripts/update-data.ts to refresh the AAM feed.'
+     }${currentQuery() ? ' No rows match your search.' : ''}</td></tr>`;
+   } else {
+     let html = visibleRows.map((row, index) => `
+@@ -1525,7 +1525,7 @@
+     { section: 'Distributions', metric: 'Ex-Date', value: fund.distributions ? fund.distributions.exDate : null },
+     { section: 'Distributions', metric: 'Latest Dividend', value: fund.distributions ? fund.distributions.dividend : null },
+     { section: 'Distributions', metric: 'Dividend Yield (indicated)', value: fund.dividendYield === null || fund.dividendYield === undefined ? null : `${fund.dividendYield.toFixed(2)}% (latest distribution x frequency / NAV)` },
+-    { section: 'Distributions', metric: 'SEC Yield (30-day)', value: meta && meta.yields ? (meta.yields.secYieldText || '—') : (fund.secYield === null || fund.secYield === undefined ? 'not published by am.jpmorgan.com for this fund' : `${fund.secYield.toFixed(2)}%`) },
++    { section: 'Distributions', metric: 'SEC Yield (30-day)', value: meta && meta.yields ? (meta.yields.secYieldText || '—') : (fund.secYield === null || fund.secYield === undefined ? 'not published by aamlive.com for this fund' : `${fund.secYield.toFixed(2)}%`) },
+     { section: 'Distributions', metric: 'Dividend Yield Basis', value: meta && meta.yields ? meta.yields.dividendYieldKind : null },
+     { section: 'Distributions', metric: 'SEC Yield Basis', value: meta && meta.yields ? meta.yields.secYieldKind : null },
+     { section: 'Holdings', metric: 'Holdings Rows', value: fund.holdings },
+@@ -1567,7 +1567,7 @@
+   }
+ 
+   el.tickerCount.textContent = fund.ticker;
+-  renderSubtitle(`${fund.ticker} overview · ${rows.length} metrics. Returns are derived from adjusted market-price closes, not official NAV returns.`);
++  renderSubtitle(`${fund.ticker} overview · ${rows.length} metrics. Official AAM NAV returns are used where published; missing values use Yahoo adjusted market-price closes.`);
+ }
+ 
+ function renderDistributionsTable(fund: FundRow): void {
+@@ -1603,7 +1603,7 @@
+   }
+ 
+   el.tickerCount.textContent = fund.ticker;
+-  renderSubtitle(`${fund.ticker} distributions · dividend schedule published by am.jpmorgan.com (ex-date, amount; the last twelve payments); frequency from the published dividend-frequency code, inferred from the cadence otherwise.`);
++  renderSubtitle(`${fund.ticker} distributions · dividend schedule published by aamlive.com (ex-date, amount; available payments); frequency from the published distribution schedule, inferred from the cadence otherwise.`);
+ }
+ 
+ // =========================================================================
+@@ -1637,7 +1637,7 @@
+   const countsText = state.counts
+     ? `${state.counts.funds} ETFs · ${(state.counts.holdings || 0).toLocaleString('en-US')} holdings rows · ${(state.counts.history || 0).toLocaleString('en-US')} history rows`
+     : '';
+-  const base = text ? String(text) : 'Search JPMorgan ETFs, select ETFs via the “Use” checkbox, then use the Watchlist tab.';
++  const base = text ? String(text) : 'Search AAM ETFs, select ETFs via the “Use” checkbox, then use the Watchlist tab.';
+   // Selected ETF count and clickable ticker badges (active fund highlighted);
+   // re-rendered by every selection writer so the count never lags.
+   const selectedCount = state.selected.size;
+@@ -1656,7 +1656,7 @@
+   }
+   el.subtitle.innerHTML = `
+     <span class="block sm:inline">${escapeHtml(base)}${selectionItem}</span>
+-    <span class="block sm:inline">·${generated ? ` updated ${escapeHtml(generated)}` : ''}${countsText ? ` · ${escapeHtml(countsText)}.` : '.'} Data: <a href="./api/jpmorgan/index.json" target="_blank" rel="noopener noreferrer" class="font-semibold text-blue-600 dark:text-blue-400 hover:underline">api/jpmorgan/index.json</a> generated from <a href="https://am.jpmorgan.com/us/en/asset-management/adv/products/fund-explorer/etf" target="_blank" rel="noopener noreferrer" class="font-semibold text-blue-600 dark:text-blue-400 hover:underline">am.jpmorgan.com ETF fund data</a> + SEC EDGAR N-PORT-P + Yahoo Finance (fallbacks)</span>
++    <span class="block sm:inline">·${generated ? ` updated ${escapeHtml(generated)}` : ''}${countsText ? ` · ${escapeHtml(countsText)}.` : '.'} Data: <a href="./api/aam/index.json" target="_blank" rel="noopener noreferrer" class="font-semibold text-blue-600 dark:text-blue-400 hover:underline">api/aam/index.json</a> generated from <a href="https://www.aamlive.com/ETF" target="_blank" rel="noopener noreferrer" class="font-semibold text-blue-600 dark:text-blue-400 hover:underline">aamlive.com ETF fund data</a> + SEC EDGAR N-PORT-P (ETF Series Solutions, CIK 0001540305 — holdings fallback only) + Yahoo Finance (market history/dividends)</span>
+   `;
+   el.subtitle.querySelectorAll('a[data-activate-fund]').forEach((link: any) => {
+     link.addEventListener('click', () => activateFund(link.dataset.activateFund || ''));
+@@ -2405,6 +2405,6 @@
+   void loadCatalog().catch(error => {
+     const message = error instanceof Error ? error.message : String(error);
+     el.tickerCount.textContent = 'Error';
+-    setStatusRow(`Unable to load api/jpmorgan/index.json: ${message}. Run bun ./scripts/update-data.ts and serve the folder (for example bunx serve . -p 1234).`, 'error');
++    setStatusRow(`Unable to load api/aam/index.json: ${message}. Run bun ./scripts/update-data.ts and serve the folder (for example bunx serve . -p 1234).`, 'error');
+   });
+ }
+--- pinned-JPMorgan/index.html
++++ AAM/index.html
+@@ -3,8 +3,8 @@
+ <head>
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+-  <meta name="description" content="JPMorgan ETF holdings to Watchlist from the static api/jpmorgan JSON feed, generated from the am.jpmorgan.com ETF fund explorer, product-data and historical-data JSON (daily holdings, NAV history, dividends), with SEC EDGAR N-PORT-P and Yahoo Finance as fallbacks." />
+-  <title>JPMorgan ETFs</title>
++  <meta name="description" content="AAM ETF holdings to Watchlist from the static api/aam JSON feed, generated from the aamlive.com catalog/detail HTML and full holdings XLS exports, with SEC EDGAR N-PORT-P (ETF Series Solutions, CIK 0001540305) as holdings fallback and Yahoo Finance market history/dividends." />
++  <title>AAM ETFs</title>
+   <link rel="icon" type="image/x-icon" href="./favicon.ico">
+ 
+   <!-- Inter font (same as Amplify / iShares apps) -->
+@@ -27,7 +27,7 @@
+   <!-- Synchronous theme init (prevents flash, same strategy as Amplify / iShares) -->
+   <script>
+     (function () {
+-      var dark = localStorage.getItem('jpmorgan-theme') === 'dark';
++      var dark = localStorage.getItem('aam-theme') === 'dark';
+       document.documentElement.classList.toggle('dark', dark);
+       document.documentElement.style.backgroundColor = dark ? '#020617' : '#f8fafc';
+     })();
+@@ -176,7 +176,7 @@
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22 7l-8.5 8.5-5-5L2 17" />
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7h6v6" />
+           </svg>
+-          <h1 class="min-w-0 text-xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight">JPMorgan ETFs</h1>
++          <h1 class="min-w-0 text-xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight">AAM ETFs</h1>
+         </div>
+         <span id="app-subtitle" class="basis-full sm:basis-auto text-sm text-slate-500 dark:text-slate-400"></span>
+       </div>
+@@ -185,9 +185,9 @@
+           Loading…
+         </button>
+         <span id="app-summary" role="region" aria-label="ETF catalog information" hidden>
+-          Search JPMorgan ETFs, select ETFs via the “Use” checkbox, then use the Watchlist tab. Data comes from
+-          <a href="./api/jpmorgan/index.json" target="_blank" rel="noopener noreferrer" class="font-semibold text-blue-600 dark:text-blue-400 hover:underline">api/jpmorgan/index.json</a> generated from
+-          <a href="https://am.jpmorgan.com/us/en/asset-management/adv/products/fund-explorer/etf" target="_blank" rel="noopener noreferrer" class="font-semibold text-blue-600 dark:text-blue-400 hover:underline">am.jpmorgan.com ETF fund data</a> + SEC EDGAR N-PORT-P + Yahoo Finance (fallbacks)
++          Search AAM ETFs, select ETFs via the “Use” checkbox, then use the Watchlist tab. Data comes from
++          <a href="./api/aam/index.json" target="_blank" rel="noopener noreferrer" class="font-semibold text-blue-600 dark:text-blue-400 hover:underline">api/aam/index.json</a> generated from
++          <a href="https://www.aamlive.com/ETF" target="_blank" rel="noopener noreferrer" class="font-semibold text-blue-600 dark:text-blue-400 hover:underline">aamlive.com ETF fund data</a> + SEC EDGAR N-PORT-P (ETF Series Solutions, CIK 0001540305 — holdings fallback only) + Yahoo Finance (market history/dividends)
+         </span>
+         <button id="theme-toggle" class="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition text-base leading-none" title="Toggle Theme">🌙</button>
+       </div>
+@@ -217,7 +217,7 @@
+           >✕</button>
+         </div>
+ 
+-        <!-- ETF catalogue tabs: All ETFs + JPMorgan categories. -->
++        <!-- ETF catalogue tabs: All ETFs + AAM categories. -->
+         <div id="tabs-bar" class="hidden flex flex-wrap items-center justify-center gap-1.5 overflow-x-auto py-1 w-full max-w-full flex-1 themed-scroll"></div>
+ 
+         <!-- Actions intentionally match Amplify / iShares naming and placement -->
+@@ -227,7 +227,7 @@
+           <div
+             id="dropzone"
+             class="flex items-center gap-2 border border-dashed border-slate-300 dark:border-slate-600 hover:border-blue-500 bg-slate-50 dark:bg-slate-900/60 transition-all rounded-lg px-3.5 py-2 cursor-pointer text-sm text-slate-600 dark:text-slate-300"
+-            title="Upload SEC Form N-PORT-P primary_doc.xml (JPMorgan ETF holdings from EDGAR, used by the feed only when am.jpmorgan.com publishes no daily holdings for a fund). Parsed in your browser; uploads live for this session only."
++            title="Upload SEC Form N-PORT-P primary_doc.xml (AAM ETF holdings from EDGAR, used by the feed only when aamlive.com publishes no complete daily holdings for a fund). Parsed in your browser; uploads live for this session only."
+           >
+             <input type="file" id="file-input" accept=".xml" class="hidden" />
+             <svg class="w-4 h-4 text-blue-500 dark:text-blue-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+@@ -275,7 +275,7 @@
+             </thead>
+             <tbody id="table-body" class="divide-y divide-slate-100 dark:divide-slate-700/50 text-sm">
+               <tr>
+-                <td colspan="10" class="py-12 text-center text-slate-400 dark:text-slate-500">Loading JPMorgan ETF catalog…</td>
++                <td colspan="10" class="py-12 text-center text-slate-400 dark:text-slate-500">Loading AAM ETF catalog…</td>
+               </tr>
+             </tbody>
+           </table>

@@ -1,0 +1,201 @@
+{
+  "referenceRepo": "daggerok/JPMorgan",
+  "referenceCommit": "8ce0ddca58b5459dd7df98f22463fb31afa82f2b",
+  "rule": "Literal copied files, enumerated string substitutions only; NO component/renderer/header/table/selection/filter/export logic or CSS/HTML structure changes. Shared header and Frequency None already in pin, retained verbatim.",
+  "frequencyCorrection": "Already corrected by pinned sibling: null/undefined/empty/dash => 00 - None; explicit Unknown => 00 - Unknown; no updater/API value changes.",
+  "substitutions": [
+    {
+      "files": [
+        "app.tsx",
+        "index.html"
+      ],
+      "category": 5,
+      "from": "https://am.jpmorgan.com/us/en/asset-management/adv/products/fund-explorer/etf",
+      "to": "https://www.aamlive.com/ETF",
+      "matches": 2
+    },
+    {
+      "files": [
+        "app.tsx",
+        "index.html"
+      ],
+      "category": 6,
+      "from": "am.jpmorgan.com",
+      "to": "aamlive.com",
+      "matches": 19
+    },
+    {
+      "files": [
+        "app.tsx",
+        "index.html"
+      ],
+      "category": "1/5/6",
+      "from": "JPMorgan",
+      "to": "AAM",
+      "matches": 26
+    },
+    {
+      "files": [
+        "app.tsx",
+        "index.html"
+      ],
+      "category": "2/3/4",
+      "from": "jpmorgan",
+      "to": "aam",
+      "matches": 22
+    },
+    {
+      "files": [
+        "app.tsx"
+      ],
+      "category": 6,
+      "from": "(\"U.S. Equity\", \"Fixed Income Taxable\", \"International Equity\")",
+      "to": "(\"Equity\", \"Fixed Income\", \"Preferred & Hybrid Securities\")",
+      "matches": 1
+    },
+    {
+      "files": [
+        "app.tsx"
+      ],
+      "category": 6,
+      "from": "the asset class plus benchmark is kept in meta.json",
+      "to": "the source asset class is kept in meta.json",
+      "matches": 1
+    },
+    {
+      "files": [
+        "app.tsx"
+      ],
+      "category": 6,
+      "from": "(CUSIP for US securities, SEDOL for foreign ones; or taken from the N-PORT filing when that fallback supplied the sheet)",
+      "to": "(CUSIP when supplied, SEDOL otherwise; or taken from the N-PORT filing when that fallback supplied the sheet)",
+      "matches": 1
+    },
+    {
+      "files": [
+        "app.tsx"
+      ],
+      "category": 6,
+      "from": "the 12-month rolling dividend yield published by aamlive.com (product-data) when present",
+      "to": "the indicated dividend yield from aamlive.com (distribution schedule) when present",
+      "matches": 1
+    },
+    {
+      "files": [
+        "app.tsx"
+      ],
+      "category": 6,
+      "from": "(daily product-data figure, month-end fund-explorer figure otherwise; the 7-day SEC yield for the money market ETF)",
+      "to": "(unsubsidized where both subsidized and unsubsidized figures are published)",
+      "matches": 1
+    },
+    {
+      "files": [
+        "app.tsx"
+      ],
+      "category": 6,
+      "from": "the official daily NAV history with distributions reinvested",
+      "to": "Yahoo adjusted market-price history",
+      "matches": 1
+    },
+    {
+      "files": [
+        "app.tsx"
+      ],
+      "category": 6,
+      "from": "derived from the daily NAV history",
+      "to": "derived from Yahoo adjusted market-price history",
+      "matches": 2
+    },
+    {
+      "files": [
+        "app.tsx"
+      ],
+      "category": 6,
+      "from": "as published by aamlive.com (cumulative returns block)",
+      "to": "based on aamlive.com annualized returns (NAV performance table)",
+      "matches": 3
+    },
+    {
+      "files": [
+        "app.tsx"
+      ],
+      "category": 6,
+      "from": "dividend-frequency code (MDEC = monthly, QDEC = quarterly, YDEC = annual)",
+      "to": "distribution schedule (monthly, quarterly, annual)",
+      "matches": 1
+    },
+    {
+      "files": [
+        "app.tsx"
+      ],
+      "category": 6,
+      "from": "when no code exists",
+      "to": "when no schedule exists",
+      "matches": 1
+    },
+    {
+      "files": [
+        "app.tsx"
+      ],
+      "category": 6,
+      "from": "closing market price versus NAV on that date (%), as published by aamlive.com.",
+      "to": "closing market price versus NAV on that date (%), derived from aamlive.com closing price and NAV.",
+      "matches": 1
+    },
+    {
+      "files": [
+        "app.tsx"
+      ],
+      "category": 5,
+      "from": "Returns are derived from adjusted market-price closes, not official NAV returns.",
+      "to": "Official AAM NAV returns are used where published; missing values use Yahoo adjusted market-price closes.",
+      "matches": 1
+    },
+    {
+      "files": [
+        "app.tsx"
+      ],
+      "category": 5,
+      "from": "(ex-date, amount; the last twelve payments); frequency from the published dividend-frequency code",
+      "to": "(ex-date, amount; available payments); frequency from the published distribution schedule",
+      "matches": 1
+    },
+    {
+      "files": [
+        "app.tsx",
+        "index.html"
+      ],
+      "category": 8,
+      "from": " + SEC EDGAR N-PORT-P + Yahoo Finance (fallbacks)",
+      "to": " + SEC EDGAR N-PORT-P (ETF Series Solutions, CIK 0001540305 \u2014 holdings fallback only) + Yahoo Finance (market history/dividends)",
+      "matches": 2
+    },
+    {
+      "files": [
+        "index.html"
+      ],
+      "category": 5,
+      "from": "aamlive.com ETF fund explorer, product-data and historical-data JSON (daily holdings, NAV history, dividends), with SEC EDGAR N-PORT-P and Yahoo Finance as fallbacks.",
+      "to": "aamlive.com catalog/detail HTML and full holdings XLS exports, with SEC EDGAR N-PORT-P (ETF Series Solutions, CIK 0001540305) as holdings fallback and Yahoo Finance market history/dividends.",
+      "matches": 1
+    },
+    {
+      "files": [
+        "index.html"
+      ],
+      "category": 5,
+      "from": "when aamlive.com publishes no daily holdings",
+      "to": "when aamlive.com publishes no complete daily holdings",
+      "matches": 1
+    }
+  ],
+  "sourceSha256": {
+    "app.tsx": "6b58d96ccafdbbc762bfb10bd4707ede5b1e41cd841e35e0695353073dae9fb4",
+    "index.html": "c85aaa1210e6e75e5fc4c2358be18b4be36cdd0280a07ed6ca7ba871d07a8e3d"
+  },
+  "resultSha256": {
+    "app.tsx": "54bd727173656424bb85a541cfec8adca74eaf930ad32557891c63eaf5f86881",
+    "index.html": "49a158d8f6a143e56c82b5a3c92153c8f8fcd2bfb64b487c0e7b325aeec920b0"
+  }
+}
