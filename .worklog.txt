@@ -6,13 +6,13 @@ CURRENT STATE
 - Repository: https://github.com/daggerok/AAM
 - Branch: feat/aam-etfs; PR: none (GitHub REST verified 2026-10-01).
 - Reconciliation: clean baseline HEAD/main/origin/main = 7bf2d91; no concurrent changes or existing PRs. Original baseline prose archived below, full original plan preserved.
-- Last confirmed pushed SHA: cfe1358faa1d665422364effdcdcccc679170dab (verified against remote before this checkpoint; containing commit identifiable via git log).
-- Completed: 9-fund API/UI/browser, valid config-backed CI, README parity,67offline tests; exact AAM About/homepage/20topics verified; Pages pending.
-- Active: final clean/offline/feed/security/type-risk review and PR creation against main (no merge).
-- Remaining: final checks + tracked verification; create PR, inspect remote checks, record PR/check status and final confirmed pushes.
+- Last confirmed pushed SHA: 11650ea8185ab42a543711516268c2a56a55072d (verified against remote before this checkpoint; containing commit identifiable via git log).
+- Completed: completeAPI/UI/browser/CI/README/metadata; explicit numeric-slot/generic-queue review; zero payout stays0% and all nonpositive price anchors unknown;69tests.
+- Active: final offline/feed/security check and PR opening, without merge or full refresh.
+- Remaining: final verification checkpoint; create PR; inspect GitHub checks; final worklog/push/remote verification.
 - Blockers: none
-- Exact next action after this checkpoint is pushed: run frozen install/all offline tests/updater+browser Bun build/full feed verifier/diff/security scan, review numeric slots and queue normalization; checkpoint then POST PR to main, inspect check runs (no data workflow dispatch/full refresh), final worklog/push/verify.
-- Status: Authorized AAM metadata verified exactly; implementation complete, final verification and PR still pending.
+- Exact next action after this checkpoint is pushed: run frozen install/tests/build/feed/diff and credential/forbidden-toolchain scan; track final verification then create PR main<-feat/aam-etfs and inspect offline Actions check result.
+- Status: Final financial edge review completed;69offline tests pass; ready for final verification/PR.
 
 INITIAL HANDOFF PROMPTS (preserved)
 ===================================
@@ -329,6 +329,14 @@ CHRONOLOGICAL JOURNAL
 - Authenticated Pages API HTTP404, prescribed public homepage HTTP404; report deployment PENDING/not accessible, never claim published live. No Pages configuration/deployment attempted and no PR merged. language remains null because default main still docs-only; not faked via About/Linguist.
 - Full nonsensitive before/after/verification evidence: evidence/metadata.json. Runtime credential read from process environment only; no token/header/cookie/source URL credential or Git auth setting persisted.
 - Source/data/UI code unchanged. Next: final local verification and PR only.
+
+### 2026-10-01 — Final financial/type-risk edge review (completed)
+- Prior metadata checkpoint 11650ea8185ab42a543711516268c2a56a55072d push verified.
+- Manual source review reconfirmed OfficialReturnRow numeric assignments use Exclude<keyof OfficialReturnRow,asOfDate>|null; date metadata never targeted, no any/assertion/ignore masking these slots. CLI and copied client generic queues store completion-only Promise<void> on both outcomes and return original Promise<T>; value/rejection/recovery/order tests retained. Bun directive line2 before imports. IDE/semantic diagnostics unavailable; no compiler introduced/run and no semantic-validation claim.
+- Found two zero-value edge distinctions in copied helper/assembly: a known zero recurring distribution should compute0%, not become unknown; SEC netAssets=0 still has a filed report date. Changed only <=0 payout guard to <0 and net-assets-date truthiness to explicit null/undefined checks. Negative/missing payouts, missing cadence and nonpositive price remain unknown. Existing real published funds have positive latest distributions, so no production values were rewritten or provider refresh performed.
+- Added zero-payout/SEC-yield0.00% regression and exhaustive first/last adjusted-close0/-1 checks for every return window (allnull, never infinity/NaN). Clarified copied internal helper comments: AAM-derived windows use Yahoo MARKET prices, not JPMorgan official NAV history. No UI code/calculation/layout change.
+- Strengthened existing tooltip-key/overview-row equality tests to require nonempty extracted sets (>40/>30), avoiding vacuous comparisons. Full-file UI substitution guard remains the authority; actual app.tsx/index.html unchanged from browser-validated hashes.
+- Commands: bun test ->69pass/0fail/589expectations; Bun updater build exit0; full feed verifier exit0 (9/1162/7623); git diff --check clean. Earlier live acquisition/scoping/one-cent variance evidence remains valid for positive-data paths; these edge cases tested offline, not claimed as new live SEC acceptance.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN

@@ -149,9 +149,9 @@ test('entire UI equals pinned sibling plus ONLY recorded string substitutions',a
 test('tooltip key set/order and fund detail rows are unchanged; no row click selection handler',async()=>{
   const original=await Bun.file(new URL('./fixtures/parity/jpmorgan-app.tsx.txt',import.meta.url)).text(),actual=await Bun.file(new URL('../app.tsx',import.meta.url)).text();
   const keys=(s:string)=>[...s.slice(s.indexOf('const COLUMN_TOOLTIPS'),s.indexOf('// =========================================================================',s.indexOf('const COLUMN_TOOLTIPS'))).matchAll(/^\s*(?:'([^']+)'|([\w]+)):/gm)].map(m=>m[1]??m[2]);
-  expect(keys(actual)).toEqual(keys(original));
+  expect(keys(original).length).toBeGreaterThan(40);expect(keys(actual)).toEqual(keys(original));
   const rows=(s:string)=>[...s.matchAll(/\{ section: '([^']+)', metric: '([^']+)'/g)].map(m=>[m[1],m[2]]);
-  expect(rows(actual)).toEqual(rows(original));
+  expect(rows(original).length).toBeGreaterThan(30);expect(rows(actual)).toEqual(rows(original));
   expect(actual).not.toMatch(/querySelectorAll\(['"]tr['"]\)[\s\S]{0,180}addEventListener\(['"]click/);
   expect(actual).not.toMatch(/<tr[^>]*onclick=/);
   expect(actual).toContain("const INDEX_URL = './api/aam/index.json'");

@@ -345,3 +345,16 @@ test('offline feed validator reconciles seeded and refreshed index/page counts; 
     expect((await verifyFeed(root)).counts).toEqual({funds:9,holdings:454,history:9});
   });
 });
+
+test('nonpositive adjusted-price anchors produce unknown, never nonfinite returns in ANY window',()=>{
+  for(const [start,end]of [[0,10],[-1,10],[10,0],[10,-1]]){
+    const days=[{date:'2023-06-30',close:start,adjClose:start,volume:0},{date:'2026-06-30',close:end,adjClose:end,volume:0}];
+    const r=priceReturns(days,new Date('2026-06-30T00:00:00Z'));
+    for(const [key,value]of Object.entries(r))if(key!=='asOfDate')expect(value).toBeNull();
+  }
+});
+test('known ZERO cash distribution yields0%, not missing; null/negative amount and missing cadence remain unknown',()=>{
+  expect(indicatedYield(0,12,25)).toBe(0);expect(indicatedYield(null,12,25)).toBeNull();expect(indicatedYield(-1,12,25)).toBeNull();expect(indicatedYield(0,null,25)).toBeNull();
+  const m=deriveCatalogMetrics({ytd:0,yr1:0,yr3:0,yr5:0,yr10:0,sinceInception:0},{asOfDate:'2026-06-30',ytd:null,yr1:null,cagr3y:null,cagr5y:null,cagr10y:null,siAnn:null,mo1:null,qtd:null},null,0,0,12,25);
+  expect(m.dividendYieldText).toBe('0.00%');expect(m.secYieldText).toBe('0.00%');
+});

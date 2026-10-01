@@ -950,8 +950,8 @@ export function totalToAnnualized(totalPercent: number | null | undefined, years
   return round(((1 + totalPercent / 100) ** (1 / years) - 1) * 100, 2);
 }
 
-// Indicated yield: latest distribution x payments per year / price — used only
-// when the product list publishes no trailing-12-month yield for the fund.
+// Indicated yield: latest distribution x payments per year / market price.
+// AAM supplies distribution amounts/cadence, not a trailing-yield history.
 export function indicatedYield(
   latestDistribution: number | null | undefined,
   paymentsPerYear: number | null | undefined,
@@ -959,7 +959,7 @@ export function indicatedYield(
 ): number | null {
   if (typeof latestDistribution !== 'number' || typeof paymentsPerYear !== 'number' || typeof price !== 'number') return null;
   if (!Number.isFinite(latestDistribution) || !Number.isFinite(paymentsPerYear) || !Number.isFinite(price) || price <= 0) return null;
-  if (paymentsPerYear <= 0 || latestDistribution <= 0) return null;
+  if (paymentsPerYear <= 0 || latestDistribution < 0) return null;
   return round(((latestDistribution * paymentsPerYear) / price) * 100, 2);
 }
 
@@ -1009,11 +1009,9 @@ function annualized(start: number, end: number, years: number): number | null {
   return round(((end / start) ** (1 / years) - 1) * 100, 2);
 }
 
-// Total returns from an adjusted daily series anchored to the last trading day
-// at or before `now`. The series is the official JPMorgan NAV with published
-// distributions reinvested (or Yahoo adjusted closes in the fallback path).
-// JPMorgan publishes official returns for every fund, so these only fill the
-// gaps (young funds, quarter-to-date) and drive the History-derived blocks.
+// Shared return windows (pinned JPMorgan), anchored at the reporting date.
+// AAM passes rounded Yahoo adjusted MARKET prices to fill unpublished fields;
+// these values are never represented as official daily NAV returns.
 export function priceReturns(days: ChartDay[], now = new Date(), coveredFrom: string | null = null): PriceReturns {
   const empty: PriceReturns = { ...EMPTY_PRICE_RETURNS };
   if (!days.length) return empty;
@@ -1431,7 +1429,7 @@ async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRe
     expenseRatio:{display:percent(ter),value:ter,gross:detail?.grossExpense??old.expenseRatio?.gross??null,net:detail?.netExpense??old.expenseRatio?.net??null},
     nav:{display:money(nav),value:nav,asOfDate:navDate?formatEdgarDate(navDate):old.nav?.asOfDate??'—'},
     marketPrice:{display:money(price),value:price,asOfDate:priceDate?formatEdgarDate(priceDate):old.marketPrice?.asOfDate??'—'},premiumDiscount:{display:percent(premium),value:premium},
-    aum:{display:assets===null?'—':formatAumDisplay(assets),value:assets,asOfDate:detail?.aumAsOfDate?formatEdgarDate(detail.aumAsOfDate):old.aum?.asOfDate??(holdings.netAssets?holdings.asOfDate:null),source:detail?.netAssets!==null&&detail?.netAssets!==undefined?'aamlive.com official fund net assets':old.aum?.source??holdings.source},
+    aum:{display:assets===null?'—':formatAumDisplay(assets),value:assets,asOfDate:detail?.aumAsOfDate?formatEdgarDate(detail.aumAsOfDate):old.aum?.asOfDate??(holdings.netAssets!==null&&holdings.netAssets!==undefined?holdings.asOfDate:null),source:detail?.netAssets!==null&&detail?.netAssets!==undefined?'aamlive.com official fund net assets':old.aum?.source??holdings.source},
     yields:{dividendYield:metric.dividendYield,dividendYieldText:metric.dividendYieldText,dividendYieldKind:'indicated: latest distribution x payments per year / market price (not trailing yield)',secYield:sec,secYieldText:percent(sec),secYieldKind:'30-day SEC yield, unsubsidized where separately published',subsidizedSecYield:detail?.subsidizedSecYield??old.yields?.subsidizedSecYield??null,unsubsidizedSecYield:detail?.unsubsidizedSecYield??old.yields?.unsubsidizedSecYield??null},
     officialReturns:rawOfficial,returns:{monthEnd,quarterEnd,derivedFrom:returnBasis},
     distributions:{frequency:frequency.frequency,paymentsPerYear:frequency.paymentsPerYear,source:'aamlive.com recent distributions (first paginated grid page), merged with Yahoo full-history events and previous published events; issuer amounts win',headers:['Ex-Date','Amount','Record Date','Payable Date'],rows:dividends.map(d=>[formatUsDate(d.epoch),String(round(d.amount,6)),d.recordDate,d.payDate]),events:dividends},
