@@ -6,13 +6,13 @@ CURRENT STATE
 - Repository: https://github.com/daggerok/AAM
 - Branch: feat/aam-etfs; PR: none (GitHub REST verified 2026-10-01).
 - Reconciliation: clean baseline HEAD/main/origin/main = 7bf2d91; no concurrent changes or existing PRs. Original baseline prose archived below, full original plan preserved.
-- Last confirmed pushed SHA: 927d928fcc0e34d639d7e332c3fb1b314686c2cf (verified against remote before this checkpoint; containing commit identifiable via git log).
-- Completed: complete9-fund API, copied UI/browser; single Sunday/manual updater25direct fields +27JSON/CLI settings; offline PR checks/Dependabot;63 tests.
-- Active: copy pinned JPMorgan README with truthful AAM sources/defaults/deployment caveats and common-structure regression.
-- Remaining: README/common offline guard; AAM metadata; final verification/PR without merge.
+- Last confirmed pushed SHA: c454a0a958ee1a94f695944bbbb837b455212840 (verified against remote before this checkpoint; containing commit identifiable via git log).
+- Completed: 9-fund API + copied UI/browser; valid config-backed CI; pinned README generic intro/headings/commands/TypeScript/tables retained,27 controls truthful;67 offline tests.
+- Active: authorized AAM About/homepage/topics verification/update and truthful Pages check.
+- Remaining: AAM metadata; final offline/feed/security checks; PR against main (do not merge) and inspect remote checks.
 - Blockers: none
-- Exact next action after this checkpoint is pushed: copy pinned README8ce0ddc common intro/headings/Using Bun/TypeScript text; retain all20 family rows plus AAM alphabetically; document27controls and25-form config-only SEC_UA/VERBOSE, source/SEC/Yahoo limitations and pending Pages; add offline regression/diff, checkpoint/push.
-- Status: CI implemented using user-requested existing config-file pattern; 63 offline tests pass; docs/metadata/PR pending.
+- Exact next action after this checkpoint is pushed: GET pinned-family/target current metadata, PATCH only AAM exact shared description/homepage + PUT20topics, GET verify; authenticated Pages API and homepage HTTP check; record before/after/limit-status (do not claim live/deploy or change default branch).
+- Status: README parity/source limitations/control defaults completed; 67 offline tests pass. Metadata/final PR remain.
 
 INITIAL HANDOFF PROMPTS (preserved)
 ===================================
@@ -307,6 +307,18 @@ CHRONOLOGICAL JOURNAL
 - Added4 offline workflow regressions: exact25input+2file surfaces, all27 config/defaults, blank/nonblank/AAM_ precedence, Sunday/manual/no-push refresh, tests-before-fetch, stage-before-diff, runtime auth, offline PR checks and Dependabot.
 - Commands: bun install --frozen-lockfile exit0; bun test ->63 pass/0 fail/441 expectations; Bun updater build exit0; bun scripts/verify-feed.ts --require-complete exit0 (9/1162/7623); git diff --check clean. No network provider refresh ran during CI implementation; tests remain offline, transpilation not semantic TS proof.
 - Workflows not remotely dispatched (feature not merged; manual workflow registration is default-branch based). GitHub PR offline-check execution will be inspected after PR creation.
+
+### 2026-10-01 — Pinned README parity and source-specific documentation (completed)
+- Prior CI checkpoint c454a0a958ee1a94f695944bbbb837b455212840 push verified.
+- README reference remains immutable daggerok/JPMorgan8ce0ddca58b5459dd7df98f22463fb31afa82f2b (not silently switching to Vanguard). Archived original/hash in scripts/fixtures/parity/jpmorgan-readme.md.txt and readme-reference.json; comparison evidence/readme-parity.diff.
+- Copied common title/intro/feature prose, hierarchy/order, Using Bun commands and TypeScript text. Only brand/repo/API paths, actual AAM sources/controls/defaults/examples/limitations/deployment/trademark identity substituted. Existing20 rows in EACH family table retained byte-for-byte; AAM added alphabetically first,21 rows each. No new generic marketing headings or cross-repo edits.
+- Source facts include fresh complete XLS POST (10-row HTML preview never complete), observed BIFF8 decoder fail-closed behavior, preserved weights/cash/duplicates/missing values, SEC trust/series validation and unproven live SEC fallback/403 research, distinct holdings/NAV/performance dates, official-versus-derived NAV/market returns, young-fund cumulative SI, gross/net/subsidized/unsubsidized fields, honest indicated yield.
+- Controls: all27 current JSON settings documented, direct CLI and AAM_ precedence; exactly25 direct manual operational fields with SEC_UA/VERBOSE config-file/CLI-only (user-requested observed-family limit fix). Empty dispatch values inherit JSON. Pacing described PER independent lane, not copied stale globally spaced wording. No unsupported raw-download option documented.
+- Live caveat explicit: second corrected real run not byte-identical only because actual PFLD Jul03 2023 adjusted close16.91->16.92; timestamp-only writes suppressed, stable fixture replay bytes identical. Source/scope/evidence links and complete initial9/1162/7623 bootstrap are dated facts, not evergreen live counts. No smoke copy-back.
+- Pages clearly PENDING; common clone command remains main for approved usage after merge. No published-application claim before real deployment verification. License untouched; independent/unofficial/trademark notice source-specific, no invented registered-mark assertion.
+- New3 offline README guards compare hash/common heading order (ignore fences), intro/Using Bun/TypeScript equality, all original table rows+sorted AAM, documented controls/defaults/examples and material caveats. First doc test failure was match-array destructuring (whole match mistaken for control name), corrected test only, no source/data changed.
+- Improved config-file regression to allow EDITABLE valid JSON defaults instead of freezing them to built-in constants; tests verify changed sleep2/concurrency1 and actual isolated CLI --help with modified contact/VERBOSE (no network), preserving the requested configuration mechanism. Documentation defaults compare against real JSON.
+- Commands: bun test ->67 pass/0 fail/547 expectations; updater/browser Bun build exit0; git diff --check clean. No provider refresh/metadata/PR action yet in this step, no semantic TS-check claim.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN

@@ -1,0 +1,145 @@
+--- pinned-JPMorgan/README.md
++++ AAM/README.md
+@@ -1,18 +1,18 @@
+-# JPMorgan
++# AAM
+ 
+-One of the app's features lets you select JPMorgan ETFs in the Watchlist and aggregate their holdings to see how often each ticker appears across the selected funds. Repeated holdings make overlapping exposure visible: the more selected funds include a ticker, the greater its potential influence on the portfolio; gains in that holding may help, while declines may hurt, and actual impact also depends on each fund's position size.  Another feature makes it faster and easier to find funds with stronger growth over different periods, higher dividend yields or distributions, greater Total Return (price performance plus dividends), and other key performance metrics. A single-file client-side tool that reads the generated `./api/jpmorgan` static feed (am.jpmorgan.com ETF fund explorer, per-fund product-data and historical-data JSON — official NAV returns, expenses, yields, complete daily holdings and whole-life NAV history — with SEC EDGAR N-PORT-P and Yahoo Finance as fallbacks) into a searchable ETF/asset-class catalog with per-fund tabs, watchlist aggregation, ticker copy and CSV/TXT export — the same look, feel, columns and business logic as the sibling applications.
++One of the app's features lets you select AAM ETFs in the Watchlist and aggregate their holdings to see how often each ticker appears across the selected funds. Repeated holdings make overlapping exposure visible: the more selected funds include a ticker, the greater its potential influence on the portfolio; gains in that holding may help, while declines may hurt, and actual impact also depends on each fund's position size.  Another feature makes it faster and easier to find funds with stronger growth over different periods, higher dividend yields or distributions, greater Total Return (price performance plus dividends), and other key performance metrics. A single-file client-side tool that reads the generated `./api/aam` static feed (aamlive.com catalog/detail HTML and full holdings XLS exports — official NAV returns, expenses and yields — with SEC EDGAR N-PORT-P as holdings fallback and Yahoo Finance market-price history/dividends) into a searchable ETF/asset-class catalog with per-fund tabs, watchlist aggregation, ticker copy and CSV/TXT export — the same look, feel, columns and business logic as the sibling applications.
+ 
+ ## Using Bun
+ 
+ ```bash
+-bunx degit daggerok/JPMorgan#main ./12345 && cd $_
++bunx degit daggerok/AAM#main ./12345 && cd $_
+ bunx serve . -p 1234
+ open http://0:1234
+ ```
+ 
+-The published application is available at <https://daggerok.github.io/JPMorgan/>.
++The application homepage is <https://daggerok.github.io/AAM/>. Deployment is pending; this feature PR is not merged, and a configured homepage is not evidence that GitHub Pages is live.
+ 
+-## Updating the static JPMorgan data
++## Updating the static AAM data
+ 
+ Run the updater with Bun:
+ 
+@@ -23,16 +23,27 @@
+ 
+ Run `./scripts/update-data.ts -h` (or `--help`) to print every configuration variable with its default and usage examples.
+ 
+-The **Update JPMorgan ETF data** GitHub Actions workflow exposes the same settings as manual inputs. All supplied filters use **AND** logic.
++The **Update AAM ETF data** GitHub Actions workflow runs every Sunday at 00:00 UTC or manually, never on push. All supplied filters use **AND** logic.
++
++Following the existing Vanguard/JPMorgan configuration-file pattern, blank manual inputs inherit `scripts/update-data.config.json`; nonblank environment values override the file, and nonblank `AAM_` aliases take precedence over canonical names. The form has 25 direct operational inputs (GitHub's limit); `SEC_UA` and `VERBOSE` remain configurable in the checked-in JSON or direct CLI environment. All 27 settings remain supported—there is no extra updater workflow or advanced JSON bundle. Offline PR checks never fetch providers.
+ 
+ ### Data sources
+ 
+ | Block | Source |
+ | --- | --- |
+-| Catalog (all US JPMorgan ETFs) | `https://am.jpmorgan.com/FundsMarketingHandler/fund-explorer?country=us&role=adv&fundType=etf` (the JSON behind the [ETF fund explorer](https://am.jpmorgan.com/us/en/asset-management/adv/products/fund-explorer/etf)) |
+-| Holdings per fund | `https://am.jpmorgan.com/FundsMarketingHandler/product-data?cusip={CUSIP}&country=us&role=adv` (the JSON behind each fund page, e.g. [JEPI](https://am.jpmorgan.com/us/en/asset-management/adv/products/jpmorgan-equity-premium-income-etf-etf-shares-46641q332)) |
+-| Daily history, distributions | `https://am.jpmorgan.com/FundsMarketingHandler/historicalData?cusip={CUSIP}&country=us&role=adv` (official NAV history) |
+-| Fallback | SEC EDGAR N-PORT-P + Yahoo Finance chart API as fallbacks |
++| Catalog (all US AAM ETFs) | [aamlive.com/ETF](https://www.aamlive.com/ETF), server-rendered ticker/asset-class catalog |
++| Holdings per fund | `https://www.aamlive.com/ETF/Detail/{TICKER}`, fresh WebForms `btnETFHoldingsExport` POST returning the complete BIFF8 XLS workbook; e.g. [SPDV](https://www.aamlive.com/ETF/Detail/SPDV) |
++| Headline fields, performance, recent distributions | The same official detail HTML: NAV/close/AUM, gross/net expenses, SEC yields, dated NAV-performance table and recent distribution grid |
++| Daily history, distributions | Yahoo Finance chart API, rounded adjusted market-price closes (not official NAV); recent issuer distribution totals take precedence by calendar ex-date |
++| Fallback | Identity-verified SEC EDGAR N-PORT-P for holdings → previously published data; Yahoo failure → previously published history/events |
++
++The HTML holdings grid is only a **10-row preview**, never a complete portfolio. The current official exports were independently decoded and the actual updater separately published all nine funds: **1,162 holdings rows / 7,623 history rows** (2026-10-01 bootstrap). Source weights, cash and duplicate positions are retained without rescaling; unavailable market values stay blank. The dependency-free XLS reader supports the observed one-sheet CFB/BIFF8 dialect and fails closed on truncation or a changed dialect instead of publishing partial rows.
++
++SEC trust registrant **ETF Series Solutions, CIK 0001540305** is not itself a fund identity. A filing must match the mapped series ID or exact normalized fund name before supplying holdings. In this environment trust submissions were reachable, but the fund ticker table/EFTS queries returned 403; live acceptance used the complete official exports, **not a demonstrated live SEC series fallback**. The fallback identity/retention paths are covered by explicitly synthetic offline fixtures.
++
++Official performance can be older than the NAV headline: the initial sources report performance **2026-06-30**, NAV/AUM **2026-09-29**, holdings **2026-10-01**. Published NAV returns are preferred; missing return metrics use Yahoo adjusted market prices at the same reporting date, not mislabeled NAV. Funds younger than one year have blank annualized SI; the issuer's cumulative young-fund SI is preserved separately, not relabeled annualized. Gross expense is primary; net expense and both SEC-yield variants remain in metadata, with unsubsidized SEC yield primary where separately published.
++
++The actual isolated CLI acceptance used `TICKERS="SPDV PFLD CLOC" VERBOSE=1` twice with normal pacing and no provider skips. All three official portfolios and Yahoo histories were freshly validated; production and six unrequested entries/files were untouched. The repeat changed only PFLD's 2023-07-03 adjusted close **16.91 → 16.92**, a Yahoo cent-boundary value variation, not timestamp churn. It was documented, not forced back to a cached value. Stable-input fixture replays are byte-identical; timestamps are stripped recursively for write comparisons. Evidence: [`evidence/live/`](./evidence/live/), [`evidence/bootstrap/`](./evidence/bootstrap/) and [`evidence/browser/`](./evidence/browser/). No smoke output was copied into production.
+ 
+ Each fund carries a derived `metrics` object that powers the catalog columns shared with the sibling sites:
+ 
+@@ -40,33 +51,48 @@
+ - `cagr3y` / `cagr5y` / `cagr10y` — published annualized 3Y/5Y/10Y figures → *CAGR 3Y/5Y/10Y*
+ - `tr3y` / `tr5y` / `tr10y` — cumulative 3Y/5Y/10Y figures `(1 + CAGR)^n - 1` → *TR 3Y/5Y/10Y*
+ - `siAnn` — since-inception annualized → *SI Ann.*
+-- `dividendYield` — 12-month trailing yield or indicated yield (latest distribution × frequency ÷ price)
+-- `secYield` — 30-day SEC yield when published; `—` otherwise
++- `dividendYield` — indicated yield (latest distribution × payments per year ÷ market price), not a published trailing yield
++- `secYield` — published 30-day SEC yield (unsubsidized where separately published); `—` otherwise
+ 
+ ### Update controls
+ 
+ | Environment variable | Default | Meaning |
+ | --- | --: | --- |
+-| `MAX_FETCHES` | all | Batch size: with a positive value the updater continues after the committed cursor in `api/jpmorgan/update-state.json`; empty or `0` is a full pass — every fund is refreshed in one run. |
+-| `REQUEST_SLEEP` | `1` | Minimum delay in seconds between outgoing request starts, including retries. |
+-| `CONCURRENCY` | `2` | Number of parallel fund update workers. Request starts are still globally spaced by `REQUEST_SLEEP`. |
+-| `AUM` | `:` | Net Assets range. Each bound may be a USD amount or `K`/`M`/`B`/`T`, or one of `nano`, `micro`, `small`, `mid`, `large`. |
+-| `TER` | `:` | Expense ratio range in % (strict `min:max`). |
+-| `DIVIDEND_YIELD` | `:` | Dividend-yield percentage range. |
+-| `TICKERS` | all | Space-, comma- or semicolon-separated ticker allowlist, e.g. `JEPI JEPQ JPST BBJP`. |
++| `MAX_FETCHES` | `0` | Batch size: positive resumes the cursor in `api/aam/update-state.json`; `0` is a full selected pass and clears the cursor after success. |
++| `REQUEST_SLEEP` | `1` | Minimum seconds between outgoing request starts per independent lane, including retries. Keep ≥1 for live sources. |
++| `CONCURRENCY` | `2` | Parallel fund workers/request lanes. Starts are independently paced, not globally serialized. |
+ | `HOLDINGS_PAGE_SIZE` | `250` | Rows in each generated current-holdings JSON page. |
+-| `HISTORY_PAGE_SIZE` | `1000` | Rows in each generated daily-history JSON page. |
+-| `MAX_RETRIES` | `2` | Retries after the initial request. Only network errors and HTTP 408/425/429/5xx are retried with exponential backoff. |
+-| `SEC_UA` | declared UA | Override the SEC User-Agent. SEC policy requires automated tools to declare a contact. |
+-| `SKIP_YAHOO` | off | Skip Yahoo Finance history updates. |
++| `HISTORY_PAGE_SIZE` | `1000` | Rows in each generated daily market-price history JSON page. |
++| `MAX_RETRIES` | `2` | Retries after the initial request. Only network errors and HTTP 408/425/429/5xx; exponential backoff, no 403/404 hammering. |
++| `TICKERS` | all | Space-, comma- or semicolon-separated allowlist, e.g. `SPDV PFLD CLOC`; unknown requested tickers fail before per-fund requests. |
++| `HISTORY_RANGE` | `max` | Yahoo coverage: `max` or `Ny`; fresh limited coverage merges with older published rows instead of deleting them. |
++| `EDGAR_FALLBACK` | `true` | Identity-verified SEC N-PORT holdings fallback when complete official holdings are unavailable. |
++| `SKIP_AAM` | `false` | Skip AAM provider calls, retain published catalog/headlines/holdings and run enabled fallbacks. |
++| `SKIP_YAHOO` | `false` | Skip Yahoo requests and retain published history/dividend events. |
++| `SEC_UA` | declared UA | Identifying SEC User-Agent/contact; default identifies the AAM repository/issues. Config-file or direct CLI ENV setting, not a workflow form field. |
++| `AUM` | `:` | Net Assets min:max; each USD bound may use K/M/B/T, or nano/micro/small/mid/large presets. |
++| `TER` | `:` | Gross expense ratio percentage range; strict `min:max`, `min:`, `:max`, or `:`. |
++| `DIVIDEND_YIELD` | `:` | Indicated dividend-yield percentage range; colon required. |
++| `SEC_YIELD` | `:` | 30-day SEC-yield percentage range (primary unsubsidized figure); colon required. |
++| `PERFORMANCE_YTD` | `:` | YTD performance percentage range; annualized for 3Y+; colon required. |
++| `PERFORMANCE_1Y` | `:` | 1Y performance percentage range; annualized for 3Y+; colon required. |
++| `PERFORMANCE_3Y` | `:` | 3Y performance percentage range; annualized for 3Y+; colon required. |
++| `PERFORMANCE_5Y` | `:` | 5Y performance percentage range; annualized for 3Y+; colon required. |
++| `PERFORMANCE_10Y` | `:` | 10Y performance percentage range; annualized for 3Y+; colon required. |
++| `TOTAL_RETURN_YTD` | `:` | YTD cumulative total-return percentage range; colon required. |
++| `TOTAL_RETURN_1Y` | `:` | 1Y cumulative total-return percentage range; colon required. |
++| `TOTAL_RETURN_3Y` | `:` | 3Y cumulative total-return percentage range; colon required. |
++| `TOTAL_RETURN_5Y` | `:` | 5Y cumulative total-return percentage range; colon required. |
++| `TOTAL_RETURN_10Y` | `:` | 10Y cumulative total-return percentage range; colon required. |
++| `VERBOSE` | `false` | Detailed provider/retry/fallback notices only; no change to data. Config-file or direct CLI ENV setting, not a workflow form field. |
+ 
+-`TICKERS` combines with AUM, TER, yield filters using AND logic; it does not override them. Funds not selected for a successful update keep their prior published metadata and data files.
++`TICKERS` combines with AUM, TER, both yield filters and all performance/total-return ranges using AND logic; it does not override them. Funds not selected for a successful update keep their prior published metadata and data files. Missing values fail bounded filters; zero/negative figures are retained. Per-fund failures are reported while other workers continue; cached data is the last resort, never replaced by an empty success. A failed batch does not advance its cursor. CLI failures return nonzero; the workflow does not publish a failed run.
+ 
+ ### Examples
+ 
+ ```bash
+ MAX_FETCHES=10 ./scripts/update-data.ts
+-TICKERS="JEPI JEPQ JPST BBJP" ./scripts/update-data.ts
++TICKERS="SPDV PFLD CLOC" ./scripts/update-data.ts
+ AUM="1B:" TER=":0.5" ./scripts/update-data.ts
+ PERFORMANCE_1Y="15:" ./scripts/update-data.ts
+ ```
+@@ -81,6 +107,7 @@
+ 
+ | Brand | Where to get the data |
+ | --- | --- |
++| **AAM** | [aamlive.com](https://www.aamlive.com/ETF) \| [AAM](https://daggerok.github.io/AAM/) |
+ | **abrdn (Aberdeen)** | [aberdeeninvestments.com](https://www.aberdeeninvestments.com/en-us/investor/funds/etfs) \| [aberdeen](https://daggerok.github.io/aberdeen/) |
+ | **Amplify** | [amplifyetfs.com](https://amplifyetfs.com/) \| [Amplify](https://daggerok.github.io/Amplify/) |
+ | **Capital Group** | [capitalgroup.com](https://www.capitalgroup.com/advisor/investments/exchange-traded-funds.html) \| [Capital-Group](https://daggerok.github.io/Capital-Group/) |
+@@ -106,6 +133,7 @@
+ 
+ | Application | Data provider | Repository |
+ | --- | --- | --- |
++| AAM | Official AAM catalog/detail HTML + full holdings XLS + SEC N-PORT holdings fallback + Yahoo market history/dividends | [AAM](https://github.com/daggerok/AAM) |
+ | abrdn (Aberdeen) | Official Aberdeen gateway + SEC N-PORT holdings fallback + Yahoo history/dividends | [aberdeen](https://github.com/daggerok/aberdeen) |
+ | Amplify | Amplify ETFs (Firestore data feed) | [Amplify](https://github.com/daggerok/Amplify) |
+ | Capital Group | Official Capital Group fund data + SEC N-PORT holdings fallback + Yahoo history fallback | [Capital-Group](https://github.com/daggerok/Capital-Group) |
+@@ -131,4 +159,4 @@
+ 
+ [MIT — same as all sibling ETF repositories.](./LICENSE)
+ 
+-J.P. Morgan® and JPMorgan® and the fund names/tickers referenced here are trademarks of JPMorgan Chase & Co. This is an independent, unofficial tool; it is not affiliated with, endorsed by, or sponsored by J.P. Morgan Asset Management or JPMorgan Chase & Co. All data is reproduced from J.P. Morgan Asset Management's own public fund pages and downloads, public SEC EDGAR filings and Yahoo Finance for research purposes. All other trademarks, including index names, are the property of their respective owners.
++AAM and the fund names/tickers referenced here are trademarks of their respective owners. This is an independent, unofficial tool; it is not affiliated with, endorsed by, or sponsored by Advisors Asset Management, Inc. All data is reproduced from AAM's own public fund pages and downloads, public SEC EDGAR filings and Yahoo Finance for research purposes. All other trademarks, including index names, are the property of their respective owners.
