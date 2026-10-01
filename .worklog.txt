@@ -6,13 +6,13 @@ CURRENT STATE
 - Repository: https://github.com/daggerok/AAM
 - Branch: feat/aam-etfs; PR: none (GitHub REST verified 2026-10-01).
 - Reconciliation: clean baseline HEAD/main/origin/main = 7bf2d91; no concurrent changes or existing PRs. Original baseline prose archived below, full original plan preserved.
-- Last confirmed pushed SHA: 57088a530657397119d1ca3674dbe910932cb5cd (verified against remote before this checkpoint; containing commit identifiable via git log).
-- Completed: 9-fund API/UI/browser complete; read-only Vanguard pin c423d47 shows JSON defaults + nonblank ENV precedence, 20 manual inputs/21 config keys; AAM equivalent25direct +2config-only.
-- Active: confirm exact Vanguard/JPMorgan pattern: SEC_UA and VERBOSE file-default/CLI settings, 25 direct operational dispatch inputs.
-- Remaining: CI/Dependabot; pinned README/common regression; AAM metadata; final verification/PR.
-- Blockers: GitHub25 dispatch cap vs original27 direct-field requirement. Existing siblings intentionally leave contact/diagnostic settings config-only; narrow exception not yet explicitly confirmed.
-- Exact next action after this checkpoint is pushed: confirm adopting observed sibling config-default pattern without JSON bundle or extra update workflow; then implement valid CI and finish docs/metadata/PR.
-- Status: Vanguard configuration/workflow inspection complete; valid family-pattern adaptation identified, awaiting narrow confirmation.
+- Last confirmed pushed SHA: 927d928fcc0e34d639d7e332c3fb1b314686c2cf (verified against remote before this checkpoint; containing commit identifiable via git log).
+- Completed: complete9-fund API, copied UI/browser; single Sunday/manual updater25direct fields +27JSON/CLI settings; offline PR checks/Dependabot;63 tests.
+- Active: copy pinned JPMorgan README with truthful AAM sources/defaults/deployment caveats and common-structure regression.
+- Remaining: README/common offline guard; AAM metadata; final verification/PR without merge.
+- Blockers: none
+- Exact next action after this checkpoint is pushed: copy pinned README8ce0ddc common intro/headings/Using Bun/TypeScript text; retain all20 family rows plus AAM alphabetically; document27controls and25-form config-only SEC_UA/VERBOSE, source/SEC/Yahoo limitations and pending Pages; add offline regression/diff, checkpoint/push.
+- Status: CI implemented using user-requested existing config-file pattern; 63 offline tests pass; docs/metadata/PR pending.
 
 INITIAL HANDOFF PROMPTS (preserved)
 ===================================
@@ -296,6 +296,17 @@ CHRONOLOGICAL JOURNAL
 - Will not copy unrelated Vanguard0-second sleep/4workers defaults, misplaced Bun directive atline13, stale README defaults or shallow writer. AAM keeps conservative1/2 lanes, line2 directive, recursive deterministic writer and truthful docs.
 - Recovery after ask_user pause: snapshot excluded .git/config and .cache; restored public origin URL/fetchspec and author (no credentials in config), fetched/reconciled remote; HEAD/remote feature57088a5 and main7bf2d91 unchanged, PR list still empty. Snapshot also dropped updater executable mode; restored committed0755, no source-content changes. Bun/browser cache is absent and must be reinstalled before subsequent validation.
 - First research-checkpoint command failed at remote verification before editing worklog/commit because origin config was excluded. No commit/push occurred and no concurrent content changes were overwritten. This checkpoint completes the previously staged evidence plus factual journal only.
+
+### 2026-10-01 — Valid scheduled/manual CI via existing sibling config defaults (completed)
+- Prior Vanguard-research checkpoint 927d928fcc0e34d639d7e332c3fb1b314686c2cf push verified. Recovery/fetch reconfirmed feature/main unchanged and PR list empty; Bun1.4.2 installed/reinstalled outside repository cache, target frozen install succeeds.
+- Latest user clarification: their Vanguard/config-file suggestion was specifically to FIX the max25 workflow-parameter issue, not to solicit another group/split design. Applied the observed existing family pattern without further questions or unrelated changes.
+- Single update-data.yml: Sunday0 0 * *0 + workflow_dispatch ONLY,25 direct operational inputs with blank string defaults/matching uppercase ENV. All27 canonical settings remain in checked-in JSON, CLI/help/output and forthcoming docs; SEC_UA/VERBOSE use file defaults or direct CLI env, not form fields. This is the necessary narrow adaptation of original all27 direct-field wording; no JSON bundle, hidden dropped control, or second updater workflow. Manifest scripts/fixtures/parity/control-surfaces.json is self-contained.
+- AAM runtimeControls already reads JSON before merging nonblank ENV, with AAM_ aliases higher priority; scheduled/empty manual env never clobbers file defaults. File can set VERBOSE/contact for workflow runs. Conservative1-second independent lanes/2workers retained (did NOT copy Vanguard0/4 defaults).
+- Updater workflow: checkoutv7/setup-bunv2(latest), frozen install; all offline tests before real CLI; full feed validator/tests/diff check after generation; stage ONLY api/aam before cached-diff check (detects added pages), scoped Conventional Commit and ordinary push. Serial update group/no cancellation. persist-credentials=false; commit token supplied only at runtime, shell credential helper not stored in URL/Git config. No force or auto-rebase.
+- Separate checks.yml is OFFLINE pull_request/manual only: no provider refresh, read-only permissions, frozen install/tests/feed verification/Bun transpilation/diff. It is not a second updater workflow. Dependabot copied verbatim pinned family: monthly Bun/actions, limit10 each.
+- Added4 offline workflow regressions: exact25input+2file surfaces, all27 config/defaults, blank/nonblank/AAM_ precedence, Sunday/manual/no-push refresh, tests-before-fetch, stage-before-diff, runtime auth, offline PR checks and Dependabot.
+- Commands: bun install --frozen-lockfile exit0; bun test ->63 pass/0 fail/441 expectations; Bun updater build exit0; bun scripts/verify-feed.ts --require-complete exit0 (9/1162/7623); git diff --check clean. No network provider refresh ran during CI implementation; tests remain offline, transpilation not semantic TS proof.
+- Workflows not remotely dispatched (feature not merged; manual workflow registration is default-branch based). GitHub PR offline-check execution will be inspected after PR creation.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN
