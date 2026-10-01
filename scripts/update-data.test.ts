@@ -324,3 +324,9 @@ test('zero price anchors cannot yield infinite derived financial returns',()=>{
   const d=priceReturns([{date:'2025-06-30',close:0,adjClose:0,volume:0},{date:'2026-06-30',close:1,adjClose:1,volume:0}],new Date('2026-06-30T00:00:00Z'));
   expect(d.yr1).toBeNull();expect(d.siAnn).toBeNull();
 });
+test('same ex-date with exchange-opening vs midnight epochs is ONE distribution, issuer total wins',()=>{
+  const midnight=1790726400,opening=1790775000;
+  const d=mergeDividends([{epoch:midnight,amount:.115,recordDate:'2026-09-30',payDate:'2026-10-02'},{epoch:opening,amount:.11}],[{epoch:opening,amount:.11}],[{epoch:midnight,amount:.115,exDate:'2026-09-30',recordDate:'2026-09-30',payDate:'2026-10-02'}]);
+  expect(d).toEqual([{epoch:midnight,amount:.115,exDate:'2026-09-30',recordDate:'2026-09-30',payDate:'2026-10-02'}]);
+  expect(mergeDividends(d,[{epoch:opening,amount:.115}],[])).toEqual(d);
+});

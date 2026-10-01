@@ -6,13 +6,13 @@ CURRENT STATE
 - Repository: https://github.com/daggerok/AAM
 - Branch: feat/aam-etfs; PR: none (GitHub REST verified 2026-10-01).
 - Reconciliation: clean baseline HEAD/main/origin/main = 7bf2d91; no concurrent changes or existing PRs. Original baseline prose archived below, full original plan preserved.
-- Last confirmed pushed SHA: 660e0b5cb4c8baeb8a2406197d0c067b1b1ad9f0 (verified against remote before this checkpoint; containing commit identifiable via git log).
-- Completed: actual CLI twice live at revision 660e0b5: all 3 fresh detail/full XLS/Yahoo; complete 454 holdings / 4178 history; 6 unrequested funds and production seed unchanged; offline 44/0.
-- Active: fix calendar ex-date dividend deduplication and extend acceptance evidence with per-file value diffs before rerun.
-- Remaining: resolve acceptance findings + rerun/commit evidence; separate production bootstrap batches; parity UI/browser; CI; README/metadata; PR.
-- Blockers: Acceptance not yet passed: one SPDV history page changed; exact value delta not captured by first harness. Calendar-date duplicate distributions found (Yahoo exchange-time epoch vs AAM midnight epoch). No production portfolios published.
-- Exact next action after this checkpoint is pushed: deduplicate distributions by ISO ex-date instead of raw epoch, normalize stored epochs and retain issuer priority; add different-hour regression. Extend harness to archive run snapshots and report exact non-timestamp value diffs/upstream variations, preserving first failed attempt evidence; then rerun real CLI acceptance.
-- Status: Live sources validated for 3 funds; acceptance checkpoint FAILED repeat-stability guard and dividend-date merge needs fix.
+- Last confirmed pushed SHA: 71385be7d44c8243dc51361e2a4c7d7fac172cc2 (verified against remote before this checkpoint; containing commit identifiable via git log).
+- Completed: actual source paths validated in failed first attempt; calendar-date event merge fixed; 45 offline tests passing; production remains catalog-only.
+- Active: extend live harness with full run snapshots/precise JSON diffs and rerun both actual CLI commands.
+- Remaining: live repeat evidence; separate bounded production bootstrap; UI/browser; CI; README/metadata; PR.
+- Blockers: First attempt repeat delta unresolved (SPDV history/002.json). No complete live acceptance claim yet.
+- Exact next action after this checkpoint is pushed: extend live-acceptance.ts to keep run-1/run-2 API snapshots and structured value diffs, then execute same real conservative subset command twice; validate unique calendar ex-dates, fresh provider counts, retained unrequested data and production isolation.
+- Status: Dividend ex-date merge corrected and regression-tested; repeated live acceptance still pending.
 
 INITIAL HANDOFF PROMPTS (preserved)
 ===================================
@@ -209,6 +209,13 @@ CHRONOLOGICAL JOURNAL
 - Harness exit 1 because second run changed exactly funds/SPDV/history/002.json (CLOC/PFLD and every meta/index/other page byte-identical). This is NOT timestamp-only (pages have no timestamps), but first harness recorded hashes not first-run page bodies, so exact upstream value delta is not yet established. DO NOT claim successful byte stability. Next harness must retain run snapshots and exact value diffs, document upstream changes rather than force cached values back.
 - Also audited distribution events: 10 calendar ex-dates appear twice because Yahoo uses exchange-opening-hour epoch (e.g. 1790775000) and AAM uses UTC midnight (1790726400) for 2026-09-30. Counts 116 SPDV / 92 PFLD / 21 CLOC include these duplicates. This is an implementation defect, isolated only; fix by calendar-date keys with issuer priority and add regression.
 - The CLI source paths did run live successfully, but acceptance is UNFINISHED and financial event merge needs correction. No smoke portfolio or history has been copied into production. Disposables: .cache/live-acceptance-awkzBK; resumable evidence is tracked, not dependent on cache survival.
+
+### 2026-10-01 — Correct calendar ex-date merging (completed)
+- Previous first-attempt evidence checkpoint 71385be7d44c8243dc51361e2a4c7d7fac172cc2 push verified.
+- Scoped fix only in mergeDividends and its regression: identify cash distributions by ISO calendar ex-date, normalize stored event epochs to UTC midnight, keep older official record/pay dates, and apply issuer total $/Share last. This resolves real AAM/Yahoo differing-hour duplicates without changing source amounts or cadence rules.
+- Regression uses observed 2026-09-30 epochs 1790726400 (AAM midnight) vs 1790775000 (Yahoo opening hour): ONE event, amount=0.115, official record/pay dates retained, repeat merge stable. Existing legacy duplicate cache is also deduplicated by calendar date.
+- Commands: bun test -> 45 pass / 0 fail / 269 expectations; bun build --target=bun scripts/update-data.ts --outfile=/dev/null -> exit 0; git diff --check -> clean.
+- No live output was published and no first-attempt evidence overwritten. SPDV history-page provider delta still needs exact capture; that is a separate acceptance issue, not masked by this dividend fix.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN

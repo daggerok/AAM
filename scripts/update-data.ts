@@ -1252,11 +1252,23 @@ function daysFromRows(rows:SheetRow[]):ChartDay[] {
   return rows.flatMap(row=>{const date=rowDate(row),close=numberOrNull(row.Close),adjClose=numberOrNull(row['Adj Close']);return date&&close!==null&&adjClose!==null?[{date,close,adjClose,volume:numberOrNull(row.Volume)??0}]:[];});
 }
 export function mergeDividends(previous:Array<{epoch:number;amount:number;recordDate?:string;payDate?:string}>,chart:Array<{epoch:number;amount:number}>,official:DistributionEvent[]):DistributionEvent[] {
-  const events=new Map<number,DistributionEvent>();
-  for(const d of [...previous,...chart])if(Number.isFinite(d.epoch)&&Number.isFinite(d.amount))events.set(d.epoch,{epoch:d.epoch,amount:round(d.amount,6),exDate:epochToIsoDate(d.epoch),recordDate:('recordDate' in d?d.recordDate:undefined)??events.get(d.epoch)?.recordDate??'',payDate:('payDate' in d?d.payDate:undefined)??events.get(d.epoch)?.payDate??''});
-  for(const d of official)events.set(d.epoch,d); // issuer wins overlapping events, retaining full older Yahoo schedule
+  // Providers disagree about the hour (AAM midnight vs Yahoo exchange open),
+  // NOT the ex-date. Calendar-date identity prevents double-counting payouts.
+  const events=new Map<string,DistributionEvent>();
+  for(const d of [...previous,...chart]) {
+    if(!Number.isFinite(d.epoch)||!Number.isFinite(d.amount))continue;
+    const exDate=epochToIsoDate(d.epoch),epoch=isoToEpoch(exDate);if(epoch===null)continue;
+    const old=events.get(exDate);
+    events.set(exDate,{epoch,amount:round(d.amount,6),exDate,
+      recordDate:('recordDate' in d?d.recordDate:undefined)||old?.recordDate||'',
+      payDate:('payDate' in d?d.payDate:undefined)||old?.payDate||''});
+  }
+  for(const d of official) {
+    const epoch=isoToEpoch(d.exDate);if(epoch!==null)events.set(d.exDate,{...d,epoch});
+  } // Issuer total $/Share wins overlapping events; old Yahoo history retained.
   return [...events.values()].sort((a,b)=>a.epoch-b.epoch);
 }
+
 export function batchSelection(funds:CatalogFund[],config:UpdaterConfig,cursor:string|null):CatalogFund[] {
   const selected=[...funds].sort((a,b)=>a.ticker.localeCompare(b.ticker)).filter(f=>!config.tickers.length||config.tickers.includes(f.ticker));
   if(!config.maxFetches)return selected;
