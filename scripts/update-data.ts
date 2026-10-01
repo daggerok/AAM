@@ -241,7 +241,15 @@ export const CONTROL_DEFAULTS: Record<string, string> = {
   PERFORMANCE_YTD: ':', PERFORMANCE_1Y: ':', PERFORMANCE_3Y: ':', PERFORMANCE_5Y: ':', PERFORMANCE_10Y: ':',
   TOTAL_RETURN_YTD: ':', TOTAL_RETURN_1Y: ':', TOTAL_RETURN_3Y: ':', TOTAL_RETURN_5Y: ':', TOTAL_RETURN_10Y: ':', VERBOSE: 'false',
 };
-export const CONTROL_NAMES = Object.keys(CONTROL_DEFAULTS);
+export const CONTROL_NAMES = [
+  'MAX_FETCHES', 'REQUEST_SLEEP', 'CONCURRENCY', 'HOLDINGS_PAGE_SIZE', 'HISTORY_PAGE_SIZE', 'MAX_RETRIES',
+  'TICKERS', 'HISTORY_RANGE', 'EDGAR_FALLBACK', 'SKIP_AAM', 'SKIP_YAHOO', 'SEC_UA',
+  'AUM', 'TER', 'DIVIDEND_YIELD', 'SEC_YIELD',
+  'PERFORMANCE_YTD', 'PERFORMANCE_1Y', 'PERFORMANCE_3Y', 'PERFORMANCE_5Y', 'PERFORMANCE_10Y',
+  'TOTAL_RETURN_YTD', 'TOTAL_RETURN_1Y', 'TOTAL_RETURN_3Y', 'TOTAL_RETURN_5Y', 'TOTAL_RETURN_10Y', 'VERBOSE',
+] as const;
+export type ControlName = (typeof CONTROL_NAMES)[number];
+export const CONFIG_FILE_URL = new URL('./update-data.config.json', import.meta.url);
 
 export function parseRange(raw: string, label: string): Range | undefined {
   const text = raw.trim();
@@ -283,24 +291,50 @@ export function parseAumRange(raw: string): Range | undefined {
   return { min, max, source: text };
 }
 
-/** Defaults file < nonblank runtime env (AAM_ alias takes precedence). */
-export function resolveControls(file: unknown = {}, env: Record<string, string | undefined> = {}): Record<string, string> {
-  if (!file || typeof file !== 'object' || Array.isArray(file)) throw new Error('Configuration must be a JSON object');
-  const result = { ...CONTROL_DEFAULTS };
-  for (const [key,value] of Object.entries(file)) {
-    if (!CONTROL_NAMES.includes(key)) throw new Error(`Unknown updater control: ${key}`);
-    if (!['string','number','boolean'].includes(typeof value)) throw new Error(`${key}: expected a scalar`);
-    if (String(value).trim()) result[key] = String(value).trim();
-  }
+/** Controls where an empty value is meaningful (no allowlist / no bound); every other blank layer value inherits. */
+const BLANK_OK = new Set<string>(['TICKERS', 'AUM', 'TER', 'DIVIDEND_YIELD', 'SEC_YIELD', ...CONTROL_NAMES.filter(k => /^(PERFORMANCE|TOTAL_RETURN)_/.test(k))]);
+function mergeControls(file: unknown, advanced: unknown, inputs: unknown, env: Record<string, string | undefined>): Record<string, string> {
+  const result: Record<string, string> = { ...CONTROL_DEFAULTS };
+  const known = new Set<string>(CONTROL_NAMES);
+  // Layers apply in order. A blank value only overrides where blank is meaningful (BLANK_OK); inputs never override with blank.
+  const apply = (layer: unknown, label: string, mode: 'file' | 'advanced' | 'inputs' | 'env'): void => {
+    if (!layer || typeof layer !== 'object' || Array.isArray(layer)) throw new Error(`${label}: configuration must be a JSON object`);
+    for (const [key, raw] of Object.entries(layer)) {
+      if (!known.has(key)) throw new Error(`Unknown updater control: ${key}`);
+      if (mode === 'inputs' && (raw === '' || raw === undefined || raw === null)) continue;
+      if (!['string', 'number', 'boolean'].includes(typeof raw)) throw new Error(`${key}: expected string, number or boolean`);
+      const text = String(raw).trim();
+      if (/[\x00-\x1f\x7f]/.test(String(raw))) throw new Error(`${key}: control characters not allowed`);
+      if (text === '' && !BLANK_OK.has(key)) continue;
+      result[key] = text;
+    }
+  };
+  apply(file, 'file', 'file');
+  apply(advanced, 'advanced', 'advanced');
+  apply(inputs, 'inputs', 'inputs');
+  const envLayer: Record<string, string> = {};
   for (const key of CONTROL_NAMES) {
-    const value = [env[`AAM_${key}`],env[key]].find(v => v !== undefined && v.trim() !== '');
-    if (value !== undefined) result[key] = value.trim();
-    if (/[\x00-\x1f\x7f]/.test(result[key])) throw new Error(`${key}: control characters not allowed`);
+    const value = env[`AAM_${key}`] ?? env[key]; // AAM_ alias wins over the canonical name
+    if (value !== undefined) envLayer[key] = value;
   }
+  apply(envLayer, 'env', 'env');
   return result;
 }
+/** Precedence: config file < advanced JSON < nonblank workflow inputs < env (AAM_ alias wins); validates every value. */
+export function resolveControls(file: unknown = {}, advanced: unknown = {}, inputs: unknown = {}, env: Record<string, string | undefined> = {}): Record<string, string> {
+  const result = mergeControls(file, advanced, inputs, env);
+  parseControls(result); // validate before any request or write
+  return result;
+}
+/** Reads the checked-in defaults at runtime (a missing file means built-in defaults) and applies env overrides. */
+export async function runtimeControls(env: Record<string, string | undefined> = process.env): Promise<Record<string, string>> {
+  const file = await readJson(CONFIG_FILE_URL);
+  return resolveControls(file ?? {}, {}, {}, env);
+}
 export function readConfig(env: Record<string, string | undefined> = {}, file: unknown = {}): UpdaterConfig {
-  const e = resolveControls(file,env);
+  return parseControls(mergeControls(file, {}, {}, env));
+}
+function parseControls(e: Record<string, string>): UpdaterConfig {
   const integer = (key: string, min: number): number => {
     if (!/^\d+$/.test(e[key]) || !Number.isSafeInteger(Number(e[key])) || Number(e[key]) < min) throw new Error(`${key}: expected integer >= ${min}`);
     return Number(e[key]);
@@ -1444,9 +1478,6 @@ async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRe
   return {row,providers};
 }
 
-async function runtimeControls(env:Record<string,string|undefined>):Promise<Record<string,string>> {
-  const file=await readJson(new URL('./update-data.config.json',import.meta.url));return resolveControls(file??{},env);
-}
 export async function main(env:Record<string,string|undefined>=process.env,options:{root?:URL;fetcher?:Fetcher;now?:Date}={}):Promise<RunSummary> {
   const controls=await runtimeControls(env),config=readConfig(controls),root=options.root??API_ROOT,now=options.now??new Date();
   process.env.VERBOSE=controls.VERBOSE;outputPrintConfig('AAM',config);
@@ -1495,7 +1526,7 @@ export async function main(env:Record<string,string|undefined>=process.env,optio
 }
 async function printHelp():Promise<void> {
   const controls=await runtimeControls(process.env);readConfig(controls);
-  console.log('AAM ETF updater — bun scripts/update-data.ts\nFile defaults: scripts/update-data.config.json; nonblank env wins; AAM_ aliases accepted.');
+  console.log('AAM ETF updater - bun scripts/update-data.ts\nFile defaults: scripts/update-data.config.json; env wins over the file; AAM_ aliases accepted.');
   for(const key of CONTROL_NAMES)console.log(`  ${key}=${CONTROL_DEFAULTS[key]||'(all)'}${controls[key]!==CONTROL_DEFAULTS[key]?` (effective: ${controls[key]})`:''}`);
   console.log('MAX_FETCHES=0: full pass/reset cursor; positive: resume bounded batches.\nTICKERS: space/comma/semicolon allowlist, AND with every filter; unselected funds retained.\nRanges: inclusive min:max / min: / :max / :; AUM K/M/B/T or nano/micro/small/mid/large.\nPERFORMANCE_*: annualized for 3Y+; TOTAL_RETURN_*: cumulative. Missing values fail bounded filters.\nREQUEST_SLEEP: seconds between request starts PER lane; CONCURRENCY: parallel fund workers.\nMAX_RETRIES: retries after first request (network/408/425/429/5xx only).\nHOLDINGS_PAGE_SIZE/HISTORY_PAGE_SIZE: generated rows/page. HISTORY_RANGE: max or Ny (old rows retained).\nSEC_UA: identifying User-Agent/contact, EDGAR_FALLBACK: holdings only. SKIP_AAM/SKIP_YAHOO: opt-out, retain cache.\nVERBOSE=1: retry/fallback detail. No dry-run: actual CLI writes data.');
   console.log('Examples:\n  TICKERS="SPDV PFLD CLOC" VERBOSE=1 bun scripts/update-data.ts\n  MAX_FETCHES=3 bun scripts/update-data.ts\n  AUM="10M:2B" TER=":0.5" bun scripts/update-data.ts\n  PERFORMANCE_1Y="15:" bun scripts/update-data.ts');

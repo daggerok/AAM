@@ -13,7 +13,7 @@ test('conservative unfiltered defaults; explicit env and AAM aliases win', () =>
   expect(readConfig({ AAM_TICKERS:'spdv;pfld SPDV', MAX_RETRIES:'0', REQUEST_SLEEP:'', AAM_CONCURRENCY:'3' },{CONCURRENCY:'7'}).tickers).toEqual(['PFLD','SPDV']);
   expect(readConfig({AAM_CONCURRENCY:'3'}, {CONCURRENCY:'7'}).concurrency).toBe(3);
   expect(readConfig({MAX_RETRIES:'0'}).maxRetries).toBe(0);
-  expect(resolveControls({TICKERS:'CLOC'},{TICKERS:''}).TICKERS).toBe('CLOC');
+  expect(resolveControls({TICKERS:'CLOC'},{},{TICKERS:''}).TICKERS).toBe('CLOC');
 });
 test('invalid config fails before provider requests or disk writes', () => {
   for (const bad of [{CONCURRENCY:'0'},{MAX_RETRIES:'-1'},{MAX_FETCHES:'1x'},{REQUEST_SLEEP:'NaN'},{HISTORY_RANGE:'1mo'},{EDGAR_FALLBACK:'maybe'},{TICKERS:'../SPDV'},{SEC_UA:'a\nb'}]) expect(() => readConfig(bad)).toThrow();

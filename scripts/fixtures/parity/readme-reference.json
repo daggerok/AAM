@@ -1,7 +1,0 @@
-{
-  "repo": "daggerok/JPMorgan",
-  "sha": "8ce0ddca58b5459dd7df98f22463fb31afa82f2b",
-  "sourceSha256": "12fd9357cab6ef82d8a96a325b5ffb861d00c999e1542e239fb70b9cb4545970",
-  "resultSha256": "9477c65f2c3852ae4b8ddd01c8a9575c9892df6f47b426d58e2007c4014b0a93",
-  "permittedChanges": "brand/repo/API paths; actual sources/fallbacks and limitations; truthful file/control defaults and workflow25+2 adaptation; examples; pending deployment; AAM trademark source identity; new AAM rows only. Generic intro/feature claims, hierarchy, Using Bun commands and TypeScript wording preserved."
-}
