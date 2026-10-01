@@ -358,3 +358,24 @@ test('known ZERO cash distribution yields0%, not missing; null/negative amount a
   const m=deriveCatalogMetrics({ytd:0,yr1:0,yr3:0,yr5:0,yr10:0,sinceInception:0},{asOfDate:'2026-06-30',ytd:null,yr1:null,cagr3y:null,cagr5y:null,cagr10y:null,siAnn:null,mo1:null,qtd:null},null,0,0,12,25);
   expect(m.dividendYieldText).toBe('0.00%');expect(m.secYieldText).toBe('0.00%');
 });
+
+test('partially missing current issuer dates cannot erase previously verified record/pay dates',()=>{
+  const old={epoch:1790726400,amount:.1,exDate:'2026-09-30',recordDate:'2026-09-30',payDate:'2026-10-02'};
+  const merged=mergeDividends([old],[],[{...old,amount:0,recordDate:'',payDate:''}]);
+  expect(merged).toEqual([{...old,amount:0}]);
+});
+test('filed net-assets ZERO still carries SEC report date through real offline fund assembly',async()=>{
+  await testFeed(async(_dir,root,base)=>{
+    const xml=(await fixtureText('nport.xml')).replace('<netAssets>100000000</netAssets>','<netAssets>0</netAssets>');
+    const mock:Fetcher=async(url,init)=>{
+      if(url==='https://www.aamlive.com/ETF/Detail/SPDV')return new Response('offline detail unavailable',{status:403});
+      if(url.endsWith('company_tickers_mf.json'))return Response.json({fields:['symbol','cik','seriesId','classId'],data:[['SPDV',1540305,'S000000001','C1']]});
+      if(url.includes('browse-edgar'))return new Response('<feed><entry><filing-type>NPORT-P</filing-type><accession-number>0001193125-26-000001</accession-number><filing-href>https://www.sec.gov/Archives/edgar/data/1540305/a</filing-href></entry></feed>');
+      if(url.endsWith('primary_doc.xml'))return new Response(xml);
+      return base(url,init);
+    };
+    await main({...integrationEnv,TICKERS:'SPDV'},{root,fetcher:mock,now:fixedNow});
+    const meta=await Bun.file(new URL('funds/SPDV/meta.json',root)).json();
+    expect(meta.aum.value).toBe(0);expect(meta.aum.asOfDate).toBe('2026-06-30');
+  });
+});

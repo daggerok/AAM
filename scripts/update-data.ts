@@ -1262,7 +1262,8 @@ export function mergeDividends(previous:Array<{epoch:number;amount:number;record
       payDate:('payDate' in d?d.payDate:undefined)||old?.payDate||''});
   }
   for(const d of official) {
-    const epoch=isoToEpoch(d.exDate);if(epoch!==null)events.set(d.exDate,{...d,epoch});
+    const epoch=isoToEpoch(d.exDate),old=events.get(d.exDate);
+    if(epoch!==null)events.set(d.exDate,{...d,epoch,recordDate:d.recordDate||old?.recordDate||'',payDate:d.payDate||old?.payDate||''});
   } // Issuer total $/Share wins overlapping events; old Yahoo history retained.
   return [...events.values()].sort((a,b)=>a.epoch-b.epoch);
 }

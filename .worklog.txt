@@ -6,13 +6,13 @@ CURRENT STATE
 - Repository: https://github.com/daggerok/AAM
 - Branch: feat/aam-etfs; PR: none (GitHub REST verified 2026-10-01).
 - Reconciliation: clean baseline HEAD/main/origin/main = 7bf2d91; no concurrent changes or existing PRs. Original baseline prose archived below, full original plan preserved.
-- Last confirmed pushed SHA: 11650ea8185ab42a543711516268c2a56a55072d (verified against remote before this checkpoint; containing commit identifiable via git log).
-- Completed: completeAPI/UI/browser/CI/README/metadata; explicit numeric-slot/generic-queue review; zero payout stays0% and all nonpositive price anchors unknown;69tests.
-- Active: final offline/feed/security check and PR opening, without merge or full refresh.
-- Remaining: final verification checkpoint; create PR; inspect GitHub checks; final worklog/push/remote verification.
+- Last confirmed pushed SHA: 29a547f4546dd9a91f23a7f6e6c225c70dbda836 (verified against remote before this checkpoint; containing commit identifiable via git log).
+- Completed: API/UI/browser/CI/docs/metadata done; zero/date/cache edge guards covered;71offline tests/590expectations.
+- Active: final local verification and PR/check-status handoff.
+- Remaining: final verification evidence checkpoint; open PR; inspect remote checks; final worklog/push/remote verification.
 - Blockers: none
-- Exact next action after this checkpoint is pushed: run frozen install/tests/build/feed/diff and credential/forbidden-toolchain scan; track final verification then create PR main<-feat/aam-etfs and inspect offline Actions check result.
-- Status: Final financial edge review completed;69offline tests pass; ready for final verification/PR.
+- Exact next action after this checkpoint is pushed: run final frozen/test/build/feed/security checks without provider refresh; commit verification, then open main PR and inspect checks.
+- Status: Final retention edge regressions complete;71offline tests pass; ready to open PR after final verification.
 
 INITIAL HANDOFF PROMPTS (preserved)
 ===================================
@@ -337,6 +337,14 @@ CHRONOLOGICAL JOURNAL
 - Added zero-payout/SEC-yield0.00% regression and exhaustive first/last adjusted-close0/-1 checks for every return window (allnull, never infinity/NaN). Clarified copied internal helper comments: AAM-derived windows use Yahoo MARKET prices, not JPMorgan official NAV history. No UI code/calculation/layout change.
 - Strengthened existing tooltip-key/overview-row equality tests to require nonempty extracted sets (>40/>30), avoiding vacuous comparisons. Full-file UI substitution guard remains the authority; actual app.tsx/index.html unchanged from browser-validated hashes.
 - Commands: bun test ->69pass/0fail/589expectations; Bun updater build exit0; full feed verifier exit0 (9/1162/7623); git diff --check clean. Earlier live acquisition/scoping/one-cent variance evidence remains valid for positive-data paths; these edge cases tested offline, not claimed as new live SEC acceptance.
+
+### 2026-10-01 — Field-level date retention coverage (completed)
+- Prior zero-metric checkpoint29a547f4546dd9a91f23a7f6e6c225c70dbda836 push verified.
+- A partially missing current issuer record/pay-date cell now keeps the previously verified date for the SAME ex-date; issuer total amount (including0) still wins. This closes a field-level missing-source path without hiding changed amounts or creating dates. Existing calendar deduplication/source priority unchanged.
+- Added offline regression for current empty date fields over known dates and actual fund-assembly SEC netAssets=0 fixture: value0 and report date2026-06-30 retained. Synthetic SEC fixture/routing explicitly offline, not production or live-fallback evidence.
+- Actual complete published API and UI unchanged; no provider refresh. Positive live-source paths unaffected by these absent/zero-field cases.
+- Commands: bun test ->71pass/0fail/590expectations; updater Bun build exit0; git diff --check clean.
+- Correction to preceding journal's expectation-count typo: the actual69-test run had587 expectations, not589. Pass/fail counts were correct. This entry derives numbers directly from the recorded Bun log rather than guessing.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN
