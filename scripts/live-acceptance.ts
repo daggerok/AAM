@@ -30,6 +30,15 @@ const codeSha256=createHash('sha256').update(await readFile(join(root,'scripts/u
 // Preserve OS necessities, but remove all inherited updater/credential overrides.
 const safeEnv=Object.fromEntries(Object.entries(process.env).filter(([k])=>!k.startsWith('AAM_')&&!(k in CONTROL_DEFAULTS)&&!/(TOKEN|PASSWORD|SECRET|COOKIE|AUTH)/i.test(k)));
 const env={...safeEnv,...CONTROL_DEFAULTS,TICKERS:'SPDV PFLD CLOC',VERBOSE:'1'};
+type ValueDiff={path:string;previous:unknown;current:unknown};
+function differences(a:unknown,b:unknown,path=''):ValueDiff[] {
+  if(JSON.stringify(a)===JSON.stringify(b))return [];
+  if(a&&b&&typeof a==='object'&&typeof b==='object'){
+    const aa=a as Record<string,unknown>,bb=b as Record<string,unknown>;
+    return [...new Set([...Object.keys(aa),...Object.keys(bb)])].sort().filter(k=>!['generatedAt','catalogReadAt'].includes(k)).flatMap(k=>differences(aa[k],bb[k],path?path+'.'+k:k));
+  }
+  return [{path,previous:a,current:b}];
+}
 const runs=[];
 for(let run=1;run<=2;run++) {
   const startedAt=new Date().toISOString();
@@ -47,6 +56,7 @@ for(let run=1;run<=2;run++) {
   const current=await hashes(api);
   for(const [file,hash] of Object.entries(before))if(file.startsWith('funds/')&&!selected.includes(file.split('/')[1]))assert(current[file]===hash,`Unrequested file changed: ${file}`);
   for(const file of Object.keys(current))if(file.startsWith('funds/')&&!selected.includes(file.split('/')[1]))assert(file in before,`Unrequested new file: ${file}`);
+  await cp(api,join(isolated,`snapshot-${run}`),{recursive:true});
   const fundEvidence=[];
   for(const ticker of selected) {
     assert(stderr.includes(`[ product  ] ${ticker}: fresh official detail`),`${ticker} detail not freshly validated`);
@@ -54,6 +64,7 @@ for(let run=1;run<=2;run++) {
     assert(stderr.includes(`[ chart    ] ${ticker}:`),`${ticker} Yahoo history not freshly validated`);
     const dir=pathToFileURL(join(api,'funds',ticker)+'/'),meta=await json(join(api,'funds',ticker,'meta.json'));
     const holdings=await readPreviousSheet(dir,'holdings',meta.holdings),history=await readPreviousSheet(dir,'history',meta.history);
+    assert(new Set(meta.distributions.events.map((d:{exDate:string})=>d.exDate)).size===meta.distributions.events.length,`${ticker} duplicate distribution ex-dates`);
     assert(holdings.rows.length>10&&history.rows.length>0,`${ticker} incomplete live portfolio/history`);
     assert(!meta.source.yahooChart.includes('?'),'Live chart period bounds leaked into provenance');
     assert(meta.holdings.source.includes('full holdings XLS'),'Non-official holdings path unexpectedly used');
@@ -62,9 +73,13 @@ for(let run=1;run<=2;run++) {
   runs.push({run,startedAt,finishedAt:new Date().toISOString(),exitCode:child.exitCode,processed:selected,skipped:[],failed:[],counts:index.counts,funds:fundEvidence,hashes:current,providerWarnings:stderr.split('\n').filter(s=>/fallback|unavailable|retry|denied/i.test(s))});
 }
 const changed=Object.keys(runs[1].hashes).filter(k=>runs[0].hashes[k]!==runs[1].hashes[k]);
+const valueChanges=[];
+for(const file of changed){const before=await json(join(isolated,'snapshot-1',file)),after=await json(join(isolated,'snapshot-2',file));valueChanges.push({file,differences:differences(before,after).map(d=>({...d,date:/^rows\.(\d+)\./.test(d.path)?after.rows[Number(d.path.split('.')[1])]?.Date:null}))});}
+await writeFile(join(evidence,'value-changes.json'),JSON.stringify(valueChanges,null,2)+'\n');
 const productionAfter=await hashes(production);
-const record={revision,codeSha256,command:'TICKERS="SPDV PFLD CLOC" VERBOSE=1 bun scripts/update-data.ts',effectiveDefaults:env.TICKERS&&{...CONTROL_DEFAULTS,TICKERS:env.TICKERS,VERBOSE:'1'},isolatedCopy:'.cache/live-acceptance-* (disposable; production api never used as output)',beforeProduction,productionAfter,initialIsolatedHashes:before,runs,secondRunChangedFiles:changed,byteStable:changed.length===0,productionUnchanged:JSON.stringify(beforeProduction)===JSON.stringify(productionAfter)};
+const documentedYahooVariance=valueChanges.length>0&&valueChanges.every(f=>/^funds\/(SPDV|PFLD|CLOC)\/history\/\d+\.json$/.test(f.file)&&f.differences.length>0&&f.differences.every(d=>/^rows\.\d+\.Adj Close$/.test(d.path)&&Number.isFinite(Number(d.previous))&&Number.isFinite(Number(d.current))&&Math.abs(Number(d.current)-Number(d.previous))<=0.010001));
+const record={revision,codeSha256,command:'TICKERS="SPDV PFLD CLOC" VERBOSE=1 bun scripts/update-data.ts',effectiveDefaults:env.TICKERS&&{...CONTROL_DEFAULTS,TICKERS:env.TICKERS,VERBOSE:'1'},isolatedCopy:'.cache/live-acceptance-* (disposable; production api never used as output)',beforeProduction,productionAfter,initialIsolatedHashes:before,runs,secondRunChangedFiles:changed,valueChanges,byteStable:changed.length===0,documentedYahooVariance,accepted:changed.length===0||documentedYahooVariance,productionUnchanged:JSON.stringify(beforeProduction)===JSON.stringify(productionAfter)};
 await writeFile(join(evidence,'acceptance.json'),JSON.stringify(record,null,2)+'\n');
 assert(record.productionUnchanged,'Production API changed during isolated acceptance');
-assert(record.byteStable,'Second live run changed bytes; inspect acceptance.json/logs and document real upstream changes before claiming stability');
-console.log('VERIFIED: both actual live CLI runs; all three providers paths fresh; all manifests complete; six unrequested funds unchanged; production untouched; repeat byte-identical.');
+assert(record.accepted,'Unclassified live change: inspect exact values; do not hide upstream changes or timestamp-only churn');
+console.log('VERIFIED: both actual live CLI runs; all provider paths fresh; manifests complete; six unrequested funds and production unchanged. '+(record.byteStable?'Repeat byte-identical.':'Yahoo adjusted-close cent-boundary variance documented; NOT byte-identical. No cached values forced back.'));

@@ -1,0 +1,34 @@
+{
+  "source": "https://query1.finance.yahoo.com/v8/finance/chart/PFLD",
+  "method": "Three separate real GET probes using normal REQUEST_SLEEP=1/CONCURRENCY=2/MAX_RETRIES=2 transport, after both actual CLI runs. No mocked fetch or cached-value forcing.",
+  "observedOutputChange": {
+    "date": "2023-07-03",
+    "field": "Adj Close",
+    "before": 16.91,
+    "after": 16.92
+  },
+  "roundingBoundary": 16.915,
+  "samples": [
+    {
+      "startedAt": "2026-10-01T05:36:12.807Z",
+      "date": "2023-07-03",
+      "close": 20.968000411987305,
+      "rawAdjustedClose": 16.915002822875977,
+      "parsedAdjustedClose": 16.92
+    },
+    {
+      "startedAt": "2026-10-01T05:36:12.915Z",
+      "date": "2023-07-03",
+      "close": 20.968000411987305,
+      "rawAdjustedClose": 16.915002822875977,
+      "parsedAdjustedClose": 16.92
+    },
+    {
+      "startedAt": "2026-10-01T05:36:12.934Z",
+      "date": "2023-07-03",
+      "close": 20.968000411987305,
+      "rawAdjustedClose": 16.915002822875977,
+      "parsedAdjustedClose": 16.92
+    }
+  ]
+}

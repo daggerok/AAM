@@ -6,13 +6,13 @@ CURRENT STATE
 - Repository: https://github.com/daggerok/AAM
 - Branch: feat/aam-etfs; PR: none (GitHub REST verified 2026-10-01).
 - Reconciliation: clean baseline HEAD/main/origin/main = 7bf2d91; no concurrent changes or existing PRs. Original baseline prose archived below, full original plan preserved.
-- Last confirmed pushed SHA: 71385be7d44c8243dc51361e2a4c7d7fac172cc2 (verified against remote before this checkpoint; containing commit identifiable via git log).
-- Completed: actual source paths validated in failed first attempt; calendar-date event merge fixed; 45 offline tests passing; production remains catalog-only.
-- Active: extend live harness with full run snapshots/precise JSON diffs and rerun both actual CLI commands.
-- Remaining: live repeat evidence; separate bounded production bootstrap; UI/browser; CI; README/metadata; PR.
-- Blockers: First attempt repeat delta unresolved (SPDV history/002.json). No complete live acceptance claim yet.
-- Exact next action after this checkpoint is pushed: extend live-acceptance.ts to keep run-1/run-2 API snapshots and structured value diffs, then execute same real conservative subset command twice; validate unique calendar ex-dates, fresh provider counts, retained unrequested data and production isolation.
-- Status: Dividend ex-date merge corrected and regression-tested; repeated live acceptance still pending.
+- Last confirmed pushed SHA: 665e33b0a00d421e9ee348c8f6f9302bee9878c6 (verified against remote before this checkpoint; containing commit identifiable via git log).
+- Completed: corrected ex-date merge; two actual live CLI runs at 665e33b all fresh/complete, production and 6 unrequested funds unchanged; exact provider delta/probes tracked; 46 offline tests pass with stable fixture bytes.
+- Active: separate bounded initial production data bootstrap after acceptance (no copy-back of smoke data).
+- Remaining: production initial feed in 3 explicit ticker batches; parity UI/browser; CI; README/metadata; PR.
+- Blockers: No implementation blocker. Live Yahoo can cross 2-decimal rounding boundary ($0.01 history variation); recorded honestly, not suppressed. SEC live holdings fallback denied/not exercised; offline fallback tested.
+- Exact next action after this checkpoint is pushed: generate initial production API separately with real CLI TICKERS="SPDV PFLD CLOC" VERBOSE=1 (defaults intact), record counts/provenance and scope checks; commit/push first batch before subsequent three-fund batches.
+- Status: Mandatory live source/scope acceptance audited successfully WITH documented Yahoo one-cent provider variance (NOT byte-identical).
 
 INITIAL HANDOFF PROMPTS (preserved)
 ===================================
@@ -216,6 +216,18 @@ CHRONOLOGICAL JOURNAL
 - Regression uses observed 2026-09-30 epochs 1790726400 (AAM midnight) vs 1790775000 (Yahoo opening hour): ONE event, amount=0.115, official record/pay dates retained, repeat merge stable. Existing legacy duplicate cache is also deduplicated by calendar date.
 - Commands: bun test -> 45 pass / 0 fail / 269 expectations; bun build --target=bun scripts/update-data.ts --outfile=/dev/null -> exit 0; git diff --check -> clean.
 - No live output was published and no first-attempt evidence overwritten. SPDV history-page provider delta still needs exact capture; that is a separate acceptance issue, not masked by this dividend fix.
+
+### 2026-10-01 — Corrected live acceptance and exact Yahoo variance audit (completed with caveat)
+- Prior dividend fix checkpoint 665e33b0a00d421e9ee348c8f6f9302bee9878c6 push verified.
+- Extended scripts/live-acceptance.ts to retain run snapshots in disposable isolated copy, capture structured per-field diffs, and reject duplicate calendar ex-dates. Re-executed SAME actual CLI twice at updater revision 665e33b, code hash in evidence/live/acceptance.json; normal sleep/retries/concurrency, no mocked fetch/SKIP flags, production seed copied but never output.
+- Run 1: 2026-10-01T05:35:16.143Z..05:35:21.093Z, CLI exit 0; run 2: 05:35:21.093Z..05:35:26.081Z, CLI exit 0. All CLOC/PFLD/SPDV fresh detail/full XLS/Yahoo; processed=3, skipped=0, failed=0, no provider warnings. Holdings/history counts still 61/235, 338/1723, 55/2220; total 9 funds / 454 holdings / 4178 history. Distribution counts correctly deduplicated: 11/82/106, all unique ex-dates.
+- Scope/manifest/provenance guards passed: all six unrequested rows/files unchanged; production seed hashes unchanged; all requested fund page manifests match actual rows, source/date/yield/expense/SI semantics checked; no live period-bounded URLs persisted as source.
+- Original strict repeat guard again exited 1 (both child CLI exits remain 0). This time exact delta captured: ONLY funds/PFLD/history/001.json, Jul 03 2023 row (index 908), Adj Close 16.91 -> 16.92. Date, Close=20.968, Volume=10400 and every other field/file were byte-identical; pages have no run timestamps. This is a provider-value change, not timestamp churn.
+- Three extra REAL Yahoo PFLD GET probes using normal transport (05:36:12.807Z/.915Z/.934Z) observed raw adjusted close=16.915002822875977, rounding to 16.92 around the 16.915 boundary, unadjusted close=20.968000411987305. Tracked evidence/live/provider-variance.json. First pre-change raw float was not captured; exact generated before/after cents WERE captured. Do not invent that missing raw value.
+- Manual post-run audit command validated child exit/scope results, sole exact data delta and actual source probe; accepted live refresh with DOCUMENTED provider variance, NOT a claim of live byte identity. Harness now accepts only classified <=$0.01 adjusted-close history variations with exact diffs; unclassified/timestamp-only differences still fail. No rounding policy change, cached-value forcing, repeated requests to cherry-pick a clean pair, or fixture replay labeled live.
+- Stable inputs separately validated: offline second fixture run identical bytes; literal cent-boundary regression retains new source cents while equal literal inputs parse identically. Commands: bun test -> 46 pass / 0 fail / 272 expectations; updater and live harness Bun build -> exit 0; git diff --check -> clean.
+- First failed attempt evidence is preserved in evidence/live-attempt-1, corrected evidence in evidence/live. SEC live holdings fallback remains unexercised/blocked; complete official holdings succeeded, SEC identity and cached-retention paths are tested offline.
+- Acceptance source acquisition/scope requirements are complete with above honest live variance caveat. Next: separate initial production bootstrap (authorized static app feed), never copying smoke files.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN

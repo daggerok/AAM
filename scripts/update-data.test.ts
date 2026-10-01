@@ -330,3 +330,9 @@ test('same ex-date with exchange-opening vs midnight epochs is ONE distribution,
   expect(d).toEqual([{epoch:midnight,amount:.115,exDate:'2026-09-30',recordDate:'2026-09-30',payDate:'2026-10-02'}]);
   expect(mergeDividends(d,[{epoch:opening,amount:.115}],[])).toEqual(d);
 });
+test('Yahoo cent-boundary variance remains a real cent change; equal inputs stay identical',()=>{
+  const payload=(adj:number)=>({chart:{result:[{timestamp:[1688342400],indicators:{quote:[{close:[20.968000411987305],volume:[10400]}],adjclose:[{adjclose:[adj]}]}}]}});
+  const low=parseChart(payload(16.914998)),high=parseChart(payload(16.915002822875977));
+  expect(low.days[0].adjClose).toBe(16.91);expect(high.days[0].adjClose).toBe(16.92);
+  expect(parseChart(payload(16.915002822875977))).toEqual(high);
+});
