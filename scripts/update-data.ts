@@ -1104,6 +1104,18 @@ export function lastCompletedQuarterEnd(now = new Date()): Date {
   return new Date(Date.UTC(year, 8, 30)); // Oct-Dec -> Sep 30
 }
 
+/** Honest label for how metrics.ytd..siAnn were computed (STANDARD.md 9a). Official labels start with 'official AAM'. */
+export function returnsBasisLabel(anyOfficial: boolean, filledFromYahoo: boolean): string {
+  if (!anyOfficial) return 'derived from Yahoo adjusted market-price closes (estimate), not official NAV returns';
+  return filledFromYahoo
+    ? 'official AAM NAV total returns (aamlive.com performance table); missing metrics estimated from Yahoo adjusted market prices at the same reporting date'
+    : 'official AAM NAV total returns (aamlive.com dated performance table)';
+}
+
+export function isoDateOrNull(value: unknown): string | null {
+  return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value) ? value : null;
+}
+
 /**
  * Merges the official JPMorgan returns with the ones derived from the adjusted
  * daily series. Official figures win wherever they exist (they are NAV total
@@ -1119,6 +1131,7 @@ export function deriveCatalogMetrics(
   paymentsPerYear: number | null,
   price: number | null,
   officialCumulative: CumulativeReturns | null = null,
+  officialAsOf: string | null = null,
 ): JsonRecord {
   const coalesce = (value: number | null | undefined): number | null => (typeof value === 'number' && Number.isFinite(value) ? value : null);
   const ytd = coalesce(official.ytd) ?? coalesce(derived.ytd);
@@ -1128,6 +1141,11 @@ export function deriveCatalogMetrics(
   const cagr10y = coalesce(official.yr10) ?? coalesce(derived.cagr10y);
   const siAnn = coalesce(official.sinceInception) ?? coalesce(derived.siAnn);
   const dividendYield = coalesce(publishedDividendYield) ?? indicatedYield(latestDistribution, paymentsPerYear, price);
+  const anyOfficial = Object.values(official).some((value) => value !== null);
+  const filledFromYahoo = (['ytd', 'yr1', 'yr3', 'yr5', 'yr10', 'sinceInception'] as const).some((k, i) => {
+    const d = [derived.ytd, derived.yr1, derived.cagr3y, derived.cagr5y, derived.cagr10y, derived.siAnn][i];
+    return coalesce(official[k]) === null && coalesce(d) !== null;
+  });
   const text = (value: number | null): string | null => (value === null ? null : `${value.toFixed(2)}%`);
   return {
     ytd,
@@ -1143,9 +1161,9 @@ export function deriveCatalogMetrics(
     dividendYieldText: text(dividendYield) ?? '—',
     secYield: coalesce(publishedSecYield),
     secYieldText: text(coalesce(publishedSecYield)) ?? '—',
-    returnsBasis: Object.values(official).some((value) => value !== null)
-      ? 'official AAM NAV total returns (aamlive.com dated performance table)'
-      : 'derived from Yahoo adjusted market-price closes, not official NAV returns',
+    returnsBasis: returnsBasisLabel(anyOfficial, filledFromYahoo),
+    // Date the returns are as of: the issuer performance table date, or the last Yahoo close when derived. NOT the NAV date.
+    performanceAsOf: anyOfficial ? isoDateOrNull(officialAsOf) : isoDateOrNull(derived.asOfDate),
   };
 }
 
@@ -1320,6 +1338,9 @@ export type RunSummary = {processed:string[];skipped:string[];failed:string[];pr
 const percent=(v:number|null|undefined):string=>v==null?'—':`${v.toFixed(2)}%`;
 const money=(v:number|null|undefined):string=>v==null?'—':`$${v.toFixed(2)}`;
 
+/** Seed metrics: every contract key present, nothing known yet (null, never 0). */
+const UNKNOWN_METRICS:JsonRecord={ytd:null,tr1y:null,tr3y:null,tr5y:null,tr10y:null,cagr3y:null,cagr5y:null,cagr10y:null,siAnn:null,dividendYield:null,dividendYieldText:'—',secYield:null,secYieldText:'—',returnsBasis:'unknown: per-fund refresh pending, no returns published yet',performanceAsOf:null};
+
 /** Explicit initial seed: real catalog headlines, UNKNOWN portfolios/metrics. */
 export async function initializeCatalogSeed(root:URL,funds:CatalogFund[],now=new Date()):Promise<void> {
   if(await readJson(new URL('index.json',root)))throw new Error('Seed refuses to overwrite an existing feed');
@@ -1333,7 +1354,7 @@ export async function initializeCatalogSeed(root:URL,funds:CatalogFund[],now=new
       history:{pages:[],pageSize:1000,totalRows:0,source:'not yet refreshed',status:'unavailable'}};
     await writeIfChanged(new URL(`funds/${fund.ticker}/meta.json`,root),meta);
     rows.push({ticker:fund.ticker,name:fund.name,category:fund.category,fundPage:fund.fundPage,dataFile:`./funds/${fund.ticker}/meta.json`,nav:meta.nav.display,navValue:fund.nav,
-      asOfDate:meta.nav.asOfDate,inceptionDate:fund.inception?formatEdgarDate(fund.inception):'—',metrics:{secYield:fund.secYield,secYieldText:percent(fund.secYield)},holdings:0,history:0});
+      asOfDate:meta.nav.asOfDate,inceptionDate:fund.inception?formatEdgarDate(fund.inception):'—',metrics:{...UNKNOWN_METRICS,secYield:fund.secYield,secYieldText:percent(fund.secYield)},holdings:0,history:0});
   }
   await writeIfChanged(new URL('index.json',root),{generatedAt:now.toISOString(),source:{provider:'AAM official catalog seed (portfolios/history pending)',site:AAM_SITE,catalog:CATALOG_URL},counts:{funds:rows.length,holdings:0,history:0},funds:rows.sort((a,b)=>a.ticker.localeCompare(b.ticker))});
 }
@@ -1447,11 +1468,10 @@ async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRe
   const anchor=officialDate??days.at(-1)?.date??null,usable=anchor?days.filter(d=>d.date<=anchor):[];
   const derived=usable.length?priceReturns(usable,new Date(anchor!+'T00:00:00Z')):{...EMPTY_PRICE_RETURNS};
   if(!inception||!usable.length||!annualizedSinceInception(1,inception,anchor)||Date.parse(usable[0].date)-Date.parse(inception)>7*86400000)derived.siAnn=null;
-  const metric=deriveCatalogMetrics(official,derived,null,sec,latest?.amount,frequency.paymentsPerYear,price);
+  const metric=deriveCatalogMetrics(official,derived,null,sec,latest?.amount,frequency.paymentsPerYear,price,null,officialDate);
   if(!latest&&old.yields?.dividendYield!==undefined){metric.dividendYield=numberOrNull(old.yields.dividendYield);metric.dividendYieldText=percent(metric.dividendYield);}
   const reasons=fundFilterReasons({ticker:fund.ticker,aumValue:aum??holdings.netAssets,terValue:ter,metrics:metric},config);
   if(reasons.length)return {row:null,providers,reason:reasons.join(',')};
-  const returnBasis=rawOfficial?'official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date':'derived from Yahoo adjusted market-price closes, not official NAV returns';
   const monthEnd={asOfDate:anchor?formatEdgarDate(anchor):null,mo1:derived.mo1,qtd:derived.qtd,ytd:metric.ytd,yr1:metric.tr1y,yr3:metric.cagr3y,yr5:metric.cagr5y,yr10:metric.cagr10y,sinceInception:metric.siAnn};
   const quarterEnd=officialDate&&/-(03-31|06-30|09-30|12-31)$/.test(officialDate)?{...official,asOfDate:formatEdgarDate(officialDate)}:old.returns?.quarterEnd??null;
   const historySource=chart?.days.length?'Yahoo Finance daily market-price closes / adjusted closes (not official NAV)':old.history?.source??'unavailable';
@@ -1468,7 +1488,7 @@ async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRe
     marketPrice:{display:money(price),value:price,asOfDate:priceDate?formatEdgarDate(priceDate):old.marketPrice?.asOfDate??'—'},premiumDiscount:{display:percent(premium),value:premium},
     aum:{display:assets===null?'—':formatAumDisplay(assets),value:assets,asOfDate:detail?.aumAsOfDate?formatEdgarDate(detail.aumAsOfDate):old.aum?.asOfDate??(holdings.netAssets!==null&&holdings.netAssets!==undefined?holdings.asOfDate:null),source:detail?.netAssets!==null&&detail?.netAssets!==undefined?'aamlive.com official fund net assets':old.aum?.source??holdings.source},
     yields:{dividendYield:metric.dividendYield,dividendYieldText:metric.dividendYieldText,dividendYieldKind:'indicated: latest distribution x payments per year / market price (not trailing yield)',secYield:sec,secYieldText:percent(sec),secYieldKind:'30-day SEC yield, unsubsidized where separately published',subsidizedSecYield:detail?.subsidizedSecYield??old.yields?.subsidizedSecYield??null,unsubsidizedSecYield:detail?.unsubsidizedSecYield??old.yields?.unsubsidizedSecYield??null},
-    officialReturns:rawOfficial,returns:{monthEnd,quarterEnd,derivedFrom:returnBasis},
+    officialReturns:rawOfficial,returns:{monthEnd,quarterEnd,derivedFrom:metric.returnsBasis,performanceAsOf:metric.performanceAsOf},
     distributions:{frequency:frequency.frequency,paymentsPerYear:frequency.paymentsPerYear,source:'aamlive.com recent distributions (first paginated grid page), merged with Yahoo full-history events and previous published events; issuer amounts win',headers:['Ex-Date','Amount','Record Date','Payable Date'],rows:dividends.map(d=>[formatUsDate(d.epoch),String(round(d.amount,6)),d.recordDate,d.payDate]),events:dividends},
     holdings:{...holdingsManifest,asOfDate:holdings.asOfDate,asOf:holdings.asOfDate?formatEdgarDate(holdings.asOfDate):'—',source:holdings.source,status:holdings.status},
     history:{...historyManifest,asOf:days.length?formatEdgarDate(days.at(-1)!.date):old.history?.asOf??'—',source:historySource,status:history.length?'available':'unavailable'},

@@ -100,7 +100,8 @@
    "sinceInception": 23.81,
    "asOfDate": "Sep 30 2026"
   },
-  "derivedFrom": "official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date"
+  "derivedFrom": "official AAM NAV total returns (aamlive.com dated performance table)",
+  "performanceAsOf": "2026-09-30"
  },
  "distributions": {
   "frequency": "Annually",
