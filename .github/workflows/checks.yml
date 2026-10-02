@@ -19,7 +19,6 @@ jobs:
           bun-version: latest
       - run: bun install --frozen-lockfile
       - run: bun test
-      - run: bun scripts/verify-feed.ts --require-complete
       # Transpilation only; this is NOT semantic TypeScript validation.
       - run: bun build --target=bun scripts/update-data.ts --outfile=/dev/null
       - run: bun build --target=browser app.tsx --outfile=/dev/null

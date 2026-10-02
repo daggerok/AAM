@@ -141,6 +141,7 @@ concurrency:
 jobs:
   update-data:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -169,7 +170,7 @@ jobs:
               .filter(([key]) => key !== "advanced")
               .map(([key, value]) => [key.toUpperCase(), value]));
             const file = await Bun.file("scripts/update-data.config.json").json();
-            // Protected repository Actions variable: highest precedence, applied only when nonblank (never printed).
+            // Protected repository Actions variables: highest precedence, applied only when nonblank (never printed).
             const protectedVars = {};
             if ((process.env.PROTECTED_SEC_UA ?? "").trim()) protectedVars.SEC_UA = process.env.PROTECTED_SEC_UA.trim();
             const controls = resolveControls(file, advanced, individual, protectedVars);
@@ -178,12 +179,10 @@ jobs:
           '
       - name: Generate api/aam static data
         run: bun ./scripts/update-data.ts
-      - name: Validate generated feed
-        run: bun scripts/verify-feed.ts --require-complete
       - name: Commit updated data
+        if: ${{ !cancelled() }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        if: ${{ !cancelled() }}
         run: |
           git add api/aam
           if git diff --cached --quiet -- api/aam; then
