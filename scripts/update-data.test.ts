@@ -149,7 +149,7 @@ const headings = (text: string) => text.replace(/```[\s\S]*?```/g, '').split('\n
 const section = (text: string, start: string, end?: string) => text.slice(text.indexOf(start), end ? text.indexOf(end, text.indexOf(start) + start.length) : undefined);
 test('README follows the standard section order, lists all 27 brands once and documents valid examples', () => {
   expect(headings(readme)).toEqual(['# AAM', '## Using Bun', '## Updating the static AAM data', '### Data sources', '### Metrics and caveats', '### Update controls', '### Examples', '## TypeScript and verification', '## Brands table', '## Sibling applications', '## License']);
-  expect(readme).toContain('Deployment is pending'); expect(readme).not.toContain('published application is available');
+  expect(readme).toContain('published application is available'); expect(readme).not.toContain('Deployment is pending');
   expect(readme).not.toMatch(/worklog|\.prompt|evidence|fixtures|research\/|config-docs|ui\.test|verify-feed/i);
   const verification = section(readme, '## TypeScript and verification', '## Brands table').match(/```bash\n([\s\S]*?)```/)?.[1];
   expect(verification?.trim().split('\n')).toEqual(['bun install --frozen-lockfile', 'bun test', 'bun build --target=bun scripts/update-data.ts --outfile=/dev/null', 'git diff --check']);
