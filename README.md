@@ -10,7 +10,7 @@ bunx serve . -p 1234
 open http://0:1234
 ```
 
-The application homepage is <https://daggerok.github.io/AAM/>. Deployment is pending; this feature PR is not merged, and a configured homepage is not evidence that GitHub Pages is live.
+The application homepage is <https://daggerok.github.io/AAM/>. Deployment is pending; this feature PR is not merged, so GitHub Pages is not confirmed live.
 
 ## Updating the static AAM data
 
@@ -21,7 +21,7 @@ bun scripts/update-data.ts
 
 Run `bun scripts/update-data.ts --help` (or `-h`) to print every control with its default and the effective value. `scripts/update-data.config.json` holds the default for every control; edit it to change the defaults for scheduled and local runs.
 
-The **Update AAM ETF data** GitHub Actions workflow runs every Sunday at 00:00 UTC or manually, never on push. It has 24 individual inputs plus an `advanced` JSON object (25 inputs, GitHub's limit). Controls without an individual input (`SEC_UA`, `VERBOSE`, `TOTAL_RETURN_10Y`) are set through `advanced`, for example `{"TOTAL_RETURN_10Y": "5:", "VERBOSE": true}`. The workflow and the CLI share one resolver (`resolveControls`, which also checks every value), so precedence is the same everywhere: config file defaults < `advanced` JSON < nonblank individual inputs < protected Actions variable or environment (the `SEC_UA` repository variable; locally any `<CONTROL>` or `AAM_<CONTROL>` environment variable, the alias winning). Blank inputs inherit the file value, and only `TICKERS` and the min:max filters may be cleared to an empty value through `advanced`. All supplied filters use **AND** logic. Output goes to the fixed `api/aam` directory. Offline PR checks never fetch providers.
+The **Update AAM ETF data** GitHub Actions workflow runs every Sunday at 00:00 UTC or manually, never on push. It has 24 individual inputs plus an `advanced` JSON object (25 inputs, GitHub's limit). Controls without an individual input (`SEC_UA`, `VERBOSE`, `TOTAL_RETURN_10Y`) are set through `advanced`, for example `{"TOTAL_RETURN_10Y": "5:", "VERBOSE": true}`. The workflow and the CLI share one resolver (`resolveControls`, which also checks every value), so precedence is the same everywhere: config file defaults < `advanced` JSON < nonblank individual inputs < protected Actions variable or environment (the `SEC_UA` repository variable; locally any `<CONTROL>` or `AAM_<CONTROL>` environment variable, the alias winning). Blank inputs inherit the file value; `advanced` may set any key to an empty string, and an explicitly set environment variable wins even when empty - an empty value returns the control to its built-in default (no allowlist, no bound). All supplied filters use **AND** logic. Output goes to the fixed `api/aam` directory. Offline PR checks never fetch providers.
 
 ### Data sources
 
@@ -35,13 +35,13 @@ The **Update AAM ETF data** GitHub Actions workflow runs every Sunday at 00:00 U
 
 The HTML holdings grid is only a **10-row preview**, never a complete portfolio. The current official exports were independently decoded and the actual updater separately published all nine funds: **1,162 holdings rows / 7,623 history rows** (2026-10-01 bootstrap). Source weights, cash and duplicate positions are retained without rescaling; unavailable market values stay blank. The dependency-free XLS reader supports the observed one-sheet CFB/BIFF8 dialect and fails closed on truncation or a changed dialect instead of publishing partial rows.
 
-SEC trust registrant **ETF Series Solutions, CIK 0001540305** is not itself a fund identity. A filing must match the mapped series ID or exact normalized fund name before supplying holdings. In this environment trust submissions were reachable, but the fund ticker table/EFTS queries returned 403; live acceptance used the complete official exports, **not a demonstrated live SEC series fallback**. The fallback identity/retention paths are covered by explicitly synthetic offline fixtures.
+SEC trust registrant **ETF Series Solutions, CIK 0001540305** is not itself a fund identity. A filing must match the mapped series ID or exact normalized fund name before supplying holdings. In this environment trust submissions were reachable, but the fund ticker table/EFTS queries returned 403; live acceptance used the complete official exports, **not a demonstrated live SEC series fallback**. The fallback identity/retention paths are covered by small synthetic offline samples in `scripts/update-data.test.ts`.
 
 ### Metrics and caveats
 
 Official performance can be older than the NAV headline: the initial sources report performance **2026-06-30**, NAV/AUM **2026-09-29**, holdings **2026-10-01**. Published NAV returns are preferred; missing return metrics use Yahoo adjusted market prices at the same reporting date, not mislabeled NAV. Funds younger than one year have blank annualized SI; the issuer's cumulative young-fund SI is preserved separately, not relabeled annualized. Gross expense is primary; net expense and both SEC-yield variants remain in metadata, with unsubsidized SEC yield primary where separately published.
 
-The actual isolated CLI acceptance used `TICKERS="SPDV PFLD CLOC" VERBOSE=1` twice with normal pacing and no provider skips. All three official portfolios and Yahoo histories were freshly validated; production and six unrequested entries/files were untouched. The repeat changed only PFLD's 2023-07-03 adjusted close **16.91 -> 16.92**, a Yahoo cent-boundary value variation, not timestamp churn. It was documented, not forced back to a cached value. Stable-input fixture replays are byte-identical; timestamps are stripped recursively for write comparisons. Evidence: [`evidence/live/`](./evidence/live/), [`evidence/bootstrap/`](./evidence/bootstrap/) and [`evidence/browser/`](./evidence/browser/). No smoke output was copied into production.
+The actual isolated CLI acceptance used `TICKERS="SPDV PFLD CLOC" VERBOSE=1` twice with normal pacing and no provider skips. All three official portfolios and Yahoo histories were freshly validated; production and six unrequested entries/files were untouched. The repeat changed only PFLD's 2023-07-03 adjusted close **16.91 -> 16.92**, a Yahoo cent-boundary value variation, not timestamp churn. It was documented, not forced back to a cached value. Offline replays of identical inputs are byte-identical; timestamps are stripped recursively for write comparisons. No smoke output was copied into production.
 
 Each fund carries a derived `metrics` object that powers the catalog columns shared with the sibling sites:
 
@@ -61,13 +61,13 @@ Each fund carries a derived `metrics` object that powers the catalog columns sha
 | `CONCURRENCY` | `2` | Parallel fund workers/request lanes. Starts are independently paced, not globally serialized. |
 | `HOLDINGS_PAGE_SIZE` | `250` | Rows in each generated current-holdings JSON page. |
 | `HISTORY_PAGE_SIZE` | `1000` | Rows in each generated daily market-price history JSON page. |
-| `MAX_RETRIES` | `2` | Retries after the initial request. Only network errors and HTTP 408/425/429/5xx; exponential backoff, no 403/404 hammering. |
+| `MAX_RETRIES` | `2` | Integer >= 1: retries after the initial request. Only network errors and HTTP 408/425/429/5xx; exponential backoff, no 403/404 hammering. |
 | `TICKERS` | all | Space-, comma- or semicolon-separated allowlist, e.g. `SPDV PFLD CLOC`; unknown requested tickers fail before per-fund requests. |
 | `HISTORY_RANGE` | `max` | Yahoo coverage: `max` or `Ny`; fresh limited coverage merges with older published rows instead of deleting them. |
 | `EDGAR_FALLBACK` | `true` | Identity-verified SEC N-PORT holdings fallback when complete official holdings are unavailable. |
 | `SKIP_AAM` | `false` | Skip AAM provider calls, retain published catalog/headlines/holdings and run enabled fallbacks. |
 | `SKIP_YAHOO` | `false` | Skip Yahoo requests and retain published history/dividend events. |
-| `SEC_UA` | declared UA | Identifying SEC User-Agent/contact; default identifies the AAM repository/issues. Not an individual workflow input: use `advanced`, the config file or CLI environment; the protected `SEC_UA` Actions variable wins when nonblank. |
+| `SEC_UA` | declared UA | Identifying SEC User-Agent/contact; default is `daggerok ETF feed daggerok@gmail.com` and the value is redacted in config logs. Not an individual workflow input: use `advanced`, the config file or CLI environment; the protected `SEC_UA` Actions variable wins when nonblank. |
 | `AUM` | `:` | Net Assets min:max; each USD bound may use K/M/B/T, or nano/micro/small/mid/large presets. |
 | `TER` | `:` | Gross expense ratio percentage range; strict `min:max`, `min:`, `:max`, or `:`. |
 | `DIVIDEND_YIELD` | `:` | Indicated dividend-yield percentage range; colon required. |
@@ -82,7 +82,7 @@ Each fund carries a derived `metrics` object that powers the catalog columns sha
 | `TOTAL_RETURN_3Y` | `:` | 3Y cumulative total-return percentage range; colon required. |
 | `TOTAL_RETURN_5Y` | `:` | 5Y cumulative total-return percentage range; colon required. |
 | `TOTAL_RETURN_10Y` | `:` | 10Y cumulative total-return percentage range; colon required. Not an individual workflow input: use `advanced`. |
-| `VERBOSE` | `false` | Detailed provider/retry/fallback notices only; no change to data. Not an individual workflow input: use `advanced`, the config file or CLI environment; the protected `SEC_UA` Actions variable wins when nonblank. |
+| `VERBOSE` | `false` | Detailed provider/retry/fallback notices only; no change to data. Not an individual workflow input: use `advanced`, the config file or CLI environment. |
 
 `TICKERS` combines with AUM, TER, both yield filters and all performance/total-return ranges using AND logic; it does not override them. Funds not selected for a successful update keep their prior published metadata and data files. Missing values fail bounded filters; zero/negative figures are retained. Per-fund failures are reported while other workers continue; cached data is the last resort, never replaced by an empty success. A failed batch does not advance its cursor. CLI failures return nonzero; the workflow does not publish a failed run.
 
@@ -108,7 +108,7 @@ bun build --target=bun scripts/update-data.ts --outfile=/dev/null
 git diff --check
 ```
 
-The README controls table, the config file, `CONTROL_NAMES`, `--help` output and the workflow inputs are kept in sync by `scripts/config-docs.test.ts`.
+The README controls table, the config file, `CONTROL_NAMES`, `--help` output and the workflow inputs are kept in sync by the offline tests in `scripts/update-data.test.ts`.
 
 ## Brands table
 
@@ -133,7 +133,7 @@ The README controls table, the config file, `CONTROL_NAMES`, `--help` output and
 | **ProShares** | [proshares.com](https://www.proshares.com/our-etfs/find-proshares-etfs) \| [ProShares](https://daggerok.github.io/ProShares/) |
 | **Schwab** | [schwabassetmanagement.com](https://www.schwabassetmanagement.com/products) \| [Schwab](https://daggerok.github.io/Schwab/) |
 | **SPDR** | [ssga.com](https://www.ssga.com/us/en/intermediary/etfs/fund-finder) \| [SPDR](https://daggerok.github.io/SPDR/) |
-| **Sprott ETFs** | [sprottetfs.com](https://sprottetfs.com/) \| [Sprott](https://daggerok.github.io/Sprott/) (deployment pending) |
+| **Sprott ETFs** | [sprottetfs.com](https://sprottetfs.com/) \| [Sprott](https://daggerok.github.io/Sprott/) |
 | **Tema ETFs** | [temaetfs.com](https://temaetfs.com/funds) \| [Tema](https://daggerok.github.io/Tema/) |
 | **Themes ETFs** | [themesetfs.com/etfs](https://themesetfs.com/etfs) \| [Themes](https://daggerok.github.io/Themes/) |
 | **VanEck** | [vaneck.com](https://www.vaneck.com/us/en/etf-mutual-fund-finder/) \| [VanEck](https://daggerok.github.io/VanEck/) |
