@@ -10,6 +10,7 @@ import {
   parseDetail, exportPostbackBody, readXlsCells, parseHoldingsWorkbook, excelSerialDate, parseChart, chartUrl, priceReturns, annualizedToTotal,
   totalToAnnualized, indicatedYield, inferDistributionFrequency, deriveCatalogMetrics, annualizedSinceInception, fundFilterReasons,
   parseFundTickerMap, parseCompanyTickerMap, parseNport, nportMatches, parseNportAccessions, parseEdgarAtomFilings, nportUrlFor, createTransport,
+  isCertError, installSystemCa, systemCaActive,
   buildPages, writePages, readPreviousSheet, mergeHistory, mergeDividends, batchSelection, initializeCatalogSeed, validatePortfolioPreview, main,
 } from './update-data';
 import type { Fetcher } from './update-data';
@@ -56,7 +57,7 @@ test('scheduled path (empty inputs and advanced) equals config file defaults and
 });
 
 test('resolver rejects invalid shapes, unknown keys, non-scalars, newlines and invalid values in every layer', () => {
-  for (const bad of [null, [], 'x', { UNKNOWN: 1 }, { TOKEN: 'forbidden' }, { TICKERS: ['SPDV'] }, { TICKERS: { a: 1 } }, { SEC_UA: 'x\nEVIL=yes' }, { SEC_UA: 'x\ry' }, { SEC_UA: 'x\0y' }, { CONCURRENCY: 0 }, { MAX_FETCHES: 1.5 }, { MAX_RETRIES: 0 }, { VERBOSE: 'maybe' }, { AUM: '1:2:3' }]) {
+  for (const bad of [null, [], 'x', { UNKNOWN: 1 }, { TOKEN: 'forbidden' }, { TICKERS: ['SPDV'] }, { TICKERS: { a: 1 } }, { SEC_UA: 'x\nEVIL=yes' }, { SEC_UA: 'x\ry' }, { SEC_UA: 'x\0y' }, { CONCURRENCY: 0 }, { MAX_FETCHES: 1.5 }, { MAX_RETRIES: 0 }, { VERBOSE: 'maybe' }, { USE_SYSTEM_CA: 'maybe' }, { AUM: '1:2:3' }]) {
     expect(() => resolveControls(bad)).toThrow();
     expect(() => resolveControls({}, bad)).toThrow();
   }
@@ -90,7 +91,7 @@ test('SEC_UA is redacted in config logs', async () => {
 test('config keys, CONTROL_NAMES, README rows and --help are in sync', async () => {
   expect(Object.keys(file).sort()).toEqual([...names].sort());
   expect(Object.keys(CONTROL_DEFAULTS).sort()).toEqual([...names].sort());
-  expect(names.length).toBe(27);
+  expect(names.length).toBe(28);
   for (const v of Object.values(file)) expect(typeof v).toBe('string');
   const section = readme.slice(readme.indexOf('### Update controls'), readme.indexOf('### Examples'));
   const rows = [...section.matchAll(/^\| `(\w+)` \|/gm)].map(r => r[1]);
@@ -636,4 +637,54 @@ test('feed validator reconciles seeded and refreshed index/page counts; incomple
 });
 test('committed api/aam feed is internally consistent (structure only, no value pins)', async () => {
   await verifyFeed(new URL('../api/aam/', import.meta.url), true);
+});
+
+test('USE_SYSTEM_CA: default auto, case-insensitive auto/true/false, rejects anything else', () => {
+  expect(file.USE_SYSTEM_CA).toBe('auto');
+  expect(readConfig({}, file).useSystemCa).toBe('auto');
+  for (const v of ['auto', 'TRUE', 'False']) expect(readConfig({ USE_SYSTEM_CA: v }, file).useSystemCa).toBe(v.toLowerCase());
+  expect(() => resolveControls(file, {}, {}, { USE_SYSTEM_CA: 'maybe' })).toThrow('USE_SYSTEM_CA');
+});
+
+test('isCertError recognizes untrusted-certificate errors, also through cause', () => {
+  expect(isCertError({ code: 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY' })).toBe(true);
+  expect(isCertError(new Error('unable to get local issuer certificate'))).toBe(true);
+  expect(isCertError(new Error('fetch failed', { cause: new Error('self-signed certificate in certificate chain') }))).toBe(true);
+  expect(isCertError({ code: 'ECONNRESET', message: 'socket hang up' })).toBe(false);
+  expect(isCertError(new Error('HTTP 403'))).toBe(false);
+  expect(isCertError(null)).toBe(false);
+});
+
+test('systemCaActive detects flag, NODE_USE_SYSTEM_CA and the restart marker', () => {
+  expect(systemCaActive({}, [])).toBe(false);
+  expect(systemCaActive({}, ['--use-system-ca'])).toBe(true);
+  expect(systemCaActive({ NODE_USE_SYSTEM_CA: '1' }, [])).toBe(true);
+  expect(systemCaActive({ ETF_UPDATER_SYSTEM_CA: '1' }, [])).toBe(true);
+});
+
+test('installSystemCa: false/active keep fetch, true restarts now, auto restarts once on cert errors only', async () => {
+  const original = globalThis.fetch;
+  const calls: string[] = [];
+  const reexec = (() => { calls.push('reexec'); throw new Error('reexec'); }) as () => never;
+  try {
+    installSystemCa('false', reexec, false); expect(globalThis.fetch).toBe(original);
+    installSystemCa('auto', reexec, true); expect(globalThis.fetch).toBe(original);
+    installSystemCa('true', reexec, true); expect(globalThis.fetch).toBe(original);
+    expect(() => installSystemCa('true', reexec, false)).toThrow('reexec');
+    expect(calls).toEqual(['reexec']); calls.length = 0;
+
+    let next: () => Promise<Response> = async () => new Response('ok');
+    globalThis.fetch = (async () => next()) as unknown as typeof fetch;
+    const stub = globalThis.fetch;
+    installSystemCa('auto', reexec, false);
+    expect(globalThis.fetch).not.toBe(stub);
+    expect(await (await fetch('https://example.invalid')).text()).toBe('ok');
+    next = async () => { throw new Error('socket hang up'); };
+    await expect(fetch('https://example.invalid')).rejects.toThrow('socket hang up');
+    expect(calls).toEqual([]);
+    next = async () => { throw Object.assign(new Error('fetch failed'), { cause: { code: 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY' } }); };
+    const errors = console.error; console.error = () => {};
+    try { await expect(fetch('https://example.invalid')).rejects.toThrow('reexec'); } finally { console.error = errors; }
+    expect(calls).toEqual(['reexec']);
+  } finally { globalThis.fetch = original; }
 });
