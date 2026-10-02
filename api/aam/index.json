@@ -61,7 +61,8 @@
      "sinceInception": 13.76,
      "asOfDate": "Sep 30 2026"
     },
-    "derivedFrom": "official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date"
+    "derivedFrom": "official AAM NAV total returns (aamlive.com dated performance table)",
+    "performanceAsOf": "2026-09-30"
    },
    "metrics": {
     "ytd": 7.22,
@@ -77,7 +78,8 @@
     "dividendYieldText": "0.99%",
     "secYield": 1.26,
     "secYieldText": "1.26%",
-    "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)"
+    "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)",
+    "performanceAsOf": "2026-09-30"
    },
    "holdings": 36,
    "history": 544
@@ -129,7 +131,8 @@
      "sinceInception": null,
      "asOfDate": "Sep 30 2026"
     },
-    "derivedFrom": "official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date"
+    "derivedFrom": "official AAM NAV total returns (aamlive.com dated performance table)",
+    "performanceAsOf": "2026-09-30"
    },
    "metrics": {
     "ytd": 4.5,
@@ -145,7 +148,8 @@
     "dividendYieldText": "6.24%",
     "secYield": 5.8,
     "secYieldText": "5.80%",
-    "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)"
+    "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)",
+    "performanceAsOf": "2026-09-30"
    },
    "holdings": 61,
    "history": 236
@@ -197,7 +201,8 @@
      "sinceInception": 4.82,
      "asOfDate": "Sep 30 2026"
     },
-    "derivedFrom": "official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date"
+    "derivedFrom": "official AAM NAV total returns (aamlive.com dated performance table)",
+    "performanceAsOf": "2026-09-30"
    },
    "metrics": {
     "ytd": 2.23,
@@ -213,7 +218,8 @@
     "dividendYieldText": "5.31%",
     "secYield": 5.2,
     "secYieldText": "5.20%",
-    "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)"
+    "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)",
+    "performanceAsOf": "2026-09-30"
    },
    "holdings": 218,
    "history": 457
@@ -265,7 +271,8 @@
      "sinceInception": 2.01,
      "asOfDate": "Sep 30 2026"
     },
-    "derivedFrom": "official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date"
+    "derivedFrom": "official AAM NAV total returns (aamlive.com dated performance table)",
+    "performanceAsOf": "2026-09-30"
    },
    "metrics": {
     "ytd": 1.62,
@@ -281,7 +288,8 @@
     "dividendYieldText": "5.66%",
     "secYield": 5.89,
     "secYieldText": "5.89%",
-    "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)"
+    "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)",
+    "performanceAsOf": "2026-09-30"
    },
    "holdings": 338,
    "history": 1724
@@ -333,7 +341,8 @@
      "sinceInception": 13.59,
      "asOfDate": "Sep 30 2026"
     },
-    "derivedFrom": "official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date"
+    "derivedFrom": "official AAM NAV total returns (aamlive.com dated performance table)",
+    "performanceAsOf": "2026-09-30"
    },
    "metrics": {
     "ytd": 10.95,
@@ -349,7 +358,8 @@
     "dividendYieldText": "0.25%",
     "secYield": 0.26,
     "secYieldText": "0.26%",
-    "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)"
+    "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)",
+    "performanceAsOf": "2026-09-30"
    },
    "holdings": 44,
    "history": 544
@@ -401,7 +411,8 @@
      "sinceInception": 8.99,
      "asOfDate": "Sep 30 2026"
     },
-    "derivedFrom": "official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date"
+    "derivedFrom": "official AAM NAV total returns (aamlive.com dated performance table)",
+    "performanceAsOf": "2026-09-30"
    },
    "metrics": {
     "ytd": 8.21,
@@ -417,7 +428,8 @@
     "dividendYieldText": "0.02%",
     "secYield": -0.04,
     "secYieldText": "-0.04%",
-    "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)"
+    "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)",
+    "performanceAsOf": "2026-09-30"
    },
    "holdings": 73,
    "history": 545
@@ -469,7 +481,8 @@
      "sinceInception": 9.06,
      "asOfDate": "Sep 30 2026"
     },
-    "derivedFrom": "official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date"
+    "derivedFrom": "official AAM NAV total returns (aamlive.com dated performance table)",
+    "performanceAsOf": "2026-09-30"
    },
    "metrics": {
     "ytd": 14.87,
@@ -485,7 +498,8 @@
     "dividendYieldText": "3.55%",
     "secYield": 3.64,
     "secYieldText": "3.64%",
-    "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)"
+    "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)",
+    "performanceAsOf": "2026-09-30"
    },
    "holdings": 55,
    "history": 2221
@@ -537,7 +551,8 @@
      "sinceInception": 19.75,
      "asOfDate": "Sep 30 2026"
     },
-    "derivedFrom": "official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date"
+    "derivedFrom": "official AAM NAV total returns (aamlive.com dated performance table)",
+    "performanceAsOf": "2026-09-30"
    },
    "metrics": {
     "ytd": 12.67,
@@ -553,7 +568,8 @@
     "dividendYieldText": "2.13%",
     "secYield": 2.25,
     "secYieldText": "2.25%",
-    "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)"
+    "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)",
+    "performanceAsOf": "2026-09-30"
    },
    "holdings": 67,
    "history": 299
@@ -605,7 +621,8 @@
      "sinceInception": 23.81,
      "asOfDate": "Sep 30 2026"
     },
-    "derivedFrom": "official AAM NAV total returns (aamlive.com performance table); missing metrics from Yahoo adjusted market prices at the same reporting date"
+    "derivedFrom": "official AAM NAV total returns (aamlive.com dated performance table)",
+    "performanceAsOf": "2026-09-30"
    },
    "metrics": {
     "ytd": 24.09,
@@ -621,7 +638,8 @@
     "dividendYieldText": "0.14%",
     "secYield": 0.13,
     "secYieldText": "0.13%",
-    "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)"
+    "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)",
+    "performanceAsOf": "2026-09-30"
    },
    "holdings": 270,
    "history": 1061
