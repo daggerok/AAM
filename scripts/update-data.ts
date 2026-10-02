@@ -228,7 +228,7 @@ export type UpdaterConfig = {
   maxFetches: number; requestSleep: number; concurrency: number;
   holdingsPageSize: number; historyPageSize: number; maxRetries: number;
   tickers: string[]; historyRange: string; edgarFallback: boolean;
-  skipAam: boolean; skipYahoo: boolean; secUa: string;
+  skipAam: boolean; skipYahoo: boolean; secUa: string; useSystemCa: string;
   aumRange?: Range; terRange?: Range; dividendYieldRange?: Range; secYieldRange?: Range;
   performanceRanges: RangeMap; totalReturnRanges: RangeMap;
 };
@@ -239,14 +239,14 @@ export const CONTROL_DEFAULTS: Record<string, string> = {
   SKIP_AAM: 'false', SKIP_YAHOO: 'false', SEC_UA: SEC_UA_DEFAULT,
   AUM: ':', TER: ':', DIVIDEND_YIELD: ':', SEC_YIELD: ':',
   PERFORMANCE_YTD: ':', PERFORMANCE_1Y: ':', PERFORMANCE_3Y: ':', PERFORMANCE_5Y: ':', PERFORMANCE_10Y: ':',
-  TOTAL_RETURN_YTD: ':', TOTAL_RETURN_1Y: ':', TOTAL_RETURN_3Y: ':', TOTAL_RETURN_5Y: ':', TOTAL_RETURN_10Y: ':', VERBOSE: 'false',
+  TOTAL_RETURN_YTD: ':', TOTAL_RETURN_1Y: ':', TOTAL_RETURN_3Y: ':', TOTAL_RETURN_5Y: ':', TOTAL_RETURN_10Y: ':', VERBOSE: 'false', USE_SYSTEM_CA: 'auto',
 };
 export const CONTROL_NAMES = [
   'MAX_FETCHES', 'REQUEST_SLEEP', 'CONCURRENCY', 'HOLDINGS_PAGE_SIZE', 'HISTORY_PAGE_SIZE', 'MAX_RETRIES',
   'TICKERS', 'HISTORY_RANGE', 'EDGAR_FALLBACK', 'SKIP_AAM', 'SKIP_YAHOO', 'SEC_UA',
   'AUM', 'TER', 'DIVIDEND_YIELD', 'SEC_YIELD',
   'PERFORMANCE_YTD', 'PERFORMANCE_1Y', 'PERFORMANCE_3Y', 'PERFORMANCE_5Y', 'PERFORMANCE_10Y',
-  'TOTAL_RETURN_YTD', 'TOTAL_RETURN_1Y', 'TOTAL_RETURN_3Y', 'TOTAL_RETURN_5Y', 'TOTAL_RETURN_10Y', 'VERBOSE',
+  'TOTAL_RETURN_YTD', 'TOTAL_RETURN_1Y', 'TOTAL_RETURN_3Y', 'TOTAL_RETURN_5Y', 'TOTAL_RETURN_10Y', 'VERBOSE', 'USE_SYSTEM_CA',
 ] as const;
 export type ControlName = (typeof CONTROL_NAMES)[number];
 export const CONFIG_FILE_URL = new URL('./update-data.config.json', import.meta.url);
@@ -357,10 +357,11 @@ function parseControls(layers: Record<string, string>): UpdaterConfig {
     return t.toUpperCase();
   }))].sort();
   bool('VERBOSE');
+  if (!/^(auto|true|false)$/i.test(e.USE_SYSTEM_CA)) throw new Error('USE_SYSTEM_CA: expected auto, true or false');
   return {
     maxFetches: integer('MAX_FETCHES',0), requestSleep, concurrency: integer('CONCURRENCY',1),
     holdingsPageSize: integer('HOLDINGS_PAGE_SIZE',1), historyPageSize: integer('HISTORY_PAGE_SIZE',1), maxRetries: integer('MAX_RETRIES',1),
-    tickers, historyRange: e.HISTORY_RANGE.toLowerCase(), edgarFallback: bool('EDGAR_FALLBACK'), skipAam: bool('SKIP_AAM'), skipYahoo: bool('SKIP_YAHOO'), secUa: e.SEC_UA,
+    tickers, historyRange: e.HISTORY_RANGE.toLowerCase(), edgarFallback: bool('EDGAR_FALLBACK'), skipAam: bool('SKIP_AAM'), skipYahoo: bool('SKIP_YAHOO'), secUa: e.SEC_UA, useSystemCa: e.USE_SYSTEM_CA.toLowerCase(),
     aumRange: parseAumRange(e.AUM), terRange: parseRange(e.TER,'TER'), dividendYieldRange: parseRange(e.DIVIDEND_YIELD,'DIVIDEND_YIELD'), secYieldRange: parseRange(e.SEC_YIELD,'SEC_YIELD'),
     performanceRanges: ranges('PERFORMANCE'), totalReturnRanges: ranges('TOTAL_RETURN'),
   };
@@ -1479,9 +1480,46 @@ async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRe
   return {row,providers};
 }
 
+// --- TLS trust store (identical in every ETF repo) ---
+const SYSTEM_CA_MARKER = 'ETF_UPDATER_SYSTEM_CA';
+const CERT_ERROR = /UNABLE_TO_GET_ISSUER_CERT|UNABLE_TO_VERIFY_LEAF_SIGNATURE|SELF_SIGNED_CERT|CERT_HAS_EXPIRED|unable to get (?:local )?issuer certificate|self[- ]signed certificate|certificate has expired/i;
+
+export function isCertError(error: unknown): boolean {
+  const e = error as { code?: unknown; message?: unknown; cause?: unknown } | null;
+  return CERT_ERROR.test(`${String(e?.code ?? '')} ${String(e?.message ?? '')}`) || (e?.cause ? isCertError(e.cause) : false);
+}
+
+export function systemCaActive(env: Record<string, string | undefined> = process.env, execArgv: string[] = process.execArgv): boolean {
+  return execArgv.includes('--use-system-ca') || env.NODE_USE_SYSTEM_CA === '1' || env[SYSTEM_CA_MARKER] === '1';
+}
+
+export function reexecWithSystemCa(): never {
+  const child = Bun.spawnSync([process.execPath, '--use-system-ca', ...process.argv.slice(1)], {
+    env: { ...process.env, [SYSTEM_CA_MARKER]: '1' },
+    stdio: ['inherit', 'inherit', 'inherit'],
+  });
+  process.exit(child.exitCode ?? 1);
+}
+
+/** mode: auto (restart once on an untrusted-certificate error), true (restart now), false (never). */
+export function installSystemCa(mode: string, reexec: () => never = reexecWithSystemCa, active: boolean = systemCaActive()): void {
+  if (mode === 'false' || active) return;
+  if (mode === 'true') reexec();
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = (async (...args: Parameters<typeof fetch>) => {
+    try { return await realFetch(...args); }
+    catch (error) {
+      if (!isCertError(error)) throw error;
+      console.error('[ notice   ] TLS certificate not trusted; restarting once with --use-system-ca');
+      return reexec();
+    }
+  }) as typeof fetch;
+}
+
 export async function main(env:Record<string,string|undefined>=process.env,options:{root?:URL;fetcher?:Fetcher;now?:Date}={}):Promise<RunSummary> {
   const controls=await runtimeControls(env),config=readConfig(controls),root=options.root??API_ROOT,now=options.now??new Date();
   process.env.VERBOSE=controls.VERBOSE;outputPrintConfig('AAM',config);
+  if(!options.fetcher)installSystemCa(config.useSystemCa);
   const index=await readJson(new URL('index.json',root)),oldFunds=new Map<string,JsonRecord>((index?.funds??[]).map((f:JsonRecord)=>[f.ticker,f]));
   const client=providerClient(config,options.fetcher??fetch);
   let catalog:CatalogFund[]|null=null;
@@ -1529,7 +1567,7 @@ async function printHelp():Promise<void> {
   const controls=await runtimeControls(process.env);readConfig(controls);
   console.log('AAM ETF updater - bun scripts/update-data.ts\nFile defaults: scripts/update-data.config.json < advanced JSON < nonblank workflow inputs < env (an explicitly set env var wins, even if empty); AAM_ aliases accepted.');
   for(const key of CONTROL_NAMES)console.log(`  ${key}=${CONTROL_DEFAULTS[key]||'(all)'}${(controls[key]??CONTROL_DEFAULTS[key])!==CONTROL_DEFAULTS[key]?` (effective: ${key==='SEC_UA'?'<redacted>':controls[key]})`:''}`);
-  console.log('MAX_FETCHES=0: full pass/reset cursor; positive: resume bounded batches.\nTICKERS: space/comma/semicolon allowlist, AND with every filter; unselected funds retained.\nRanges: inclusive min:max / min: / :max / :; AUM K/M/B/T or nano/micro/small/mid/large.\nPERFORMANCE_*: annualized for 3Y+; TOTAL_RETURN_*: cumulative. Missing values fail bounded filters.\nREQUEST_SLEEP: seconds between request starts PER lane; CONCURRENCY: parallel fund workers.\nMAX_RETRIES: integer >= 1, retries after first request (network/408/425/429/5xx only).\nHOLDINGS_PAGE_SIZE/HISTORY_PAGE_SIZE: generated rows/page. HISTORY_RANGE: max or Ny (old rows retained).\nSEC_UA: identifying User-Agent/contact, EDGAR_FALLBACK: holdings only. SKIP_AAM/SKIP_YAHOO: opt-out, retain cache.\nVERBOSE=1: retry/fallback detail. No dry-run: actual CLI writes data.');
+  console.log('MAX_FETCHES=0: full pass/reset cursor; positive: resume bounded batches.\nTICKERS: space/comma/semicolon allowlist, AND with every filter; unselected funds retained.\nRanges: inclusive min:max / min: / :max / :; AUM K/M/B/T or nano/micro/small/mid/large.\nPERFORMANCE_*: annualized for 3Y+; TOTAL_RETURN_*: cumulative. Missing values fail bounded filters.\nREQUEST_SLEEP: seconds between request starts PER lane; CONCURRENCY: parallel fund workers.\nMAX_RETRIES: integer >= 1, retries after first request (network/408/425/429/5xx only).\nHOLDINGS_PAGE_SIZE/HISTORY_PAGE_SIZE: generated rows/page. HISTORY_RANGE: max or Ny (old rows retained).\nSEC_UA: identifying User-Agent/contact, EDGAR_FALLBACK: holdings only. SKIP_AAM/SKIP_YAHOO: opt-out, retain cache.\nVERBOSE=1: retry/fallback detail.\nUSE_SYSTEM_CA: auto (restart once with --use-system-ca on an untrusted-certificate error), true, false. No dry-run: actual CLI writes data.');
   console.log('Examples:\n  TICKERS="SPDV PFLD CLOC" VERBOSE=1 bun scripts/update-data.ts\n  MAX_FETCHES=3 bun scripts/update-data.ts\n  AUM="10M:2B" TER=":0.5" bun scripts/update-data.ts\n  PERFORMANCE_1Y="15:" bun scripts/update-data.ts');
 }
 if(import.meta.main) {
