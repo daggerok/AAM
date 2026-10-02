@@ -10,7 +10,7 @@
   "EDGAR_FALLBACK": "true",
   "SKIP_AAM": "false",
   "SKIP_YAHOO": "false",
-  "SEC_UA": "AAM static feed https://github.com/daggerok/AAM (contact via repository issues)",
+  "SEC_UA": "daggerok ETF feed daggerok@gmail.com",
   "AUM": ":",
   "TER": ":",
   "DIVIDEND_YIELD": ":",
