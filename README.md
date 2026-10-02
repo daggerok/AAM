@@ -10,7 +10,7 @@ bunx serve . -p 1234
 open http://0:1234
 ```
 
-The application homepage is <https://daggerok.github.io/AAM/>. Deployment is pending; this feature PR is not merged, so GitHub Pages is not confirmed live.
+The published application is available at <https://daggerok.github.io/AAM/>.
 
 ## Updating the static AAM data
 
