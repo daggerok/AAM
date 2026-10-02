@@ -51,6 +51,10 @@ Each fund carries a derived `metrics` object that powers the catalog columns sha
 - `siAnn` - since-inception annualized -> *SI Ann.*
 - `dividendYield` - indicated yield (latest distribution × payments per year ÷ market price), not a published trailing yield
 - `secYield` - published 30-day SEC yield (unsubsidized where separately published); `-` otherwise
+- `returnsBasis` - mandatory non-empty label of how the returns were computed: `official AAM NAV total returns (aamlive.com ...)`, the same plus a note that missing metrics are estimated from Yahoo adjusted market prices at the same reporting date, or `derived from Yahoo adjusted market-price closes (estimate)` when AAM publishes no returns; never empty or `-`
+- `performanceAsOf` - mandatory ISO `YYYY-MM-DD` date the returns are as of: the performance-table date from aamlive.com, or the last Yahoo close date when derived; not the NAV date; `null` only when truly unknown
+
+`returnsBasis` and `performanceAsOf` are always the last two keys of `metrics`; per-fund `meta.json` repeats them as `returns.derivedFrom` and `returns.performanceAsOf`.
 
 ### Update controls
 

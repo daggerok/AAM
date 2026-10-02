@@ -8,7 +8,7 @@ import {
   CONTROL_NAMES, CONTROL_DEFAULTS, readConfig, resolveControls, runtimeControls, parseRange, parseAumRange, createRequestGate, createSerialQueue,
   samePublishedContent, writeIfChanged, outputFundLine, decodeEntities, parseCatalog, returnSlot, parseNavPerformance, parseDistributions,
   parseDetail, exportPostbackBody, readXlsCells, parseHoldingsWorkbook, excelSerialDate, parseChart, chartUrl, priceReturns, annualizedToTotal,
-  totalToAnnualized, indicatedYield, inferDistributionFrequency, deriveCatalogMetrics, annualizedSinceInception, fundFilterReasons,
+  totalToAnnualized, indicatedYield, inferDistributionFrequency, deriveCatalogMetrics, returnsBasisLabel, isoDateOrNull, annualizedSinceInception, fundFilterReasons,
   parseFundTickerMap, parseCompanyTickerMap, parseNport, nportMatches, parseNportAccessions, parseEdgarAtomFilings, nportUrlFor, createTransport,
   isCertError, installSystemCa, systemCaActive,
   buildPages, writePages, readPreviousSheet, mergeHistory, mergeDividends, batchSelection, initializeCatalogSeed, validatePortfolioPreview, main,
@@ -258,7 +258,22 @@ test('derived cumulative/annualized metrics and indicated yield preserve units a
   const derived = { asOfDate: '2026-06-30', ytd: 99, yr1: 99, cagr3y: 99, cagr5y: 5, cagr10y: null, siAnn: 99, mo1: null, qtd: null };
   const m = deriveCatalogMetrics(official, derived, null, 0, .1, 12, 24);
   expect(m).toMatchObject({ ytd: 0, tr1y: -5, cagr3y: 10, cagr5y: 5, tr3y: 33.1, secYield: 0, dividendYield: 5 }); expect(m.returnsBasis).toContain('official AAM');
+  expect(Object.keys(m).slice(-2)).toEqual(['returnsBasis', 'performanceAsOf']);
   expect(annualizedSinceInception(3.68, '2025-10-22', '2026-06-30')).toBeNull(); expect(annualizedSinceInception(5, '2020-01-01', '2026-06-30')).toBe(5);
+});
+test('metrics returnsBasis/performanceAsOf: official date, mixed estimate label, derived last close, unknown stays null', () => {
+  const derived = { asOfDate: '2026-09-30', ytd: 1, yr1: 2, cagr3y: 3, cagr5y: null, cagr10y: null, siAnn: 4, mo1: null, qtd: null };
+  const full = { ytd: 1, yr1: 2, yr3: 3, yr5: null, yr10: null, sinceInception: 4 };
+  const pure = deriveCatalogMetrics(full, derived, null, 1, null, null, null, null, '2026-06-30');
+  expect(pure).toMatchObject({ performanceAsOf: '2026-06-30', returnsBasis: 'official AAM NAV total returns (aamlive.com dated performance table)' });
+  const mixed = deriveCatalogMetrics({ ...full, yr3: null }, derived, null, 1, null, null, null, null, '2026-06-30');
+  expect(mixed.returnsBasis).toContain('estimated from Yahoo'); expect(mixed.returnsBasis).toStartWith('official AAM'); expect(mixed.performanceAsOf).toBe('2026-06-30'); expect(mixed.cagr3y).toBe(3);
+  const none = { ytd: null, yr1: null, yr3: null, yr5: null, yr10: null, sinceInception: null };
+  const yahoo = deriveCatalogMetrics(none, derived, null, 1, null, null, null, null, '2026-06-30');
+  expect(yahoo.returnsBasis).toContain('derived from Yahoo'); expect(yahoo.returnsBasis).toContain('estimate'); expect(yahoo.performanceAsOf).toBe('2026-09-30');
+  expect(deriveCatalogMetrics(none, { ...derived, asOfDate: '' }, null, null, null, null, null).performanceAsOf).toBeNull();
+  expect(deriveCatalogMetrics(full, derived, null, 1, null, null, null).performanceAsOf).toBeNull();
+  expect(returnsBasisLabel(false, false).trim()).not.toBe(''); expect(isoDateOrNull('Sep 30 2026')).toBeNull(); expect(isoDateOrNull('')).toBeNull();
 });
 test('cadence inference and official frequency labels do not depend on wall clock', () => {
   const ds = [0, 31, 61, 92].map(day => ({ epoch: day * 86400, amount: .1 })); expect(inferDistributionFrequency(ds)).toEqual({ frequency: 'Monthly', paymentsPerYear: 12 });
@@ -536,6 +551,10 @@ async function verifyFeed(root: URL, requireComplete = false) {
     if (row.dataFile !== `./funds/${row.ticker}/meta.json`) throw new Error('Unexpected metadata path');
     const dir = new URL(`funds/${row.ticker}/`, root), meta = JSON.parse(await readFile(new URL('meta.json', dir), 'utf8'));
     if (meta.ticker !== row.ticker) throw new Error('Fund identity mismatch');
+    const mx = row.metrics ?? {}, basis = mx.returnsBasis;
+    if (typeof basis !== 'string' || !basis.trim() || basis.trim() === '-') throw new Error(`${row.ticker}: empty returnsBasis`);
+    if (!('performanceAsOf' in mx) || !(mx.performanceAsOf === null || /^\d{4}-\d{2}-\d{2}$/.test(mx.performanceAsOf))) throw new Error(`${row.ticker}: bad performanceAsOf`);
+    if (Object.keys(mx).slice(-2).join() !== 'returnsBasis,performanceAsOf') throw new Error(`${row.ticker}: returnsBasis/performanceAsOf must end the metrics object`);
     const h = await readPreviousSheet(dir, 'holdings', meta.holdings), p = await readPreviousSheet(dir, 'history', meta.history);
     if (h.rows.length !== row.holdings || p.rows.length !== row.history) throw new Error(`${row.ticker}: index/manifest row mismatch`);
     if (requireComplete && (!h.rows.length || !p.rows.length)) throw new Error(`${row.ticker}: initial refresh incomplete`);
@@ -554,6 +573,11 @@ test('CLI assembly processes explicit subset, preserves unrequested funds/files,
     const summary = await main(integrationEnv, { root, fetcher, now: fixedNow });
     expect(summary.processed).toEqual(['CLOC', 'PFLD', 'SPDV']); expect(summary.failed).toEqual([]); expect(summary.counts).toEqual({ funds: 5, holdings: 7, history: 9 });
     for (const t of summary.processed) expect(summary.providers[t]).toMatchObject({ detail: 'fresh', holdings: 'official', history: 'yahoo', warnings: [] });
+    for (const t of summary.processed) {
+      const row = (await Bun.file(new URL('index.json', root)).json()).funds.find((r: { ticker: string }) => r.ticker === t), meta = await Bun.file(new URL(`funds/${t}/meta.json`, root)).json();
+      expect(row.metrics.returnsBasis).toStartWith('official AAM'); expect(row.metrics.performanceAsOf).toBe('2026-06-30'); expect(row.metrics.performanceAsOf).not.toBe('2026-09-29');
+      expect(meta.returns).toMatchObject({ derivedFrom: row.metrics.returnsBasis, performanceAsOf: '2026-06-30' });
+    }
     const after = await snapshot(dir), index = await Bun.file(new URL('index.json', root)).json();
     for (const f of old.funds.filter((f: { ticker: string }) => !['SPDV', 'PFLD', 'CLOC'].includes(f.ticker))) { expect(index.funds.find((r: { ticker: string }) => r.ticker === f.ticker)).toEqual(f); expect(after[`funds/${f.ticker}/meta.json`]).toBe(before[`funds/${f.ticker}/meta.json`]); }
     expect((await Bun.file(new URL('funds/CLOC/meta.json', root)).json()).yields.secYield).toBe(5.77);
