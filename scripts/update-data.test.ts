@@ -131,11 +131,8 @@ test('workflow: <=25 inputs, advanced JSON, every input maps to a control, weekl
   expect(workflowText.indexOf('bun test')).toBeLessThan(workflowText.indexOf('bun ./scripts/update-data.ts'));
 });
 
-test('offline PR workflow never invokes the provider CLI; Dependabot is the family Bun/actions config', async () => {
-  const source = await read('.github/workflows/checks.yml'), checks = Bun.YAML.parse(source);
-  expect(Object.keys(checks.on).sort()).toEqual(['pull_request', 'workflow_dispatch']); expect(checks.permissions).toEqual({ contents: 'read' });
-  expect(source).not.toMatch(/run: bun (?:\.\/)?scripts\/update-data\.ts\s*$/m);
-  expect(source).toContain('run: bun test');
+test('only the update-data workflow and the family Dependabot config exist', async () => {
+  expect((await readdir(new URL('../.github/workflows/', import.meta.url))).sort()).toEqual(['update-data.yml']);
   const bot = Bun.YAML.parse(await read('.github/dependabot.yml'));
   expect(bot.version).toBe(2); expect(bot.updates.map((u: { 'package-ecosystem': string }) => u['package-ecosystem'])).toEqual(['bun', 'github-actions']);
   for (const update of bot.updates) { expect(update.directory).toBe('/'); expect(update.schedule.interval).toBe('monthly'); expect(update['open-pull-requests-limit']).toBe(10); }
@@ -147,7 +144,7 @@ test('only the three standard files live in scripts/', async () => {
 
 const headings = (text: string) => text.replace(/```[\s\S]*?```/g, '').split('\n').filter(s => /^#{1,3} /.test(s));
 const section = (text: string, start: string, end?: string) => text.slice(text.indexOf(start), end ? text.indexOf(end, text.indexOf(start) + start.length) : undefined);
-test('README follows the standard section order, lists all 27 brands once and documents valid examples', () => {
+test('README follows the standard section order, lists all 29 brands once and documents valid examples', () => {
   expect(headings(readme)).toEqual(['# AAM', '## Using Bun', '## Updating the static AAM data', '### Data sources', '### Metrics and caveats', '### Update controls', '### Examples', '## TypeScript and verification', '## Brands table', '## Sibling applications', '## License']);
   expect(readme).toContain('published application is available'); expect(readme).not.toContain('Deployment is pending');
   expect(readme).not.toMatch(/worklog|\.prompt|evidence|fixtures|research\/|config-docs|ui\.test|verify-feed/i);
@@ -155,7 +152,7 @@ test('README follows the standard section order, lists all 27 brands once and do
   expect(verification?.trim().split('\n')).toEqual(['bun install --frozen-lockfile', 'bun test', 'bun build --target=bun scripts/update-data.ts --outfile=/dev/null', 'git diff --check']);
   for (const [start, end] of [['## Brands table', '## Sibling applications'], ['## Sibling applications', '## License']]) {
     const rows = section(readme, start, end).split('\n').filter(line => /^\| /.test(line)).slice(2);
-    expect(rows.length).toBe(27); expect(rows.filter(s => s.includes('/daggerok/AAM)') || s.includes('/daggerok.github.io/AAM/)'))).toHaveLength(1);
+    expect(rows.length).toBe(29); expect(rows.filter(s => s.includes('/daggerok/AAM)') || s.includes('/daggerok.github.io/AAM/)'))).toHaveLength(1);
   }
   expect(readme).toContain('16.91 -> 16.92'); expect(readme).toContain('not a demonstrated live SEC series fallback'); expect(readme).toContain('10-row preview'); expect(readme).toContain('independent, unofficial tool');
   const examples = section(readme, '### Examples', '## TypeScript and verification').match(/```bash\n([\s\S]*?)```/)?.[1] ?? '';
