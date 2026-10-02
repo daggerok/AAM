@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 /// <reference types="bun" />
 // AAM static feed. Shared console/SEC/chart/metrics shape: pinned JPMorgan;
-// deterministic writers and fund assembly shape: pinned Aberdeen (see worklog).
+// deterministic writers and fund assembly shape: pinned Aberdeen.
 import { mkdir, readFile, writeFile, readdir, rm, rename } from 'node:fs/promises';
 import { readFile as outputReadFile, readdir as outputReadDir } from 'node:fs/promises';
 import { createHash as outputCreateHash } from 'node:crypto';
@@ -44,7 +44,7 @@ function outputConfigEntries(config: Record<string, any>): [string, string][] {
 }
 function outputPrintConfig(brand: string, config: Record<string, any>): void {
   const entries: [string, string][] = [...outputConfigEntries(config), ['VERBOSE', String(outputVerbose())]];
-  console.log(`[ config   ] ${brand} updater:\n${entries.map(([key, value]) => `              ${key}=${/TOKEN|PASSWORD|SECRET|COOKIE/i.test(key) ? '<redacted>' : outputClean(value)}`).join('\n')}`);
+  console.log(`[ config   ] ${brand} updater:\n${entries.map(([key, value]) => `              ${key}=${/TOKEN|PASSWORD|SECRET|COOKIE|SEC_UA/i.test(key) ? '<redacted>' : outputClean(value)}`).join('\n')}`);
 }
 function outputHasOutputFilters(config: Record<string, any>): boolean {
   return outputConfigEntries(config).some(([name, value]) =>
@@ -145,7 +145,7 @@ const EDGAR_ARCHIVES = 'https://www.sec.gov/Archives/edgar/data';
 const EDGAR_BROWSE_URL = 'https://www.sec.gov/cgi-bin/browse-edgar';
 const SEC_FUND_TICKERS_URL = 'https://www.sec.gov/files/company_tickers_mf.json';
 const SEC_COMPANY_TICKERS_URL = 'https://www.sec.gov/files/company_tickers.json';
-const SEC_UA_DEFAULT = 'AAM static feed https://github.com/daggerok/AAM (contact via repository issues)';
+const SEC_UA_DEFAULT = 'daggerok ETF feed daggerok@gmail.com';
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const sleep = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
 const errorMessage = (error: unknown): string => error instanceof Error ? error.message : String(error);
@@ -291,33 +291,31 @@ export function parseAumRange(raw: string): Range | undefined {
   return { min, max, source: text };
 }
 
-/** Controls where an empty value is meaningful (no allowlist / no bound); every other blank layer value inherits. */
-const BLANK_OK = new Set<string>(['TICKERS', 'AUM', 'TER', 'DIVIDEND_YIELD', 'SEC_YIELD', ...CONTROL_NAMES.filter(k => /^(PERFORMANCE|TOTAL_RETURN)_/.test(k))]);
+/**
+ * Layers apply in order: file < advanced < nonblank named inputs < env. An explicitly set env var wins even
+ * when empty (it clears the control back to the built-in default); `AAM_<NAME>` aliases beat `<NAME>`.
+ */
 function mergeControls(file: unknown, advanced: unknown, inputs: unknown, env: Record<string, string | undefined>): Record<string, string> {
-  const result: Record<string, string> = { ...CONTROL_DEFAULTS };
+  const result: Record<string, string> = {};
   const known = new Set<string>(CONTROL_NAMES);
-  // Layers apply in order. A blank value only overrides where blank is meaningful (BLANK_OK); inputs never override with blank.
-  const apply = (layer: unknown, label: string, mode: 'file' | 'advanced' | 'inputs' | 'env'): void => {
-    if (!layer || typeof layer !== 'object' || Array.isArray(layer)) throw new Error(`${label}: configuration must be a JSON object`);
+  const apply = (layer: unknown, skipEmpty = false): void => {
+    if (!layer || typeof layer !== 'object' || Array.isArray(layer)) throw new Error('Configuration must be a JSON object');
     for (const [key, raw] of Object.entries(layer)) {
       if (!known.has(key)) throw new Error(`Unknown updater control: ${key}`);
-      if (mode === 'inputs' && (raw === '' || raw === undefined || raw === null)) continue;
+      if (skipEmpty && (raw === '' || raw === undefined || raw === null)) continue;
       if (!['string', 'number', 'boolean'].includes(typeof raw)) throw new Error(`${key}: expected string, number or boolean`);
-      const text = String(raw).trim();
-      if (/[\x00-\x1f\x7f]/.test(String(raw))) throw new Error(`${key}: control characters not allowed`);
-      if (text === '' && !BLANK_OK.has(key)) continue;
+      const text = String(raw);
+      if (/[\r\n\0]/.test(text)) throw new Error(`${key}: multiline/control characters are not allowed`);
       result[key] = text;
     }
   };
-  apply(file, 'file', 'file');
-  apply(advanced, 'advanced', 'advanced');
-  apply(inputs, 'inputs', 'inputs');
-  const envLayer: Record<string, string> = {};
+  apply(file);
+  apply(advanced);
+  apply(inputs, true);
   for (const key of CONTROL_NAMES) {
-    const value = env[`AAM_${key}`] ?? env[key]; // AAM_ alias wins over the canonical name
-    if (value !== undefined) envLayer[key] = value;
+    const value = env[`AAM_${key}`] ?? env[key];
+    if (value !== undefined) apply({ [key]: value });
   }
-  apply(envLayer, 'env', 'env');
   return result;
 }
 /** Precedence: config file < advanced JSON < nonblank workflow inputs < env (AAM_ alias wins); validates every value. */
@@ -334,7 +332,10 @@ export async function runtimeControls(env: Record<string, string | undefined> = 
 export function readConfig(env: Record<string, string | undefined> = {}, file: unknown = {}): UpdaterConfig {
   return parseControls(mergeControls(file, {}, {}, env));
 }
-function parseControls(e: Record<string, string>): UpdaterConfig {
+function parseControls(layers: Record<string, string>): UpdaterConfig {
+  // Missing or empty values fall back to the built-in default; everything else is validated strictly.
+  const e: Record<string, string> = { ...CONTROL_DEFAULTS };
+  for (const [key, value] of Object.entries(layers)) if (value !== '') e[key] = value;
   const integer = (key: string, min: number): number => {
     if (!/^\d+$/.test(e[key]) || !Number.isSafeInteger(Number(e[key])) || Number(e[key]) < min) throw new Error(`${key}: expected integer >= ${min}`);
     return Number(e[key]);
@@ -358,7 +359,7 @@ function parseControls(e: Record<string, string>): UpdaterConfig {
   bool('VERBOSE');
   return {
     maxFetches: integer('MAX_FETCHES',0), requestSleep, concurrency: integer('CONCURRENCY',1),
-    holdingsPageSize: integer('HOLDINGS_PAGE_SIZE',1), historyPageSize: integer('HISTORY_PAGE_SIZE',1), maxRetries: integer('MAX_RETRIES',0),
+    holdingsPageSize: integer('HOLDINGS_PAGE_SIZE',1), historyPageSize: integer('HISTORY_PAGE_SIZE',1), maxRetries: integer('MAX_RETRIES',1),
     tickers, historyRange: e.HISTORY_RANGE.toLowerCase(), edgarFallback: bool('EDGAR_FALLBACK'), skipAam: bool('SKIP_AAM'), skipYahoo: bool('SKIP_YAHOO'), secUa: e.SEC_UA,
     aumRange: parseAumRange(e.AUM), terRange: parseRange(e.TER,'TER'), dividendYieldRange: parseRange(e.DIVIDEND_YIELD,'DIVIDEND_YIELD'), secYieldRange: parseRange(e.SEC_YIELD,'SEC_YIELD'),
     performanceRanges: ranges('PERFORMANCE'), totalReturnRanges: ranges('TOTAL_RETURN'),
@@ -1526,9 +1527,9 @@ export async function main(env:Record<string,string|undefined>=process.env,optio
 }
 async function printHelp():Promise<void> {
   const controls=await runtimeControls(process.env);readConfig(controls);
-  console.log('AAM ETF updater - bun scripts/update-data.ts\nFile defaults: scripts/update-data.config.json; env wins over the file; AAM_ aliases accepted.');
-  for(const key of CONTROL_NAMES)console.log(`  ${key}=${CONTROL_DEFAULTS[key]||'(all)'}${controls[key]!==CONTROL_DEFAULTS[key]?` (effective: ${controls[key]})`:''}`);
-  console.log('MAX_FETCHES=0: full pass/reset cursor; positive: resume bounded batches.\nTICKERS: space/comma/semicolon allowlist, AND with every filter; unselected funds retained.\nRanges: inclusive min:max / min: / :max / :; AUM K/M/B/T or nano/micro/small/mid/large.\nPERFORMANCE_*: annualized for 3Y+; TOTAL_RETURN_*: cumulative. Missing values fail bounded filters.\nREQUEST_SLEEP: seconds between request starts PER lane; CONCURRENCY: parallel fund workers.\nMAX_RETRIES: retries after first request (network/408/425/429/5xx only).\nHOLDINGS_PAGE_SIZE/HISTORY_PAGE_SIZE: generated rows/page. HISTORY_RANGE: max or Ny (old rows retained).\nSEC_UA: identifying User-Agent/contact, EDGAR_FALLBACK: holdings only. SKIP_AAM/SKIP_YAHOO: opt-out, retain cache.\nVERBOSE=1: retry/fallback detail. No dry-run: actual CLI writes data.');
+  console.log('AAM ETF updater - bun scripts/update-data.ts\nFile defaults: scripts/update-data.config.json < advanced JSON < nonblank workflow inputs < env (an explicitly set env var wins, even if empty); AAM_ aliases accepted.');
+  for(const key of CONTROL_NAMES)console.log(`  ${key}=${CONTROL_DEFAULTS[key]||'(all)'}${(controls[key]??CONTROL_DEFAULTS[key])!==CONTROL_DEFAULTS[key]?` (effective: ${key==='SEC_UA'?'<redacted>':controls[key]})`:''}`);
+  console.log('MAX_FETCHES=0: full pass/reset cursor; positive: resume bounded batches.\nTICKERS: space/comma/semicolon allowlist, AND with every filter; unselected funds retained.\nRanges: inclusive min:max / min: / :max / :; AUM K/M/B/T or nano/micro/small/mid/large.\nPERFORMANCE_*: annualized for 3Y+; TOTAL_RETURN_*: cumulative. Missing values fail bounded filters.\nREQUEST_SLEEP: seconds between request starts PER lane; CONCURRENCY: parallel fund workers.\nMAX_RETRIES: integer >= 1, retries after first request (network/408/425/429/5xx only).\nHOLDINGS_PAGE_SIZE/HISTORY_PAGE_SIZE: generated rows/page. HISTORY_RANGE: max or Ny (old rows retained).\nSEC_UA: identifying User-Agent/contact, EDGAR_FALLBACK: holdings only. SKIP_AAM/SKIP_YAHOO: opt-out, retain cache.\nVERBOSE=1: retry/fallback detail. No dry-run: actual CLI writes data.');
   console.log('Examples:\n  TICKERS="SPDV PFLD CLOC" VERBOSE=1 bun scripts/update-data.ts\n  MAX_FETCHES=3 bun scripts/update-data.ts\n  AUM="10M:2B" TER=":0.5" bun scripts/update-data.ts\n  PERFORMANCE_1Y="15:" bun scripts/update-data.ts');
 }
 if(import.meta.main) {
