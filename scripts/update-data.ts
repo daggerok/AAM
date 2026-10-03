@@ -2,7 +2,7 @@
 /// <reference types="bun" />
 // AAM static feed. Shared console/SEC/chart/metrics shape: pinned JPMorgan;
 // deterministic writers and fund assembly shape: pinned Aberdeen.
-import { mkdir, readFile, writeFile, readdir, rm, rename } from 'node:fs/promises';
+import { mkdir, readFile, writeFile, readdir, rm, rename, appendFile } from 'node:fs/promises';
 import { readFile as outputReadFile, readdir as outputReadDir } from 'node:fs/promises';
 import { createHash as outputCreateHash } from 'node:crypto';
 import { join as outputJoin } from 'node:path';
@@ -539,7 +539,7 @@ export function parseDetail(html: string, expectedTicker: string): Detail {
   return {
     ticker,name:title.replace(/\s*\([^)]*\)\s*$/,'').trim(),cusip:facts.get('cusip')||null,isin:facts.get('isin')||null,inception:toIsoDate(facts.get('inception'))||null,
     grossExpense:gross?numberOrNull(gross[1]):numberOrNull(expense),netExpense:net?numberOrNull(net[1]):numberOrNull(expense),
-    secYield:unsub?numberOrNull(unsub[1]):yieldPlain,subsidizedSecYield:sub?numberOrNull(sub[1]):yieldPlain,unsubsidizedSecYield:unsub?numberOrNull(unsub[1]):yieldPlain,
+    secYield:unsub?numberOrNull(unsub[1]):yieldPlain??(sub?numberOrNull(sub[1]):null),subsidizedSecYield:sub?numberOrNull(sub[1]):yieldPlain,unsubsidizedSecYield:unsub?numberOrNull(unsub[1]):yieldPlain,
     nav:numberOrNull(facts.get('nav')),marketPrice:numberOrNull(facts.get('closing price')),netAssets:numberOrNull(facts.get('net assets')),exchange:facts.get('exchange')??'',
     priceAsOfDate:asOf(html,'ResponsiveETFsDetailHeader_navAsOfDate'),aumAsOfDate:asOf(html,'ResponsiveETFsDetailHeader_totalNetAssetsAsOfDate'),
     frequency:facts.get('distribution schedule')||null,benchmark:facts.get('benchmark index')||null,
@@ -1235,7 +1235,7 @@ export function createTransport(config: UpdaterConfig, fetcher: Fetcher = fetch,
     for(let attempt=0;attempt<=config.maxRetries;attempt++) {
       await pace();
       try {
-        const response=await fetcher(url,{redirect:'follow',signal:AbortSignal.timeout(30000),...init});
+        const response=await fetcher(url,{redirect:'follow',signal:AbortSignal.timeout(45000),...init});
         if(response.ok)return response;
         await response.body?.cancel();throw new HttpError(response.status,label);
       } catch(error) {
@@ -1266,13 +1266,25 @@ export function buildPages(ticker: string, kind: 'holdings'|'history', headers: 
   }
   return result;
 }
-export async function writePages(dir: URL,ticker: string,kind:'holdings'|'history',headers:string[],rows:SheetRow[],pageSize:number):Promise<PageManifest> {
+/** Remove owned pages that the manifest no longer lists; run only AFTER the new meta.json is written. */
+export async function pruneStalePages(dir:URL,kind:'holdings'|'history',manifest:PageManifest):Promise<void> {
+  const kindDir=new URL(kind+'/',dir),kept=new Set(manifest.pages);
+  for(const entry of await readdir(kindDir).catch(()=>[] as string[]))if(/^\d+\.json$/.test(entry)&&!kept.has(`${kind}/${entry}`))await rm(new URL(entry,kindDir));
+}
+export async function writePages(dir: URL,ticker: string,kind:'holdings'|'history',headers:string[],rows:SheetRow[],pageSize:number,prune=true):Promise<PageManifest> {
   const pages=buildPages(ticker,kind,headers,rows,pageSize),kindDir=new URL(kind+'/',dir);
   await mkdir(kindDir,{recursive:true});
   for(const page of pages)await writeIfChanged(new URL(page.name,dir),page.payload);
-  const kept=new Set(pages.map(p=>p.name));
-  for(const entry of await readdir(kindDir))if(/^\d+\.json$/.test(entry)&&!kept.has(`${kind}/${entry}`))await rm(new URL(entry,kindDir));
-  return {pages:pages.map(p=>p.name),pageSize,totalRows:rows.length};
+  const manifest={pages:pages.map(p=>p.name),pageSize,totalRows:rows.length};
+  if(prune)await pruneStalePages(dir,kind,manifest);
+  return manifest;
+}
+/** A crash between tmp write and rename must not leave a *.tmp that `git add api/aam` would commit. */
+export async function removeStaleTemps(dir:URL):Promise<void> {
+  for(const entry of await readdir(dir,{withFileTypes:true}).catch(()=>[])) {
+    if(entry.isDirectory())await removeStaleTemps(new URL(entry.name+'/',dir));
+    else if(entry.name.endsWith('.json.tmp'))await rm(new URL(entry.name,dir),{force:true});
+  }
 }
 async function readJson(file: URL): Promise<JsonRecord|null> {
   try{return JSON.parse(await readFile(file,'utf8'));}catch(error){if(error instanceof Error&&'code' in error&&error.code==='ENOENT')return null;throw error;}
@@ -1293,7 +1305,19 @@ export async function readPreviousSheet(dir:URL,kind:'holdings'|'history',manife
   return {rows,headers};
 }
 function historyRow(day:ChartDay):SheetRow {return {Date:formatEdgarDate(day.date),Close:String(day.close),'Adj Close':String(round(day.adjClose,2)),Volume:String(day.volume)};}
-function rowDate(row:SheetRow):string {const time=Date.parse(String(row.Date??''));return Number.isFinite(time)?new Date(time).toISOString().slice(0,10):'';}
+/** Date text ("Jun 04 2026", "06/04/2026", ISO) -> ISO date, always read as UTC so a run east of UTC gives the same output. */
+export function dateTextToIso(raw:unknown):string {
+  const text=String(raw??'').trim(),named=/^([A-Za-z]{3})[a-z]*\.? (\d{1,2}),? (\d{4})$/.exec(text);
+  if(named){const m=MONTHS.findIndex(x=>x.toLowerCase()===named[1].toLowerCase());if(m>=0)return `${named[3]}-${String(m+1).padStart(2,'0')}-${named[2].padStart(2,'0')}`;}
+  const iso=toIsoDate(text),time=Date.parse(/^\d{4}-\d{2}-\d{2}$/.test(iso)?`${iso}T00:00:00Z`:`${text} UTC`);
+  return Number.isFinite(time)?new Date(time).toISOString().slice(0,10):'';
+}
+function rowDate(row:SheetRow):string {return dateTextToIso(row.Date);}
+export function secFilingIsFresher(filingDate:string|null,publishedDate:string|null,havePublished:boolean):boolean {
+  if(!havePublished)return true;
+  const a=dateTextToIso(filingDate),b=dateTextToIso(publishedDate);
+  return Boolean(a&&(!b||a>b));
+}
 export function mergeHistory(previous:SheetRow[],fresh:ChartDay[]):SheetRow[] {
   const rows=new Map<string,SheetRow>();
   for(const row of previous){const date=rowDate(row);if(!date)throw new Error('Invalid cached history date');rows.set(date,row);}
@@ -1425,8 +1449,8 @@ function providerClient(config:UpdaterConfig,fetcher:Fetcher) {
 function officialRowFromOld(old:JsonRecord):OfficialReturnRow|null {
   if(old.officialReturns)return old.officialReturns;
   if(!old.returns?.monthEnd||!String(old.returns?.derivedFrom??'').startsWith('official AAM'))return null;
-  const m=old.returns.monthEnd,date=Date.parse(String(m.asOfDate??''));
-  return {asOfDate:Number.isFinite(date)?new Date(date).toISOString().slice(0,10):null,ytd:numberOrNull(m.ytd),yr1:numberOrNull(m.yr1),yr3:numberOrNull(m.yr3),yr5:numberOrNull(m.yr5),yr10:numberOrNull(m.yr10),sinceInception:numberOrNull(m.sinceInception)};
+  const m=old.returns.monthEnd;
+  return {asOfDate:dateTextToIso(m.asOfDate)||null,ytd:numberOrNull(m.ytd),yr1:numberOrNull(m.yr1),yr3:numberOrNull(m.yr3),yr5:numberOrNull(m.yr5),yr10:numberOrNull(m.yr10),sinceInception:numberOrNull(m.sinceInception)};
 }
 async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRecord,root:URL,client:ReturnType<typeof providerClient>,now:Date):Promise<{row:JsonRecord|null;providers:ProviderState;reason?:string}> {
   const dir=new URL(`funds/${fund.ticker}/`,root),old=await readJson(new URL('meta.json',dir))??{};
@@ -1442,16 +1466,29 @@ async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRe
   if(!inRange(aum,config.aumRange)||!inRange(ter,config.terRange)||!inRange(sec,config.secYieldRange))return {row:null,providers,reason:'AUM/TER/SEC_YIELD'};
   let holdings=response?await optional(`${fund.ticker} official holdings`,()=>client.holdings(fund,response.html,response.detail)):null;
   if(holdings){providers.holdings='official';outputNote(`[ holdings ] ${fund.ticker}: ${holdings.rows.length} complete official XLS rows`);}
-  if(!holdings&&config.edgarFallback){holdings=await optional(`${fund.ticker} SEC holdings`,()=>client.sec(fund));if(holdings){providers.holdings='sec';outputNote(`[ edgar    ] ${fund.ticker}: ${holdings.rows.length} identity-verified N-PORT rows`);}}
+  if(!holdings&&config.edgarFallback){
+    const filing=await optional(`${fund.ticker} SEC holdings`,()=>client.sec(fund));
+    // An N-PORT filing lags the daily official export by weeks: it may only replace published rows that are older than it.
+    if(filing&&!secFilingIsFresher(filing.asOfDate,oldHoldings.rows.length?old.holdings?.asOfDate??null:null,oldHoldings.rows.length>0)){
+      const message=`${fund.ticker} SEC holdings: N-PORT ${filing.asOfDate??'undated'} is not newer than published ${old.holdings?.asOfDate??'rows'}; kept published holdings`;
+      providers.warnings.push(message);outputNote(`[ fallback ] ${message}`);
+    }else if(filing){holdings=filing;providers.holdings='sec';outputNote(`[ edgar    ] ${fund.ticker}: ${holdings.rows.length} identity-verified N-PORT rows`);}
+  }
   const chart=config.skipYahoo?null:await optional(`${fund.ticker} Yahoo history`,()=>client.chart(fund.ticker,now));
   if(chart?.days.length){providers.history='yahoo';outputNote(`[ chart    ] ${fund.ticker}: ${chart.days.length} fresh Yahoo daily bars`);}
-  if(!detail&&!holdings&&!chart?.days.length) {
-    if(!oldIndex.ticker)throw new Error(`${fund.ticker}: no usable per-fund sources or published data`);
+  if(!detail&&!holdings&&!chart?.days.length&&!oldIndex.ticker)throw new Error(`${fund.ticker}: no usable per-fund sources or published data`);
+  // A fund is either fully updated or fully kept: when a required source failed and a complete published state exists,
+  // never mix fresh columns (returns, NAV, history) with stale ones.
+  const failedSources=[...(config.skipAam?[]:[detail?null:'detail',holdings?null:'holdings']),...(config.skipYahoo||chart?.days.length?[]:['history'])].filter((x):x is string=>Boolean(x));
+  const hasComplete=Boolean(oldIndex.ticker&&old.ticker&&oldHoldings.rows.length&&oldHistory.rows.length);
+  if((hasComplete&&failedSources.length)||(!detail&&!holdings&&!chart?.days.length)) {
     const reasons=fundFilterReasons({ticker:fund.ticker,aumValue:aum,terValue:ter,metrics:oldIndex.metrics??{}},config);
-    return {row:reasons.length?null:oldIndex,providers,reason:reasons.join(',')||'no fresh per-fund source; published data retained'};
+    return {row:reasons.length?null:oldIndex,providers,reason:reasons.join(',')||`source failed (${failedSources.join(', ')||'all'}); previous complete state kept`};
   }
   holdings??={rows:oldHoldings.rows,headers:oldHoldings.headers.length?oldHoldings.headers:HOLDINGS_HEADERS,asOfDate:old.holdings?.asOfDate??null,source:old.holdings?.source??'unavailable from official/SEC providers',status:oldHoldings.rows.length?'available':'unavailable'};
   const history=chart?.days.length?mergeHistory(oldHistory.rows,chart.days):oldHistory.rows,days=daysFromRows(history);
+  // Yahoo re-bases adjusted closes at every dividend: derive returns from the fresh single-basis window, never across old and new rows.
+  const basisDays=chart?.days.length?daysFromRows(chart.days.map(historyRow)):days;
   const priorEvents=Array.isArray(old.distributions?.events)?old.distributions.events:[];
   const dividends=mergeDividends(priorEvents,chart?.dividends??[],detail?.dividends??[]),latest=dividends.at(-1)??null;
   const frequency=decodeDividendFrequency(detail?.frequency??old.distributions?.frequency)??(dividends.length?inferDistributionFrequency(dividends):{frequency:'—',paymentsPerYear:null});
@@ -1465,7 +1502,7 @@ async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRe
   const {asOfDate:officialDate,...official}=rawOfficial??{asOfDate:null,ytd:null,yr1:null,yr3:null,yr5:null,yr10:null,sinceInception:null};
   official.sinceInception=annualizedSinceInception(official.sinceInception,inception,officialDate);
   // Missing official metrics are derived at the SAME date as published NAV returns.
-  const anchor=officialDate??days.at(-1)?.date??null,usable=anchor?days.filter(d=>d.date<=anchor):[];
+  const anchor=officialDate??days.at(-1)?.date??null,usable=anchor?basisDays.filter(d=>d.date<=anchor):[];
   const derived=usable.length?priceReturns(usable,new Date(anchor!+'T00:00:00Z')):{...EMPTY_PRICE_RETURNS};
   if(!inception||!usable.length||!annualizedSinceInception(1,inception,anchor)||Date.parse(usable[0].date)-Date.parse(inception)>7*86400000)derived.siAnn=null;
   const metric=deriveCatalogMetrics(official,derived,null,sec,latest?.amount,frequency.paymentsPerYear,price,null,officialDate);
@@ -1475,8 +1512,8 @@ async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRe
   const monthEnd={asOfDate:anchor?formatEdgarDate(anchor):null,mo1:derived.mo1,qtd:derived.qtd,ytd:metric.ytd,yr1:metric.tr1y,yr3:metric.cagr3y,yr5:metric.cagr5y,yr10:metric.cagr10y,sinceInception:metric.siAnn};
   const quarterEnd=officialDate&&/-(03-31|06-30|09-30|12-31)$/.test(officialDate)?{...official,asOfDate:formatEdgarDate(officialDate)}:old.returns?.quarterEnd??null;
   const historySource=chart?.days.length?'Yahoo Finance daily market-price closes / adjusted closes (not official NAV)':old.history?.source??'unavailable';
-  const holdingsManifest=await writePages(dir,fund.ticker,'holdings',holdings.headers,holdings.rows,config.holdingsPageSize);
-  const historyManifest=await writePages(dir,fund.ticker,'history',chart?.days.length?['Date','Close','Adj Close','Volume']:oldHistory.headers.length?oldHistory.headers:['Date','Close','Adj Close','Volume'],history,config.historyPageSize);
+  const holdingsManifest=await writePages(dir,fund.ticker,'holdings',holdings.headers,holdings.rows,config.holdingsPageSize,false);
+  const historyManifest=await writePages(dir,fund.ticker,'history',chart?.days.length?['Date','Close','Adj Close','Volume']:oldHistory.headers.length?oldHistory.headers:['Date','Close','Adj Close','Volume'],history,config.historyPageSize,false);
   const assets=aum??holdings.netAssets??null;
   const meta={
     generatedAt:now.toISOString(),ticker:fund.ticker,name:detail?.name||fund.name,category:fund.category,categoryPath:fund.category,
@@ -1494,6 +1531,7 @@ async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRe
     history:{...historyManifest,asOf:days.length?formatEdgarDate(days.at(-1)!.date):old.history?.asOf??'—',source:historySource,status:history.length?'available':'unavailable'},
   };
   await writeIfChanged(new URL('meta.json',dir),meta);
+  await pruneStalePages(dir,'holdings',holdingsManifest);await pruneStalePages(dir,'history',historyManifest);
   const row={ticker:fund.ticker,name:meta.name,category:fund.category,fundPage:fund.fundPage,dataFile:`./funds/${fund.ticker}/meta.json`,cusip:meta.identifiers.cusip,isin:meta.identifiers.isin,
     ter:meta.expenseRatio.display,terValue:ter,nav:meta.nav.display,navValue:nav,aum:meta.aum.display,aumValue:assets,asOfDate:meta.nav.asOfDate,inceptionDate:inception?formatEdgarDate(inception):'—',exchange:meta.inception.exchange,
     closePrice:meta.marketPrice.display,closePriceValue:price,premiumDiscount:meta.premiumDiscount.display,premiumDiscountValue:premium,distributions:{frequency:frequency.frequency,exDate:latest?formatUsDate(latest.epoch):'—',dividend:latest?String(round(latest.amount,6)):'—'},returns:meta.returns,metrics:metric,holdings:holdings.rows.length,history:history.length};
@@ -1536,10 +1574,11 @@ export function installSystemCa(mode: string, reexec: () => never = reexecWithSy
   }) as typeof fetch;
 }
 
-export async function main(env:Record<string,string|undefined>=process.env,options:{root?:URL;fetcher?:Fetcher;now?:Date}={}):Promise<RunSummary> {
+export async function main(env:Record<string,string|undefined>=process.env,options:{root?:URL;fetcher?:Fetcher;now?:Date;deadlineMs?:number;clock?:()=>number}={}):Promise<RunSummary> {
   const controls=await runtimeControls(env),config=readConfig(controls),root=options.root??API_ROOT,now=options.now??new Date();
   process.env.VERBOSE=controls.VERBOSE;outputPrintConfig('AAM',config);
   if(!options.fetcher)installSystemCa(config.useSystemCa);
+  await removeStaleTemps(root);
   const index=await readJson(new URL('index.json',root)),oldFunds=new Map<string,JsonRecord>((index?.funds??[]).map((f:JsonRecord)=>[f.ticker,f]));
   const client=providerClient(config,options.fetcher??fetch);
   let catalog:CatalogFund[]|null=null;
@@ -1555,13 +1594,22 @@ export async function main(env:Record<string,string|undefined>=process.env,optio
   if(!catalog.length)throw new Error('No official or published catalog; refusing empty success');
   const missing=config.tickers.filter(t=>!catalog!.some(f=>f.ticker===t));if(missing.length)throw new Error(`TICKERS not in catalog: ${missing.join(', ')}`);
   console.log(`[ catalog  ] ${catalog.length} AAM ETFs (aamlive.com / published catalog fallback)`);
-  const state=await readJson(new URL('update-state.json',root)),queue=batchSelection(catalog,config,state?.cursor??null);
+  const newFunds=oldFunds.size?catalog.map(f=>f.ticker).filter(t=>!oldFunds.has(t)).sort():[];
+  if(newFunds.length) {
+    const line=`NEW FUNDS: ${newFunds.join(', ')}`;console.log(line);
+    if(env.GITHUB_STEP_SUMMARY)await appendFile(env.GITHUB_STEP_SUMMARY,`${line}\n`).catch(()=>{});
+  }
+  // Cursor state is scoped to the TICKERS set, so a TICKERS run never reads, moves or deletes the global cursor.
+  const scope=config.tickers.join(','),state=await readJson(new URL('update-state.json',root)),scoped=scope?state?.scopes?.[scope]:state?.cursor;
+  const queue=batchSelection(catalog,config,scoped??null);
   const deferred=Boolean(config.aumRange||config.terRange||config.dividendYieldRange||config.secYieldRange||Object.keys(config.performanceRanges).length||Object.keys(config.totalReturnRanges).length);
   outputPrintFilter(queue.length,catalog.length,deferred);
   const reporter=outputCreateReporter(root,queue.length),results=new Map(oldFunds),summary:RunSummary={processed:[],skipped:[],failed:[],providers:{},counts:{funds:0,holdings:0,history:0},config};
-  let next=0;
+  let next=0;const clock=options.clock??Date.now,startedAt=clock(),deadlineMs=options.deadlineMs??25*60_000;let deadlineHit=false;
   async function worker():Promise<void> {
     for(;;) {
+      // Soft deadline (workflow timeout is 30 min): take no new fund, still write the index below.
+      if(clock()-startedAt>deadlineMs){deadlineHit=true;return;}
       const i=next++;if(i>=queue.length)return;const fund=queue[i],before=await reporter.before(fund.ticker);
       try {
         const result=await processFund(fund,config,oldFunds.get(fund.ticker)??{},root,client,now);summary.providers[fund.ticker]=result.providers;
@@ -1576,8 +1624,15 @@ export async function main(env:Record<string,string|undefined>=process.env,optio
   summary.counts={funds:funds.length,holdings:funds.reduce((s,f)=>s+(numberOrNull(f.holdings)??0),0),history:funds.reduce((s,f)=>s+(numberOrNull(f.history)??0),0)};
   // Filtered runs preserve every unselected fund entry BYTE-for-value, and all files.
   await writeIfChanged(new URL('index.json',root),{generatedAt:now.toISOString(),catalogReadAt:now.toISOString(),source:{provider:'AAM ETFs',site:AAM_SITE,catalog:CATALOG_URL,holdings:'official full XLS exports; SEC EDGAR N-PORT-P fallback',history:'Yahoo adjusted market-price chart; published cache last resort'},counts:summary.counts,funds});
-  if(config.maxFetches&&!summary.failed.length&&queue.length)await writeIfChanged(new URL('update-state.json',root),{cursor:queue.at(-1)!.ticker});
-  else if(!config.maxFetches&&!summary.failed.length)await rm(new URL('update-state.json',root),{force:true});
+  if(deadlineHit)console.log(`[ deadline ] soft deadline reached: ${Math.min(next,queue.length)} of ${queue.length} queued funds started; the rest keep their published state`);
+  const started=Math.min(next,queue.length);
+  if(!summary.failed.length&&(config.maxFetches?started:!deadlineHit)) {
+    const nextState:JsonRecord={...(state??{}),scopes:{...(state?.scopes??{})}};
+    if(config.maxFetches)scope?nextState.scopes[scope]=queue[started-1].ticker:nextState.cursor=queue[started-1].ticker;
+    else scope?delete nextState.scopes[scope]:delete nextState.cursor;
+    if(!Object.keys(nextState.scopes).length)delete nextState.scopes;
+    if(Object.keys(nextState).length)await writeIfChanged(new URL('update-state.json',root),nextState);else await rm(new URL('update-state.json',root),{force:true});
+  }
   summary.processed.sort();summary.skipped.sort();summary.failed.sort();
   console.log(`[ done     ] ${summary.processed.length} funds updated, ${summary.failed.length} failures (${summary.skipped.length} skipped)`);
   console.log(`[ done     ] counts: ${summary.counts.funds} funds / ${summary.counts.holdings} holdings rows / ${summary.counts.history} history rows`);
