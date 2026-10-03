@@ -539,7 +539,7 @@ export function parseDetail(html: string, expectedTicker: string): Detail {
   return {
     ticker,name:title.replace(/\s*\([^)]*\)\s*$/,'').trim(),cusip:facts.get('cusip')||null,isin:facts.get('isin')||null,inception:toIsoDate(facts.get('inception'))||null,
     grossExpense:gross?numberOrNull(gross[1]):numberOrNull(expense),netExpense:net?numberOrNull(net[1]):numberOrNull(expense),
-    secYield:unsub?numberOrNull(unsub[1]):yieldPlain,subsidizedSecYield:sub?numberOrNull(sub[1]):yieldPlain,unsubsidizedSecYield:unsub?numberOrNull(unsub[1]):yieldPlain,
+    secYield:unsub?numberOrNull(unsub[1]):yieldPlain??(sub?numberOrNull(sub[1]):null),subsidizedSecYield:sub?numberOrNull(sub[1]):yieldPlain,unsubsidizedSecYield:unsub?numberOrNull(unsub[1]):yieldPlain,
     nav:numberOrNull(facts.get('nav')),marketPrice:numberOrNull(facts.get('closing price')),netAssets:numberOrNull(facts.get('net assets')),exchange:facts.get('exchange')??'',
     priceAsOfDate:asOf(html,'ResponsiveETFsDetailHeader_navAsOfDate'),aumAsOfDate:asOf(html,'ResponsiveETFsDetailHeader_totalNetAssetsAsOfDate'),
     frequency:facts.get('distribution schedule')||null,benchmark:facts.get('benchmark index')||null,
@@ -1235,7 +1235,7 @@ export function createTransport(config: UpdaterConfig, fetcher: Fetcher = fetch,
     for(let attempt=0;attempt<=config.maxRetries;attempt++) {
       await pace();
       try {
-        const response=await fetcher(url,{redirect:'follow',signal:AbortSignal.timeout(30000),...init});
+        const response=await fetcher(url,{redirect:'follow',signal:AbortSignal.timeout(45000),...init});
         if(response.ok)return response;
         await response.body?.cancel();throw new HttpError(response.status,label);
       } catch(error) {
@@ -1293,7 +1293,19 @@ export async function readPreviousSheet(dir:URL,kind:'holdings'|'history',manife
   return {rows,headers};
 }
 function historyRow(day:ChartDay):SheetRow {return {Date:formatEdgarDate(day.date),Close:String(day.close),'Adj Close':String(round(day.adjClose,2)),Volume:String(day.volume)};}
-function rowDate(row:SheetRow):string {const time=Date.parse(String(row.Date??''));return Number.isFinite(time)?new Date(time).toISOString().slice(0,10):'';}
+/** Date text ("Jun 04 2026", "06/04/2026", ISO) -> ISO date, always read as UTC so a run east of UTC gives the same output. */
+export function dateTextToIso(raw:unknown):string {
+  const text=String(raw??'').trim(),named=/^([A-Za-z]{3})[a-z]*\.? (\d{1,2}),? (\d{4})$/.exec(text);
+  if(named){const m=MONTHS.findIndex(x=>x.toLowerCase()===named[1].toLowerCase());if(m>=0)return `${named[3]}-${String(m+1).padStart(2,'0')}-${named[2].padStart(2,'0')}`;}
+  const iso=toIsoDate(text),time=Date.parse(/^\d{4}-\d{2}-\d{2}$/.test(iso)?`${iso}T00:00:00Z`:`${text} UTC`);
+  return Number.isFinite(time)?new Date(time).toISOString().slice(0,10):'';
+}
+function rowDate(row:SheetRow):string {return dateTextToIso(row.Date);}
+export function secFilingIsFresher(filingDate:string|null,publishedDate:string|null,havePublished:boolean):boolean {
+  if(!havePublished)return true;
+  const a=dateTextToIso(filingDate),b=dateTextToIso(publishedDate);
+  return Boolean(a&&(!b||a>b));
+}
 export function mergeHistory(previous:SheetRow[],fresh:ChartDay[]):SheetRow[] {
   const rows=new Map<string,SheetRow>();
   for(const row of previous){const date=rowDate(row);if(!date)throw new Error('Invalid cached history date');rows.set(date,row);}
@@ -1425,8 +1437,8 @@ function providerClient(config:UpdaterConfig,fetcher:Fetcher) {
 function officialRowFromOld(old:JsonRecord):OfficialReturnRow|null {
   if(old.officialReturns)return old.officialReturns;
   if(!old.returns?.monthEnd||!String(old.returns?.derivedFrom??'').startsWith('official AAM'))return null;
-  const m=old.returns.monthEnd,date=Date.parse(String(m.asOfDate??''));
-  return {asOfDate:Number.isFinite(date)?new Date(date).toISOString().slice(0,10):null,ytd:numberOrNull(m.ytd),yr1:numberOrNull(m.yr1),yr3:numberOrNull(m.yr3),yr5:numberOrNull(m.yr5),yr10:numberOrNull(m.yr10),sinceInception:numberOrNull(m.sinceInception)};
+  const m=old.returns.monthEnd;
+  return {asOfDate:dateTextToIso(m.asOfDate)||null,ytd:numberOrNull(m.ytd),yr1:numberOrNull(m.yr1),yr3:numberOrNull(m.yr3),yr5:numberOrNull(m.yr5),yr10:numberOrNull(m.yr10),sinceInception:numberOrNull(m.sinceInception)};
 }
 async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRecord,root:URL,client:ReturnType<typeof providerClient>,now:Date):Promise<{row:JsonRecord|null;providers:ProviderState;reason?:string}> {
   const dir=new URL(`funds/${fund.ticker}/`,root),old=await readJson(new URL('meta.json',dir))??{};
@@ -1442,16 +1454,29 @@ async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRe
   if(!inRange(aum,config.aumRange)||!inRange(ter,config.terRange)||!inRange(sec,config.secYieldRange))return {row:null,providers,reason:'AUM/TER/SEC_YIELD'};
   let holdings=response?await optional(`${fund.ticker} official holdings`,()=>client.holdings(fund,response.html,response.detail)):null;
   if(holdings){providers.holdings='official';outputNote(`[ holdings ] ${fund.ticker}: ${holdings.rows.length} complete official XLS rows`);}
-  if(!holdings&&config.edgarFallback){holdings=await optional(`${fund.ticker} SEC holdings`,()=>client.sec(fund));if(holdings){providers.holdings='sec';outputNote(`[ edgar    ] ${fund.ticker}: ${holdings.rows.length} identity-verified N-PORT rows`);}}
+  if(!holdings&&config.edgarFallback){
+    const filing=await optional(`${fund.ticker} SEC holdings`,()=>client.sec(fund));
+    // An N-PORT filing lags the daily official export by weeks: it may only replace published rows that are older than it.
+    if(filing&&!secFilingIsFresher(filing.asOfDate,oldHoldings.rows.length?old.holdings?.asOfDate??null:null,oldHoldings.rows.length>0)){
+      const message=`${fund.ticker} SEC holdings: N-PORT ${filing.asOfDate??'undated'} is not newer than published ${old.holdings?.asOfDate??'rows'}; kept published holdings`;
+      providers.warnings.push(message);outputNote(`[ fallback ] ${message}`);
+    }else if(filing){holdings=filing;providers.holdings='sec';outputNote(`[ edgar    ] ${fund.ticker}: ${holdings.rows.length} identity-verified N-PORT rows`);}
+  }
   const chart=config.skipYahoo?null:await optional(`${fund.ticker} Yahoo history`,()=>client.chart(fund.ticker,now));
   if(chart?.days.length){providers.history='yahoo';outputNote(`[ chart    ] ${fund.ticker}: ${chart.days.length} fresh Yahoo daily bars`);}
-  if(!detail&&!holdings&&!chart?.days.length) {
-    if(!oldIndex.ticker)throw new Error(`${fund.ticker}: no usable per-fund sources or published data`);
+  if(!detail&&!holdings&&!chart?.days.length&&!oldIndex.ticker)throw new Error(`${fund.ticker}: no usable per-fund sources or published data`);
+  // A fund is either fully updated or fully kept: when a required source failed and a complete published state exists,
+  // never mix fresh columns (returns, NAV, history) with stale ones.
+  const failedSources=[...(config.skipAam?[]:[detail?null:'detail',holdings?null:'holdings']),...(config.skipYahoo||chart?.days.length?[]:['history'])].filter((x):x is string=>Boolean(x));
+  const hasComplete=Boolean(oldIndex.ticker&&old.ticker&&oldHoldings.rows.length&&oldHistory.rows.length);
+  if((hasComplete&&failedSources.length)||(!detail&&!holdings&&!chart?.days.length)) {
     const reasons=fundFilterReasons({ticker:fund.ticker,aumValue:aum,terValue:ter,metrics:oldIndex.metrics??{}},config);
-    return {row:reasons.length?null:oldIndex,providers,reason:reasons.join(',')||'no fresh per-fund source; published data retained'};
+    return {row:reasons.length?null:oldIndex,providers,reason:reasons.join(',')||`source failed (${failedSources.join(', ')||'all'}); previous complete state kept`};
   }
   holdings??={rows:oldHoldings.rows,headers:oldHoldings.headers.length?oldHoldings.headers:HOLDINGS_HEADERS,asOfDate:old.holdings?.asOfDate??null,source:old.holdings?.source??'unavailable from official/SEC providers',status:oldHoldings.rows.length?'available':'unavailable'};
   const history=chart?.days.length?mergeHistory(oldHistory.rows,chart.days):oldHistory.rows,days=daysFromRows(history);
+  // Yahoo re-bases adjusted closes at every dividend: derive returns from the fresh single-basis window, never across old and new rows.
+  const basisDays=chart?.days.length?daysFromRows(chart.days.map(historyRow)):days;
   const priorEvents=Array.isArray(old.distributions?.events)?old.distributions.events:[];
   const dividends=mergeDividends(priorEvents,chart?.dividends??[],detail?.dividends??[]),latest=dividends.at(-1)??null;
   const frequency=decodeDividendFrequency(detail?.frequency??old.distributions?.frequency)??(dividends.length?inferDistributionFrequency(dividends):{frequency:'—',paymentsPerYear:null});
@@ -1465,7 +1490,7 @@ async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRe
   const {asOfDate:officialDate,...official}=rawOfficial??{asOfDate:null,ytd:null,yr1:null,yr3:null,yr5:null,yr10:null,sinceInception:null};
   official.sinceInception=annualizedSinceInception(official.sinceInception,inception,officialDate);
   // Missing official metrics are derived at the SAME date as published NAV returns.
-  const anchor=officialDate??days.at(-1)?.date??null,usable=anchor?days.filter(d=>d.date<=anchor):[];
+  const anchor=officialDate??days.at(-1)?.date??null,usable=anchor?basisDays.filter(d=>d.date<=anchor):[];
   const derived=usable.length?priceReturns(usable,new Date(anchor!+'T00:00:00Z')):{...EMPTY_PRICE_RETURNS};
   if(!inception||!usable.length||!annualizedSinceInception(1,inception,anchor)||Date.parse(usable[0].date)-Date.parse(inception)>7*86400000)derived.siAnn=null;
   const metric=deriveCatalogMetrics(official,derived,null,sec,latest?.amount,frequency.paymentsPerYear,price,null,officialDate);

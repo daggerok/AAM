@@ -11,7 +11,7 @@ import {
   totalToAnnualized, indicatedYield, inferDistributionFrequency, deriveCatalogMetrics, returnsBasisLabel, isoDateOrNull, annualizedSinceInception, fundFilterReasons,
   parseFundTickerMap, parseCompanyTickerMap, parseNport, nportMatches, parseNportAccessions, parseEdgarAtomFilings, nportUrlFor, createTransport,
   isCertError, installSystemCa, systemCaActive,
-  buildPages, writePages, readPreviousSheet, mergeHistory, mergeDividends, batchSelection, initializeCatalogSeed, validatePortfolioPreview, main,
+  dateTextToIso, secFilingIsFresher, buildPages, writePages, readPreviousSheet, mergeHistory, mergeDividends, batchSelection, initializeCatalogSeed, validatePortfolioPreview, main,
 } from './update-data';
 import type { Fetcher } from './update-data';
 
@@ -711,4 +711,68 @@ test('installSystemCa: false/active keep fetch, true restarts now, auto restarts
     try { await expect(fetch('https://example.invalid')).rejects.toThrow('reexec'); } finally { console.error = errors; }
     expect(calls).toEqual(['reexec']);
   } finally { globalThis.fetch = original; }
+});
+
+// ---------------------------------------------------------------------------
+// Data-contract fixes: UTC dates, fund-level consistency, fallback freshness, single-basis derived returns
+// ---------------------------------------------------------------------------
+test('month-name dates are read as UTC: same output east and west of UTC', () => {
+  const zone = process.env.TZ;
+  try {
+    for (const tz of ['Europe/Berlin', 'Pacific/Auckland', 'America/Los_Angeles', 'UTC']) {
+      process.env.TZ = tz;
+      expect(dateTextToIso('Oct 01 2026')).toBe('2026-10-01'); expect(dateTextToIso('06/30/2026')).toBe('2026-06-30'); expect(dateTextToIso('2026-06-30T00:00:00Z')).toBe('2026-06-30'); expect(dateTextToIso('garbage')).toBe('');
+      const merged = mergeHistory([{ Date: 'Oct 01 2026', Close: '1', 'Adj Close': '1', Volume: '0' }], [{ date: '2026-10-01', close: 2, adjClose: 2, volume: 0 }]);
+      expect(merged.length).toBe(1); expect(merged[0].Close).toBe('2');
+    }
+  } finally { if (zone === undefined) delete process.env.TZ; else process.env.TZ = zone; }
+});
+test('SEC N-PORT replaces published holdings only when newer; no published rows always accept', () => {
+  expect(secFilingIsFresher('2026-06-30', '2026-10-01', true)).toBe(false); expect(secFilingIsFresher('2026-10-01', '2026-10-01', true)).toBe(false);
+  expect(secFilingIsFresher('2026-10-02', '2026-10-01', true)).toBe(true); expect(secFilingIsFresher(null, '2026-10-01', true)).toBe(false);
+  expect(secFilingIsFresher('2026-06-30', null, false)).toBe(true); expect(secFilingIsFresher(null, null, false)).toBe(true);
+});
+test('only-subsidized SEC yield is still the fund SEC yield', () => {
+  const html = detailHtml('CLOC', { ...FACTS.CLOC, '30 Day SEC Yield': '6.08% (subsidized)' });
+  const d = parseDetail(html, 'CLOC'); expect(d.secYield).toBe(6.08); expect(d.subsidizedSecYield).toBe(6.08); expect(d.unsubsidizedSecYield).toBeNull();
+});
+test('official holdings outage + older N-PORT keeps the fund fully as published (no mixed columns)', async () => {
+  await testFeed(async (dir, root, base) => {
+    await main(integrationEnv, { root, fetcher: base, now: fixedNow }); const before = await snapshot(dir);
+    const mock: Fetcher = async (url, init) => {
+      if (init?.method === 'POST') return new Response('down', { status: 500 });
+      if (url.endsWith('company_tickers_mf.json')) return Response.json({ fields: ['symbol', 'cik', 'seriesId', 'classId'], data: [['SPDV', 1540305, 'S000000001', 'C1']] });
+      if (url.includes('browse-edgar')) return new Response('<feed><entry><filing-type>NPORT-P</filing-type><accession-number>0001193125-26-000001</accession-number><filing-href>https://www.sec.gov/Archives/edgar/data/1540305/a</filing-href></entry></feed>');
+      if (url.endsWith('primary_doc.xml')) return new Response(NPORT_XML);
+      return base(url, init);
+    };
+    const result = await main({ ...integrationEnv, TICKERS: 'SPDV' }, { root, fetcher: mock, now: new Date('2026-10-02T05:00:00Z') });
+    expect(result.providers.SPDV.holdings).not.toBe('sec'); expect(await snapshot(dir)).toEqual(before);
+    const page = await Bun.file(new URL('funds/SPDV/holdings/001.json', root)).json(); expect(page.headers.length).toBe(11);
+  });
+});
+test('a failed detail page keeps the whole fund: fresh Yahoo history is not published beside stale returns', async () => {
+  await testFeed(async (dir, root, base) => {
+    await main(integrationEnv, { root, fetcher: base, now: fixedNow }); const before = await snapshot(dir);
+    const mock: Fetcher = async (url, init) => {
+      if (url === 'https://www.aamlive.com/ETF/Detail/SPDV') return new Response('down', { status: 403 });
+      if (url.includes('finance/chart/SPDV')) return Response.json({ chart: { result: [{ meta: { regularMarketPrice: 40, regularMarketTime: 1790726400 }, timestamp: [1790726400], indicators: { quote: [{ close: [40], volume: [1] }], adjclose: [{ adjclose: [40] }] } }] } });
+      return base(url, init);
+    };
+    const result = await main({ ...integrationEnv, TICKERS: 'SPDV' }, { root, fetcher: mock, now: new Date('2026-10-02T05:00:00Z') });
+    expect(result.providers.SPDV.detail).toBe('cached'); expect(await snapshot(dir)).toEqual(before);
+  });
+});
+test('derived returns use the fresh single-basis window, never old rows from another adjusted-close basis', async () => {
+  await testFeed(async (_dir, root, base) => {
+    await main({ ...integrationEnv, TICKERS: 'SPDV' }, { root, fetcher: base, now: fixedNow });
+    const rebased: Fetcher = async (url, init) => {
+      if (url.includes('finance/chart/SPDV')) return Response.json({ chart: { result: [{ meta: { regularMarketPrice: 52, regularMarketTime: 1782777600 }, timestamp: [1782691200, 1782777600], indicators: { quote: [{ close: [50, 52], volume: [1, 1] }], adjclose: [{ adjclose: [50, 52] }] } }] } });
+      return base(url, init);
+    };
+    await main({ ...integrationEnv, TICKERS: 'SPDV', HISTORY_RANGE: '1y' }, { root, fetcher: rebased, now: fixedNow });
+    const meta = await Bun.file(new URL('funds/SPDV/meta.json', root)).json();
+    expect(meta.history.totalRows).toBeGreaterThan(2); // old rows are retained
+    expect(meta.returns.monthEnd.mo1).toBeNull(); // 31 days back lies before the fresh window; old 24.99 rows are a different basis
+  });
 });
