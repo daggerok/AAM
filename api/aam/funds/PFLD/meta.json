@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-01T21:58:30.308Z",
+ "generatedAt": "2026-10-03T05:19:07.562Z",
  "ticker": "PFLD",
  "name": "AAM Low Duration Preferred & Income Securities ETF",
  "category": "Preferred & Hybrid Securities",
@@ -10,9 +10,9 @@
   "category": "Preferred & Hybrid Securities",
   "fundPage": "https://www.aamlive.com/ETF/Detail/PFLD",
   "inception": "2019-11-19",
-  "secYield": 5.89,
-  "nav": 19.15,
-  "asOfDate": "2026-09-30"
+  "secYield": 5.9,
+  "nav": 19.14,
+  "asOfDate": "2026-10-01"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/PFLD",
@@ -41,34 +41,34 @@
   "net": 0.45
  },
  "nav": {
-  "display": "$19.15",
-  "value": 19.15,
-  "asOfDate": "Sep 30 2026"
+  "display": "$19.14",
+  "value": 19.14,
+  "asOfDate": "Oct 01 2026"
  },
  "marketPrice": {
-  "display": "$19.08",
-  "value": 19.08,
-  "asOfDate": "Sep 30 2026"
+  "display": "$19.10",
+  "value": 19.1,
+  "asOfDate": "Oct 01 2026"
  },
  "premiumDiscount": {
-  "display": "-0.37%",
-  "value": -0.37
+  "display": "-0.21%",
+  "value": -0.21
  },
  "aum": {
-  "display": "$378.17 M",
-  "value": 378171025,
-  "asOfDate": "Sep 30 2026",
+  "display": "$378.07 M",
+  "value": 378066350,
+  "asOfDate": "Oct 01 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
-  "dividendYield": 5.66,
-  "dividendYieldText": "5.66%",
+  "dividendYield": 5.65,
+  "dividendYieldText": "5.65%",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
-  "secYield": 5.89,
-  "secYieldText": "5.89%",
+  "secYield": 5.9,
+  "secYieldText": "5.90%",
   "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
-  "subsidizedSecYield": 5.89,
-  "unsubsidizedSecYield": 5.89
+  "subsidizedSecYield": 5.9,
+  "unsubsidizedSecYield": 5.9
  },
  "officialReturns": {
   "asOfDate": "2026-09-30",
@@ -1190,9 +1190,9 @@
    "holdings/002.json"
   ],
   "pageSize": 250,
-  "totalRows": 338,
-  "asOfDate": "2026-10-01",
-  "asOf": "Oct 01 2026",
+  "totalRows": 336,
+  "asOfDate": "2026-10-05",
+  "asOf": "Oct 05 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },
@@ -1202,8 +1202,8 @@
    "history/002.json"
   ],
   "pageSize": 1000,
-  "totalRows": 1724,
-  "asOf": "Oct 01 2026",
+  "totalRows": 1725,
+  "asOf": "Oct 02 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

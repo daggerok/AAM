@@ -2,7 +2,7 @@
  "ticker": "SPDV",
  "page": 3,
  "pageSize": 1000,
- "totalRows": 2221,
+ "totalRows": 2222,
  "headers": [
   "Date",
   "Close",
@@ -1335,6 +1335,12 @@
    "Close": "39.040001",
    "Adj Close": "39.04",
    "Volume": "3800"
+  },
+  {
+   "Date": "Oct 02 2026",
+   "Close": "38.953999",
+   "Adj Close": "38.95",
+   "Volume": "3000"
   }
  ]
 }

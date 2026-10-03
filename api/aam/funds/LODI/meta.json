@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-01T21:58:30.308Z",
+ "generatedAt": "2026-10-03T05:19:07.562Z",
  "ticker": "LODI",
  "name": "AAM SLC Low Duration Income ETF",
  "category": "Fixed Income",
@@ -11,8 +11,8 @@
   "fundPage": "https://www.aamlive.com/ETF/Detail/LODI",
   "inception": "2024-12-03",
   "secYield": 5.2,
-  "nav": 24.83,
-  "asOfDate": "2026-09-30"
+  "nav": 24.85,
+  "asOfDate": "2026-10-01"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/LODI",
@@ -41,23 +41,23 @@
   "net": 0.15
  },
  "nav": {
-  "display": "$24.83",
-  "value": 24.83,
-  "asOfDate": "Sep 30 2026"
+  "display": "$24.85",
+  "value": 24.85,
+  "asOfDate": "Oct 01 2026"
  },
  "marketPrice": {
   "display": "$24.88",
   "value": 24.88,
-  "asOfDate": "Sep 30 2026"
+  "asOfDate": "Oct 01 2026"
  },
  "premiumDiscount": {
-  "display": "0.20%",
-  "value": 0.2
+  "display": "0.12%",
+  "value": 0.12
  },
  "aum": {
-  "display": "$106.75 M",
-  "value": 106753520,
-  "asOfDate": "Sep 30 2026",
+  "display": "$108.12 M",
+  "value": 108117945,
+  "asOfDate": "Oct 01 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
@@ -409,9 +409,9 @@
    "holdings/001.json"
   ],
   "pageSize": 250,
-  "totalRows": 218,
-  "asOfDate": "2026-10-01",
-  "asOf": "Oct 01 2026",
+  "totalRows": 220,
+  "asOfDate": "2026-10-05",
+  "asOf": "Oct 05 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },
@@ -420,8 +420,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 457,
-  "asOf": "Oct 01 2026",
+  "totalRows": 458,
+  "asOf": "Oct 02 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

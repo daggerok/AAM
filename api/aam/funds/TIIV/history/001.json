@@ -2,7 +2,7 @@
  "ticker": "TIIV",
  "page": 1,
  "pageSize": 1000,
- "totalRows": 299,
+ "totalRows": 300,
  "headers": [
   "Date",
   "Close",
@@ -1800,9 +1800,15 @@
   },
   {
    "Date": "Oct 01 2026",
-   "Close": "29.680799",
+   "Close": "29.681",
    "Adj Close": "29.68",
-   "Volume": "824"
+   "Volume": "800"
+  },
+  {
+   "Date": "Oct 02 2026",
+   "Close": "29.837",
+   "Adj Close": "29.84",
+   "Volume": "100"
   }
  ]
 }

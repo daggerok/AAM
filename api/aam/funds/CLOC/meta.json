@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-01T21:58:30.308Z",
+ "generatedAt": "2026-10-03T05:19:07.562Z",
  "ticker": "CLOC",
  "name": "AAM Crescent CLO ETF",
  "category": "Fixed Income",
@@ -10,9 +10,9 @@
   "category": "Fixed Income",
   "fundPage": "https://www.aamlive.com/ETF/Detail/CLOC",
   "inception": "2025-10-22",
-  "secYield": 5.8,
-  "nav": 24.9,
-  "asOfDate": "2026-09-30"
+  "secYield": 5.79,
+  "nav": 24.91,
+  "asOfDate": "2026-10-01"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/CLOC",
@@ -41,34 +41,34 @@
   "net": 0.18
  },
  "nav": {
-  "display": "$24.90",
-  "value": 24.9,
-  "asOfDate": "Sep 30 2026"
+  "display": "$24.91",
+  "value": 24.91,
+  "asOfDate": "Oct 01 2026"
  },
  "marketPrice": {
-  "display": "$25.01",
-  "value": 25.01,
-  "asOfDate": "Sep 30 2026"
+  "display": "$25.02",
+  "value": 25.02,
+  "asOfDate": "Oct 01 2026"
  },
  "premiumDiscount": {
   "display": "0.44%",
   "value": 0.44
  },
  "aum": {
-  "display": "$61.01 M",
-  "value": 61008430,
-  "asOfDate": "Sep 30 2026",
+  "display": "$61.02 M",
+  "value": 61019700,
+  "asOfDate": "Oct 01 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
   "dividendYield": 6.24,
   "dividendYieldText": "6.24%",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
-  "secYield": 5.8,
-  "secYieldText": "5.80%",
+  "secYield": 5.79,
+  "secYieldText": "5.79%",
   "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
-  "subsidizedSecYield": 6.11,
-  "unsubsidizedSecYield": 5.8
+  "subsidizedSecYield": 6.1,
+  "unsubsidizedSecYield": 5.79
  },
  "officialReturns": {
   "asOfDate": "2026-09-30",
@@ -267,8 +267,8 @@
   ],
   "pageSize": 250,
   "totalRows": 61,
-  "asOfDate": "2026-10-01",
-  "asOf": "Oct 01 2026",
+  "asOfDate": "2026-10-05",
+  "asOf": "Oct 05 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },
@@ -277,8 +277,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 236,
-  "asOf": "Oct 01 2026",
+  "totalRows": 237,
+  "asOf": "Oct 02 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }
