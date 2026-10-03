@@ -11,7 +11,7 @@ import {
   totalToAnnualized, indicatedYield, inferDistributionFrequency, deriveCatalogMetrics, returnsBasisLabel, isoDateOrNull, annualizedSinceInception, fundFilterReasons,
   parseFundTickerMap, parseCompanyTickerMap, parseNport, nportMatches, parseNportAccessions, parseEdgarAtomFilings, nportUrlFor, createTransport,
   isCertError, installSystemCa, systemCaActive,
-  dateTextToIso, secFilingIsFresher, buildPages, writePages, readPreviousSheet, mergeHistory, mergeDividends, batchSelection, initializeCatalogSeed, validatePortfolioPreview, main,
+  dateTextToIso, secFilingIsFresher, pruneStalePages, removeStaleTemps, buildPages, writePages, readPreviousSheet, mergeHistory, mergeDividends, batchSelection, initializeCatalogSeed, validatePortfolioPreview, main,
 } from './update-data';
 import type { Fetcher } from './update-data';
 
@@ -594,7 +594,7 @@ test('real cached retention on all provider denials; no empty portfolio/history/
 test('bounded runs advance in queue order; AND filters skip without modifying cached fund files', async () => {
   await testFeed(async (dir, root, fetcher) => {
     const a = await main({ ...integrationEnv, MAX_FETCHES: '2' }, { root, fetcher, now: fixedNow }); expect(a.processed).toEqual(['CLOC', 'PFLD']);
-    expect((await Bun.file(new URL('update-state.json', root)).json()).cursor).toBe('PFLD');
+    expect((await Bun.file(new URL('update-state.json', root)).json()).scopes['CLOC,PFLD,SPDV']).toBe('PFLD');
     const b = await main({ ...integrationEnv, MAX_FETCHES: '1' }, { root, fetcher, now: fixedNow }); expect(b.processed).toEqual(['SPDV']);
     const before = await snapshot(dir); const skip = await main({ ...integrationEnv, MAX_FETCHES: '0', TER: ':0' }, { root, fetcher, now: fixedNow }); expect(skip.skipped).toEqual(['CLOC', 'PFLD', 'SPDV']);
     const after = await snapshot(dir); for (const [f, hash] of Object.entries(before)) if (f.startsWith('funds/')) expect(after[f]).toBe(hash); expect(await Bun.file(new URL('update-state.json', root)).exists()).toBe(false);
@@ -774,5 +774,67 @@ test('derived returns use the fresh single-basis window, never old rows from ano
     const meta = await Bun.file(new URL('funds/SPDV/meta.json', root)).json();
     expect(meta.history.totalRows).toBeGreaterThan(2); // old rows are retained
     expect(meta.returns.monthEnd.mo1).toBeNull(); // 31 days back lies before the fresh window; old 24.99 rows are a different basis
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Robustness: write order, cursor scope, soft deadline, NEW FUNDS, real parallelism
+// ---------------------------------------------------------------------------
+test('stale pages are removed only by the explicit prune step that runs after meta.json', async () => {
+  const dir = await mkdtemp(tmpdir() + '/aam-pages-'), url = pathToFileURL(dir + '/');
+  try {
+    const rows = [1, 2, 3].map(n => ({ A: String(n) }));
+    await writePages(url, 'X', 'history', ['A'], rows, 1);
+    const short = await writePages(url, 'X', 'history', ['A'], rows.slice(0, 1), 1, false);
+    expect((await readdir(dir + '/history')).sort()).toEqual(['001.json', '002.json', '003.json']); // new pages first, nothing deleted yet
+    await pruneStalePages(url, 'history', short); expect(await readdir(dir + '/history')).toEqual(['001.json']);
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});
+test('leftover *.json.tmp files from a killed run are removed at the start of a run', async () => {
+  await testFeed(async (dir, root, fetcher) => {
+    await writeFile(dir + '/funds/PFLD/meta.json.tmp', '{'); await writeFile(dir + '/other.json.tmp', '{');
+    await main({ ...integrationEnv, TICKERS: 'SPDV' }, { root, fetcher, now: fixedNow });
+    expect(Object.keys(await snapshot(dir)).filter(f => f.endsWith('.tmp'))).toEqual([]);
+  });
+});
+test('a TICKERS run never moves or deletes the global cursor', async () => {
+  await testFeed(async (dir, root, fetcher) => {
+    await writeIfChanged(new URL('update-state.json', root), { cursor: 'PFLD' });
+    await main({ ...integrationEnv, TICKERS: 'SPDV', MAX_FETCHES: '0' }, { root, fetcher, now: fixedNow });
+    await main({ ...integrationEnv, TICKERS: 'SPDV', MAX_FETCHES: '1' }, { root, fetcher, now: fixedNow });
+    const state = await Bun.file(new URL('update-state.json', root)).json(); expect(state.cursor).toBe('PFLD'); expect(state.scopes).toEqual({ SPDV: 'SPDV' });
+    await main({ ...integrationEnv, TICKERS: 'SPDV', MAX_FETCHES: '0' }, { root, fetcher, now: fixedNow });
+    expect(await Bun.file(new URL('update-state.json', root)).json()).toEqual({ cursor: 'PFLD' });
+  });
+});
+test('soft deadline: no new fund is started, the index is still written, the cursor covers only started funds', async () => {
+  await testFeed(async (dir, root, fetcher) => {
+    let calls = 0; const clock = () => (calls++ > 1 ? 10_000_000 : 0);
+    const logs: string[] = []; const log = console.log; console.log = (...a) => { logs.push(a.join(' ')); };
+    let summary; try { summary = await main({ ...integrationEnv, MAX_FETCHES: '3' }, { root, fetcher, now: fixedNow, deadlineMs: 1000, clock }); } finally { console.log = log; }
+    expect(summary.processed.length).toBeLessThan(3); expect(logs.some(l => l.includes('soft deadline'))).toBe(true);
+    const index = await Bun.file(new URL('index.json', root)).json(); expect(index.funds.length).toBe(5);
+    const state = await Bun.file(new URL('update-state.json', root)).json(); expect(Object.values(state.scopes)[0]).toBe(summary.processed.at(-1)!);
+  });
+});
+test('NEW FUNDS line is printed and appended to GITHUB_STEP_SUMMARY when the catalog has unpublished tickers', async () => {
+  await testFeed(async (dir, root, fetcher) => {
+    const index = await Bun.file(new URL('index.json', root)).json(); index.funds = index.funds.filter((f: { ticker: string }) => f.ticker !== 'SAWS');
+    await writeFile(dir + '/index.json', JSON.stringify(index)); const summaryFile = dir + '-summary.md';
+    const logs: string[] = []; const log = console.log; console.log = (...a) => { logs.push(a.join(' ')); };
+    try { await main({ ...integrationEnv, TICKERS: 'SPDV', GITHUB_STEP_SUMMARY: summaryFile }, { root, fetcher, now: fixedNow }); } finally { console.log = log; }
+    expect(logs).toContain('NEW FUNDS: SAWS'); expect(await readFile(summaryFile, 'utf8')).toBe('NEW FUNDS: SAWS\n'); await rm(summaryFile);
+  });
+});
+test('CONCURRENCY is real: peak in-flight fund requests is 1 at c=1 and N at c=N', async () => {
+  for (const c of [1, 3]) await testFeed(async (_dir, root, base) => {
+    let now = 0, peak = 0;
+    const slow: Fetcher = async (url, init) => {
+      const detail = /\/ETF\/Detail\/[A-Z]+$/.test(url) && init?.method !== 'POST';
+      if (detail) { now++; peak = Math.max(peak, now); await new Promise(r => setTimeout(r, 20)); now--; }
+      return base(url, init);
+    };
+    await main({ ...integrationEnv, CONCURRENCY: String(c) }, { root, fetcher: slow, now: fixedNow });
+    expect(peak).toBe(c);
   });
 });

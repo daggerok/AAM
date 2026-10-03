@@ -2,7 +2,7 @@
 /// <reference types="bun" />
 // AAM static feed. Shared console/SEC/chart/metrics shape: pinned JPMorgan;
 // deterministic writers and fund assembly shape: pinned Aberdeen.
-import { mkdir, readFile, writeFile, readdir, rm, rename } from 'node:fs/promises';
+import { mkdir, readFile, writeFile, readdir, rm, rename, appendFile } from 'node:fs/promises';
 import { readFile as outputReadFile, readdir as outputReadDir } from 'node:fs/promises';
 import { createHash as outputCreateHash } from 'node:crypto';
 import { join as outputJoin } from 'node:path';
@@ -1266,13 +1266,25 @@ export function buildPages(ticker: string, kind: 'holdings'|'history', headers: 
   }
   return result;
 }
-export async function writePages(dir: URL,ticker: string,kind:'holdings'|'history',headers:string[],rows:SheetRow[],pageSize:number):Promise<PageManifest> {
+/** Remove owned pages that the manifest no longer lists; run only AFTER the new meta.json is written. */
+export async function pruneStalePages(dir:URL,kind:'holdings'|'history',manifest:PageManifest):Promise<void> {
+  const kindDir=new URL(kind+'/',dir),kept=new Set(manifest.pages);
+  for(const entry of await readdir(kindDir).catch(()=>[] as string[]))if(/^\d+\.json$/.test(entry)&&!kept.has(`${kind}/${entry}`))await rm(new URL(entry,kindDir));
+}
+export async function writePages(dir: URL,ticker: string,kind:'holdings'|'history',headers:string[],rows:SheetRow[],pageSize:number,prune=true):Promise<PageManifest> {
   const pages=buildPages(ticker,kind,headers,rows,pageSize),kindDir=new URL(kind+'/',dir);
   await mkdir(kindDir,{recursive:true});
   for(const page of pages)await writeIfChanged(new URL(page.name,dir),page.payload);
-  const kept=new Set(pages.map(p=>p.name));
-  for(const entry of await readdir(kindDir))if(/^\d+\.json$/.test(entry)&&!kept.has(`${kind}/${entry}`))await rm(new URL(entry,kindDir));
-  return {pages:pages.map(p=>p.name),pageSize,totalRows:rows.length};
+  const manifest={pages:pages.map(p=>p.name),pageSize,totalRows:rows.length};
+  if(prune)await pruneStalePages(dir,kind,manifest);
+  return manifest;
+}
+/** A crash between tmp write and rename must not leave a *.tmp that `git add api/aam` would commit. */
+export async function removeStaleTemps(dir:URL):Promise<void> {
+  for(const entry of await readdir(dir,{withFileTypes:true}).catch(()=>[])) {
+    if(entry.isDirectory())await removeStaleTemps(new URL(entry.name+'/',dir));
+    else if(entry.name.endsWith('.json.tmp'))await rm(new URL(entry.name,dir),{force:true});
+  }
 }
 async function readJson(file: URL): Promise<JsonRecord|null> {
   try{return JSON.parse(await readFile(file,'utf8'));}catch(error){if(error instanceof Error&&'code' in error&&error.code==='ENOENT')return null;throw error;}
@@ -1500,8 +1512,8 @@ async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRe
   const monthEnd={asOfDate:anchor?formatEdgarDate(anchor):null,mo1:derived.mo1,qtd:derived.qtd,ytd:metric.ytd,yr1:metric.tr1y,yr3:metric.cagr3y,yr5:metric.cagr5y,yr10:metric.cagr10y,sinceInception:metric.siAnn};
   const quarterEnd=officialDate&&/-(03-31|06-30|09-30|12-31)$/.test(officialDate)?{...official,asOfDate:formatEdgarDate(officialDate)}:old.returns?.quarterEnd??null;
   const historySource=chart?.days.length?'Yahoo Finance daily market-price closes / adjusted closes (not official NAV)':old.history?.source??'unavailable';
-  const holdingsManifest=await writePages(dir,fund.ticker,'holdings',holdings.headers,holdings.rows,config.holdingsPageSize);
-  const historyManifest=await writePages(dir,fund.ticker,'history',chart?.days.length?['Date','Close','Adj Close','Volume']:oldHistory.headers.length?oldHistory.headers:['Date','Close','Adj Close','Volume'],history,config.historyPageSize);
+  const holdingsManifest=await writePages(dir,fund.ticker,'holdings',holdings.headers,holdings.rows,config.holdingsPageSize,false);
+  const historyManifest=await writePages(dir,fund.ticker,'history',chart?.days.length?['Date','Close','Adj Close','Volume']:oldHistory.headers.length?oldHistory.headers:['Date','Close','Adj Close','Volume'],history,config.historyPageSize,false);
   const assets=aum??holdings.netAssets??null;
   const meta={
     generatedAt:now.toISOString(),ticker:fund.ticker,name:detail?.name||fund.name,category:fund.category,categoryPath:fund.category,
@@ -1519,6 +1531,7 @@ async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRe
     history:{...historyManifest,asOf:days.length?formatEdgarDate(days.at(-1)!.date):old.history?.asOf??'—',source:historySource,status:history.length?'available':'unavailable'},
   };
   await writeIfChanged(new URL('meta.json',dir),meta);
+  await pruneStalePages(dir,'holdings',holdingsManifest);await pruneStalePages(dir,'history',historyManifest);
   const row={ticker:fund.ticker,name:meta.name,category:fund.category,fundPage:fund.fundPage,dataFile:`./funds/${fund.ticker}/meta.json`,cusip:meta.identifiers.cusip,isin:meta.identifiers.isin,
     ter:meta.expenseRatio.display,terValue:ter,nav:meta.nav.display,navValue:nav,aum:meta.aum.display,aumValue:assets,asOfDate:meta.nav.asOfDate,inceptionDate:inception?formatEdgarDate(inception):'—',exchange:meta.inception.exchange,
     closePrice:meta.marketPrice.display,closePriceValue:price,premiumDiscount:meta.premiumDiscount.display,premiumDiscountValue:premium,distributions:{frequency:frequency.frequency,exDate:latest?formatUsDate(latest.epoch):'—',dividend:latest?String(round(latest.amount,6)):'—'},returns:meta.returns,metrics:metric,holdings:holdings.rows.length,history:history.length};
@@ -1561,10 +1574,11 @@ export function installSystemCa(mode: string, reexec: () => never = reexecWithSy
   }) as typeof fetch;
 }
 
-export async function main(env:Record<string,string|undefined>=process.env,options:{root?:URL;fetcher?:Fetcher;now?:Date}={}):Promise<RunSummary> {
+export async function main(env:Record<string,string|undefined>=process.env,options:{root?:URL;fetcher?:Fetcher;now?:Date;deadlineMs?:number;clock?:()=>number}={}):Promise<RunSummary> {
   const controls=await runtimeControls(env),config=readConfig(controls),root=options.root??API_ROOT,now=options.now??new Date();
   process.env.VERBOSE=controls.VERBOSE;outputPrintConfig('AAM',config);
   if(!options.fetcher)installSystemCa(config.useSystemCa);
+  await removeStaleTemps(root);
   const index=await readJson(new URL('index.json',root)),oldFunds=new Map<string,JsonRecord>((index?.funds??[]).map((f:JsonRecord)=>[f.ticker,f]));
   const client=providerClient(config,options.fetcher??fetch);
   let catalog:CatalogFund[]|null=null;
@@ -1580,13 +1594,22 @@ export async function main(env:Record<string,string|undefined>=process.env,optio
   if(!catalog.length)throw new Error('No official or published catalog; refusing empty success');
   const missing=config.tickers.filter(t=>!catalog!.some(f=>f.ticker===t));if(missing.length)throw new Error(`TICKERS not in catalog: ${missing.join(', ')}`);
   console.log(`[ catalog  ] ${catalog.length} AAM ETFs (aamlive.com / published catalog fallback)`);
-  const state=await readJson(new URL('update-state.json',root)),queue=batchSelection(catalog,config,state?.cursor??null);
+  const newFunds=oldFunds.size?catalog.map(f=>f.ticker).filter(t=>!oldFunds.has(t)).sort():[];
+  if(newFunds.length) {
+    const line=`NEW FUNDS: ${newFunds.join(', ')}`;console.log(line);
+    if(env.GITHUB_STEP_SUMMARY)await appendFile(env.GITHUB_STEP_SUMMARY,`${line}\n`).catch(()=>{});
+  }
+  // Cursor state is scoped to the TICKERS set, so a TICKERS run never reads, moves or deletes the global cursor.
+  const scope=config.tickers.join(','),state=await readJson(new URL('update-state.json',root)),scoped=scope?state?.scopes?.[scope]:state?.cursor;
+  const queue=batchSelection(catalog,config,scoped??null);
   const deferred=Boolean(config.aumRange||config.terRange||config.dividendYieldRange||config.secYieldRange||Object.keys(config.performanceRanges).length||Object.keys(config.totalReturnRanges).length);
   outputPrintFilter(queue.length,catalog.length,deferred);
   const reporter=outputCreateReporter(root,queue.length),results=new Map(oldFunds),summary:RunSummary={processed:[],skipped:[],failed:[],providers:{},counts:{funds:0,holdings:0,history:0},config};
-  let next=0;
+  let next=0;const clock=options.clock??Date.now,startedAt=clock(),deadlineMs=options.deadlineMs??25*60_000;let deadlineHit=false;
   async function worker():Promise<void> {
     for(;;) {
+      // Soft deadline (workflow timeout is 30 min): take no new fund, still write the index below.
+      if(clock()-startedAt>deadlineMs){deadlineHit=true;return;}
       const i=next++;if(i>=queue.length)return;const fund=queue[i],before=await reporter.before(fund.ticker);
       try {
         const result=await processFund(fund,config,oldFunds.get(fund.ticker)??{},root,client,now);summary.providers[fund.ticker]=result.providers;
@@ -1601,8 +1624,15 @@ export async function main(env:Record<string,string|undefined>=process.env,optio
   summary.counts={funds:funds.length,holdings:funds.reduce((s,f)=>s+(numberOrNull(f.holdings)??0),0),history:funds.reduce((s,f)=>s+(numberOrNull(f.history)??0),0)};
   // Filtered runs preserve every unselected fund entry BYTE-for-value, and all files.
   await writeIfChanged(new URL('index.json',root),{generatedAt:now.toISOString(),catalogReadAt:now.toISOString(),source:{provider:'AAM ETFs',site:AAM_SITE,catalog:CATALOG_URL,holdings:'official full XLS exports; SEC EDGAR N-PORT-P fallback',history:'Yahoo adjusted market-price chart; published cache last resort'},counts:summary.counts,funds});
-  if(config.maxFetches&&!summary.failed.length&&queue.length)await writeIfChanged(new URL('update-state.json',root),{cursor:queue.at(-1)!.ticker});
-  else if(!config.maxFetches&&!summary.failed.length)await rm(new URL('update-state.json',root),{force:true});
+  if(deadlineHit)console.log(`[ deadline ] soft deadline reached: ${Math.min(next,queue.length)} of ${queue.length} queued funds started; the rest keep their published state`);
+  const started=Math.min(next,queue.length);
+  if(!summary.failed.length&&(config.maxFetches?started:!deadlineHit)) {
+    const nextState:JsonRecord={...(state??{}),scopes:{...(state?.scopes??{})}};
+    if(config.maxFetches)scope?nextState.scopes[scope]=queue[started-1].ticker:nextState.cursor=queue[started-1].ticker;
+    else scope?delete nextState.scopes[scope]:delete nextState.cursor;
+    if(!Object.keys(nextState.scopes).length)delete nextState.scopes;
+    if(Object.keys(nextState).length)await writeIfChanged(new URL('update-state.json',root),nextState);else await rm(new URL('update-state.json',root),{force:true});
+  }
   summary.processed.sort();summary.skipped.sort();summary.failed.sort();
   console.log(`[ done     ] ${summary.processed.length} funds updated, ${summary.failed.length} failures (${summary.skipped.length} skipped)`);
   console.log(`[ done     ] counts: ${summary.counts.funds} funds / ${summary.counts.holdings} holdings rows / ${summary.counts.history} history rows`);
