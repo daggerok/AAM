@@ -135,7 +135,7 @@ function offlineIssuer(): { fetcher: Fetcher; seen: string[] } {
     seen.push((init?.method ?? 'GET') + ' ' + url);
     if (url === 'https://www.aamlive.com/ETF') return new Response(catalogHtml());
     const ticker = /\/ETF\/Detail\/([A-Z]+)$/.exec(url)?.[1];
-    if (ticker && HOLDINGS[ticker]) return init?.method === 'POST' ? new Response(xlsBytes(HOLDINGS[ticker]), { headers: { 'Content-Type': 'application/vnd.ms-excel' } }) : new Response(detailHtml(ticker));
+    if (ticker && HOLDINGS[ticker]) return init?.method === 'POST' ? new Response(new Uint8Array(xlsBytes(HOLDINGS[ticker])), { headers: { 'Content-Type': 'application/vnd.ms-excel' } }) : new Response(detailHtml(ticker));
     if (/finance\/chart\/([A-Z]+)\?/.test(url)) return Response.json({ chart: { result: [{ meta: { regularMarketPrice: 25, regularMarketTime: 1790726400, firstTradeDate: 1500000000, exchangeName: 'NYSE' }, timestamp: [1751241600, 1767139200, 1782777600], indicators: { quote: [{ close: [24, 25, 26], volume: [0, 1, 2] }], adjclose: [{ adjclose: [23.919999, 24.989999, 25.999999] }] }, events: { dividends: { old: { date: 1751241600, amount: .1 } } } }] } });
     return new Response('offline sample has no matching provider route', { status: 403 }); // SEC included
   };

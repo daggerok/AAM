@@ -1296,7 +1296,7 @@ function yahooHeaders(): Record<string,string> {return {'User-Agent':'Mozilla/5.
 export type PageManifest = {pages:string[];pageSize:number;totalRows:number};
 export function buildPages(ticker: string, kind: 'holdings'|'history', headers: string[], rows: SheetRow[], pageSize: number): Array<{name:string;payload:{ticker:string;page:number;pageSize:number;totalRows:number;headers:string[];rows:SheetRow[]}}> {
   if(!Number.isSafeInteger(pageSize)||pageSize<1)throw new Error('Invalid page size');
-  const result=[];
+  const result: Array<{name:string;payload:{ticker:string;page:number;pageSize:number;totalRows:number;headers:string[];rows:SheetRow[]}}>=[];
   for(let i=0;i<rows.length;i+=pageSize) {
     const page=result.length+1,name=`${kind}/${String(page).padStart(3,'0')}.json`;
     result.push({name,payload:{ticker,page,pageSize,totalRows:rows.length,headers,rows:rows.slice(i,i+pageSize)}});
@@ -1364,7 +1364,7 @@ export function mergeHistory(previous:SheetRow[],fresh:ChartDay[]):SheetRow[] {
 function daysFromRows(rows:SheetRow[]):ChartDay[] {
   return rows.flatMap(row=>{const date=rowDate(row),close=numberOrNull(row.Close),adjClose=numberOrNull(row['Adj Close']);return date&&close!==null&&adjClose!==null?[{date,close,adjClose,volume:numberOrNull(row.Volume)??0}]:[];});
 }
-export function mergeDividends(previous:Array<{epoch:number;amount:number;recordDate?:string;payDate?:string}>,chart:Array<{epoch:number;amount:number}>,official:DistributionEvent[]):DistributionEvent[] {
+export function mergeDividends(previous:Array<{epoch:number;amount:number;recordDate?:string;payDate?:string}>,chart:Array<{epoch:number;amount:number;recordDate?:string;payDate?:string}>,official:DistributionEvent[]):DistributionEvent[] {
   // Providers disagree about the hour (AAM midnight vs Yahoo exchange open),
   // NOT the ex-date. Calendar-date identity prevents double-counting payouts.
   const events=new Map<string,DistributionEvent>();
@@ -1373,8 +1373,8 @@ export function mergeDividends(previous:Array<{epoch:number;amount:number;record
     const exDate=epochToIsoDate(d.epoch),epoch=isoToEpoch(exDate);if(epoch===null)continue;
     const old=events.get(exDate);
     events.set(exDate,{epoch,amount:round(d.amount,6),exDate,
-      recordDate:('recordDate' in d?d.recordDate:undefined)||old?.recordDate||'',
-      payDate:('payDate' in d?d.payDate:undefined)||old?.payDate||''});
+      recordDate:d.recordDate||old?.recordDate||'',
+      payDate:d.payDate||old?.payDate||''});
   }
   for(const d of official) {
     const epoch=isoToEpoch(d.exDate),old=events.get(d.exDate);
@@ -1542,7 +1542,7 @@ async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRe
   const anchor=officialDate??days.at(-1)?.date??null,usable=anchor?basisDays.filter(d=>d.date<=anchor):[];
   const derived=usable.length?priceReturns(usable,new Date(anchor!+'T00:00:00Z')):{...EMPTY_PRICE_RETURNS};
   if(!inception||!usable.length||!annualizedSinceInception(1,inception,anchor)||Date.parse(usable[0].date)-Date.parse(inception)>7*86400000)derived.siAnn=null;
-  const metric=deriveCatalogMetrics(official,derived,null,sec,latest?.amount,frequency.paymentsPerYear,price,null,officialDate);
+  const metric=deriveCatalogMetrics(official,derived,null,sec,latest?.amount??null,frequency.paymentsPerYear,price,null,officialDate);
   if(!latest&&old.yields?.dividendYield!==undefined){metric.dividendYield=numberOrNull(old.yields.dividendYield);metric.dividendYieldText=percent(metric.dividendYield);metric.dividendYieldBasis=dividendYieldBasisFor(metric.dividendYield,'indicated');}
   const reasons=fundFilterReasons({ticker:fund.ticker,aumValue:aum??holdings.netAssets,terValue:ter,metrics:metric},config);
   if(reasons.length)return {row:null,providers,reason:reasons.join(',')};
