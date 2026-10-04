@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-03T05:19:07.562Z",
+ "generatedAt": "2026-10-04T03:26:30.361Z",
  "ticker": "SPDV",
  "name": "AAM S&P 500 High Dividend Value ETF",
  "category": "Equity",
@@ -11,8 +11,8 @@
   "fundPage": "https://www.aamlive.com/ETF/Detail/SPDV",
   "inception": "2017-11-28",
   "secYield": 3.62,
-  "nav": 39.03,
-  "asOfDate": "2026-10-01"
+  "nav": 38.95,
+  "asOfDate": "2026-10-02"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/SPDV",
@@ -41,28 +41,28 @@
   "net": 0.29
  },
  "nav": {
-  "display": "$39.03",
-  "value": 39.03,
-  "asOfDate": "Oct 01 2026"
+  "display": "$38.95",
+  "value": 38.95,
+  "asOfDate": "Oct 02 2026"
  },
  "marketPrice": {
-  "display": "$39.04",
-  "value": 39.04,
-  "asOfDate": "Oct 01 2026"
+  "display": "$38.95",
+  "value": 38.95,
+  "asOfDate": "Oct 02 2026"
  },
  "premiumDiscount": {
-  "display": "0.03%",
-  "value": 0.03
+  "display": "0.00%",
+  "value": 0
  },
  "aum": {
-  "display": "$100.50 M",
-  "value": 100503022.5,
-  "asOfDate": "Oct 01 2026",
+  "display": "$100.30 M",
+  "value": 100297537.5,
+  "asOfDate": "Oct 02 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
-  "dividendYield": 3.53,
-  "dividendYieldText": "3.53%",
+  "dividendYield": 3.54,
+  "dividendYieldText": "3.54%",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
   "secYield": 3.62,
   "secYieldText": "3.62%",

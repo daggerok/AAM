@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-03T05:19:07.562Z",
+ "generatedAt": "2026-10-04T03:26:30.361Z",
  "ticker": "PFLD",
  "name": "AAM Low Duration Preferred & Income Securities ETF",
  "category": "Preferred & Hybrid Securities",
@@ -10,9 +10,9 @@
   "category": "Preferred & Hybrid Securities",
   "fundPage": "https://www.aamlive.com/ETF/Detail/PFLD",
   "inception": "2019-11-19",
-  "secYield": 5.9,
-  "nav": 19.14,
-  "asOfDate": "2026-10-01"
+  "secYield": 5.91,
+  "nav": 19.16,
+  "asOfDate": "2026-10-02"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/PFLD",
@@ -41,34 +41,34 @@
   "net": 0.45
  },
  "nav": {
-  "display": "$19.14",
-  "value": 19.14,
-  "asOfDate": "Oct 01 2026"
+  "display": "$19.16",
+  "value": 19.16,
+  "asOfDate": "Oct 02 2026"
  },
  "marketPrice": {
-  "display": "$19.10",
-  "value": 19.1,
-  "asOfDate": "Oct 01 2026"
+  "display": "$19.19",
+  "value": 19.19,
+  "asOfDate": "Oct 02 2026"
  },
  "premiumDiscount": {
-  "display": "-0.21%",
-  "value": -0.21
+  "display": "0.16%",
+  "value": 0.16
  },
  "aum": {
-  "display": "$378.07 M",
-  "value": 378066350,
-  "asOfDate": "Oct 01 2026",
+  "display": "$375.48 M",
+  "value": 375481120,
+  "asOfDate": "Oct 02 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
-  "dividendYield": 5.65,
-  "dividendYieldText": "5.65%",
+  "dividendYield": 5.63,
+  "dividendYieldText": "5.63%",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
-  "secYield": 5.9,
-  "secYieldText": "5.90%",
+  "secYield": 5.91,
+  "secYieldText": "5.91%",
   "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
-  "subsidizedSecYield": 5.9,
-  "unsubsidizedSecYield": 5.9
+  "subsidizedSecYield": 5.91,
+  "unsubsidizedSecYield": 5.91
  },
  "officialReturns": {
   "asOfDate": "2026-09-30",

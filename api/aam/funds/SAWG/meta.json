@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-03T05:19:07.562Z",
+ "generatedAt": "2026-10-04T03:26:30.361Z",
  "ticker": "SAWG",
  "name": "AAM Sawgrass U.S. Large Cap Quality Growth ETF",
  "category": "Equity",
@@ -11,8 +11,8 @@
   "fundPage": "https://www.aamlive.com/ETF/Detail/SAWG",
   "inception": "2024-07-30",
   "secYield": 0.25,
-  "nav": 24.69,
-  "asOfDate": "2026-10-01"
+  "nav": 24.84,
+  "asOfDate": "2026-10-02"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/SAWG",
@@ -41,28 +41,28 @@
   "net": 0.49
  },
  "nav": {
-  "display": "$24.69",
-  "value": 24.69,
-  "asOfDate": "Oct 01 2026"
+  "display": "$24.84",
+  "value": 24.84,
+  "asOfDate": "Oct 02 2026"
  },
  "marketPrice": {
-  "display": "$24.69",
-  "value": 24.69,
-  "asOfDate": "Oct 01 2026"
+  "display": "$24.84",
+  "value": 24.84,
+  "asOfDate": "Oct 02 2026"
  },
  "premiumDiscount": {
   "display": "0.00%",
   "value": 0
  },
  "aum": {
-  "display": "$2.96 M",
-  "value": 2963016,
-  "asOfDate": "Oct 01 2026",
+  "display": "$2.98 M",
+  "value": 2980608,
+  "asOfDate": "Oct 02 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
-  "dividendYield": 0.25,
-  "dividendYieldText": "0.25%",
+  "dividendYield": 0.24,
+  "dividendYieldText": "0.24%",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
   "secYield": 0.25,
   "secYieldText": "0.25%",
