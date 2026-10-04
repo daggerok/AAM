@@ -999,6 +999,40 @@ export function indicatedYield(
   return round(((latestDistribution * paymentsPerYear) / price) * 100, 2);
 }
 
+/** Codes for metrics.dividendYieldBasis: which definition stands behind dividendYield (null exactly when the yield is null). */
+export const DIVIDEND_YIELD_BASES = ['official-trailing-12m', 'official-distribution-rate', 'official-other', 'computed-trailing-12m', 'indicated'] as const;
+export type DividendYieldBasis = (typeof DIVIDEND_YIELD_BASES)[number];
+
+/** AAM yield sources: a provider-published yield (none is published today; the definition is unknown) or the updater's indicated estimate. */
+export function dividendYieldBasisFor(dividendYield: number | null | undefined, source: 'published' | 'indicated'): DividendYieldBasis | null {
+  if (typeof dividendYield !== 'number' || !Number.isFinite(dividendYield)) return null;
+  switch (source) {
+    case 'published': return 'official-other';
+    case 'indicated': return 'indicated';
+  }
+}
+
+/** Rows published before the code existed carry only indicated yields: add the key, keep the yield and its code together. */
+export function withDividendYieldBasis(metrics: JsonRecord): JsonRecord {
+  const known = DIVIDEND_YIELD_BASES.find((code) => code === metrics.dividendYieldBasis) ?? null;
+  const yieldValue = numberOrNull(metrics.dividendYield);
+  const basis = yieldValue === null ? null : known ?? dividendYieldBasisFor(yieldValue, 'indicated');
+  // Keep returnsBasis and performanceAsOf as the last two keys: the code sits right after dividendYieldText.
+  const out: JsonRecord = {};
+  for (const [key, value] of Object.entries(metrics)) {
+    if (key === 'dividendYieldBasis') continue;
+    out[key] = value;
+    if (key === 'dividendYieldText') out.dividendYieldBasis = basis;
+  }
+  if (!('dividendYieldBasis' in out)) {
+    const tail = Object.entries(out).filter(([key]) => key === 'returnsBasis' || key === 'performanceAsOf');
+    for (const [key] of tail) delete out[key];
+    out.dividendYieldBasis = basis;
+    for (const [key, value] of tail) out[key] = value;
+  }
+  return out;
+}
+
 export function inferDistributionFrequency(
   dividends: Array<{ epoch: number; amount: number }>,
 ): { frequency: string; paymentsPerYear: number | null } {
@@ -1140,7 +1174,9 @@ export function deriveCatalogMetrics(
   const cagr5y = coalesce(official.yr5) ?? coalesce(derived.cagr5y);
   const cagr10y = coalesce(official.yr10) ?? coalesce(derived.cagr10y);
   const siAnn = coalesce(official.sinceInception) ?? coalesce(derived.siAnn);
-  const dividendYield = coalesce(publishedDividendYield) ?? indicatedYield(latestDistribution, paymentsPerYear, price);
+  const published = coalesce(publishedDividendYield);
+  const dividendYield = published ?? indicatedYield(latestDistribution, paymentsPerYear, price);
+  const dividendYieldBasis = dividendYieldBasisFor(dividendYield, published !== null ? 'published' : 'indicated');
   const anyOfficial = Object.values(official).some((value) => value !== null);
   const filledFromYahoo = (['ytd', 'yr1', 'yr3', 'yr5', 'yr10', 'sinceInception'] as const).some((k, i) => {
     const d = [derived.ytd, derived.yr1, derived.cagr3y, derived.cagr5y, derived.cagr10y, derived.siAnn][i];
@@ -1159,6 +1195,7 @@ export function deriveCatalogMetrics(
     siAnn,
     dividendYield,
     dividendYieldText: text(dividendYield) ?? '—',
+    dividendYieldBasis,
     secYield: coalesce(publishedSecYield),
     secYieldText: text(coalesce(publishedSecYield)) ?? '—',
     returnsBasis: returnsBasisLabel(anyOfficial, filledFromYahoo),
@@ -1363,7 +1400,7 @@ const percent=(v:number|null|undefined):string=>v==null?'—':`${v.toFixed(2)}%`
 const money=(v:number|null|undefined):string=>v==null?'—':`$${v.toFixed(2)}`;
 
 /** Seed metrics: every contract key present, nothing known yet (null, never 0). */
-const UNKNOWN_METRICS:JsonRecord={ytd:null,tr1y:null,tr3y:null,tr5y:null,tr10y:null,cagr3y:null,cagr5y:null,cagr10y:null,siAnn:null,dividendYield:null,dividendYieldText:'—',secYield:null,secYieldText:'—',returnsBasis:'unknown: per-fund refresh pending, no returns published yet',performanceAsOf:null};
+const UNKNOWN_METRICS:JsonRecord={ytd:null,tr1y:null,tr3y:null,tr5y:null,tr10y:null,cagr3y:null,cagr5y:null,cagr10y:null,siAnn:null,dividendYield:null,dividendYieldText:'—',dividendYieldBasis:null,secYield:null,secYieldText:'—',returnsBasis:'unknown: per-fund refresh pending, no returns published yet',performanceAsOf:null};
 
 /** Explicit initial seed: real catalog headlines, UNKNOWN portfolios/metrics. */
 export async function initializeCatalogSeed(root:URL,funds:CatalogFund[],now=new Date()):Promise<void> {
@@ -1506,7 +1543,7 @@ async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRe
   const derived=usable.length?priceReturns(usable,new Date(anchor!+'T00:00:00Z')):{...EMPTY_PRICE_RETURNS};
   if(!inception||!usable.length||!annualizedSinceInception(1,inception,anchor)||Date.parse(usable[0].date)-Date.parse(inception)>7*86400000)derived.siAnn=null;
   const metric=deriveCatalogMetrics(official,derived,null,sec,latest?.amount,frequency.paymentsPerYear,price,null,officialDate);
-  if(!latest&&old.yields?.dividendYield!==undefined){metric.dividendYield=numberOrNull(old.yields.dividendYield);metric.dividendYieldText=percent(metric.dividendYield);}
+  if(!latest&&old.yields?.dividendYield!==undefined){metric.dividendYield=numberOrNull(old.yields.dividendYield);metric.dividendYieldText=percent(metric.dividendYield);metric.dividendYieldBasis=dividendYieldBasisFor(metric.dividendYield,'indicated');}
   const reasons=fundFilterReasons({ticker:fund.ticker,aumValue:aum??holdings.netAssets,terValue:ter,metrics:metric},config);
   if(reasons.length)return {row:null,providers,reason:reasons.join(',')};
   const monthEnd={asOfDate:anchor?formatEdgarDate(anchor):null,mo1:derived.mo1,qtd:derived.qtd,ytd:metric.ytd,yr1:metric.tr1y,yr3:metric.cagr3y,yr5:metric.cagr5y,yr10:metric.cagr10y,sinceInception:metric.siAnn};
@@ -1620,7 +1657,7 @@ export async function main(env:Record<string,string|undefined>=process.env,optio
   }
   await Promise.all(Array.from({length:Math.min(config.concurrency,queue.length)},worker));
   if(!results.size)throw new Error('No publishable funds; refusing empty index');
-  const funds=[...results.values()].sort((a,b)=>a.ticker.localeCompare(b.ticker));
+  const funds=[...results.values()].map(f=>f.metrics?{...f,metrics:withDividendYieldBasis(f.metrics)}:f).sort((a,b)=>a.ticker.localeCompare(b.ticker));
   summary.counts={funds:funds.length,holdings:funds.reduce((s,f)=>s+(numberOrNull(f.holdings)??0),0),history:funds.reduce((s,f)=>s+(numberOrNull(f.history)??0),0)};
   // Filtered runs preserve every unselected fund entry BYTE-for-value, and all files.
   await writeIfChanged(new URL('index.json',root),{generatedAt:now.toISOString(),catalogReadAt:now.toISOString(),source:{provider:'AAM ETFs',site:AAM_SITE,catalog:CATALOG_URL,holdings:'official full XLS exports; SEC EDGAR N-PORT-P fallback',history:'Yahoo adjusted market-price chart; published cache last resort'},counts:summary.counts,funds});

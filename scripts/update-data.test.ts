@@ -8,7 +8,7 @@ import {
   CONTROL_NAMES, CONTROL_DEFAULTS, readConfig, resolveControls, runtimeControls, parseRange, parseAumRange, createRequestGate,
   samePublishedContent, writeIfChanged, decodeEntities, parseCatalog, returnSlot, parseNavPerformance, parseDistributions,
   parseDetail, exportPostbackBody, readXlsCells, parseHoldingsWorkbook, excelSerialDate, parseChart, chartUrl, priceReturns, annualizedToTotal,
-  totalToAnnualized, indicatedYield, inferDistributionFrequency, deriveCatalogMetrics, annualizedSinceInception, fundFilterReasons,
+  totalToAnnualized, indicatedYield, inferDistributionFrequency, deriveCatalogMetrics, dividendYieldBasisFor, withDividendYieldBasis, annualizedSinceInception, fundFilterReasons,
   parseFundTickerMap, parseCompanyTickerMap, parseNport, nportMatches, parseNportAccessions, parseEdgarAtomFilings, nportUrlFor, createTransport,
   isCertError, installSystemCa, systemCaActive,
   dateTextToIso, secFilingIsFresher, pruneStalePages, buildPages, writePages, readPreviousSheet, mergeHistory, mergeDividends, batchSelection, initializeCatalogSeed, validatePortfolioPreview, main,
@@ -417,6 +417,30 @@ describe('metrics', () => {
     expect(inferDistributionFrequency(ds)).toEqual({ frequency: 'Monthly', paymentsPerYear: 12 }); expect(inferDistributionFrequency([{ epoch: 0, amount: .1 }]).frequency).toBe('Unknown');
   });
 
+  test('dividendYieldBasis: indicated for the updater estimate, official-other for a published yield, null with a null yield; same key set on fresh, rebuilt and placeholder rows', () => {
+    const derived = { asOfDate: '2026-06-30', ytd: 1, yr1: 2, cagr3y: 3, cagr5y: null, cagr10y: null, siAnn: 4, mo1: null, qtd: null };
+    const none = { ytd: null, yr1: null, yr3: null, yr5: null, yr10: null, sinceInception: null };
+    const indicated = deriveCatalogMetrics(none, derived, null, 1, .1, 12, 24);
+    const published = deriveCatalogMetrics(none, derived, 4.2, 1, .1, 12, 24);
+    const zero = deriveCatalogMetrics(none, derived, null, 1, 0, 12, 24);
+    const unknown = deriveCatalogMetrics(none, derived, null, 1, null, null, 24);
+    expect(indicated).toMatchObject({ dividendYield: 5, dividendYieldBasis: 'indicated' });
+    expect(published).toMatchObject({ dividendYield: 4.2, dividendYieldBasis: 'official-other' });
+    expect(zero).toMatchObject({ dividendYield: 0, dividendYieldBasis: 'indicated' });
+    expect(unknown).toMatchObject({ dividendYield: null, dividendYieldBasis: null });
+    expect(dividendYieldBasisFor(null, 'published')).toBeNull(); expect(dividendYieldBasisFor(NaN, 'indicated')).toBeNull();
+    // rows published before the code existed (retained or rebuilt) get the key without moving the yield
+    const { dividendYieldBasis: _drop, ...legacy } = indicated;
+    const rebuilt = withDividendYieldBasis(legacy), legacyNull = withDividendYieldBasis((({ dividendYieldBasis: _x, ...r }) => r)(unknown));
+    expect(rebuilt.dividendYieldBasis).toBe('indicated'); expect(legacyNull.dividendYieldBasis).toBeNull();
+    expect(withDividendYieldBasis({ ...indicated, dividendYield: null }).dividendYieldBasis).toBeNull();
+    expect(withDividendYieldBasis({ ...published }).dividendYieldBasis).toBe('official-other');
+    expect(withDividendYieldBasis({ ...indicated, dividendYieldBasis: 'bogus' }).dividendYieldBasis).toBe('indicated');
+    for (const m of [indicated, published, zero, unknown, rebuilt, legacyNull]) {
+      expect(Object.keys(m)).toEqual(Object.keys(indicated)); expect(Object.keys(m).slice(-2)).toEqual(['returnsBasis', 'performanceAsOf']);
+    }
+  });
+
   test('returnsBasis and performanceAsOf travel together as the last two keys; the key set is identical for every input shape', () => {
     const derived = { asOfDate: '2026-09-30', ytd: 1, yr1: 2, cagr3y: 3, cagr5y: null, cagr10y: null, siAnn: 4, mo1: null, qtd: null };
     const full = { ytd: 1, yr1: 2, yr3: 3, yr5: null, yr10: null, sinceInception: 4 };
@@ -497,9 +521,11 @@ describe('pipeline', () => {
         const row = tickerOf(index, t), meta = await Bun.file(new URL(`funds/${t}/meta.json`, root)).json();
         expect(row.metrics.returnsBasis).toStartWith('official AAM'); expect(row.metrics.performanceAsOf).toBe('2026-06-30');
         expect(meta.returns).toMatchObject({ derivedFrom: row.metrics.returnsBasis, performanceAsOf: '2026-06-30' });
+        expect(row.metrics.dividendYieldBasis).toBe(row.metrics.dividendYield === null ? null : 'indicated');
       }
       for (const f of old.funds.filter((f: { ticker: string }) => !summary.processed.includes(f.ticker))) { expect(tickerOf(index, f.ticker)).toEqual(f); expect(after[`funds/${f.ticker}/meta.json`]).toBe(before[`funds/${f.ticker}/meta.json`]); }
       expect((await Bun.file(new URL('funds/CLOC/meta.json', root)).json()).yields.secYield).toBe(5.77);
+      for (const f of old.funds) expect(f.metrics).toMatchObject({ dividendYield: null, dividendYieldBasis: null }); // placeholder rows
       const keys = index.funds.map((r: { metrics: object }) => Object.keys(r.metrics).join()); expect(new Set(keys).size).toBe(1);
       const one = await main({ ...integrationEnv, TICKERS: 'SPDV' }, { root, fetcher, now: new Date('2026-10-01T05:30:00Z') });
       expect(one.failed).toEqual([]); expect((await Bun.file(new URL('index.json', root)).json()).funds.length).toBe(5);

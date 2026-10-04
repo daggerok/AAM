@@ -67,11 +67,20 @@ Each fund carries a derived `metrics` object that powers the catalog columns sha
 - `tr3y` / `tr5y` / `tr10y` - cumulative 3Y/5Y/10Y figures `(1 + CAGR)^n - 1` -> *TR 3Y/5Y/10Y*
 - `siAnn` - since-inception annualized -> *SI Ann.*
 - `dividendYield` - indicated yield (latest distribution × payments per year ÷ market price), not a published trailing yield
+- `dividendYieldBasis` - code for the definition behind `dividendYield`, `null` exactly when `dividendYield` is null (table below)
 - `secYield` - published 30-day SEC yield (unsubsidized where separately published); `-` otherwise
 - `returnsBasis` - mandatory non-empty label of how the returns were computed: `official AAM NAV total returns (aamlive.com ...)`, the same plus a note that missing metrics are estimated from Yahoo adjusted market prices at the same reporting date, or `derived from Yahoo adjusted market-price closes (estimate)` when AAM publishes no returns; never empty or `-`
 - `performanceAsOf` - mandatory ISO `YYYY-MM-DD` date the returns are as of: the performance-table date from aamlive.com, or the last Yahoo close date when derived; not the NAV date; `null` only when truly unknown
 
-`returnsBasis` and `performanceAsOf` are always the last two keys of `metrics`; per-fund `meta.json` repeats them as `returns.derivedFrom` and `returns.performanceAsOf`.
+| `dividendYieldBasis` | Meaning for AAM |
+| --- | --- |
+| `indicated` | Updater estimate: latest distribution × inferred payments per year ÷ market price (every AAM yield today, also yields retained from a previous run) |
+| `official-other` | A yield published by the provider with an unclear definition (supported by the code path, AAM publishes none today) |
+| `null` | No yield available |
+
+Codes `official-trailing-12m`, `official-distribution-rate` and `computed-trailing-12m` exist in the shared standard but are not produced for AAM.
+
+`returnsBasis` and `performanceAsOf` are always the last two keys of `metrics` (`dividendYieldBasis` follows `dividendYieldText`); per-fund `meta.json` repeats them as `returns.derivedFrom` and `returns.performanceAsOf`.
 
 ### Update controls
 
