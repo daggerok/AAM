@@ -6,9 +6,11 @@ One of the app's features lets you select AAM ETFs in the Watchlist and aggregat
 
 ```bash
 bunx degit daggerok/AAM#main ./12345 && cd $_
-bunx serve . -p 1234
-open http://0:1234
+bun install
+bun run serve
 ```
+
+`bun run serve` starts the Parcel dev server (it copies `api/` to `dist/api` first, the address is printed, usually `http://localhost:1234`). `bun run build` writes the production site to `dist/`, `bun run build-github-pages` does the same with the `/AAM/` public URL used by the GitHub Pages workflow.
 
 The published application is available at <https://daggerok.github.io/AAM/>.
 
@@ -130,7 +132,7 @@ PERFORMANCE_1Y="15:" ./scripts/update-data.ts
 
 ## TypeScript and verification
 
-The browser app is intentionally build-free: `index.html` carries the markup, styles and bootstrap, and `app.tsx` is TypeScript compiled in the browser with Babel standalone - no build step, no bundler, no `tsconfig.json` needed. Bun runs TypeScript out of the box.
+The browser app lives in `src/`: `index.html` carries the markup and the theme bootstrap, `main.tsx` is the TypeScript app and `index.css` holds Tailwind v4 and the component styles. Parcel bundles them into `dist/` with `bun run build`, and `.github/workflows/github-pages.yml` deploys `dist/` to GitHub Pages - no `tsconfig.json` needed. Bun runs the updater TypeScript out of the box.
 
 Verification before every publish:
 
