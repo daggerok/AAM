@@ -3,6 +3,3 @@
 dist/
 node_modules/
 .DS_Store
-
-# Disposable live/browser validation copies
-.cache/
