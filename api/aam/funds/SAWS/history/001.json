@@ -2,7 +2,7 @@
  "ticker": "SAWS",
  "page": 1,
  "pageSize": 1000,
- "totalRows": 546,
+ "totalRows": 551,
  "headers": [
   "Date",
   "Close",
@@ -3285,6 +3285,36 @@
    "Close": "23.237",
    "Adj Close": "23.24",
    "Volume": "5200"
+  },
+  {
+   "Date": "Oct 05 2026",
+   "Close": "23.379999",
+   "Adj Close": "23.38",
+   "Volume": "6000"
+  },
+  {
+   "Date": "Oct 06 2026",
+   "Close": "23.259001",
+   "Adj Close": "23.26",
+   "Volume": "600"
+  },
+  {
+   "Date": "Oct 07 2026",
+   "Close": "22.829",
+   "Adj Close": "22.83",
+   "Volume": "67700"
+  },
+  {
+   "Date": "Oct 08 2026",
+   "Close": "22.728001",
+   "Adj Close": "22.73",
+   "Volume": "2800"
+  },
+  {
+   "Date": "Oct 09 2026",
+   "Close": "22.903",
+   "Adj Close": "22.9",
+   "Volume": "2300"
   }
  ]
 }

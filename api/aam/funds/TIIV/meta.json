@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-04T03:26:30.361Z",
+ "generatedAt": "2026-10-11T04:08:01.651Z",
  "ticker": "TIIV",
  "name": "AAM Todd International Intrinsic Value ETF",
  "category": "Equity",
@@ -10,9 +10,9 @@
   "category": "Equity",
   "fundPage": "https://www.aamlive.com/ETF/Detail/TIIV",
   "inception": "2025-07-24",
-  "secYield": 2.27,
-  "nav": 29.81,
-  "asOfDate": "2026-10-02"
+  "secYield": 2.29,
+  "nav": 29.87,
+  "asOfDate": "2026-10-09"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/TIIV",
@@ -41,34 +41,34 @@
   "net": 0.54
  },
  "nav": {
-  "display": "$29.81",
-  "value": 29.81,
-  "asOfDate": "Oct 02 2026"
+  "display": "$29.87",
+  "value": 29.87,
+  "asOfDate": "Oct 09 2026"
  },
  "marketPrice": {
-  "display": "$29.84",
-  "value": 29.84,
-  "asOfDate": "Oct 02 2026"
+  "display": "$29.90",
+  "value": 29.9,
+  "asOfDate": "Oct 09 2026"
  },
  "premiumDiscount": {
   "display": "0.10%",
   "value": 0.1
  },
  "aum": {
-  "display": "$32.02 M",
-  "value": 32016890.43,
-  "asOfDate": "Oct 02 2026",
+  "display": "$32.09 M",
+  "value": 32090255.42,
+  "asOfDate": "Oct 09 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
   "dividendYield": 2.14,
   "dividendYieldText": "2.14%",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
-  "secYield": 2.27,
-  "secYieldText": "2.27%",
+  "secYield": 2.29,
+  "secYieldText": "2.29%",
   "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
-  "subsidizedSecYield": 2.27,
-  "unsubsidizedSecYield": 2.27
+  "subsidizedSecYield": 2.29,
+  "unsubsidizedSecYield": 2.29
  },
  "officialReturns": {
   "asOfDate": "2026-09-30",
@@ -150,8 +150,8 @@
   ],
   "pageSize": 250,
   "totalRows": 67,
-  "asOfDate": "2026-10-05",
-  "asOf": "Oct 05 2026",
+  "asOfDate": "2026-10-12",
+  "asOf": "Oct 12 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },
@@ -160,8 +160,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 300,
-  "asOf": "Oct 02 2026",
+  "totalRows": 305,
+  "asOf": "Oct 09 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

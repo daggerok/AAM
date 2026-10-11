@@ -2,7 +2,7 @@
  "ticker": "PFLD",
  "page": 2,
  "pageSize": 250,
- "totalRows": 336,
+ "totalRows": 335,
  "headers": [
   "Name",
   "Ticker",
@@ -31,7 +31,7 @@
    "Coupon": "4.25"
   },
   {
-   "Name": "Citizens Financial Group Inc 7.0148% 01/07/2175",
+   "Name": "Citizens Financial Group Inc 7.2956% 01/07/2175",
    "Ticker": "-",
    "Identifier": "174610AP0",
    "Weight": "0.13",
@@ -44,7 +44,7 @@
    "Coupon": "7.015"
   },
   {
-   "Name": "Citizens Financial Group Inc 7.1688% 01/07/2175",
+   "Name": "Citizens Financial Group Inc 7.4496% 01/07/2175",
    "Ticker": "-",
    "Identifier": "174610AQ8",
    "Weight": "0.13",
@@ -213,32 +213,6 @@
    "Coupon": "4.556"
   },
   {
-   "Name": "BRC Group Holdings Inc",
-   "Ticker": "-",
-   "Identifier": "05580M835",
-   "Weight": "0.11",
-   "Market Value": "",
-   "Shares Held": "18596",
-   "Asset Category": "Financial Services",
-   "CUSIP": "05580M835",
-   "SEDOL": "BNDN5T0",
-   "Maturity": "2028-01-31",
-   "Coupon": "6"
-  },
-  {
-   "Name": "Citizens Financial Group Inc 4% 10/06/2174",
-   "Ticker": "-",
-   "Identifier": "174610BD6",
-   "Weight": "0.11",
-   "Market Value": "",
-   "Shares Held": "425000",
-   "Asset Category": "Banking",
-   "CUSIP": "174610BD6",
-   "SEDOL": "BN6PZT3",
-   "Maturity": "2200-12-31",
-   "Coupon": "4"
-  },
-  {
    "Name": "M&T Bank Corp",
    "Ticker": "-",
    "Identifier": "55261F872",
@@ -317,17 +291,17 @@
    "Coupon": "6.5"
   },
   {
-   "Name": "Arbor Realty Trust Inc",
+   "Name": "BRC Group Holdings Inc",
    "Ticker": "-",
-   "Identifier": "038923850",
+   "Identifier": "05580M835",
    "Weight": "0.1",
    "Market Value": "",
-   "Shares Held": "19557",
-   "Asset Category": "Real Estate",
-   "CUSIP": "038923850",
-   "SEDOL": "BLR4KW3",
-   "Maturity": "2200-12-31",
-   "Coupon": "6.25"
+   "Shares Held": "18596",
+   "Asset Category": "Financial Services",
+   "CUSIP": "05580M835",
+   "SEDOL": "BNDN5T0",
+   "Maturity": "2028-01-31",
+   "Coupon": "6"
   },
   {
    "Name": "Chimera Investment Corp",
@@ -341,6 +315,19 @@
    "SEDOL": "BHRS1F7",
    "Maturity": "2200-12-31",
    "Coupon": "8"
+  },
+  {
+   "Name": "Invesco Mortgage Capital Inc",
+   "Ticker": "-",
+   "Identifier": "46131B506",
+   "Weight": "0.1",
+   "Market Value": "",
+   "Shares Held": "14748",
+   "Asset Category": "Real Estate",
+   "CUSIP": "46131B506",
+   "SEDOL": "BZ0CHS7",
+   "Maturity": "2200-12-31",
+   "Coupon": "7.5"
   },
   {
    "Name": "PennyMac Mortgage Investment Trust",
@@ -434,19 +421,6 @@
    "Coupon": "7.5"
   },
   {
-   "Name": "Invesco Mortgage Capital Inc",
-   "Ticker": "-",
-   "Identifier": "46131B506",
-   "Weight": "0.09",
-   "Market Value": "",
-   "Shares Held": "14748",
-   "Asset Category": "Real Estate",
-   "CUSIP": "46131B506",
-   "SEDOL": "BZ0CHS7",
-   "Maturity": "2200-12-31",
-   "Coupon": "7.5"
-  },
-  {
    "Name": "Seapeak LLC",
    "Ticker": "-",
    "Identifier": "Y8564M204",
@@ -497,6 +471,19 @@
    "SEDOL": "BNC35P7",
    "Maturity": "2200-12-31",
    "Coupon": "7.75"
+  },
+  {
+   "Name": "Arbor Realty Trust Inc",
+   "Ticker": "-",
+   "Identifier": "038923850",
+   "Weight": "0.08",
+   "Market Value": "",
+   "Shares Held": "19557",
+   "Asset Category": "Real Estate",
+   "CUSIP": "038923850",
+   "SEDOL": "BLR4KW3",
+   "Maturity": "2200-12-31",
+   "Coupon": "6.25"
   },
   {
    "Name": "Atlanticus Holdings Corp",
@@ -603,19 +590,6 @@
    "Coupon": "8.25"
   },
   {
-   "Name": "Bread Financial Holdings Inc",
-   "Ticker": "-",
-   "Identifier": "018581603",
-   "Weight": "0.07",
-   "Market Value": "",
-   "Shares Held": "10061",
-   "Asset Category": "Financial Services",
-   "CUSIP": "018581603",
-   "SEDOL": "BSNNTN7",
-   "Maturity": "2200-12-31",
-   "Coupon": "8.875"
-  },
-  {
    "Name": "Chimera Investment Corp",
    "Ticker": "-",
    "Identifier": "16934Q869",
@@ -627,19 +601,6 @@
    "SEDOL": "BVN5M35",
    "Maturity": "2030-08-15",
    "Coupon": "8.875"
-  },
-  {
-   "Name": "CION Investment Corp",
-   "Ticker": "-",
-   "Identifier": "17259U402",
-   "Weight": "0.07",
-   "Market Value": "",
-   "Shares Held": "9939",
-   "Asset Category": "Financial Services",
-   "CUSIP": "17259U402",
-   "SEDOL": "BW1M7C9",
-   "Maturity": "2031-03-31",
-   "Coupon": "7.5"
   },
   {
    "Name": "Ellington Financial Inc",
@@ -694,19 +655,6 @@
    "Coupon": "4.875"
   },
   {
-   "Name": "Midland States Bancorp Inc",
-   "Ticker": "-",
-   "Identifier": "597742303",
-   "Weight": "0.07",
-   "Market Value": "",
-   "Shares Held": "9629",
-   "Asset Category": "Banking",
-   "CUSIP": "597742303",
-   "SEDOL": "BJN53Y9",
-   "Maturity": "2200-12-31",
-   "Coupon": "7.75"
-  },
-  {
    "Name": "New Mountain Finance Corp",
    "Ticker": "-",
    "Identifier": "647551308",
@@ -731,19 +679,6 @@
    "SEDOL": "BMHSYD1",
    "Maturity": "2200-12-31",
    "Coupon": "7"
-  },
-  {
-   "Name": "Ready Capital Corp",
-   "Ticker": "-",
-   "Identifier": "75574U838",
-   "Weight": "0.07",
-   "Market Value": "",
-   "Shares Held": "10873",
-   "Asset Category": "Real Estate",
-   "CUSIP": "75574U838",
-   "SEDOL": "BSC9G79",
-   "Maturity": "2029-12-15",
-   "Coupon": "9"
   },
   {
    "Name": "Seapeak LLC",
@@ -798,45 +733,6 @@
    "Coupon": "4"
   },
   {
-   "Name": "ACRES Commercial Realty Corp",
-   "Ticker": "-",
-   "Identifier": "00489Q201",
-   "Weight": "0.06",
-   "Market Value": "",
-   "Shares Held": "9852",
-   "Asset Category": "Real Estate",
-   "CUSIP": "00489Q201",
-   "SEDOL": "BNKTVH1",
-   "Maturity": "2200-12-31",
-   "Coupon": "8.625"
-  },
-  {
-   "Name": "ACRES Commercial Realty Corp",
-   "Ticker": "-",
-   "Identifier": "00489Q201",
-   "Weight": "0.06",
-   "Market Value": "",
-   "Shares Held": "9852",
-   "Asset Category": "Real Estate",
-   "CUSIP": "00489Q201",
-   "SEDOL": "BNKTVK4",
-   "Maturity": "2200-12-31",
-   "Coupon": "8.625"
-  },
-  {
-   "Name": "Bank of America Corp",
-   "Ticker": "-",
-   "Identifier": "060505625",
-   "Weight": "0.06",
-   "Market Value": "",
-   "Shares Held": "11308",
-   "Asset Category": "Banking",
-   "CUSIP": "060505625",
-   "SEDOL": "B06H0T3",
-   "Maturity": "2200-12-31",
-   "Coupon": "0"
-  },
-  {
    "Name": "Bank of America Corp",
    "Ticker": "-",
    "Identifier": "060505815",
@@ -848,6 +744,32 @@
    "SEDOL": "B1GH4Y3",
    "Maturity": "2200-12-31",
    "Coupon": "0"
+  },
+  {
+   "Name": "Bread Financial Holdings Inc",
+   "Ticker": "-",
+   "Identifier": "018581603",
+   "Weight": "0.06",
+   "Market Value": "",
+   "Shares Held": "10061",
+   "Asset Category": "Financial Services",
+   "CUSIP": "018581603",
+   "SEDOL": "BSNNTN7",
+   "Maturity": "2200-12-31",
+   "Coupon": "8.875"
+  },
+  {
+   "Name": "CION Investment Corp",
+   "Ticker": "-",
+   "Identifier": "17259U402",
+   "Weight": "0.06",
+   "Market Value": "",
+   "Shares Held": "9939",
+   "Asset Category": "Financial Services",
+   "CUSIP": "17259U402",
+   "SEDOL": "BW1M7C9",
+   "Maturity": "2031-03-31",
+   "Coupon": "7.5"
   },
   {
    "Name": "ConnectOne Bancorp Inc",
@@ -954,6 +876,19 @@
    "Coupon": "8.875"
   },
   {
+   "Name": "Midland States Bancorp Inc",
+   "Ticker": "-",
+   "Identifier": "597742303",
+   "Weight": "0.06",
+   "Market Value": "",
+   "Shares Held": "9629",
+   "Asset Category": "Banking",
+   "CUSIP": "597742303",
+   "SEDOL": "BJN53Y9",
+   "Maturity": "2200-12-31",
+   "Coupon": "7.75"
+  },
+  {
    "Name": "Old National Bancorp/IN",
    "Ticker": "-",
    "Identifier": "68003D204",
@@ -980,17 +915,17 @@
    "Coupon": "9"
   },
   {
-   "Name": "Redwood Trust Inc",
+   "Name": "Ready Capital Corp",
    "Ticker": "-",
-   "Identifier": "758075840",
+   "Identifier": "75574U838",
    "Weight": "0.06",
    "Market Value": "",
-   "Shares Held": "10127",
+   "Shares Held": "10873",
    "Asset Category": "Real Estate",
-   "CUSIP": "758075840",
-   "SEDOL": "BW5VPQ2",
-   "Maturity": "2031-06-01",
-   "Coupon": "9.75"
+   "CUSIP": "75574U838",
+   "SEDOL": "BSC9G79",
+   "Maturity": "2029-12-15",
+   "Coupon": "9"
   },
   {
    "Name": "Rithm Capital Corp",
@@ -1058,6 +993,32 @@
    "Coupon": "5.5"
   },
   {
+   "Name": "ACRES Commercial Realty Corp",
+   "Ticker": "-",
+   "Identifier": "00489Q201",
+   "Weight": "0.05",
+   "Market Value": "",
+   "Shares Held": "9852",
+   "Asset Category": "Real Estate",
+   "CUSIP": "00489Q201",
+   "SEDOL": "BNKTVH1",
+   "Maturity": "2200-12-31",
+   "Coupon": "8.625"
+  },
+  {
+   "Name": "ACRES Commercial Realty Corp",
+   "Ticker": "-",
+   "Identifier": "00489Q201",
+   "Weight": "0.05",
+   "Market Value": "",
+   "Shares Held": "9852",
+   "Asset Category": "Real Estate",
+   "CUSIP": "00489Q201",
+   "SEDOL": "BNKTVK4",
+   "Maturity": "2200-12-31",
+   "Coupon": "8.625"
+  },
+  {
    "Name": "Adamas Trust Inc",
    "Ticker": "-",
    "Identifier": "649604816",
@@ -1069,6 +1030,32 @@
    "SEDOL": "BTQLGH8",
    "Maturity": "2030-10-01",
    "Coupon": "9.875"
+  },
+  {
+   "Name": "Bank of America Corp",
+   "Ticker": "-",
+   "Identifier": "060505625",
+   "Weight": "0.05",
+   "Market Value": "",
+   "Shares Held": "11308",
+   "Asset Category": "Banking",
+   "CUSIP": "060505625",
+   "SEDOL": "B06H0T3",
+   "Maturity": "2200-12-31",
+   "Coupon": "0"
+  },
+  {
+   "Name": "Redwood Trust Inc",
+   "Ticker": "-",
+   "Identifier": "758075840",
+   "Weight": "0.05",
+   "Market Value": "",
+   "Shares Held": "10127",
+   "Asset Category": "Real Estate",
+   "CUSIP": "758075840",
+   "SEDOL": "BW5VPQ2",
+   "Maturity": "2031-06-01",
+   "Coupon": "9.75"
   },
   {
    "Name": "Tsakos Energy Navigation Ltd",
@@ -1113,7 +1100,7 @@
    "Name": "Redwood Trust Inc",
    "Ticker": "-",
    "Identifier": "758075857",
-   "Weight": "0.04",
+   "Weight": "0.03",
    "Market Value": "",
    "Shares Held": "6256",
    "Asset Category": "Real Estate",

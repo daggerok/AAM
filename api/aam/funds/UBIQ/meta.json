@@ -1,107 +1,91 @@
 {
  "generatedAt": "2026-10-11T04:08:01.651Z",
- "ticker": "SAWS",
- "name": "AAM Sawgrass U.S. Small Cap Quality Growth ETF",
+ "ticker": "UBIQ",
+ "name": "AAM Ubiquitous ETF",
  "category": "Equity",
  "categoryPath": "Equity",
  "providerIds": {
-  "ticker": "SAWS",
-  "name": "AAM Sawgrass U.S. Small Cap Quality Growth ETF",
+  "ticker": "UBIQ",
+  "name": "AAM Ubiquitous ETF",
   "category": "Equity",
-  "fundPage": "https://www.aamlive.com/ETF/Detail/SAWS",
-  "inception": "2024-07-30",
-  "secYield": -0.06,
-  "nav": 22.91,
+  "fundPage": "https://www.aamlive.com/ETF/Detail/UBIQ",
+  "inception": "2026-10-05",
+  "secYield": null,
+  "nav": 25.72,
   "asOfDate": "2026-10-09"
  },
  "source": {
-  "fundPage": "https://www.aamlive.com/ETF/Detail/SAWS",
+  "fundPage": "https://www.aamlive.com/ETF/Detail/UBIQ",
   "catalog": "https://www.aamlive.com/ETF",
-  "holdingsDownload": "https://www.aamlive.com/ETF/Detail/SAWS",
+  "holdingsDownload": "https://www.aamlive.com/ETF/Detail/UBIQ",
   "holdingsMethod": "POST WebForms __EVENTTARGET=btnETFHoldingsExport (no direct query URL)",
-  "yahooChart": "https://query1.finance.yahoo.com/v8/finance/chart/SAWS",
+  "yahooChart": "https://query1.finance.yahoo.com/v8/finance/chart/UBIQ",
   "holdingsSource": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "historySource": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "provider": "AAM official catalog/detail HTML and full XLS exports; SEC EDGAR N-PORT-P holdings fallback; Yahoo Finance market history/dividends"
  },
  "identifiers": {
-  "cusip": "26922B485",
-  "isin": "US26922B4858",
+  "cusip": "268961281",
+  "isin": "US2689612818",
   "indexTicker": null
  },
  "inception": {
-  "fundInceptionDate": "2024-07-30",
+  "fundInceptionDate": "2026-10-05",
   "shareClassInceptionDate": null,
   "exchange": "NYSE Arca"
  },
  "expenseRatio": {
-  "display": "0.55%",
-  "value": 0.55,
-  "gross": 0.55,
-  "net": 0.55
+  "display": "0.49%",
+  "value": 0.49,
+  "gross": 0.49,
+  "net": 0.49
  },
  "nav": {
-  "display": "$22.91",
-  "value": 22.91,
+  "display": "$25.72",
+  "value": 25.72,
   "asOfDate": "Oct 09 2026"
  },
  "marketPrice": {
-  "display": "$22.90",
-  "value": 22.9,
+  "display": "$25.72",
+  "value": 25.72,
   "asOfDate": "Oct 09 2026"
  },
  "premiumDiscount": {
-  "display": "-0.04%",
-  "value": -0.04
+  "display": "0.00%",
+  "value": 0
  },
  "aum": {
-  "display": "$7.56 M",
-  "value": 7560432,
+  "display": "$5.66 M",
+  "value": 5659302,
   "asOfDate": "Oct 09 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
-  "dividendYield": 0.02,
-  "dividendYieldText": "0.02%",
+  "dividendYield": null,
+  "dividendYieldText": "—",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
-  "secYield": -0.06,
-  "secYieldText": "-0.06%",
+  "secYield": null,
+  "secYieldText": "—",
   "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
-  "subsidizedSecYield": -0.06,
-  "unsubsidizedSecYield": -0.06
+  "subsidizedSecYield": null,
+  "unsubsidizedSecYield": null
  },
- "officialReturns": {
-  "asOfDate": "2026-09-30",
-  "ytd": 8.21,
-  "yr1": 7.66,
-  "yr3": null,
-  "yr5": null,
-  "yr10": null,
-  "sinceInception": 8.99
- },
+ "officialReturns": null,
  "returns": {
   "monthEnd": {
-   "asOfDate": "Sep 30 2026",
-   "mo1": -2.76,
-   "qtd": -11.19,
-   "ytd": 8.21,
-   "yr1": 7.66,
+   "asOfDate": "Oct 09 2026",
+   "mo1": null,
+   "qtd": null,
+   "ytd": null,
+   "yr1": null,
    "yr3": null,
    "yr5": null,
    "yr10": null,
-   "sinceInception": 8.99
+   "sinceInception": null
   },
-  "quarterEnd": {
-   "ytd": 8.21,
-   "yr1": 7.66,
-   "yr3": null,
-   "yr5": null,
-   "yr10": null,
-   "sinceInception": 8.99,
-   "asOfDate": "Sep 30 2026"
-  },
-  "derivedFrom": "official AAM NAV total returns (aamlive.com dated performance table)",
-  "performanceAsOf": "2026-09-30"
+  "quarterEnd": null,
+  "derivedFrom": "derived from Yahoo adjusted market-price closes (estimate), not official NAV returns",
+  "performanceAsOf": "2026-10-09"
  },
  "distributions": {
   "frequency": "Annually",
@@ -113,43 +97,15 @@
    "Record Date",
    "Payable Date"
   ],
-  "rows": [
-   [
-    "12/31/2024",
-    "0.00653",
-    "2024-12-31",
-    "2025-01-03"
-   ],
-   [
-    "12/31/2025",
-    "0.00454",
-    "2025-12-31",
-    "2026-01-05"
-   ]
-  ],
-  "events": [
-   {
-    "epoch": 1735603200,
-    "amount": 0.00653,
-    "exDate": "2024-12-31",
-    "recordDate": "2024-12-31",
-    "payDate": "2025-01-03"
-   },
-   {
-    "epoch": 1767139200,
-    "amount": 0.00454,
-    "exDate": "2025-12-31",
-    "recordDate": "2025-12-31",
-    "payDate": "2026-01-05"
-   }
-  ]
+  "rows": [],
+  "events": []
  },
  "holdings": {
   "pages": [
    "holdings/001.json"
   ],
   "pageSize": 250,
-  "totalRows": 73,
+  "totalRows": 24,
   "asOfDate": "2026-10-12",
   "asOf": "Oct 12 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
@@ -160,7 +116,7 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 551,
+  "totalRows": 4,
   "asOf": "Oct 09 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"

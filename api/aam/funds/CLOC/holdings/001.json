@@ -2,7 +2,7 @@
  "ticker": "CLOC",
  "page": 1,
  "pageSize": 250,
- "totalRows": 61,
+ "totalRows": 59,
  "headers": [
   "Name",
   "Ticker",
@@ -21,9 +21,9 @@
    "Name": "Cash & Other",
    "Ticker": "-",
    "Identifier": "",
-   "Weight": "2.91",
+   "Weight": "5.87",
    "Market Value": "",
-   "Shares Held": "1773420.11",
+   "Shares Held": "3580908.95",
    "Asset Category": "Cash & Other",
    "CUSIP": "",
    "SEDOL": "",
@@ -55,6 +55,19 @@
    "SEDOL": "",
    "Maturity": "2037-10-15",
    "Coupon": "8.8529"
+  },
+  {
+   "Name": "CTM CLO 2025-1 Ltd 5.2529% 07/15/2038",
+   "Ticker": "-",
+   "Identifier": "12719PAA9",
+   "Weight": "2.47",
+   "Market Value": "",
+   "Shares Held": "1500000",
+   "Asset Category": "Collateralized Loan Obligation",
+   "CUSIP": "12719PAA9",
+   "SEDOL": "BQT2L50",
+   "Maturity": "2038-07-15",
+   "Coupon": "5.2529"
   },
   {
    "Name": "Magnetite Xli Ltd 6.4102% 01/25/2038",
@@ -94,19 +107,6 @@
    "SEDOL": "",
    "Maturity": "2037-07-15",
    "Coupon": "6.3529"
-  },
-  {
-   "Name": "CTM CLO 2025-1 Ltd 5.2529% 07/15/2038",
-   "Ticker": "-",
-   "Identifier": "12719PAA9",
-   "Weight": "2.46",
-   "Market Value": "",
-   "Shares Held": "1500000",
-   "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "12719PAA9",
-   "SEDOL": "BQT2L50",
-   "Maturity": "2038-07-15",
-   "Coupon": "5.2529"
   },
   {
    "Name": "Golub Capital Partners CLO 59M Ltd 5.3292% 04/20/2037",
@@ -164,7 +164,7 @@
    "Name": "Madison Park Funding LXXIII Ltd 6.4995% 10/17/2038",
    "Ticker": "-",
    "Identifier": "55823HAJ0",
-   "Weight": "2.05",
+   "Weight": "2.06",
    "Market Value": "",
    "Shares Held": "1250000",
    "Asset Category": "Collateralized Loan Obligation",
@@ -239,32 +239,6 @@
    "Coupon": "7.4029"
   },
   {
-   "Name": "Silver Point CLO 9 Ltd 8.7529% 03/31/2038",
-   "Ticker": "-",
-   "Identifier": "82809VAL6",
-   "Weight": "1.67",
-   "Market Value": "",
-   "Shares Held": "1000000",
-   "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "82809VAL6",
-   "SEDOL": "",
-   "Maturity": "2038-03-31",
-   "Coupon": "8.7529"
-  },
-  {
-   "Name": "Blueberry Park CLO Ltd 6.6292% 10/20/2037",
-   "Ticker": "-",
-   "Identifier": "09609QAG3",
-   "Weight": "1.66",
-   "Market Value": "",
-   "Shares Held": "1010000",
-   "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "09609QAG3",
-   "SEDOL": "BN6M549",
-   "Maturity": "2037-10-20",
-   "Coupon": "6.6292"
-  },
-  {
    "Name": "Aimco CLO 14 Ltd 6.3292% 10/20/2038",
    "Ticker": "-",
    "Identifier": "00144GAW1",
@@ -276,6 +250,19 @@
    "SEDOL": "BVWQDY7",
    "Maturity": "2038-10-20",
    "Coupon": "6.3292"
+  },
+  {
+   "Name": "Blueberry Park CLO Ltd 6.6292% 10/20/2037",
+   "Ticker": "-",
+   "Identifier": "09609QAG3",
+   "Weight": "1.65",
+   "Market Value": "",
+   "Shares Held": "1010000",
+   "Asset Category": "Collateralized Loan Obligation",
+   "CUSIP": "09609QAG3",
+   "SEDOL": "BN6M549",
+   "Maturity": "2037-10-20",
+   "Coupon": "6.6292"
   },
   {
    "Name": "HPS Loan Management 2025-26 Ltd 6.5792% 07/20/2038",
@@ -330,19 +317,6 @@
    "Coupon": "5.4792"
   },
   {
-   "Name": "Bain Capital Credit CLO 2024-4 Ltd 6.8522% 10/23/2037",
-   "Ticker": "-",
-   "Identifier": "05685VAJ1",
-   "Weight": "1.64",
-   "Market Value": "",
-   "Shares Held": "1000000",
-   "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "05685VAJ1",
-   "SEDOL": "BL9XNW9",
-   "Maturity": "2037-10-23",
-   "Coupon": "6.8522"
-  },
-  {
    "Name": "Ballyrock CLO 28 Ltd 6.5292% 01/20/2038",
    "Ticker": "-",
    "Identifier": "05876HAJ1",
@@ -356,43 +330,30 @@
    "Coupon": "6.5292"
   },
   {
-   "Name": "Bridge Street CLO V Ltd 6.5792% 04/20/2038",
+   "Name": "Captree Park CLO Ltd 6.9792% 07/20/2037",
    "Ticker": "-",
-   "Identifier": "107921AJ7",
+   "Identifier": "14074EAL5",
    "Weight": "1.64",
    "Market Value": "",
    "Shares Held": "1000000",
    "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "107921AJ7",
-   "SEDOL": "",
-   "Maturity": "2038-04-20",
-   "Coupon": "6.5792"
+   "CUSIP": "14074EAL5",
+   "SEDOL": "BS6Q5P7",
+   "Maturity": "2037-07-20",
+   "Coupon": "6.9792"
   },
   {
-   "Name": "Cerberus Loan Funding XLV LLC 5.6529% 04/15/2036",
+   "Name": "Cerberus Loan Funding XLIII LLC 8.0029% 10/15/2035",
    "Ticker": "-",
-   "Identifier": "15675FAA6",
+   "Identifier": "156945AS6",
    "Weight": "1.64",
    "Market Value": "",
    "Shares Held": "1000000",
    "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "15675FAA6",
+   "CUSIP": "156945AS6",
    "SEDOL": "",
-   "Maturity": "2036-04-15",
-   "Coupon": "5.6529"
-  },
-  {
-   "Name": "Flatiron RR CLO 27 LTD 6.6292% 10/18/2037",
-   "Ticker": "-",
-   "Identifier": "33882JAJ1",
-   "Weight": "1.64",
-   "Market Value": "",
-   "Shares Held": "1000000",
-   "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "33882JAJ1",
-   "SEDOL": "BVV7SV3",
-   "Maturity": "2037-10-18",
-   "Coupon": "6.6292"
+   "Maturity": "2035-10-15",
+   "Coupon": "8.0029"
   },
   {
    "Name": "Fortress Credit BSL XIX Ltd 6.1751% 07/24/2036",
@@ -460,19 +421,6 @@
    "Coupon": "5.0102"
   },
   {
-   "Name": "Neuberger Berman Loan Advisers CLO 47 Ltd 6.5406% 04/16/2035",
-   "Ticker": "-",
-   "Identifier": "64135DAQ8",
-   "Weight": "1.64",
-   "Market Value": "",
-   "Shares Held": "1000000",
-   "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "64135DAQ8",
-   "SEDOL": "",
-   "Maturity": "2035-04-16",
-   "Coupon": "6.5406"
-  },
-  {
    "Name": "OCP CLO 2021-21 Ltd 4.9092% 01/20/2038",
    "Ticker": "-",
    "Identifier": "671000AL1",
@@ -484,19 +432,6 @@
    "SEDOL": "BWTTBJ7",
    "Maturity": "2038-01-20",
    "Coupon": "4.9092"
-  },
-  {
-   "Name": "OCP CLO 2024-35 Ltd 6.9102% 10/25/2037",
-   "Ticker": "-",
-   "Identifier": "671060AJ0",
-   "Weight": "1.64",
-   "Market Value": "",
-   "Shares Held": "1000000",
-   "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "671060AJ0",
-   "SEDOL": "BR849J4",
-   "Maturity": "2037-10-25",
-   "Coupon": "6.9102"
   },
   {
    "Name": "OHA Credit Funding 16-R Ltd 4.9292% 10/20/2038",
@@ -512,6 +447,32 @@
    "Coupon": "4.9292"
   },
   {
+   "Name": "Regatta 30 Funding Ltd 6.6102% 01/25/2038",
+   "Ticker": "-",
+   "Identifier": "75903UAJ2",
+   "Weight": "1.64",
+   "Market Value": "",
+   "Shares Held": "1000000",
+   "Asset Category": "Collateralized Loan Obligation",
+   "CUSIP": "75903UAJ2",
+   "SEDOL": "",
+   "Maturity": "2038-01-25",
+   "Coupon": "6.6102"
+  },
+  {
+   "Name": "Silver Point CLO 9 Ltd 8.7529% 03/31/2038",
+   "Ticker": "-",
+   "Identifier": "82809VAL6",
+   "Weight": "1.64",
+   "Market Value": "",
+   "Shares Held": "1000000",
+   "Asset Category": "Collateralized Loan Obligation",
+   "CUSIP": "82809VAL6",
+   "SEDOL": "",
+   "Maturity": "2038-03-31",
+   "Coupon": "8.7529"
+  },
+  {
    "Name": "Trestles CLO VI Ltd 4.9902% 04/25/2038",
    "Ticker": "-",
    "Identifier": "894940AQ8",
@@ -525,56 +486,69 @@
    "Coupon": "4.9902"
   },
   {
-   "Name": "Captree Park CLO Ltd 6.9792% 07/20/2037",
+   "Name": "Bain Capital Credit CLO 2024-4 Ltd 6.8522% 10/23/2037",
    "Ticker": "-",
-   "Identifier": "14074EAL5",
-   "Weight": "1.63",
+   "Identifier": "05685VAJ1",
+   "Weight": "1.62",
    "Market Value": "",
    "Shares Held": "1000000",
    "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "14074EAL5",
-   "SEDOL": "BS6Q5P7",
-   "Maturity": "2037-07-20",
-   "Coupon": "6.9792"
+   "CUSIP": "05685VAJ1",
+   "SEDOL": "BL9XNW9",
+   "Maturity": "2037-10-23",
+   "Coupon": "6.8522"
   },
   {
-   "Name": "Regatta 30 Funding Ltd 6.6102% 01/25/2038",
+   "Name": "Bridge Street CLO V Ltd 6.5792% 04/20/2038",
    "Ticker": "-",
-   "Identifier": "75903UAJ2",
-   "Weight": "1.63",
+   "Identifier": "107921AJ7",
+   "Weight": "1.62",
    "Market Value": "",
    "Shares Held": "1000000",
    "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "75903UAJ2",
-   "SEDOL": "",
-   "Maturity": "2038-01-25",
-   "Coupon": "6.6102"
-  },
-  {
-   "Name": "Fortress Credit Opportunities XXXIII CLO LLC 7.4183% 04/20/2038",
-   "Ticker": "-",
-   "Identifier": "34967LAQ6",
-   "Weight": "1.6",
-   "Market Value": "",
-   "Shares Held": "1000000",
-   "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "34967LAQ6",
+   "CUSIP": "107921AJ7",
    "SEDOL": "",
    "Maturity": "2038-04-20",
-   "Coupon": "7.4183"
+   "Coupon": "6.5792"
   },
   {
-   "Name": "HPS Loan Management 2024-22 Ltd 6.6292% 10/20/2037",
+   "Name": "Neuberger Berman Loan Advisers CLO 47 Ltd 6.5406% 04/16/2035",
    "Ticker": "-",
-   "Identifier": "40444YAJ4",
-   "Weight": "1.56",
+   "Identifier": "64135DAQ8",
+   "Weight": "1.62",
    "Market Value": "",
-   "Shares Held": "950000",
+   "Shares Held": "1000000",
    "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "40444YAJ4",
+   "CUSIP": "64135DAQ8",
    "SEDOL": "",
-   "Maturity": "2037-10-20",
+   "Maturity": "2035-04-16",
+   "Coupon": "6.5406"
+  },
+  {
+   "Name": "Flatiron RR CLO 27 LTD 6.6292% 10/18/2037",
+   "Ticker": "-",
+   "Identifier": "33882JAJ1",
+   "Weight": "1.59",
+   "Market Value": "",
+   "Shares Held": "1000000",
+   "Asset Category": "Collateralized Loan Obligation",
+   "CUSIP": "33882JAJ1",
+   "SEDOL": "BVV7SV3",
+   "Maturity": "2037-10-18",
    "Coupon": "6.6292"
+  },
+  {
+   "Name": "OCP CLO 2024-35 Ltd 6.9102% 10/25/2037",
+   "Ticker": "-",
+   "Identifier": "671060AJ0",
+   "Weight": "1.59",
+   "Market Value": "",
+   "Shares Held": "1000000",
+   "Asset Category": "Collateralized Loan Obligation",
+   "CUSIP": "671060AJ0",
+   "SEDOL": "BR849J4",
+   "Maturity": "2037-10-25",
+   "Coupon": "6.9102"
   },
   {
    "Name": "GoldenTree Loan Management US CLO 23 Ltd 6.3292% 01/20/2039",
@@ -588,6 +562,19 @@
    "SEDOL": "BNDY690",
    "Maturity": "2039-01-20",
    "Coupon": "6.3292"
+  },
+  {
+   "Name": "HPS Loan Management 2024-22 Ltd 6.6292% 10/20/2037",
+   "Ticker": "-",
+   "Identifier": "40444YAJ4",
+   "Weight": "1.52",
+   "Market Value": "",
+   "Shares Held": "950000",
+   "Asset Category": "Collateralized Loan Obligation",
+   "CUSIP": "40444YAJ4",
+   "SEDOL": "",
+   "Maturity": "2037-10-20",
+   "Coupon": "6.6292"
   },
   {
    "Name": "Eldridge CLO 2025-1 Ltd 6.6792% 10/20/2038",
@@ -606,7 +593,7 @@
    "Name": "Wellington Management Clo 5 Ltd 5.0192% 10/18/2038",
    "Ticker": "-",
    "Identifier": "94957NAA3",
-   "Weight": "1.43",
+   "Weight": "1.44",
    "Market Value": "",
    "Shares Held": "875000",
    "Asset Category": "Collateralized Loan Obligation",
@@ -653,19 +640,6 @@
    "SEDOL": "",
    "Maturity": "2037-10-19",
    "Coupon": "5.4292"
-  },
-  {
-   "Name": "RR 48 LTD 5.1838% 04/23/2034",
-   "Ticker": "-",
-   "Identifier": "48662LAA9",
-   "Weight": "1.23",
-   "Market Value": "",
-   "Shares Held": "750000",
-   "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "48662LAA9",
-   "SEDOL": "BMDK9N6",
-   "Maturity": "2034-04-23",
-   "Coupon": "5.1838"
   },
   {
    "Name": "Gallatin CLO XI 2024-1 Ltd 5.6792% 10/20/2037",

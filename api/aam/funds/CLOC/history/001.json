@@ -2,7 +2,7 @@
  "ticker": "CLOC",
  "page": 1,
  "pageSize": 1000,
- "totalRows": 237,
+ "totalRows": 242,
  "headers": [
   "Date",
   "Close",
@@ -1431,6 +1431,36 @@
    "Close": "25.040001",
    "Adj Close": "25.04",
    "Volume": "2000"
+  },
+  {
+   "Date": "Oct 05 2026",
+   "Close": "25.049999",
+   "Adj Close": "25.05",
+   "Volume": "3500"
+  },
+  {
+   "Date": "Oct 06 2026",
+   "Close": "25.030001",
+   "Adj Close": "25.03",
+   "Volume": "9800"
+  },
+  {
+   "Date": "Oct 07 2026",
+   "Close": "25.055",
+   "Adj Close": "25.06",
+   "Volume": "1000"
+  },
+  {
+   "Date": "Oct 08 2026",
+   "Close": "25.004999",
+   "Adj Close": "25",
+   "Volume": "7100"
+  },
+  {
+   "Date": "Oct 09 2026",
+   "Close": "25.004999",
+   "Adj Close": "25",
+   "Volume": "400"
   }
  ]
 }
