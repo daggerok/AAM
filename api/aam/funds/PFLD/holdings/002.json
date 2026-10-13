@@ -2,7 +2,7 @@
  "ticker": "PFLD",
  "page": 2,
  "pageSize": 250,
- "totalRows": 335,
+ "totalRows": 334,
  "headers": [
   "Name",
   "Ticker",
@@ -17,19 +17,6 @@
   "Coupon"
  ],
  "rows": [
-  {
-   "Name": "Western Alliance Bancorp",
-   "Ticker": "-",
-   "Identifier": "957638406",
-   "Weight": "0.14",
-   "Market Value": "",
-   "Shares Held": "20814",
-   "Asset Category": "Banking",
-   "CUSIP": "957638406",
-   "SEDOL": "BNZJSP3",
-   "Maturity": "2200-12-31",
-   "Coupon": "4.25"
-  },
   {
    "Name": "Citizens Financial Group Inc 7.2956% 01/07/2175",
    "Ticker": "-",
@@ -655,19 +642,6 @@
    "Coupon": "4.875"
   },
   {
-   "Name": "New Mountain Finance Corp",
-   "Ticker": "-",
-   "Identifier": "647551308",
-   "Weight": "0.07",
-   "Market Value": "",
-   "Shares Held": "9629",
-   "Asset Category": "Financial Services",
-   "CUSIP": "647551308",
-   "SEDOL": "BNDSDV3",
-   "Maturity": "2028-11-15",
-   "Coupon": "8.25"
-  },
-  {
    "Name": "Old National Bancorp/IN",
    "Ticker": "-",
    "Identifier": "68003D303",
@@ -887,6 +861,19 @@
    "SEDOL": "BJN53Y9",
    "Maturity": "2200-12-31",
    "Coupon": "7.75"
+  },
+  {
+   "Name": "New Mountain Finance Corp",
+   "Ticker": "-",
+   "Identifier": "647551308",
+   "Weight": "0.06",
+   "Market Value": "",
+   "Shares Held": "9629",
+   "Asset Category": "Financial Services",
+   "CUSIP": "647551308",
+   "SEDOL": "BNDSDV3",
+   "Maturity": "2028-11-15",
+   "Coupon": "8.25"
   },
   {
    "Name": "Old National Bancorp/IN",

@@ -325,7 +325,7 @@ describe('parsing', () => {
   test('Yahoo chart: adjusted-close jitter rounded, zero volume kept, missing quote skipped, dividends sorted, cent boundary stays a real change', () => {
     const payload = { chart: { result: [{ meta: { longName: 'AAM sample' }, timestamp: [1751241600, 1751328000, 1751414400], indicators: { quote: [{ close: [25, 26, null], volume: [0, 100, null] }], adjclose: [{ adjclose: [24.910001, 25.989999, null] }] }, events: { dividends: { b: { date: 1751328000, amount: .1 }, a: { date: 1751241600, amount: .2 } } } }] } };
     const c = parseChart(payload);
-    expect(c.days).toEqual([{ date: '2025-06-30', close: 25, adjClose: 24.91, volume: 0 }, { date: '2025-07-01', close: 26, adjClose: 25.99, volume: 100 }]);
+    expect(c.days).toEqual([{ date: '2025-06-30', close: 25, adjClose: 24.91, volume: 0, adjCloseRaw: 24.910001 }, { date: '2025-07-01', close: 26, adjClose: 25.99, volume: 100, adjCloseRaw: 25.989999 }]);
     expect(c.dividends.map(d => d.amount)).toEqual([.2, .1]);
     expect(() => parseChart({ chart: { result: [] } })).toThrow();
     const one = (adj: number) => parseChart({ chart: { result: [{ timestamp: [1688342400], indicators: { quote: [{ close: [20.968000411987305], volume: [10400] }], adjclose: [{ adjclose: [adj] }] } }] } });
@@ -532,6 +532,36 @@ describe('pipeline', () => {
       const second = await main(integrationEnv, { root, fetcher, now: new Date('2026-10-01T06:00:00Z') });
       expect(second.failed).toEqual([]); expect(await snapshot(dir)).toEqual(after);
     });
+  });
+
+  test('two runs on the same source data write zero changes even when Yahoo adjusted closes jitter across a cent boundary', async () => {
+    await testFeed(async (dir, root, fetcher) => {
+      // Yahoo float32 noise seen live: SPDV 2024-11-12 came back as 31.544998 and 31.545001 a minute apart
+      const jittered = (adjclose: number[]): Fetcher => async (url, init) => {
+        const response = await fetcher(url, init);
+        if (!/finance\/chart\//.test(url)) return response;
+        const payload = await response.json();
+        payload.chart.result[0].indicators.adjclose = [{ adjclose }];
+        return Response.json(payload);
+      };
+      await main(integrationEnv, { root, fetcher: jittered([23.915001, 24.984999, 25.995001]), now: fixedNow });
+      const first = await snapshot(dir);
+      const second = await main(integrationEnv, { root, fetcher: jittered([23.914998, 24.985002, 25.994999]), now: new Date('2026-10-01T06:00:00Z') });
+      expect(second.failed).toEqual([]);
+      expect(await snapshot(dir)).toEqual(first);
+      // a real change beyond the noise is still written
+      await main(integrationEnv, { root, fetcher: jittered([23.9, 24.97, 25.98]), now: new Date('2026-10-01T06:30:00Z') });
+      expect(await snapshot(dir)).not.toEqual(first);
+    });
+  });
+
+  test('mergeHistory keeps the published cent only within float noise of a cent boundary', () => {
+    const prior = [{ Date: 'Nov 12 2024', Close: '33.928001', 'Adj Close': '31.54', Volume: '3900' }];
+    const day = (adjCloseRaw: number) => ({ date: '2024-11-12', close: 33.928001, adjClose: Math.round(adjCloseRaw * 100) / 100, volume: 3900, adjCloseRaw });
+    expect(mergeHistory(prior, [day(31.545001)])[0]['Adj Close']).toBe('31.54');
+    expect(mergeHistory(prior, [day(31.5452)])[0]['Adj Close']).toBe('31.55');
+    expect(mergeHistory(prior, [day(31.56)])[0]['Adj Close']).toBe('31.56');
+    expect(mergeHistory(prior, [{ ...day(31.545001), volume: 4000 }])[0]).toEqual({ ...prior[0], Volume: '4000' });
   });
 
   test('every index row points at a real meta file (dataFile never dangling); feed counts reconcile before and after a run', async () => {

@@ -11,9 +11,9 @@ import { fileURLToPath as outputFileURLToPath } from 'node:url';
 // Console presentation; no changes to provider requests or persisted data.
 /** Presentation only: no requests, writes, filtering, or changes to updater state. */
 
-const outputClean = (value: unknown): string => String(value ?? 'null').replace(/[\x00-\x1f\x7f]+/g, ' ');
+const outputClean = (value: unknown): string => String(value ?? 'null').replace(/[\r\n\t]+/g, ' ');
 /** Presentation only: per-fund retry and fallback notices are printed when VERBOSE is enabled. */
-const outputVerbose = (): boolean => /^(1|true|yes|on)$/i.test(process.env.VERBOSE ?? '');
+const outputVerbose = (): boolean => /^(1|true|yes|on)$/i.test((globalThis as any).process?.env?.VERBOSE ?? '');
 function outputNote(message: string): void { if (outputVerbose()) console.warn(message); }
 /** Names are the canonical environment knobs, not internal parser properties. */
 function outputConfigEntries(config: Record<string, any>): [string, string][] {
@@ -24,10 +24,12 @@ function outputConfigEntries(config: Record<string, any>): [string, string][] {
     performanceRanges: 'PERFORMANCE', totalReturnRanges: 'TOTAL_RETURN',
     skipVanEck: 'SKIP_VANECK', skipProShares: 'SKIP_PROSHARES',
     skipWisdomTree: 'SKIP_WISDOMTREE', skipGoldmanSachs: 'SKIP_GOLDMANSACHS',
+    skipGlobalX: 'SKIP_GLOBALX', skipNorthernTrust: 'SKIP_NORTHERNTRUST',
   };
-  const range = (v: any): string => v?.source ?? `${Number.isFinite(v?.min) ? v.min : ''}:${Number.isFinite(v?.max) ? v.max : ''}`;
+  const range = (v: any): string => typeof v === 'string' ? v : v?.source ?? `${Number.isFinite(v?.min) ? v.min : ''}:${Number.isFinite(v?.max) ? v.max : ''}`;
   for (const [key, value] of Object.entries(config)) {
-    const name = aliases[key] ?? key.replace(/([a-z0-9])([A-Z])/g, '$1_$2').toUpperCase();
+    if (['proxyGapMs', 'fetchTimeoutMs', 'retryDelayMs'].includes(key)) continue;
+    const name = aliases[key] ?? (/^[A-Z0-9_]+$/.test(key) ? key : key.replace(/([a-z0-9])([A-Z])/g, '$1_$2').toUpperCase());
     if (name === 'PERFORMANCE' || name === 'TOTAL_RETURN') {
       for (const period of ['YTD', '1Y', '3Y', '5Y', '10Y']) values.set(`${name}_${period}`, range(value?.[period]));
     } else if (['AUM', 'TER', 'DIVIDEND_YIELD', 'SEC_YIELD'].includes(name)) {
@@ -42,24 +44,29 @@ function outputConfigEntries(config: Record<string, any>): [string, string][] {
     return (ai < 0 ? first.length : ai) - (bi < 0 ? first.length : bi) || a.localeCompare(b);
   });
 }
+function outputConfigValue(key: string, value: string): string {
+  if (/TOKEN|PASSWORD|SECRET|COOKIE|SEC_UA/i.test(key)) return '<redacted>';
+  if (key === 'TICKERS' && ['', 'null', 'undefined'].includes(value)) return 'all';
+  return outputClean(value);
+}
 function outputPrintConfig(brand: string, config: Record<string, any>): void {
   const entries: [string, string][] = [...outputConfigEntries(config), ['VERBOSE', String(outputVerbose())]];
-  console.log(`[ config   ] ${brand} updater:\n${entries.map(([key, value]) => `              ${key}=${/TOKEN|PASSWORD|SECRET|COOKIE|SEC_UA/i.test(key) ? '<redacted>' : outputClean(value)}`).join('\n')}`);
+  console.log(`[ config   ] ${brand} updater:\n${entries.map(([key, value]) => `              ${key}=${outputConfigValue(key, value)}`).join('\n')}`);
 }
 function outputHasOutputFilters(config: Record<string, any>): boolean {
   return outputConfigEntries(config).some(([name, value]) =>
-    /^(TICKERS|CATEGORY|AUM|TER|DIVIDEND_YIELD|SEC_YIELD|PERFORMANCE_|TOTAL_RETURN_)/.test(name) &&
+    /^(CATEGORY|AUM|TER|DIVIDEND_YIELD|SEC_YIELD|PERFORMANCE_|TOTAL_RETURN_)/.test(name) &&
     !['', ':', 'null', 'all'].includes(value));
 }
 function outputPrintFilter(selected: number, total: number, deferred = false): void {
   console.log(`[ filter   ] ${selected} of ${total} funds ${deferred ? 'selected for evaluation (data-dependent filters applied per fund)' : 'pass filters'}`);
 }
-export function outputStable(value: any): any {
+function outputStable(value: any): any {
   if (Array.isArray(value)) return value.map(outputStable);
   if (value && typeof value === 'object') return Object.fromEntries(Object.keys(value).sort().filter(key => !['generatedAt', 'catalogReadAt'].includes(key)).map(key => [key, outputStable(value[key])]));
   return value;
 }
-export function outputContentKey(value: unknown): string { return JSON.stringify(outputStable(value)) ?? 'null'; }
+function outputContentKey(value: unknown): string { return JSON.stringify(outputStable(value)) ?? 'null'; }
 async function outputInspectFund(root: URL | string, ticker: string): Promise<{ digest: string; meta: any }> {
   const dir = outputJoin(root instanceof URL ? outputFileURLToPath(root) : root, 'funds', ticker);
   const hash = outputCreateHash('sha256');
@@ -80,20 +87,31 @@ async function outputInspectFund(root: URL | string, ticker: string): Promise<{ 
 }
 const outputCount = (value: any): unknown => typeof value === 'number' ? value : Array.isArray(value) ? value.length : value?.totalRows ?? value?.rows?.length ?? null;
 const outputScalar = (value: any): any => value && typeof value === 'object' ? value.display ?? value.value ?? null : value;
+const outputUnits: Record<string, number> = { K: 1e3, M: 1e6, B: 1e9, T: 1e12, THOUSAND: 1e3, MILLION: 1e6, BILLION: 1e9, TRILLION: 1e12 };
 function outputMoney(value: any): string {
-  const raw = outputScalar(value);
+  const raw = value && typeof value === 'object' && typeof value.value === 'number' && Number.isFinite(value.value) ? value.value : outputScalar(value);
   if (raw === null || raw === undefined || raw === '—' || raw === '--') return 'null';
   const text = String(raw).replace(/[$,\s]/g, '');
-  const match = text.match(/^([+-]?[\d.]+)([KMBT])?$/i);
+  const match = text.match(/^([+-]?[\d.]+)(K|M|B|T|Thousand|Million|Billion|Trillion)?$/i);
   if (!match) return outputClean(raw);
-  const number = Number(match[1]) * ({ K: 1e3, M: 1e6, B: 1e9, T: 1e12 }[match[2]?.toUpperCase() as 'K' | 'M' | 'B' | 'T'] ?? 1);
+  const number = Number(match[1]) * (outputUnits[match[2]?.toUpperCase() ?? ''] ?? 1);
   if (!Number.isFinite(number)) return 'null';
   for (const [unit, scale] of [['T', 1e12], ['B', 1e9], ['M', 1e6], ['K', 1e3]] as const) {
     if (Math.abs(number) >= scale) return `$${(number / scale).toFixed(1)}${unit}`;
   }
   return `$${number.toFixed(2)}`;
 }
-export function outputFundLine(index: number, total: number, ticker: string, status: string, data: any = {}, reason?: unknown): string {
+/** Yields: rounded to 2 decimals without trailing zeros; placeholders are omitted like null. */
+function outputPercent(value: any): unknown {
+  const raw = outputScalar(value);
+  if (raw === null || raw === undefined) return null;
+  if (typeof raw === 'number') return Number.isFinite(raw) ? Number(raw.toFixed(2)) : null;
+  const text = String(raw).trim().replace(/%$/, '').trim();
+  if (['', '-', '—', '--', 'n/a'].includes(text.toLowerCase())) return null;
+  const number = Number(text.replace(/,/g, ''));
+  return Number.isFinite(number) ? Number(number.toFixed(2)) : outputClean(raw);
+}
+function outputFundLine(index: number, total: number, ticker: string, status: string, data: any = {}, reason?: unknown): string {
   const width = Math.max(2, String(total).length);
   const metrics = data.metrics ?? {};
   // Presentation only. Keep valid zero/false values; omit unavailable fields.
@@ -112,21 +130,34 @@ export function outputFundLine(index: number, total: number, ticker: string, sta
     field('divs', outputCount(data.worksheets?.Distributions ?? data.distributions)),
     field('netAssets', outputMoney(data.netAssets ?? data.aum)),
     field('total', outputMoney(data.totalFundNetAssets ?? data.totalNetAssets)),
-    field('div', outputScalar(data.trailingYield ?? data.yields?.effectiveYield ?? data.yields?.dividendYield ?? data.dividendYield ?? metrics.dividendYield)),
-    field('sec', outputScalar(data.secYield ?? data.yields?.secYield ?? metrics.secYield)),
+    field('div', outputPercent(data.trailingYield ?? data.yields?.effectiveYield ?? data.yields?.dividendYield ?? data.dividendYield ?? metrics.dividendYield)),
+    field('sec', outputPercent(data.secYield ?? data.yields?.secYield ?? metrics.secYield)),
     field('wp', data.workplaceRaw),
   ].filter(part => part !== '').join(' ');
   return `[ ${String(index).padStart(width)}/${String(total).padEnd(width)}  ] ${outputClean(ticker).padEnd(5)} ${status.padEnd(9)}${detail ? ` ${detail}` : ''}${reason ? ` reason=${outputClean(reason)}` : ''}`;
 }
-export function outputCreateReporter(root: URL | string, total: number) {
+function outputCreateReporter(root: URL | string, total: number) {
   let completed = 0;
+  const tally = new Map<string, number>();
   return {
     before: (ticker: string) => outputInspectFund(root, ticker),
     async result(ticker: string, before: { digest: string }, status?: string, reason?: unknown, extra: any = {}) {
       const after = await outputInspectFund(root, ticker);
-      console.log(outputFundLine(++completed, total, ticker, status ?? (before.digest === after.digest ? 'unchanged' : 'updated'), { ...after.meta, ...extra }, reason));
+      const final = status ?? (before.digest === after.digest ? 'unchanged' : 'updated');
+      tally.set(final, (tally.get(final) ?? 0) + 1);
+      console.log(outputFundLine(++completed, total, ticker, final, { ...after.meta, ...extra }, reason));
+    },
+    /** First [ done ] line: the statuses of every fund line this reporter printed. */
+    summary(startedAt: number): string {
+      const order = ['updated', 'unchanged', 'kept', 'skipped', 'failed'];
+      const statuses = [...order, ...[...tally.keys()].filter(status => !order.includes(status))];
+      return `[ done     ] ${completed} fund${completed === 1 ? '' : 's'}: ${statuses.map(status => `${tally.get(status) ?? 0} ${status}`).join(', ')} in ${((Date.now() - startedAt) / 1000).toFixed(1)}s`;
     },
   };
+}
+/** Second [ done ] line: published totals. */
+function outputCounts(funds: number, holdings: number, history: number): string {
+  return `[ done     ] counts: ${funds.toLocaleString('en-US')} funds / ${holdings.toLocaleString('en-US')} holdings rows / ${history.toLocaleString('en-US')} history rows`;
 }
 
 
@@ -915,7 +946,8 @@ export function parseNport(xml: string): ParsedNport {
 
 
 // Shared Yahoo adjusted-close parser and derived metrics from pinned JPMorgan.
-export type ChartDay = { date: string; close: number; adjClose: number; volume: number };
+// adjCloseRaw: Yahoo's unrounded value, only used to tell float noise from a real change (never persisted).
+export type ChartDay = { date: string; close: number; adjClose: number; volume: number; adjCloseRaw?: number };
 
 export type ParsedChart = {
   exchangeName: string;
@@ -953,6 +985,7 @@ export function parseChart(payload: JsonRecord): ParsedChart {
       // meaningful precision for a price and absorbs that jitter.
       adjClose: round(adjClose, 2),
       volume: typeof volumes[i] === 'number' ? (volumes[i] as number) : 0,
+      adjCloseRaw: adjClose,
     });
   }
   const events = ((result.events || {}) as JsonRecord).dividends as Record<string, JsonRecord> | undefined;
@@ -1355,10 +1388,18 @@ export function secFilingIsFresher(filingDate:string|null,publishedDate:string|n
   const a=dateTextToIso(filingDate),b=dateTextToIso(publishedDate);
   return Boolean(a&&(!b||a>b));
 }
+// Yahoo's adjusted close is float32 and its last digits move with the request's period2, so a value
+// sitting on a cent boundary (31.544998 vs 31.545001) flips between runs. Within that noise the
+// published cent is kept: a rerun with the same source data changes nothing.
+export const ADJ_CLOSE_NOISE=1e-4;
 export function mergeHistory(previous:SheetRow[],fresh:ChartDay[]):SheetRow[] {
   const rows=new Map<string,SheetRow>();
   for(const row of previous){const date=rowDate(row);if(!date)throw new Error('Invalid cached history date');rows.set(date,row);}
-  for(const day of fresh)rows.set(day.date,historyRow(day));
+  for(const day of fresh){
+    const row=historyRow(day),prior=rows.get(day.date),priorAdj=prior?numberOrNull(prior['Adj Close']):null,raw=day.adjCloseRaw??day.adjClose;
+    if(prior&&priorAdj!==null&&row['Adj Close']!==prior['Adj Close']&&Math.abs(raw-priorAdj)<=0.005+ADJ_CLOSE_NOISE)row['Adj Close']=prior['Adj Close'];
+    rows.set(day.date,row);
+  }
   return [...rows].sort(([a],[b])=>a.localeCompare(b)).map(([,r])=>r);
 }
 function daysFromRows(rows:SheetRow[]):ChartDay[] {
@@ -1525,7 +1566,8 @@ async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRe
   holdings??={rows:oldHoldings.rows,headers:oldHoldings.headers.length?oldHoldings.headers:HOLDINGS_HEADERS,asOfDate:old.holdings?.asOfDate??null,source:old.holdings?.source??'unavailable from official/SEC providers',status:oldHoldings.rows.length?'available':'unavailable'};
   const history=chart?.days.length?mergeHistory(oldHistory.rows,chart.days):oldHistory.rows,days=daysFromRows(history);
   // Yahoo re-bases adjusted closes at every dividend: derive returns from the fresh single-basis window, never across old and new rows.
-  const basisDays=chart?.days.length?daysFromRows(chart.days.map(historyRow)):days;
+  const chartDates=new Set(chart?.days.map(day=>day.date)??[]);
+  const basisDays=chart?.days.length?daysFromRows(history.filter(row=>chartDates.has(rowDate(row)))):days;
   const priorEvents=Array.isArray(old.distributions?.events)?old.distributions.events:[];
   const dividends=mergeDividends(priorEvents,chart?.dividends??[],detail?.dividends??[]),latest=dividends.at(-1)??null;
   const frequency=decodeDividendFrequency(detail?.frequency??old.distributions?.frequency)??(dividends.length?inferDistributionFrequency(dividends):{frequency:'—',paymentsPerYear:null});
@@ -1612,7 +1654,7 @@ export function installSystemCa(mode: string, reexec: () => never = reexecWithSy
 }
 
 export async function main(env:Record<string,string|undefined>=process.env,options:{root?:URL;fetcher?:Fetcher;now?:Date;deadlineMs?:number;clock?:()=>number}={}):Promise<RunSummary> {
-  const controls=await runtimeControls(env),config=readConfig(controls),root=options.root??API_ROOT,now=options.now??new Date();
+  const runStartedAt=Date.now(),controls=await runtimeControls(env),config=readConfig(controls),root=options.root??API_ROOT,now=options.now??new Date();
   process.env.VERBOSE=controls.VERBOSE;outputPrintConfig('AAM',config);
   if(!options.fetcher)installSystemCa(config.useSystemCa);
   await removeStaleTemps(root);
@@ -1671,8 +1713,8 @@ export async function main(env:Record<string,string|undefined>=process.env,optio
     if(Object.keys(nextState).length)await writeIfChanged(new URL('update-state.json',root),nextState);else await rm(new URL('update-state.json',root),{force:true});
   }
   summary.processed.sort();summary.skipped.sort();summary.failed.sort();
-  console.log(`[ done     ] ${summary.processed.length} funds updated, ${summary.failed.length} failures (${summary.skipped.length} skipped)`);
-  console.log(`[ done     ] counts: ${summary.counts.funds} funds / ${summary.counts.holdings} holdings rows / ${summary.counts.history} history rows`);
+  console.log(reporter.summary(runStartedAt));
+  console.log(outputCounts(summary.counts.funds, summary.counts.holdings, summary.counts.history));
   return summary;
 }
 async function printHelp():Promise<void> {
