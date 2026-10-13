@@ -946,7 +946,8 @@ export function parseNport(xml: string): ParsedNport {
 
 
 // Shared Yahoo adjusted-close parser and derived metrics from pinned JPMorgan.
-export type ChartDay = { date: string; close: number; adjClose: number; volume: number };
+// adjCloseRaw: Yahoo's unrounded value, only used to tell float noise from a real change (never persisted).
+export type ChartDay = { date: string; close: number; adjClose: number; volume: number; adjCloseRaw?: number };
 
 export type ParsedChart = {
   exchangeName: string;
@@ -984,6 +985,7 @@ export function parseChart(payload: JsonRecord): ParsedChart {
       // meaningful precision for a price and absorbs that jitter.
       adjClose: round(adjClose, 2),
       volume: typeof volumes[i] === 'number' ? (volumes[i] as number) : 0,
+      adjCloseRaw: adjClose,
     });
   }
   const events = ((result.events || {}) as JsonRecord).dividends as Record<string, JsonRecord> | undefined;
@@ -1386,10 +1388,18 @@ export function secFilingIsFresher(filingDate:string|null,publishedDate:string|n
   const a=dateTextToIso(filingDate),b=dateTextToIso(publishedDate);
   return Boolean(a&&(!b||a>b));
 }
+// Yahoo's adjusted close is float32 and its last digits move with the request's period2, so a value
+// sitting on a cent boundary (31.544998 vs 31.545001) flips between runs. Within that noise the
+// published cent is kept: a rerun with the same source data changes nothing.
+export const ADJ_CLOSE_NOISE=1e-4;
 export function mergeHistory(previous:SheetRow[],fresh:ChartDay[]):SheetRow[] {
   const rows=new Map<string,SheetRow>();
   for(const row of previous){const date=rowDate(row);if(!date)throw new Error('Invalid cached history date');rows.set(date,row);}
-  for(const day of fresh)rows.set(day.date,historyRow(day));
+  for(const day of fresh){
+    const row=historyRow(day),prior=rows.get(day.date),priorAdj=prior?numberOrNull(prior['Adj Close']):null,raw=day.adjCloseRaw??day.adjClose;
+    if(prior&&priorAdj!==null&&row['Adj Close']!==prior['Adj Close']&&Math.abs(raw-priorAdj)<=0.005+ADJ_CLOSE_NOISE)row['Adj Close']=prior['Adj Close'];
+    rows.set(day.date,row);
+  }
   return [...rows].sort(([a],[b])=>a.localeCompare(b)).map(([,r])=>r);
 }
 function daysFromRows(rows:SheetRow[]):ChartDay[] {
@@ -1556,7 +1566,8 @@ async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRe
   holdings??={rows:oldHoldings.rows,headers:oldHoldings.headers.length?oldHoldings.headers:HOLDINGS_HEADERS,asOfDate:old.holdings?.asOfDate??null,source:old.holdings?.source??'unavailable from official/SEC providers',status:oldHoldings.rows.length?'available':'unavailable'};
   const history=chart?.days.length?mergeHistory(oldHistory.rows,chart.days):oldHistory.rows,days=daysFromRows(history);
   // Yahoo re-bases adjusted closes at every dividend: derive returns from the fresh single-basis window, never across old and new rows.
-  const basisDays=chart?.days.length?daysFromRows(chart.days.map(historyRow)):days;
+  const chartDates=new Set(chart?.days.map(day=>day.date)??[]);
+  const basisDays=chart?.days.length?daysFromRows(history.filter(row=>chartDates.has(rowDate(row)))):days;
   const priorEvents=Array.isArray(old.distributions?.events)?old.distributions.events:[];
   const dividends=mergeDividends(priorEvents,chart?.dividends??[],detail?.dividends??[]),latest=dividends.at(-1)??null;
   const frequency=decodeDividendFrequency(detail?.frequency??old.distributions?.frequency)??(dividends.length?inferDistributionFrequency(dividends):{frequency:'—',paymentsPerYear:null});
