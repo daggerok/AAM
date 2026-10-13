@@ -1,6 +1,6 @@
 {
- "generatedAt": "2026-10-13T01:36:12.515Z",
- "catalogReadAt": "2026-10-13T01:36:12.515Z",
+ "generatedAt": "2026-10-13T05:17:16.232Z",
+ "catalogReadAt": "2026-10-13T05:17:16.232Z",
  "source": {
   "provider": "AAM ETFs",
   "site": "https://www.aamlive.com",
@@ -10,7 +10,7 @@
  },
  "counts": {
   "funds": 10,
-  "holdings": 1184,
+  "holdings": 1183,
   "history": 7700
  },
  "funds": [
@@ -295,7 +295,7 @@
     "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)",
     "performanceAsOf": "2026-09-30"
    },
-   "holdings": 335,
+   "holdings": 334,
    "history": 1731
   },
   {
