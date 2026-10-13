@@ -11,9 +11,9 @@ import { fileURLToPath as outputFileURLToPath } from 'node:url';
 // Console presentation; no changes to provider requests or persisted data.
 /** Presentation only: no requests, writes, filtering, or changes to updater state. */
 
-const outputClean = (value: unknown): string => String(value ?? 'null').replace(/[\x00-\x1f\x7f]+/g, ' ');
+const outputClean = (value: unknown): string => String(value ?? 'null').replace(/[\r\n\t]+/g, ' ');
 /** Presentation only: per-fund retry and fallback notices are printed when VERBOSE is enabled. */
-const outputVerbose = (): boolean => /^(1|true|yes|on)$/i.test(process.env.VERBOSE ?? '');
+const outputVerbose = (): boolean => /^(1|true|yes|on)$/i.test((globalThis as any).process?.env?.VERBOSE ?? '');
 function outputNote(message: string): void { if (outputVerbose()) console.warn(message); }
 /** Names are the canonical environment knobs, not internal parser properties. */
 function outputConfigEntries(config: Record<string, any>): [string, string][] {
@@ -42,9 +42,14 @@ function outputConfigEntries(config: Record<string, any>): [string, string][] {
     return (ai < 0 ? first.length : ai) - (bi < 0 ? first.length : bi) || a.localeCompare(b);
   });
 }
+function outputConfigValue(key: string, value: string): string {
+  if (/TOKEN|PASSWORD|SECRET|COOKIE|SEC_UA/i.test(key)) return '<redacted>';
+  if (key === 'TICKERS' && ['', 'null', 'undefined'].includes(value)) return 'all';
+  return outputClean(value);
+}
 function outputPrintConfig(brand: string, config: Record<string, any>): void {
   const entries: [string, string][] = [...outputConfigEntries(config), ['VERBOSE', String(outputVerbose())]];
-  console.log(`[ config   ] ${brand} updater:\n${entries.map(([key, value]) => `              ${key}=${/TOKEN|PASSWORD|SECRET|COOKIE|SEC_UA/i.test(key) ? '<redacted>' : outputClean(value)}`).join('\n')}`);
+  console.log(`[ config   ] ${brand} updater:\n${entries.map(([key, value]) => `              ${key}=${outputConfigValue(key, value)}`).join('\n')}`);
 }
 function outputHasOutputFilters(config: Record<string, any>): boolean {
   return outputConfigEntries(config).some(([name, value]) =>
@@ -54,12 +59,12 @@ function outputHasOutputFilters(config: Record<string, any>): boolean {
 function outputPrintFilter(selected: number, total: number, deferred = false): void {
   console.log(`[ filter   ] ${selected} of ${total} funds ${deferred ? 'selected for evaluation (data-dependent filters applied per fund)' : 'pass filters'}`);
 }
-export function outputStable(value: any): any {
+function outputStable(value: any): any {
   if (Array.isArray(value)) return value.map(outputStable);
   if (value && typeof value === 'object') return Object.fromEntries(Object.keys(value).sort().filter(key => !['generatedAt', 'catalogReadAt'].includes(key)).map(key => [key, outputStable(value[key])]));
   return value;
 }
-export function outputContentKey(value: unknown): string { return JSON.stringify(outputStable(value)) ?? 'null'; }
+function outputContentKey(value: unknown): string { return JSON.stringify(outputStable(value)) ?? 'null'; }
 async function outputInspectFund(root: URL | string, ticker: string): Promise<{ digest: string; meta: any }> {
   const dir = outputJoin(root instanceof URL ? outputFileURLToPath(root) : root, 'funds', ticker);
   const hash = outputCreateHash('sha256');
@@ -80,20 +85,31 @@ async function outputInspectFund(root: URL | string, ticker: string): Promise<{ 
 }
 const outputCount = (value: any): unknown => typeof value === 'number' ? value : Array.isArray(value) ? value.length : value?.totalRows ?? value?.rows?.length ?? null;
 const outputScalar = (value: any): any => value && typeof value === 'object' ? value.display ?? value.value ?? null : value;
+const outputUnits: Record<string, number> = { K: 1e3, M: 1e6, B: 1e9, T: 1e12, THOUSAND: 1e3, MILLION: 1e6, BILLION: 1e9, TRILLION: 1e12 };
 function outputMoney(value: any): string {
-  const raw = outputScalar(value);
+  const raw = value && typeof value === 'object' && typeof value.value === 'number' && Number.isFinite(value.value) ? value.value : outputScalar(value);
   if (raw === null || raw === undefined || raw === '—' || raw === '--') return 'null';
   const text = String(raw).replace(/[$,\s]/g, '');
-  const match = text.match(/^([+-]?[\d.]+)([KMBT])?$/i);
+  const match = text.match(/^([+-]?[\d.]+)(K|M|B|T|Thousand|Million|Billion|Trillion)?$/i);
   if (!match) return outputClean(raw);
-  const number = Number(match[1]) * ({ K: 1e3, M: 1e6, B: 1e9, T: 1e12 }[match[2]?.toUpperCase() as 'K' | 'M' | 'B' | 'T'] ?? 1);
+  const number = Number(match[1]) * (outputUnits[match[2]?.toUpperCase() ?? ''] ?? 1);
   if (!Number.isFinite(number)) return 'null';
   for (const [unit, scale] of [['T', 1e12], ['B', 1e9], ['M', 1e6], ['K', 1e3]] as const) {
     if (Math.abs(number) >= scale) return `$${(number / scale).toFixed(1)}${unit}`;
   }
   return `$${number.toFixed(2)}`;
 }
-export function outputFundLine(index: number, total: number, ticker: string, status: string, data: any = {}, reason?: unknown): string {
+/** Yields: rounded to 2 decimals without trailing zeros; placeholders are omitted like null. */
+function outputPercent(value: any): unknown {
+  const raw = outputScalar(value);
+  if (raw === null || raw === undefined) return null;
+  if (typeof raw === 'number') return Number.isFinite(raw) ? Number(raw.toFixed(2)) : null;
+  const text = String(raw).trim().replace(/%$/, '').trim();
+  if (['', '-', '—', '--', 'n/a'].includes(text.toLowerCase())) return null;
+  const number = Number(text.replace(/,/g, ''));
+  return Number.isFinite(number) ? Number(number.toFixed(2)) : outputClean(raw);
+}
+function outputFundLine(index: number, total: number, ticker: string, status: string, data: any = {}, reason?: unknown): string {
   const width = Math.max(2, String(total).length);
   const metrics = data.metrics ?? {};
   // Presentation only. Keep valid zero/false values; omit unavailable fields.
@@ -112,21 +128,34 @@ export function outputFundLine(index: number, total: number, ticker: string, sta
     field('divs', outputCount(data.worksheets?.Distributions ?? data.distributions)),
     field('netAssets', outputMoney(data.netAssets ?? data.aum)),
     field('total', outputMoney(data.totalFundNetAssets ?? data.totalNetAssets)),
-    field('div', outputScalar(data.trailingYield ?? data.yields?.effectiveYield ?? data.yields?.dividendYield ?? data.dividendYield ?? metrics.dividendYield)),
-    field('sec', outputScalar(data.secYield ?? data.yields?.secYield ?? metrics.secYield)),
+    field('div', outputPercent(data.trailingYield ?? data.yields?.effectiveYield ?? data.yields?.dividendYield ?? data.dividendYield ?? metrics.dividendYield)),
+    field('sec', outputPercent(data.secYield ?? data.yields?.secYield ?? metrics.secYield)),
     field('wp', data.workplaceRaw),
   ].filter(part => part !== '').join(' ');
   return `[ ${String(index).padStart(width)}/${String(total).padEnd(width)}  ] ${outputClean(ticker).padEnd(5)} ${status.padEnd(9)}${detail ? ` ${detail}` : ''}${reason ? ` reason=${outputClean(reason)}` : ''}`;
 }
-export function outputCreateReporter(root: URL | string, total: number) {
+function outputCreateReporter(root: URL | string, total: number) {
   let completed = 0;
+  const tally = new Map<string, number>();
   return {
     before: (ticker: string) => outputInspectFund(root, ticker),
     async result(ticker: string, before: { digest: string }, status?: string, reason?: unknown, extra: any = {}) {
       const after = await outputInspectFund(root, ticker);
-      console.log(outputFundLine(++completed, total, ticker, status ?? (before.digest === after.digest ? 'unchanged' : 'updated'), { ...after.meta, ...extra }, reason));
+      const final = status ?? (before.digest === after.digest ? 'unchanged' : 'updated');
+      tally.set(final, (tally.get(final) ?? 0) + 1);
+      console.log(outputFundLine(++completed, total, ticker, final, { ...after.meta, ...extra }, reason));
+    },
+    /** First [ done ] line: the statuses of every fund line this reporter printed. */
+    summary(startedAt: number): string {
+      const order = ['updated', 'unchanged', 'kept', 'skipped', 'failed'];
+      const statuses = [...order, ...[...tally.keys()].filter(status => !order.includes(status))];
+      return `[ done     ] ${completed} funds: ${statuses.map(status => `${tally.get(status) ?? 0} ${status}`).join(', ')} in ${((Date.now() - startedAt) / 1000).toFixed(1)}s`;
     },
   };
+}
+/** Second [ done ] line: published totals. */
+function outputCounts(funds: number, holdings: number, history: number): string {
+  return `[ done     ] counts: ${funds.toLocaleString('en-US')} funds / ${holdings.toLocaleString('en-US')} holdings rows / ${history.toLocaleString('en-US')} history rows`;
 }
 
 
@@ -1612,7 +1641,7 @@ export function installSystemCa(mode: string, reexec: () => never = reexecWithSy
 }
 
 export async function main(env:Record<string,string|undefined>=process.env,options:{root?:URL;fetcher?:Fetcher;now?:Date;deadlineMs?:number;clock?:()=>number}={}):Promise<RunSummary> {
-  const controls=await runtimeControls(env),config=readConfig(controls),root=options.root??API_ROOT,now=options.now??new Date();
+  const runStartedAt=Date.now(),controls=await runtimeControls(env),config=readConfig(controls),root=options.root??API_ROOT,now=options.now??new Date();
   process.env.VERBOSE=controls.VERBOSE;outputPrintConfig('AAM',config);
   if(!options.fetcher)installSystemCa(config.useSystemCa);
   await removeStaleTemps(root);
@@ -1671,8 +1700,8 @@ export async function main(env:Record<string,string|undefined>=process.env,optio
     if(Object.keys(nextState).length)await writeIfChanged(new URL('update-state.json',root),nextState);else await rm(new URL('update-state.json',root),{force:true});
   }
   summary.processed.sort();summary.skipped.sort();summary.failed.sort();
-  console.log(`[ done     ] ${summary.processed.length} funds updated, ${summary.failed.length} failures (${summary.skipped.length} skipped)`);
-  console.log(`[ done     ] counts: ${summary.counts.funds} funds / ${summary.counts.holdings} holdings rows / ${summary.counts.history} history rows`);
+  console.log(reporter.summary(runStartedAt));
+  console.log(outputCounts(summary.counts.funds, summary.counts.holdings, summary.counts.history));
   return summary;
 }
 async function printHelp():Promise<void> {
