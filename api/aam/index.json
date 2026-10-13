@@ -1,6 +1,6 @@
 {
- "generatedAt": "2026-10-11T04:08:01.651Z",
- "catalogReadAt": "2026-10-11T04:08:01.651Z",
+ "generatedAt": "2026-10-13T01:36:12.515Z",
+ "catalogReadAt": "2026-10-13T01:36:12.515Z",
  "source": {
   "provider": "AAM ETFs",
   "site": "https://www.aamlive.com",
@@ -11,7 +11,7 @@
  "counts": {
   "funds": 10,
   "holdings": 1184,
-  "history": 7690
+  "history": 7700
  },
  "funds": [
   {
@@ -83,7 +83,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 36,
-   "history": 550
+   "history": 551
   },
   {
    "ticker": "CLOC",
@@ -154,7 +154,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 59,
-   "history": 242
+   "history": 243
   },
   {
    "ticker": "LODI",
@@ -225,7 +225,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 221,
-   "history": 463
+   "history": 464
   },
   {
    "ticker": "PFLD",
@@ -296,7 +296,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 335,
-   "history": 1730
+   "history": 1731
   },
   {
    "ticker": "SAWG",
@@ -367,7 +367,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 44,
-   "history": 551
+   "history": 552
   },
   {
    "ticker": "SAWS",
@@ -438,7 +438,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 73,
-   "history": 551
+   "history": 552
   },
   {
    "ticker": "SPDV",
@@ -509,7 +509,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 55,
-   "history": 2227
+   "history": 2228
   },
   {
    "ticker": "TIIV",
@@ -580,7 +580,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 67,
-   "history": 305
+   "history": 306
   },
   {
    "ticker": "TRFM",
@@ -651,7 +651,7 @@
     "performanceAsOf": "2026-09-30"
    },
    "holdings": 270,
-   "history": 1067
+   "history": 1068
   },
   {
    "ticker": "UBIQ",
@@ -681,7 +681,7 @@
    },
    "returns": {
     "monthEnd": {
-     "asOfDate": "Oct 09 2026",
+     "asOfDate": "Oct 12 2026",
      "mo1": null,
      "qtd": null,
      "ytd": null,
@@ -693,7 +693,7 @@
     },
     "quarterEnd": null,
     "derivedFrom": "derived from Yahoo adjusted market-price closes (estimate), not official NAV returns",
-    "performanceAsOf": "2026-10-09"
+    "performanceAsOf": "2026-10-12"
    },
    "metrics": {
     "ytd": null,
@@ -711,10 +711,10 @@
     "secYield": null,
     "secYieldText": "—",
     "returnsBasis": "derived from Yahoo adjusted market-price closes (estimate), not official NAV returns",
-    "performanceAsOf": "2026-10-09"
+    "performanceAsOf": "2026-10-12"
    },
    "holdings": 24,
-   "history": 4
+   "history": 5
   }
  ]
 }

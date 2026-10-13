@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-11T04:08:01.651Z",
+ "generatedAt": "2026-10-13T01:36:12.515Z",
  "ticker": "UBIQ",
  "name": "AAM Ubiquitous ETF",
  "category": "Equity",
@@ -73,7 +73,7 @@
  "officialReturns": null,
  "returns": {
   "monthEnd": {
-   "asOfDate": "Oct 09 2026",
+   "asOfDate": "Oct 12 2026",
    "mo1": null,
    "qtd": null,
    "ytd": null,
@@ -85,7 +85,7 @@
   },
   "quarterEnd": null,
   "derivedFrom": "derived from Yahoo adjusted market-price closes (estimate), not official NAV returns",
-  "performanceAsOf": "2026-10-09"
+  "performanceAsOf": "2026-10-12"
  },
  "distributions": {
   "frequency": "Annually",
@@ -116,8 +116,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 4,
-  "asOf": "Oct 09 2026",
+  "totalRows": 5,
+  "asOf": "Oct 12 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

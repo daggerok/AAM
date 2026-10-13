@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-11T04:08:01.651Z",
+ "generatedAt": "2026-10-13T01:36:12.515Z",
  "ticker": "TRFM",
  "name": "AAM Transformers ETF",
  "category": "Equity",
@@ -175,8 +175,8 @@
    "history/002.json"
   ],
   "pageSize": 1000,
-  "totalRows": 1067,
-  "asOf": "Oct 09 2026",
+  "totalRows": 1068,
+  "asOf": "Oct 12 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }
