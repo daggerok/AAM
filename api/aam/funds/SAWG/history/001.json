@@ -2,7 +2,7 @@
  "ticker": "SAWG",
  "page": 1,
  "pageSize": 1000,
- "totalRows": 552,
+ "totalRows": 556,
  "headers": [
   "Date",
   "Close",
@@ -3320,7 +3320,31 @@
    "Date": "Oct 12 2026",
    "Close": "25.084999",
    "Adj Close": "25.08",
-   "Volume": "1242"
+   "Volume": "1200"
+  },
+  {
+   "Date": "Oct 13 2026",
+   "Close": "25.016001",
+   "Adj Close": "25.02",
+   "Volume": "100"
+  },
+  {
+   "Date": "Oct 14 2026",
+   "Close": "24.77",
+   "Adj Close": "24.77",
+   "Volume": "500"
+  },
+  {
+   "Date": "Oct 15 2026",
+   "Close": "24.933001",
+   "Adj Close": "24.93",
+   "Volume": "300"
+  },
+  {
+   "Date": "Oct 16 2026",
+   "Close": "24.563",
+   "Adj Close": "24.56",
+   "Volume": "100"
   }
  ]
 }

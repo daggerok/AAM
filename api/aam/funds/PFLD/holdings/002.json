@@ -18,19 +18,6 @@
  ],
  "rows": [
   {
-   "Name": "Citizens Financial Group Inc 7.2956% 01/07/2175",
-   "Ticker": "-",
-   "Identifier": "174610AP0",
-   "Weight": "0.13",
-   "Market Value": "",
-   "Shares Held": "475000",
-   "Asset Category": "Banking",
-   "CUSIP": "174610AP0",
-   "SEDOL": "BDC55T7",
-   "Maturity": "2200-12-31",
-   "Coupon": "7.015"
-  },
-  {
    "Name": "Citizens Financial Group Inc 7.4496% 01/07/2175",
    "Ticker": "-",
    "Identifier": "174610AQ8",
@@ -200,6 +187,19 @@
    "Coupon": "4.556"
   },
   {
+   "Name": "FMC Corp 8.45% 11/01/2055",
+   "Ticker": "-",
+   "Identifier": "302491AZ8",
+   "Weight": "0.11",
+   "Market Value": "",
+   "Shares Held": "1280000",
+   "Asset Category": "Basic Industry",
+   "CUSIP": "302491AZ8",
+   "SEDOL": "BRJF1M3",
+   "Maturity": "2055-11-01",
+   "Coupon": "8.45"
+  },
+  {
    "Name": "M&T Bank Corp",
    "Ticker": "-",
    "Identifier": "55261F872",
@@ -304,19 +304,6 @@
    "Coupon": "8"
   },
   {
-   "Name": "Invesco Mortgage Capital Inc",
-   "Ticker": "-",
-   "Identifier": "46131B506",
-   "Weight": "0.1",
-   "Market Value": "",
-   "Shares Held": "14748",
-   "Asset Category": "Real Estate",
-   "CUSIP": "46131B506",
-   "SEDOL": "BZ0CHS7",
-   "Maturity": "2200-12-31",
-   "Coupon": "7.5"
-  },
-  {
    "Name": "PennyMac Mortgage Investment Trust",
    "Ticker": "-",
    "Identifier": "70931T707",
@@ -369,19 +356,6 @@
    "Coupon": "9.25"
   },
   {
-   "Name": "Chimera Investment Corp",
-   "Ticker": "-",
-   "Identifier": "16934Q505",
-   "Weight": "0.09",
-   "Market Value": "",
-   "Shares Held": "15779",
-   "Asset Category": "Real Estate",
-   "CUSIP": "16934Q505",
-   "SEDOL": "BGHCHV0",
-   "Maturity": "2200-12-31",
-   "Coupon": "7.75"
-  },
-  {
    "Name": "Compass Diversified Holdings",
    "Ticker": "-",
    "Identifier": "20451Q302",
@@ -408,6 +382,19 @@
    "Coupon": "7.5"
   },
   {
+   "Name": "Invesco Mortgage Capital Inc",
+   "Ticker": "-",
+   "Identifier": "46131B506",
+   "Weight": "0.09",
+   "Market Value": "",
+   "Shares Held": "14748",
+   "Asset Category": "Real Estate",
+   "CUSIP": "46131B506",
+   "SEDOL": "BZ0CHS7",
+   "Maturity": "2200-12-31",
+   "Coupon": "7.5"
+  },
+  {
    "Name": "Seapeak LLC",
    "Ticker": "-",
    "Identifier": "Y8564M204",
@@ -419,19 +406,6 @@
    "SEDOL": "BF4VQJ4",
    "Maturity": "2200-12-31",
    "Coupon": "8.5"
-  },
-  {
-   "Name": "Adamas Trust Inc",
-   "Ticker": "-",
-   "Identifier": "649604865",
-   "Weight": "0.08",
-   "Market Value": "",
-   "Shares Held": "11972",
-   "Asset Category": "Real Estate",
-   "CUSIP": "649604865",
-   "SEDOL": "BMC4Z64",
-   "Maturity": "2200-12-31",
-   "Coupon": "6.875"
   },
   {
    "Name": "Adamas Trust Inc",
@@ -512,6 +486,19 @@
    "Coupon": "5"
   },
   {
+   "Name": "Chimera Investment Corp",
+   "Ticker": "-",
+   "Identifier": "16934Q505",
+   "Weight": "0.08",
+   "Market Value": "",
+   "Shares Held": "15779",
+   "Asset Category": "Real Estate",
+   "CUSIP": "16934Q505",
+   "SEDOL": "BGHCHV0",
+   "Maturity": "2200-12-31",
+   "Coupon": "7.75"
+  },
+  {
    "Name": "CION Investment Corp",
    "Ticker": "-",
    "Identifier": "17259U303",
@@ -577,6 +564,19 @@
    "Coupon": "8.25"
   },
   {
+   "Name": "Adamas Trust Inc",
+   "Ticker": "-",
+   "Identifier": "649604865",
+   "Weight": "0.07",
+   "Market Value": "",
+   "Shares Held": "11972",
+   "Asset Category": "Real Estate",
+   "CUSIP": "649604865",
+   "SEDOL": "BMC4Z64",
+   "Maturity": "2200-12-31",
+   "Coupon": "6.875"
+  },
+  {
    "Name": "Chimera Investment Corp",
    "Ticker": "-",
    "Identifier": "16934Q869",
@@ -640,6 +640,32 @@
    "SEDOL": "BMYXVW7",
    "Maturity": "2028-11-01",
    "Coupon": "4.875"
+  },
+  {
+   "Name": "Midland States Bancorp Inc",
+   "Ticker": "-",
+   "Identifier": "597742303",
+   "Weight": "0.07",
+   "Market Value": "",
+   "Shares Held": "9629",
+   "Asset Category": "Banking",
+   "CUSIP": "597742303",
+   "SEDOL": "BJN53Y9",
+   "Maturity": "2200-12-31",
+   "Coupon": "7.75"
+  },
+  {
+   "Name": "New Mountain Finance Corp",
+   "Ticker": "-",
+   "Identifier": "647551308",
+   "Weight": "0.07",
+   "Market Value": "",
+   "Shares Held": "9629",
+   "Asset Category": "Financial Services",
+   "CUSIP": "647551308",
+   "SEDOL": "BNDSDV3",
+   "Maturity": "2028-11-15",
+   "Coupon": "8.25"
   },
   {
    "Name": "Old National Bancorp/IN",
@@ -850,32 +876,6 @@
    "Coupon": "8.875"
   },
   {
-   "Name": "Midland States Bancorp Inc",
-   "Ticker": "-",
-   "Identifier": "597742303",
-   "Weight": "0.06",
-   "Market Value": "",
-   "Shares Held": "9629",
-   "Asset Category": "Banking",
-   "CUSIP": "597742303",
-   "SEDOL": "BJN53Y9",
-   "Maturity": "2200-12-31",
-   "Coupon": "7.75"
-  },
-  {
-   "Name": "New Mountain Finance Corp",
-   "Ticker": "-",
-   "Identifier": "647551308",
-   "Weight": "0.06",
-   "Market Value": "",
-   "Shares Held": "9629",
-   "Asset Category": "Financial Services",
-   "CUSIP": "647551308",
-   "SEDOL": "BNDSDV3",
-   "Maturity": "2028-11-15",
-   "Coupon": "8.25"
-  },
-  {
    "Name": "Old National Bancorp/IN",
    "Ticker": "-",
    "Identifier": "68003D204",
@@ -967,19 +967,6 @@
    "Coupon": "6.25"
   },
   {
-   "Name": "Valley National Bancorp",
-   "Ticker": "-",
-   "Identifier": "919794305",
-   "Weight": "0.06",
-   "Market Value": "",
-   "Shares Held": "8358",
-   "Asset Category": "Banking",
-   "CUSIP": "919794305",
-   "SEDOL": "BDGSY95",
-   "Maturity": "2200-12-31",
-   "Coupon": "5.5"
-  },
-  {
    "Name": "ACRES Commercial Realty Corp",
    "Ticker": "-",
    "Identifier": "00489Q201",
@@ -1056,6 +1043,19 @@
    "SEDOL": "BD584Z2",
    "Maturity": "2200-12-31",
    "Coupon": "9.25"
+  },
+  {
+   "Name": "Valley National Bancorp",
+   "Ticker": "-",
+   "Identifier": "919794305",
+   "Weight": "0.05",
+   "Market Value": "",
+   "Shares Held": "8358",
+   "Asset Category": "Banking",
+   "CUSIP": "919794305",
+   "SEDOL": "BDGSY95",
+   "Maturity": "2200-12-31",
+   "Coupon": "5.5"
   },
   {
    "Name": "Bank of America Corp",

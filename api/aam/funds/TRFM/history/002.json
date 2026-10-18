@@ -2,7 +2,7 @@
  "ticker": "TRFM",
  "page": 2,
  "pageSize": 1000,
- "totalRows": 1068,
+ "totalRows": 1072,
  "headers": [
   "Date",
   "Close",
@@ -417,6 +417,30 @@
    "Close": "59.610001",
    "Adj Close": "59.61",
    "Volume": "21100"
+  },
+  {
+   "Date": "Oct 13 2026",
+   "Close": "59.381001",
+   "Adj Close": "59.38",
+   "Volume": "20200"
+  },
+  {
+   "Date": "Oct 14 2026",
+   "Close": "57.259998",
+   "Adj Close": "57.26",
+   "Volume": "38800"
+  },
+  {
+   "Date": "Oct 15 2026",
+   "Close": "57.25",
+   "Adj Close": "57.25",
+   "Volume": "48000"
+  },
+  {
+   "Date": "Oct 16 2026",
+   "Close": "55.500999",
+   "Adj Close": "55.5",
+   "Volume": "39600"
   }
  ]
 }

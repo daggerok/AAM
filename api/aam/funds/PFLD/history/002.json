@@ -2,7 +2,7 @@
  "ticker": "PFLD",
  "page": 2,
  "pageSize": 1000,
- "totalRows": 1731,
+ "totalRows": 1735,
  "headers": [
   "Date",
   "Close",
@@ -4395,6 +4395,30 @@
    "Close": "19.200001",
    "Adj Close": "19.2",
    "Volume": "36600"
+  },
+  {
+   "Date": "Oct 13 2026",
+   "Close": "19.171",
+   "Adj Close": "19.17",
+   "Volume": "62700"
+  },
+  {
+   "Date": "Oct 14 2026",
+   "Close": "19.129999",
+   "Adj Close": "19.13",
+   "Volume": "85700"
+  },
+  {
+   "Date": "Oct 15 2026",
+   "Close": "19.219999",
+   "Adj Close": "19.22",
+   "Volume": "39100"
+  },
+  {
+   "Date": "Oct 16 2026",
+   "Close": "19.139999",
+   "Adj Close": "19.14",
+   "Volume": "58800"
   }
  ]
 }

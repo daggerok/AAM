@@ -2,7 +2,7 @@
  "ticker": "UBIQ",
  "page": 1,
  "pageSize": 1000,
- "totalRows": 5,
+ "totalRows": 9,
  "headers": [
   "Date",
   "Close",
@@ -36,9 +36,33 @@
   },
   {
    "Date": "Oct 12 2026",
-   "Close": "25.966299",
+   "Close": "25.969999",
    "Adj Close": "25.97",
-   "Volume": "2051"
+   "Volume": "2100"
+  },
+  {
+   "Date": "Oct 13 2026",
+   "Close": "26.049999",
+   "Adj Close": "26.05",
+   "Volume": "58700"
+  },
+  {
+   "Date": "Oct 14 2026",
+   "Close": "25.85",
+   "Adj Close": "25.85",
+   "Volume": "395900"
+  },
+  {
+   "Date": "Oct 15 2026",
+   "Close": "26.190001",
+   "Adj Close": "26.19",
+   "Volume": "99500"
+  },
+  {
+   "Date": "Oct 16 2026",
+   "Close": "25.950001",
+   "Adj Close": "25.95",
+   "Volume": "185800"
   }
  ]
 }
