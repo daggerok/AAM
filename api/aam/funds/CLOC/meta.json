@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-18T03:07:14.509Z",
+ "generatedAt": "2026-10-20T02:46:37.127Z",
  "ticker": "CLOC",
  "name": "AAM Crescent CLO ETF",
  "category": "Fixed Income",
@@ -277,8 +277,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 247,
-  "asOf": "Oct 16 2026",
+  "totalRows": 248,
+  "asOf": "Oct 19 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

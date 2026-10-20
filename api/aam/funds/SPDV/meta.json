@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-18T03:07:14.509Z",
+ "generatedAt": "2026-10-20T02:46:37.127Z",
  "ticker": "SPDV",
  "name": "AAM S&P 500 High Dividend Value ETF",
  "category": "Equity",
@@ -1514,8 +1514,8 @@
    "history/003.json"
   ],
   "pageSize": 1000,
-  "totalRows": 2232,
-  "asOf": "Oct 16 2026",
+  "totalRows": 2233,
+  "asOf": "Oct 19 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }
