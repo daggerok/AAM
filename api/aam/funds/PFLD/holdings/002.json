@@ -291,19 +291,6 @@
    "Coupon": "8"
   },
   {
-   "Name": "FMC Corp 8.45% 11/01/2055",
-   "Ticker": "-",
-   "Identifier": "302491AZ8",
-   "Weight": "0.1",
-   "Market Value": "",
-   "Shares Held": "1280000",
-   "Asset Category": "Basic Industry",
-   "CUSIP": "302491AZ8",
-   "SEDOL": "BRJF1M3",
-   "Maturity": "2055-11-01",
-   "Coupon": "8.45"
-  },
-  {
    "Name": "PennyMac Mortgage Investment Trust",
    "Ticker": "-",
    "Identifier": "70931T707",
@@ -356,6 +343,19 @@
    "Coupon": "9.25"
   },
   {
+   "Name": "Chimera Investment Corp",
+   "Ticker": "-",
+   "Identifier": "16934Q505",
+   "Weight": "0.09",
+   "Market Value": "",
+   "Shares Held": "15641",
+   "Asset Category": "Real Estate",
+   "CUSIP": "16934Q505",
+   "SEDOL": "BGHCHV0",
+   "Maturity": "2200-12-31",
+   "Coupon": "7.75"
+  },
+  {
    "Name": "Compass Diversified Holdings",
    "Ticker": "-",
    "Identifier": "20451Q302",
@@ -380,6 +380,19 @@
    "SEDOL": "2613741",
    "Maturity": "2038-08-01",
    "Coupon": "7.5"
+  },
+  {
+   "Name": "FMC Corp 8.45% 11/01/2055",
+   "Ticker": "-",
+   "Identifier": "302491AZ8",
+   "Weight": "0.09",
+   "Market Value": "",
+   "Shares Held": "1280000",
+   "Asset Category": "Basic Industry",
+   "CUSIP": "302491AZ8",
+   "SEDOL": "BRJF1M3",
+   "Maturity": "2055-11-01",
+   "Coupon": "8.45"
   },
   {
    "Name": "Invesco Mortgage Capital Inc",
@@ -410,6 +423,19 @@
   {
    "Name": "Adamas Trust Inc",
    "Ticker": "-",
+   "Identifier": "649604865",
+   "Weight": "0.08",
+   "Market Value": "",
+   "Shares Held": "11894",
+   "Asset Category": "Real Estate",
+   "CUSIP": "649604865",
+   "SEDOL": "BMC4Z64",
+   "Maturity": "2200-12-31",
+   "Coupon": "6.875"
+  },
+  {
+   "Name": "Adamas Trust Inc",
+   "Ticker": "-",
    "Identifier": "649604881",
    "Weight": "0.08",
    "Market Value": "",
@@ -432,6 +458,19 @@
    "SEDOL": "BNC35P7",
    "Maturity": "2200-12-31",
    "Coupon": "7.75"
+  },
+  {
+   "Name": "Arbor Realty Trust Inc",
+   "Ticker": "-",
+   "Identifier": "038923850",
+   "Weight": "0.08",
+   "Market Value": "",
+   "Shares Held": "19407",
+   "Asset Category": "Real Estate",
+   "CUSIP": "038923850",
+   "SEDOL": "BLR4KW3",
+   "Maturity": "2200-12-31",
+   "Coupon": "6.25"
   },
   {
    "Name": "Atlanticus Holdings Corp",
@@ -471,19 +510,6 @@
    "SEDOL": "BP6WPH6",
    "Maturity": "2026-12-31",
    "Coupon": "5"
-  },
-  {
-   "Name": "Chimera Investment Corp",
-   "Ticker": "-",
-   "Identifier": "16934Q505",
-   "Weight": "0.08",
-   "Market Value": "",
-   "Shares Held": "15641",
-   "Asset Category": "Real Estate",
-   "CUSIP": "16934Q505",
-   "SEDOL": "BGHCHV0",
-   "Maturity": "2200-12-31",
-   "Coupon": "7.75"
   },
   {
    "Name": "CION Investment Corp",
@@ -551,32 +577,6 @@
    "Coupon": "8.25"
   },
   {
-   "Name": "Adamas Trust Inc",
-   "Ticker": "-",
-   "Identifier": "649604865",
-   "Weight": "0.07",
-   "Market Value": "",
-   "Shares Held": "11894",
-   "Asset Category": "Real Estate",
-   "CUSIP": "649604865",
-   "SEDOL": "BMC4Z64",
-   "Maturity": "2200-12-31",
-   "Coupon": "6.875"
-  },
-  {
-   "Name": "Arbor Realty Trust Inc",
-   "Ticker": "-",
-   "Identifier": "038923850",
-   "Weight": "0.07",
-   "Market Value": "",
-   "Shares Held": "19407",
-   "Asset Category": "Real Estate",
-   "CUSIP": "038923850",
-   "SEDOL": "BLR4KW3",
-   "Maturity": "2200-12-31",
-   "Coupon": "6.25"
-  },
-  {
    "Name": "Bread Financial Holdings Inc",
    "Ticker": "-",
    "Identifier": "018581603",
@@ -601,6 +601,19 @@
    "SEDOL": "BVN5M35",
    "Maturity": "2030-08-15",
    "Coupon": "8.875"
+  },
+  {
+   "Name": "CION Investment Corp",
+   "Ticker": "-",
+   "Identifier": "17259U402",
+   "Weight": "0.07",
+   "Market Value": "",
+   "Shares Held": "9873",
+   "Asset Category": "Financial Services",
+   "CUSIP": "17259U402",
+   "SEDOL": "BW1M7C9",
+   "Maturity": "2031-03-31",
+   "Coupon": "7.5"
   },
   {
    "Name": "Ellington Financial Inc",
@@ -757,19 +770,6 @@
    "SEDOL": "B1GH4Y3",
    "Maturity": "2200-12-31",
    "Coupon": "0"
-  },
-  {
-   "Name": "CION Investment Corp",
-   "Ticker": "-",
-   "Identifier": "17259U402",
-   "Weight": "0.06",
-   "Market Value": "",
-   "Shares Held": "9873",
-   "Asset Category": "Financial Services",
-   "CUSIP": "17259U402",
-   "SEDOL": "BW1M7C9",
-   "Maturity": "2031-03-31",
-   "Coupon": "7.5"
   },
   {
    "Name": "ConnectOne Bancorp Inc",

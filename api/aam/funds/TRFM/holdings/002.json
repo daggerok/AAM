@@ -18,6 +18,19 @@
  ],
  "rows": [
   {
+   "Name": "Pampa Energia SA",
+   "Ticker": "PAM",
+   "Identifier": "B41HK52",
+   "Weight": "0.18",
+   "Market Value": "",
+   "Shares Held": "7673",
+   "Asset Category": "Utilities",
+   "CUSIP": "",
+   "SEDOL": "B41HK52",
+   "Maturity": "",
+   "Coupon": ""
+  },
+  {
    "Name": "Pentair PLC",
    "Ticker": "PNR",
    "Identifier": "BLS09M3",
@@ -79,6 +92,19 @@
    "Asset Category": "Information Technology",
    "CUSIP": "",
    "SEDOL": "B0CL646",
+   "Maturity": "",
+   "Coupon": ""
+  },
+  {
+   "Name": "XPeng Inc",
+   "Ticker": "XPEV",
+   "Identifier": "BMXR2T4",
+   "Weight": "0.18",
+   "Market Value": "",
+   "Shares Held": "58320",
+   "Asset Category": "Consumer Discretionary",
+   "CUSIP": "",
+   "SEDOL": "BMXR2T4",
    "Maturity": "",
    "Coupon": ""
   },
@@ -148,19 +174,6 @@
    "Coupon": ""
   },
   {
-   "Name": "Mobileye Global Inc",
-   "Ticker": "MBLY",
-   "Identifier": "BLFH8G4",
-   "Weight": "0.17",
-   "Market Value": "",
-   "Shares Held": "78098",
-   "Asset Category": "Consumer Discretionary",
-   "CUSIP": "",
-   "SEDOL": "BLFH8G4",
-   "Maturity": "",
-   "Coupon": ""
-  },
-  {
    "Name": "Prysmian SpA",
    "Ticker": "PRYMY",
    "Identifier": "B3F5D78",
@@ -213,19 +226,6 @@
    "Coupon": ""
   },
   {
-   "Name": "XPeng Inc",
-   "Ticker": "XPEV",
-   "Identifier": "BMXR2T4",
-   "Weight": "0.17",
-   "Market Value": "",
-   "Shares Held": "58320",
-   "Asset Category": "Consumer Discretionary",
-   "CUSIP": "",
-   "SEDOL": "BMXR2T4",
-   "Maturity": "",
-   "Coupon": ""
-  },
-  {
    "Name": "Fair Isaac Corp",
    "Ticker": "FICO",
    "Identifier": "2330299",
@@ -239,23 +239,10 @@
    "Coupon": ""
   },
   {
-   "Name": "Contemporary Amperex Technology Co Ltd",
-   "Ticker": "CYATY",
-   "Identifier": "BTPF0L3",
-   "Weight": "0.15",
-   "Market Value": "",
-   "Shares Held": "35712",
-   "Asset Category": "Industrials",
-   "CUSIP": "",
-   "SEDOL": "BTPF0L3",
-   "Maturity": "",
-   "Coupon": ""
-  },
-  {
    "Name": "GDS Holdings Ltd",
    "Ticker": "GDS",
    "Identifier": "BD6FLL7",
-   "Weight": "0.14",
+   "Weight": "0.15",
    "Market Value": "",
    "Shares Held": "20898",
    "Asset Category": "Information Technology",
@@ -265,12 +252,25 @@
    "Coupon": ""
   },
   {
+   "Name": "Contemporary Amperex Technology Co Ltd",
+   "Ticker": "CYATY",
+   "Identifier": "BTPF0L3",
+   "Weight": "0.13",
+   "Market Value": "",
+   "Shares Held": "35712",
+   "Asset Category": "Industrials",
+   "CUSIP": "",
+   "SEDOL": "BTPF0L3",
+   "Maturity": "",
+   "Coupon": ""
+  },
+  {
    "Name": "Cash & Other",
    "Ticker": "-",
    "Identifier": "",
    "Weight": "0.06",
    "Market Value": "",
-   "Shares Held": "191132.04",
+   "Shares Held": "187161.44",
    "Asset Category": "Cash & Other",
    "CUSIP": "",
    "SEDOL": "",

@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-21T04:09:10.457Z",
+ "generatedAt": "2026-10-21T05:02:41.231Z",
  "ticker": "UBIQ",
  "name": "AAM Ubiquitous ETF",
  "category": "Equity",
@@ -106,8 +106,8 @@
   ],
   "pageSize": 250,
   "totalRows": 24,
-  "asOfDate": "2026-10-20",
-  "asOf": "Oct 20 2026",
+  "asOfDate": "2026-10-21",
+  "asOf": "Oct 21 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },
