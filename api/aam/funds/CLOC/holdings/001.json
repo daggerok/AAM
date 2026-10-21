@@ -21,9 +21,9 @@
    "Name": "Cash & Other",
    "Ticker": "-",
    "Identifier": "",
-   "Weight": "2.61",
+   "Weight": "2.63",
    "Market Value": "",
-   "Shares Held": "1594542.8",
+   "Shares Held": "1604719.13",
    "Asset Category": "Cash & Other",
    "CUSIP": "",
    "SEDOL": "",
@@ -68,19 +68,6 @@
    "SEDOL": "",
    "Maturity": "2037-07-15",
    "Coupon": "6.6425"
-  },
-  {
-   "Name": "Birch Grove CLO 16 Ltd 4.9076% 04/23/2039",
-   "Ticker": "-",
-   "Identifier": "090971AA0",
-   "Weight": "2.46",
-   "Market Value": "",
-   "Shares Held": "1500000",
-   "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "090971AA0",
-   "SEDOL": "",
-   "Maturity": "2039-04-23",
-   "Coupon": "4.9076"
   },
   {
    "Name": "CTM CLO 2025-1 Ltd 5.5425% 07/15/2038",
@@ -135,6 +122,19 @@
    "Coupon": "5.4292"
   },
   {
+   "Name": "Birch Grove CLO 16 Ltd 4.9076% 04/23/2039",
+   "Ticker": "-",
+   "Identifier": "090971AA0",
+   "Weight": "2.45",
+   "Market Value": "",
+   "Shares Held": "1500000",
+   "Asset Category": "Collateralized Loan Obligation",
+   "CUSIP": "090971AA0",
+   "SEDOL": "",
+   "Maturity": "2039-04-23",
+   "Coupon": "4.9076"
+  },
+  {
    "Name": "Palmer Square CLO 2021-3 Ltd 6.8425% 10/15/2038",
    "Ticker": "-",
    "Identifier": "69688FAW0",
@@ -187,7 +187,7 @@
    "Coupon": "6.3522"
   },
   {
-   "Name": "Madison Park Funding LXXIII Ltd 6.4995% 10/17/2038",
+   "Name": "Madison Park Funding LXXIII Ltd 6.8662% 10/17/2038",
    "Ticker": "-",
    "Identifier": "55823HAJ0",
    "Weight": "2.03",
@@ -197,7 +197,7 @@
    "CUSIP": "55823HAJ0",
    "SEDOL": "",
    "Maturity": "2038-10-17",
-   "Coupon": "6.4995"
+   "Coupon": "6.8662"
   },
   {
    "Name": "Balboa Bay Loan Funding 2020-1 Ltd 5.0192% 10/20/2035",
@@ -317,7 +317,7 @@
    "Coupon": "8.2925"
   },
   {
-   "Name": "Flatiron RR CLO 27 LTD 6.6292% 10/18/2037",
+   "Name": "Flatiron RR CLO 27 LTD 7.0162% 10/18/2037",
    "Ticker": "-",
    "Identifier": "33882JAJ1",
    "Weight": "1.64",
@@ -327,7 +327,7 @@
    "CUSIP": "33882JAJ1",
    "SEDOL": "BVV7SV3",
    "Maturity": "2037-10-18",
-   "Coupon": "6.6292"
+   "Coupon": "7.0162"
   },
   {
    "Name": "Fortress Credit BSL XIX Ltd 6.1751% 07/24/2036",
@@ -369,7 +369,7 @@
    "Coupon": "6.5792"
   },
   {
-   "Name": "Ivy Hill Middle Market Credit Fund XX Ltd 5.3792% 07/19/2037",
+   "Name": "Ivy Hill Middle Market Credit Fund XX Ltd 5.7662% 07/19/2037",
    "Ticker": "-",
    "Identifier": "46604CAL0",
    "Weight": "1.64",
@@ -379,7 +379,7 @@
    "CUSIP": "46604CAL0",
    "SEDOL": "",
    "Maturity": "2037-07-19",
-   "Coupon": "5.3792"
+   "Coupon": "5.7662"
   },
   {
    "Name": "LCM 41 Ltd 5.7425% 04/15/2036",
@@ -603,7 +603,7 @@
    "Coupon": "6.6252"
   },
   {
-   "Name": "Wellington Management Clo 5 Ltd 5.0192% 10/18/2038",
+   "Name": "Wellington Management Clo 5 Ltd 5.4062% 10/18/2038",
    "Ticker": "-",
    "Identifier": "94957NAA3",
    "Weight": "1.43",
@@ -613,10 +613,10 @@
    "CUSIP": "94957NAA3",
    "SEDOL": "BV9C951",
    "Maturity": "2038-10-18",
-   "Coupon": "5.0192"
+   "Coupon": "5.4062"
   },
   {
-   "Name": "AIMCO CLO Series 2018-A 5.0595% 10/17/2037",
+   "Name": "AIMCO CLO Series 2018-A 5.4262% 10/17/2037",
    "Ticker": "-",
    "Identifier": "00900GAN5",
    "Weight": "1.23",
@@ -626,7 +626,7 @@
    "CUSIP": "00900GAN5",
    "SEDOL": "BMVGPD8",
    "Maturity": "2037-10-17",
-   "Coupon": "5.0595"
+   "Coupon": "5.4262"
   },
   {
    "Name": "Antares CLO 2024-6 Ltd 7.5292% 01/20/2037",
@@ -642,7 +642,7 @@
    "Coupon": "7.5292"
   },
   {
-   "Name": "Flatiron CLO 21 Ltd 5.4292% 10/19/2037",
+   "Name": "Flatiron CLO 21 Ltd 5.8162% 10/19/2037",
    "Ticker": "-",
    "Identifier": "33883PAU1",
    "Weight": "1.23",
@@ -652,7 +652,7 @@
    "CUSIP": "33883PAU1",
    "SEDOL": "",
    "Maturity": "2037-10-19",
-   "Coupon": "5.4292"
+   "Coupon": "5.8162"
   },
   {
    "Name": "Gallatin CLO XI 2024-1 Ltd 5.6792% 10/20/2037",
@@ -671,7 +671,7 @@
    "Name": "Elevation CLO 2020-11 Ltd 6.0425% 10/15/2037",
    "Ticker": "-",
    "Identifier": "28621YAS4",
-   "Weight": "1.07",
+   "Weight": "1.06",
    "Market Value": "",
    "Shares Held": "650000",
    "Asset Category": "Collateralized Loan Obligation",
@@ -759,7 +759,7 @@
    "Coupon": "6.2751"
   },
   {
-   "Name": "TCW CLO 2024-2 Ltd 5.5495% 07/17/2037",
+   "Name": "TCW CLO 2024-2 Ltd 5.9162% 07/17/2037",
    "Ticker": "-",
    "Identifier": "87252GAG1",
    "Weight": "0.82",
@@ -769,7 +769,7 @@
    "CUSIP": "87252GAG1",
    "SEDOL": "",
    "Maturity": "2037-07-17",
-   "Coupon": "5.5495"
+   "Coupon": "5.9162"
   },
   {
    "Name": "Voya CLO 2022-1 Ltd 5.4792% 04/20/2035",

@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-20T02:46:37.127Z",
+ "generatedAt": "2026-10-21T04:09:10.457Z",
  "ticker": "SAWG",
  "name": "AAM Sawgrass U.S. Large Cap Quality Growth ETF",
  "category": "Equity",
@@ -11,8 +11,8 @@
   "fundPage": "https://www.aamlive.com/ETF/Detail/SAWG",
   "inception": "2024-07-30",
   "secYield": 0.22,
-  "nav": 24.57,
-  "asOfDate": "2026-10-16"
+  "nav": 24.7,
+  "asOfDate": "2026-10-19"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/SAWG",
@@ -41,23 +41,23 @@
   "net": 0.49
  },
  "nav": {
-  "display": "$24.57",
-  "value": 24.57,
-  "asOfDate": "Oct 16 2026"
+  "display": "$24.70",
+  "value": 24.7,
+  "asOfDate": "Oct 19 2026"
  },
  "marketPrice": {
-  "display": "$24.56",
-  "value": 24.56,
-  "asOfDate": "Oct 16 2026"
+  "display": "$24.72",
+  "value": 24.72,
+  "asOfDate": "Oct 19 2026"
  },
  "premiumDiscount": {
-  "display": "-0.04%",
-  "value": -0.04
+  "display": "0.08%",
+  "value": 0.08
  },
  "aum": {
-  "display": "$2.95 M",
-  "value": 2948100,
-  "asOfDate": "Oct 16 2026",
+  "display": "$2.96 M",
+  "value": 2964048,
+  "asOfDate": "Oct 19 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
@@ -150,8 +150,8 @@
   ],
   "pageSize": 250,
   "totalRows": 44,
-  "asOfDate": "2026-10-19",
-  "asOf": "Oct 19 2026",
+  "asOfDate": "2026-10-20",
+  "asOf": "Oct 20 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },
@@ -160,8 +160,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 557,
-  "asOf": "Oct 19 2026",
+  "totalRows": 558,
+  "asOf": "Oct 20 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

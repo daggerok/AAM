@@ -18,6 +18,32 @@
  ],
  "rows": [
   {
+   "Name": "Pentair PLC",
+   "Ticker": "PNR",
+   "Identifier": "BLS09M3",
+   "Weight": "0.18",
+   "Market Value": "",
+   "Shares Held": "10807",
+   "Asset Category": "Industrials",
+   "CUSIP": "",
+   "SEDOL": "BLS09M3",
+   "Maturity": "",
+   "Coupon": ""
+  },
+  {
+   "Name": "Renesas Electronics Corp",
+   "Ticker": "RNECY",
+   "Identifier": "2500337",
+   "Weight": "0.18",
+   "Market Value": "",
+   "Shares Held": "61534",
+   "Asset Category": "Information Technology",
+   "CUSIP": "",
+   "SEDOL": "2500337",
+   "Maturity": "",
+   "Coupon": ""
+  },
+  {
    "Name": "Rocket Lab Corp",
    "Ticker": "RKLB",
    "Identifier": "BT6C8Z3",
@@ -44,19 +70,6 @@
    "Coupon": ""
   },
   {
-   "Name": "ServiceTitan Inc",
-   "Ticker": "TTAN",
-   "Identifier": "BPGN2Q7",
-   "Weight": "0.18",
-   "Market Value": "",
-   "Shares Held": "7840",
-   "Asset Category": "Information Technology",
-   "CUSIP": "",
-   "SEDOL": "BPGN2Q7",
-   "Maturity": "",
-   "Coupon": ""
-  },
-  {
    "Name": "Silicon Motion Technology Corp",
    "Ticker": "SIMO",
    "Identifier": "B0CL646",
@@ -70,41 +83,28 @@
    "Coupon": ""
   },
   {
-   "Name": "SiTime Corp",
-   "Ticker": "SITM",
-   "Identifier": "BKS48R6",
-   "Weight": "0.18",
-   "Market Value": "",
-   "Shares Held": "1251",
-   "Asset Category": "Information Technology",
-   "CUSIP": "",
-   "SEDOL": "BKS48R6",
-   "Maturity": "",
-   "Coupon": ""
-  },
-  {
-   "Name": "TTM Technologies Inc",
-   "Ticker": "TTMI",
-   "Identifier": "2635659",
-   "Weight": "0.18",
-   "Market Value": "",
-   "Shares Held": "6309",
-   "Asset Category": "Information Technology",
-   "CUSIP": "",
-   "SEDOL": "2635659",
-   "Maturity": "",
-   "Coupon": ""
-  },
-  {
-   "Name": "ACM Research Inc",
-   "Ticker": "ACMR",
-   "Identifier": "BF5C2N2",
+   "Name": "Adyen NV",
+   "Ticker": "ADYEY",
+   "Identifier": "BJXK4M9",
    "Weight": "0.17",
    "Market Value": "",
-   "Shares Held": "10491",
+   "Shares Held": "53911",
+   "Asset Category": "Financials",
+   "CUSIP": "",
+   "SEDOL": "BJXK4M9",
+   "Maturity": "",
+   "Coupon": ""
+  },
+  {
+   "Name": "Applied Digital Corp",
+   "Ticker": "APLD",
+   "Identifier": "BMCNFN8",
+   "Weight": "0.17",
+   "Market Value": "",
+   "Shares Held": "28124",
    "Asset Category": "Information Technology",
    "CUSIP": "",
-   "SEDOL": "BF5C2N2",
+   "SEDOL": "BMCNFN8",
    "Maturity": "",
    "Coupon": ""
   },
@@ -174,6 +174,19 @@
    "Coupon": ""
   },
   {
+   "Name": "Rivian Automotive Inc",
+   "Ticker": "RIVN",
+   "Identifier": "BL98841",
+   "Weight": "0.17",
+   "Market Value": "",
+   "Shares Held": "45756",
+   "Asset Category": "Consumer Discretionary",
+   "CUSIP": "",
+   "SEDOL": "BL98841",
+   "Maturity": "",
+   "Coupon": ""
+  },
+  {
    "Name": "Vestas Wind Systems A/S",
    "Ticker": "VWDRY",
    "Identifier": "B1P16F1",
@@ -213,32 +226,6 @@
    "Coupon": ""
   },
   {
-   "Name": "Applied Digital Corp",
-   "Ticker": "APLD",
-   "Identifier": "BMCNFN8",
-   "Weight": "0.16",
-   "Market Value": "",
-   "Shares Held": "28124",
-   "Asset Category": "Information Technology",
-   "CUSIP": "",
-   "SEDOL": "BMCNFN8",
-   "Maturity": "",
-   "Coupon": ""
-  },
-  {
-   "Name": "Contemporary Amperex Technology Co Ltd",
-   "Ticker": "CYATY",
-   "Identifier": "BTPF0L3",
-   "Weight": "0.16",
-   "Market Value": "",
-   "Shares Held": "35712",
-   "Asset Category": "Industrials",
-   "CUSIP": "",
-   "SEDOL": "BTPF0L3",
-   "Maturity": "",
-   "Coupon": ""
-  },
-  {
    "Name": "Fair Isaac Corp",
    "Ticker": "FICO",
    "Identifier": "2330299",
@@ -252,10 +239,23 @@
    "Coupon": ""
   },
   {
+   "Name": "Contemporary Amperex Technology Co Ltd",
+   "Ticker": "CYATY",
+   "Identifier": "BTPF0L3",
+   "Weight": "0.15",
+   "Market Value": "",
+   "Shares Held": "35712",
+   "Asset Category": "Industrials",
+   "CUSIP": "",
+   "SEDOL": "BTPF0L3",
+   "Maturity": "",
+   "Coupon": ""
+  },
+  {
    "Name": "GDS Holdings Ltd",
    "Ticker": "GDS",
    "Identifier": "BD6FLL7",
-   "Weight": "0.15",
+   "Weight": "0.14",
    "Market Value": "",
    "Shares Held": "20898",
    "Asset Category": "Information Technology",
@@ -268,9 +268,9 @@
    "Name": "Cash & Other",
    "Ticker": "-",
    "Identifier": "",
-   "Weight": "0.05",
+   "Weight": "0.06",
    "Market Value": "",
-   "Shares Held": "171810.78",
+   "Shares Held": "191132.04",
    "Asset Category": "Cash & Other",
    "CUSIP": "",
    "SEDOL": "",

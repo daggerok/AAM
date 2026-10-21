@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-20T02:46:37.127Z",
+ "generatedAt": "2026-10-21T04:09:10.457Z",
  "ticker": "CLOC",
  "name": "AAM Crescent CLO ETF",
  "category": "Fixed Income",
@@ -12,7 +12,7 @@
   "inception": "2025-10-22",
   "secYield": 5.73,
   "nav": 24.93,
-  "asOfDate": "2026-10-16"
+  "asOfDate": "2026-10-19"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/CLOC",
@@ -43,21 +43,21 @@
  "nav": {
   "display": "$24.93",
   "value": 24.93,
-  "asOfDate": "Oct 16 2026"
+  "asOfDate": "Oct 19 2026"
  },
  "marketPrice": {
   "display": "$25.05",
   "value": 25.05,
-  "asOfDate": "Oct 16 2026"
+  "asOfDate": "Oct 19 2026"
  },
  "premiumDiscount": {
   "display": "0.48%",
   "value": 0.48
  },
  "aum": {
-  "display": "$61.07 M",
-  "value": 61066985,
-  "asOfDate": "Oct 16 2026",
+  "display": "$61.08 M",
+  "value": 61077275,
+  "asOfDate": "Oct 19 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
@@ -267,8 +267,8 @@
   ],
   "pageSize": 250,
   "totalRows": 62,
-  "asOfDate": "2026-10-19",
-  "asOf": "Oct 19 2026",
+  "asOfDate": "2026-10-20",
+  "asOf": "Oct 20 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },
@@ -277,8 +277,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 248,
-  "asOf": "Oct 19 2026",
+  "totalRows": 249,
+  "asOf": "Oct 20 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

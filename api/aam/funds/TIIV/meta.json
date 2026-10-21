@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-20T02:46:37.127Z",
+ "generatedAt": "2026-10-21T04:09:10.457Z",
  "ticker": "TIIV",
  "name": "AAM Todd International Intrinsic Value ETF",
  "category": "Equity",
@@ -10,9 +10,9 @@
   "category": "Equity",
   "fundPage": "https://www.aamlive.com/ETF/Detail/TIIV",
   "inception": "2025-07-24",
-  "secYield": 2.33,
-  "nav": 29.91,
-  "asOfDate": "2026-10-16"
+  "secYield": 2.35,
+  "nav": 29.69,
+  "asOfDate": "2026-10-19"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/TIIV",
@@ -41,34 +41,34 @@
   "net": 0.54
  },
  "nav": {
-  "display": "$29.91",
-  "value": 29.91,
-  "asOfDate": "Oct 16 2026"
+  "display": "$29.69",
+  "value": 29.69,
+  "asOfDate": "Oct 19 2026"
  },
  "marketPrice": {
-  "display": "$29.94",
-  "value": 29.94,
-  "asOfDate": "Oct 16 2026"
+  "display": "$29.77",
+  "value": 29.77,
+  "asOfDate": "Oct 19 2026"
  },
  "premiumDiscount": {
-  "display": "0.10%",
-  "value": 0.1
+  "display": "0.27%",
+  "value": 0.27
  },
  "aum": {
-  "display": "$32.13 M",
-  "value": 32130643.76,
-  "asOfDate": "Oct 16 2026",
+  "display": "$31.89 M",
+  "value": 31887991.47,
+  "asOfDate": "Oct 19 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
-  "dividendYield": 2.14,
-  "dividendYieldText": "2.14%",
+  "dividendYield": 2.15,
+  "dividendYieldText": "2.15%",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
-  "secYield": 2.33,
-  "secYieldText": "2.33%",
+  "secYield": 2.35,
+  "secYieldText": "2.35%",
   "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
-  "subsidizedSecYield": 2.33,
-  "unsubsidizedSecYield": 2.33
+  "subsidizedSecYield": 2.35,
+  "unsubsidizedSecYield": 2.35
  },
  "officialReturns": {
   "asOfDate": "2026-09-30",
@@ -150,8 +150,8 @@
   ],
   "pageSize": 250,
   "totalRows": 66,
-  "asOfDate": "2026-10-19",
-  "asOf": "Oct 19 2026",
+  "asOfDate": "2026-10-20",
+  "asOf": "Oct 20 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },
@@ -160,8 +160,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 311,
-  "asOf": "Oct 19 2026",
+  "totalRows": 312,
+  "asOf": "Oct 20 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }
