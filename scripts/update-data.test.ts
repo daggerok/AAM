@@ -11,7 +11,7 @@ import {
   totalToAnnualized, indicatedYield, inferDistributionFrequency, deriveCatalogMetrics, dividendYieldBasisFor, withDividendYieldBasis, annualizedSinceInception, fundFilterReasons,
   parseFundTickerMap, parseCompanyTickerMap, parseNport, nportMatches, parseNportAccessions, parseEdgarAtomFilings, nportUrlFor, createTransport,
   isCertError, installSystemCa, systemCaActive,
-  dateTextToIso, secFilingIsFresher, pruneStalePages, buildPages, writePages, readPreviousSheet, mergeHistory, mergeDividends, batchSelection, initializeCatalogSeed, validatePortfolioPreview, main,
+  dateTextToIso, secFilingIsFresher, pruneStalePages, buildPages, writePages, readPreviousSheet, mergeHistory, mergeDividends, batchSelection, initializeCatalogSeed, validatePortfolioPreview, holdingsGuard, main,
 } from './update-data';
 import type { Fetcher } from './update-data';
 
@@ -54,9 +54,9 @@ function catalogHtml(funds = FUNDS): string {
 }
 type HoldingRow = (string | number)[];
 const HOLDINGS: Record<string, HoldingRow[]> = {
-  SPDV: [['Skyworks Solutions Inc', 'SWKS', '2961053', 'Information Technology', 29953, 2.57, '-', '-'], ['Cognizant Technology Solutions Corp', 'CTSH', '2257019', 'Information Technology', 43812, 2.52, '-', '-'], ['Cash & Other', 'Cash&Other', '', 'Cash', 0, 0.4, '-', '-']],
-  PFLD: [['Example Preferred 6.5%', '48128AAJ2', '', 'Preferred', 100000, 1.5, 50333, 6.5], ['Bank Capital Security', 'BCS', '', 'Preferred', 5000, 1.25, '-', '-']],
-  CLOC: [['Example CLO Note', '00140HAA1', '', 'CLO', 250000, 2, 50333, 5.0792], ['Cash & Other', 'Cash&Other', '', 'Cash', 0, 1, '-', '-']],
+  SPDV: [['Skyworks Solutions Inc', 'SWKS', '2961053', 'Information Technology', 29953, 97.08, '-', '-'], ['Cognizant Technology Solutions Corp', 'CTSH', '2257019', 'Information Technology', 43812, 2.52, '-', '-'], ['Cash & Other', 'Cash&Other', '', 'Cash', 0, 0.4, '-', '-']],
+  PFLD: [['Example Preferred 6.5%', '48128AAJ2', '', 'Preferred', 100000, 98.75, 50333, 6.5], ['Bank Capital Security', 'BCS', '', 'Preferred', 5000, 1.25, '-', '-']],
+  CLOC: [['Example CLO Note', '00140HAA1', '', 'CLO', 250000, 99, 50333, 5.0792], ['Cash & Other', 'Cash&Other', '', 'Cash', 0, 1, '-', '-']],
 };
 const FACTS: Record<string, Record<string, string>> = {
   SPDV: { Ticker: 'SPDV', CUSIP: '26922A594', ISIN: 'US26922A5948', Inception: '11/28/2017', 'Expense Ratio': '0.29%', 'Distribution Schedule': 'Monthly', '30 Day SEC Yield': '3.60%', NAV: '$30.00', 'Closing Price': '$30.10', 'Net Assets': '$100,651,085', Exchange: 'NYSE Arca' },
@@ -113,9 +113,11 @@ const NPORT_XML = `<?xml version="1.0"?>
 <genInfo><regName>ETF Series Solutions</regName><regCik>1540305</regCik><seriesName>AAM S&amp;P 500 High Dividend Value ETF</seriesName><seriesId>S000000001</seriesId><repPdDate>2026-06-30</repPdDate></genInfo>
 <fundInfo><netAssets>100000000</netAssets></fundInfo>
 <invstOrSecs>
-<invstOrSec><name>Microsoft Corp</name><cusip>594918104</cusip><balance>100</balance><valUSD>50000</valUSD><pctVal>0.05</pctVal><assetCat>EC</assetCat></invstOrSec>
-<invstOrSec><name>Bond Issuer 6% 2035</name><cusip>N/A</cusip><identifiers><isin value="US0000000001"/></identifiers><balance>100000</balance><valUSD>99000</valUSD><pctVal>0.099</pctVal><assetCat>DBT</assetCat></invstOrSec>
+<invstOrSec><name>Microsoft Corp</name><cusip>594918104</cusip><balance>100</balance><valUSD>50000</valUSD><pctVal>50</pctVal><assetCat>EC</assetCat></invstOrSec>
+<invstOrSec><name>Bond Issuer 6% 2035</name><cusip>N/A</cusip><identifiers><isin value="US0000000001"/></identifiers><balance>100000</balance><valUSD>99000</valUSD><pctVal>39.9</pctVal><assetCat>DBT</assetCat></invstOrSec>
 <invstOrSec><name>Unknown private security</name><cusip>N/A</cusip><balance></balance><pctVal></pctVal><assetCat>OTHER</assetCat></invstOrSec>
+<invstOrSec><name>Apple Inc</name><cusip>037833100</cusip><balance>30</balance><valUSD>6000</valUSD><pctVal>6</pctVal><assetCat>EC</assetCat></invstOrSec>
+<invstOrSec><name>Cash and equivalents</name><cusip>N/A</cusip><balance>4100</balance><valUSD>4100</valUSD><pctVal>4.1</pctVal><assetCat>STIV</assetCat></invstOrSec>
 </invstOrSecs></formData></edgarSubmission>`;
 
 
@@ -338,9 +340,9 @@ describe('parsing', () => {
     expect([...body.keys()].sort()).toEqual(['__EVENTARGUMENT', '__EVENTTARGET', '__VIEWSTATE', '__VIEWSTATEGENERATOR']);
     expect(() => exportPostbackBody(html.replaceAll('btnETFHoldingsExport', 'bad'))).toThrow(); expect(() => exportPostbackBody('<html>login</html>')).toThrow();
     const rows = parseHoldingsWorkbook(xlsBytes(HOLDINGS.SPDV));
-    expect(rows.length).toBe(3); expect(rows.reduce((s, r) => s + Number(r.Weight), 0)).toBeCloseTo(5.49, 6);
+    expect(rows.length).toBe(3); expect(rows.reduce((s, r) => s + Number(r.Weight), 0)).toBeCloseTo(100, 6);
     expect(rows.every(r => r['Market Value'] === '')).toBe(true); expect(parseHoldingsWorkbook(xlsBytes(HOLDINGS.SPDV))).toEqual(rows);
-    expect(rows[0]).toMatchObject({ Name: 'Skyworks Solutions Inc', Ticker: 'SWKS', Identifier: '2961053', Weight: '2.57', 'Shares Held': '29953' });
+    expect(rows[0]).toMatchObject({ Name: 'Skyworks Solutions Inc', Ticker: 'SWKS', Identifier: '2961053', Weight: '97.08', 'Shares Held': '29953' });
     expect(parseHoldingsWorkbook(xlsBytes(HOLDINGS.PFLD))[0]).toMatchObject({ Ticker: '-', CUSIP: '48128AAJ2', Maturity: '2037-10-20', Coupon: '6.5' });
   });
 
@@ -358,6 +360,21 @@ describe('parsing', () => {
     expect(() => validatePortfolioPreview([{ ...rows[0], Weight: '99' }, ...rows.slice(1)], d.previewRows)).toThrow('mismatch');
   });
 
+  test('holdings guard: header-only, renamed weight column, broken weights, a bad weight sum and a halved sheet are rejected', () => {
+    const headers = ['Name', 'Ticker', 'Weight'];
+    const rows = [{ Name: 'A', Ticker: 'A', Weight: '60%' }, { Name: 'B', Ticker: 'B', Weight: '40%' }];
+    expect(holdingsGuard(headers, rows, 2)).toBeNull();
+    expect(holdingsGuard(headers, [['A', 'A', '60'], ['B', 'B', '40']], null)).toBeNull();
+    expect(holdingsGuard([], [], 0)).toBeNull(); // nothing published before: an empty sheet is honest
+    expect(holdingsGuard(headers, [], 505)).toContain('no holdings rows');
+    expect(holdingsGuard(['Name', 'Ticker', 'Wt'], rows, 2)).toContain('no weight column');
+    expect(holdingsGuard(headers, rows.map((row) => ({ ...row, Weight: '6\u200B0' })), 2)).toContain('numeric weight');
+    const allocation = [{ Name: 'Cash&Collateral', Ticker: '-', Weight: '100' }, { Name: 'Equities', Ticker: '-', Weight: '476' }];
+    expect(holdingsGuard(headers, allocation, 2)).toContain('outside 50..150');
+    expect(holdingsGuard(headers, allocation, 2, ['sum'])).toBeNull();
+    expect(holdingsGuard(headers, rows, 5)).toContain('less than half');
+  });
+
   test('SEC: ticker maps, raw primary_doc N-PORT URLs, exact trust + series match, missing values null-like, no first-filing guess', () => {
     const table = parseFundTickerMap({ fields: ['symbol', 'cik', 'seriesId', 'classId'], data: [['SPDV', 1540305, 'S000000001', 'C1'], ['BAD', 0, '', '']] });
     expect(table.get('SPDV')).toEqual({ cik: '0001540305', seriesId: 'S000000001', classId: 'C1' }); expect(table.has('BAD')).toBe(false);
@@ -367,7 +384,7 @@ describe('parsing', () => {
     expect(parseNportAccessions({ cik: '1540305', filings: { recent: { form: ['8-K', 'NPORT-P'], accessionNumber: ['x', '0001193125-26-000001'], filingDate: ['', '2026-08-01'], reportDate: ['', '2026-06-30'] } } })[0].url).toBe(url);
     expect(parseEdgarAtomFilings('<feed><entry><filing-type>NPORT-P</filing-type><accession-number>0001193125-26-000001</accession-number><filing-href>https://www.sec.gov/Archives/edgar/data/1540305/a</filing-href><filing-date>2026-08-01</filing-date></entry></feed>')[0].url).toBe(url);
     const parsed = parseNport(NPORT_XML), fund = parseCatalog(catalogHtml()).find(f => f.ticker === 'SPDV')!;
-    expect(parsed).toMatchObject({ regCik: '1540305', seriesId: 'S000000001', repPdDate: '2026-06-30', netAssets: 100000000 }); expect(parsed.holdings.length).toBe(3);
+    expect(parsed).toMatchObject({ regCik: '1540305', seriesId: 'S000000001', repPdDate: '2026-06-30', netAssets: 100000000 }); expect(parsed.holdings.length).toBe(5);
     expect(parsed.holdings[1].Identifier).toBe('US0000000001'); expect(parsed.holdings[2]['Market Value']).toBe(''); expect(parsed.holdings[2].Weight).toBe('');
     expect(nportMatches(fund, parsed, table.get('SPDV'))).toBe(true); expect(nportMatches(fund, parsed)).toBe(true);
     expect(nportMatches(fund, { ...parsed, regCik: '999' })).toBe(false); expect(nportMatches(fund, { ...parsed, seriesName: 'Other AAM Fund' })).toBe(false);
@@ -598,6 +615,18 @@ describe('pipeline', () => {
       const b = await main({ ...integrationEnv, TICKERS: 'SPDV' }, { root, fetcher: olderSec, now: new Date('2026-10-02T05:00:00Z') });
       expect(b.providers.SPDV.holdings).not.toBe('sec'); expect(await snapshot(dir)).toEqual(before);
       expect((await Bun.file(new URL('funds/SPDV/holdings/001.json', root)).json()).headers.length).toBe(11);
+    });
+  });
+
+  test('an export cut down to the top-holdings grid fails the holdings guard: the fund stays exactly as published and is reported failed', async () => {
+    // the preview grid still matches, so only the guard notices that 3 of the 7 published rows came back
+    const full: HoldingRow[] = [...HOLDINGS.SPDV, ...['A', 'B', 'C', 'D'].map((x): HoldingRow => [`Small Holding ${x}`, `SM${x}`, '', 'Industrials', 10, 0.01, '-', '-'])];
+    const exportOf = (rows: HoldingRow[], base: Fetcher): Fetcher => async (url, init) => url === 'https://www.aamlive.com/ETF/Detail/SPDV' && init?.method === 'POST' ? new Response(new Uint8Array(xlsBytes(rows))) : base(url, init);
+    await testFeed(async (dir, root, base) => {
+      await main(integrationEnv, { root, fetcher: exportOf(full, base), now: fixedNow }); const before = await snapshot(dir);
+      expect(tickerOf(await Bun.file(new URL('index.json', root)).json(), 'SPDV').holdings).toBe(7);
+      const result = await main({ ...integrationEnv, TICKERS: 'SPDV' }, { root, fetcher: exportOf(HOLDINGS.SPDV, base), now: new Date('2026-10-02T05:00:00Z') });
+      expect(result.failed).toEqual(['SPDV']); expect(await snapshot(dir)).toEqual(before);
     });
   });
 
