@@ -343,19 +343,6 @@
    "Coupon": "9.25"
   },
   {
-   "Name": "Chimera Investment Corp",
-   "Ticker": "-",
-   "Identifier": "16934Q505",
-   "Weight": "0.09",
-   "Market Value": "",
-   "Shares Held": "15641",
-   "Asset Category": "Real Estate",
-   "CUSIP": "16934Q505",
-   "SEDOL": "BGHCHV0",
-   "Maturity": "2200-12-31",
-   "Coupon": "7.75"
-  },
-  {
    "Name": "Compass Diversified Holdings",
    "Ticker": "-",
    "Identifier": "20451Q302",
@@ -512,6 +499,19 @@
    "Coupon": "5"
   },
   {
+   "Name": "Chimera Investment Corp",
+   "Ticker": "-",
+   "Identifier": "16934Q505",
+   "Weight": "0.08",
+   "Market Value": "",
+   "Shares Held": "15641",
+   "Asset Category": "Real Estate",
+   "CUSIP": "16934Q505",
+   "SEDOL": "BGHCHV0",
+   "Maturity": "2200-12-31",
+   "Coupon": "7.75"
+  },
+  {
    "Name": "CION Investment Corp",
    "Ticker": "-",
    "Identifier": "17259U303",
@@ -603,19 +603,6 @@
    "Coupon": "8.875"
   },
   {
-   "Name": "CION Investment Corp",
-   "Ticker": "-",
-   "Identifier": "17259U402",
-   "Weight": "0.07",
-   "Market Value": "",
-   "Shares Held": "9873",
-   "Asset Category": "Financial Services",
-   "CUSIP": "17259U402",
-   "SEDOL": "BW1M7C9",
-   "Maturity": "2031-03-31",
-   "Coupon": "7.5"
-  },
-  {
    "Name": "Ellington Financial Inc",
    "Ticker": "-",
    "Identifier": "28852N307",
@@ -666,19 +653,6 @@
    "SEDOL": "BMYXVW7",
    "Maturity": "2028-11-01",
    "Coupon": "4.875"
-  },
-  {
-   "Name": "Midland States Bancorp Inc",
-   "Ticker": "-",
-   "Identifier": "597742303",
-   "Weight": "0.07",
-   "Market Value": "",
-   "Shares Held": "9569",
-   "Asset Category": "Banking",
-   "CUSIP": "597742303",
-   "SEDOL": "BJN53Y9",
-   "Maturity": "2200-12-31",
-   "Coupon": "7.75"
   },
   {
    "Name": "New Mountain Finance Corp",
@@ -770,6 +744,19 @@
    "SEDOL": "B1GH4Y3",
    "Maturity": "2200-12-31",
    "Coupon": "0"
+  },
+  {
+   "Name": "CION Investment Corp",
+   "Ticker": "-",
+   "Identifier": "17259U402",
+   "Weight": "0.06",
+   "Market Value": "",
+   "Shares Held": "9873",
+   "Asset Category": "Financial Services",
+   "CUSIP": "17259U402",
+   "SEDOL": "BW1M7C9",
+   "Maturity": "2031-03-31",
+   "Coupon": "7.5"
   },
   {
    "Name": "ConnectOne Bancorp Inc",
@@ -874,6 +861,19 @@
    "SEDOL": "BPRBVL8",
    "Maturity": "2029-02-15",
    "Coupon": "8.875"
+  },
+  {
+   "Name": "Midland States Bancorp Inc",
+   "Ticker": "-",
+   "Identifier": "597742303",
+   "Weight": "0.06",
+   "Market Value": "",
+   "Shares Held": "9569",
+   "Asset Category": "Banking",
+   "CUSIP": "597742303",
+   "SEDOL": "BJN53Y9",
+   "Maturity": "2200-12-31",
+   "Coupon": "7.75"
   },
   {
    "Name": "Old National Bancorp/IN",

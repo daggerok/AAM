@@ -2,7 +2,7 @@
  "ticker": "LODI",
  "page": 1,
  "pageSize": 1000,
- "totalRows": 470,
+ "totalRows": 473,
  "headers": [
   "Date",
   "Close",
@@ -2829,6 +2829,24 @@
    "Close": "24.950001",
    "Adj Close": "24.95",
    "Volume": "10000"
+  },
+  {
+   "Date": "Oct 21 2026",
+   "Close": "24.950001",
+   "Adj Close": "24.95",
+   "Volume": "18600"
+  },
+  {
+   "Date": "Oct 22 2026",
+   "Close": "24.98",
+   "Adj Close": "24.98",
+   "Volume": "12500"
+  },
+  {
+   "Date": "Oct 23 2026",
+   "Close": "25.004999",
+   "Adj Close": "25",
+   "Volume": "7300"
   }
  ]
 }

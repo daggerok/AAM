@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-21T04:09:10.457Z",
+ "generatedAt": "2026-10-25T03:17:58.568Z",
  "ticker": "BDIV",
  "name": "AAM Brentview Dividend Growth ETF",
  "category": "Equity",
@@ -11,8 +11,8 @@
   "fundPage": "https://www.aamlive.com/ETF/Detail/BDIV",
   "inception": "2024-07-30",
   "secYield": 1.23,
-  "nav": 25.03,
-  "asOfDate": "2026-10-19"
+  "nav": 24.99,
+  "asOfDate": "2026-10-23"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/BDIV",
@@ -41,23 +41,23 @@
   "net": 0.49
  },
  "nav": {
-  "display": "$25.03",
-  "value": 25.03,
-  "asOfDate": "Oct 19 2026"
+  "display": "$24.99",
+  "value": 24.99,
+  "asOfDate": "Oct 23 2026"
  },
  "marketPrice": {
-  "display": "$25.05",
-  "value": 25.05,
-  "asOfDate": "Oct 19 2026"
+  "display": "$25.00",
+  "value": 25,
+  "asOfDate": "Oct 23 2026"
  },
  "premiumDiscount": {
-  "display": "0.08%",
-  "value": 0.08
+  "display": "0.04%",
+  "value": 0.04
  },
  "aum": {
-  "display": "$7.01 M",
-  "value": 7008904,
-  "asOfDate": "Oct 19 2026",
+  "display": "$7.25 M",
+  "value": 7246578,
+  "asOfDate": "Oct 23 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
@@ -462,8 +462,8 @@
   ],
   "pageSize": 250,
   "totalRows": 36,
-  "asOfDate": "2026-10-20",
-  "asOf": "Oct 20 2026",
+  "asOfDate": "2026-10-26",
+  "asOf": "Oct 26 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },
@@ -472,8 +472,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 557,
-  "asOf": "Oct 20 2026",
+  "totalRows": 560,
+  "asOf": "Oct 23 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

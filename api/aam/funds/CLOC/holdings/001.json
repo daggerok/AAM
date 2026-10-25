@@ -2,7 +2,7 @@
  "ticker": "CLOC",
  "page": 1,
  "pageSize": 250,
- "totalRows": 62,
+ "totalRows": 63,
  "headers": [
   "Name",
   "Ticker",
@@ -18,19 +18,6 @@
  ],
  "rows": [
   {
-   "Name": "Cash & Other",
-   "Ticker": "-",
-   "Identifier": "",
-   "Weight": "2.65",
-   "Market Value": "",
-   "Shares Held": "1615264.93",
-   "Asset Category": "Cash & Other",
-   "CUSIP": "",
-   "SEDOL": "",
-   "Maturity": "",
-   "Coupon": ""
-  },
-  {
    "Name": "Apidos Loan Fund 2024-1 Ltd 6.5102% 10/25/2038",
    "Ticker": "-",
    "Identifier": "037986AW6",
@@ -42,6 +29,19 @@
    "SEDOL": "",
    "Maturity": "2038-10-25",
    "Coupon": "6.5102"
+  },
+  {
+   "Name": "Cash & Other",
+   "Ticker": "-",
+   "Identifier": "",
+   "Weight": "2.51",
+   "Market Value": "",
+   "Shares Held": "1536139.41",
+   "Asset Category": "Cash & Other",
+   "CUSIP": "",
+   "SEDOL": "",
+   "Maturity": "",
+   "Coupon": ""
   },
   {
    "Name": "Maranon Loan Funding 2025-1 Ltd 9.1425% 10/15/2037",
@@ -57,23 +57,10 @@
    "Coupon": "9.1425"
   },
   {
-   "Name": "Birch Grove CLO 16 Ltd 4.9076% 04/23/2039",
-   "Ticker": "-",
-   "Identifier": "090971AA0",
-   "Weight": "2.46",
-   "Market Value": "",
-   "Shares Held": "1500000",
-   "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "090971AA0",
-   "SEDOL": "",
-   "Maturity": "2039-04-23",
-   "Coupon": "4.9076"
-  },
-  {
    "Name": "Cerberus Loan Funding 50 LLC 6.6425% 07/15/2037",
    "Ticker": "-",
    "Identifier": "15673UAE7",
-   "Weight": "2.46",
+   "Weight": "2.47",
    "Market Value": "",
    "Shares Held": "1500000",
    "Asset Category": "Collateralized Loan Obligation",
@@ -135,10 +122,23 @@
    "Coupon": "5.7844"
   },
   {
+   "Name": "Birch Grove CLO 16 Ltd 5.268% 04/23/2039",
+   "Ticker": "-",
+   "Identifier": "090971AA0",
+   "Weight": "2.45",
+   "Market Value": "",
+   "Shares Held": "1500000",
+   "Asset Category": "Collateralized Loan Obligation",
+   "CUSIP": "090971AA0",
+   "SEDOL": "",
+   "Maturity": "2039-04-23",
+   "Coupon": "5.268"
+  },
+  {
    "Name": "Palmer Square CLO 2021-3 Ltd 6.8425% 10/15/2038",
    "Ticker": "-",
    "Identifier": "69688FAW0",
-   "Weight": "2.45",
+   "Weight": "2.4",
    "Market Value": "",
    "Shares Held": "1500000",
    "Asset Category": "Collateralized Loan Obligation",
@@ -174,17 +174,17 @@
    "Coupon": "6.4333"
   },
   {
-   "Name": "Neuberger Berman Loan Advisers CLO 59 Ltd 6.3522% 01/23/2039",
+   "Name": "Neuberger Berman Loan Advisers CLO 59 Ltd 6.668% 01/23/2039",
    "Ticker": "-",
    "Identifier": "640962AJ5",
-   "Weight": "2.05",
+   "Weight": "2.04",
    "Market Value": "",
    "Shares Held": "1250000",
    "Asset Category": "Collateralized Loan Obligation",
    "CUSIP": "640962AJ5",
    "SEDOL": "BSZC3P2",
    "Maturity": "2039-01-23",
-   "Coupon": "6.3522"
+   "Coupon": "6.668"
   },
   {
    "Name": "Madison Park Funding LXXIII Ltd 6.8662% 10/17/2038",
@@ -198,19 +198,6 @@
    "SEDOL": "",
    "Maturity": "2038-10-17",
    "Coupon": "6.8662"
-  },
-  {
-   "Name": "Balboa Bay Loan Funding 2020-1 Ltd 5.0192% 10/20/2035",
-   "Ticker": "-",
-   "Identifier": "05766BAU2",
-   "Weight": "2",
-   "Market Value": "",
-   "Shares Held": "1220000",
-   "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "05766BAU2",
-   "SEDOL": "BT9NC51",
-   "Maturity": "2035-10-20",
-   "Coupon": "5.0192"
   },
   {
    "Name": "CIFC Funding 2023-I Ltd 6.6425% 10/15/2038",
@@ -302,6 +289,19 @@
    "SEDOL": "BPLJJR0",
    "Maturity": "2038-01-20",
    "Coupon": "6.8844"
+  },
+  {
+   "Name": "Flatiron CLO 26 Ltd 5.3725% 01/15/2038",
+   "Ticker": "-",
+   "Identifier": "33888AAC9",
+   "Weight": "1.64",
+   "Market Value": "",
+   "Shares Held": "1000000",
+   "Asset Category": "Collateralized Loan Obligation",
+   "CUSIP": "33888AAC9",
+   "SEDOL": "",
+   "Maturity": "2038-01-15",
+   "Coupon": "5.3725"
   },
   {
    "Name": "Flatiron RR CLO 27 LTD 7.0162% 10/18/2037",
@@ -538,7 +538,7 @@
    "Coupon": "6.6102"
   },
   {
-   "Name": "Bain Capital Credit CLO 2024-4 Ltd 6.8522% 10/23/2037",
+   "Name": "Bain Capital Credit CLO 2024-4 Ltd 7.168% 10/23/2037",
    "Ticker": "-",
    "Identifier": "05685VAJ1",
    "Weight": "1.62",
@@ -548,7 +548,7 @@
    "CUSIP": "05685VAJ1",
    "SEDOL": "BL9XNW9",
    "Maturity": "2037-10-23",
-   "Coupon": "6.8522"
+   "Coupon": "7.168"
   },
   {
    "Name": "Bridge Street CLO V Ltd 6.9344% 04/20/2038",
@@ -671,7 +671,7 @@
    "Name": "Elevation CLO 2020-11 Ltd 6.0425% 10/15/2037",
    "Ticker": "-",
    "Identifier": "28621YAS4",
-   "Weight": "1.07",
+   "Weight": "1.06",
    "Market Value": "",
    "Shares Held": "650000",
    "Asset Category": "Collateralized Loan Obligation",
@@ -707,7 +707,7 @@
    "Coupon": "6.7925"
   },
   {
-   "Name": "CARLYLE US CLO 2017-3 Ltd 5.5137% 10/21/2037",
+   "Name": "CARLYLE US CLO 2017-3 Ltd 5.8373% 10/21/2037",
    "Ticker": "-",
    "Identifier": "14314FBC1",
    "Weight": "0.82",
@@ -717,7 +717,7 @@
    "CUSIP": "14314FBC1",
    "SEDOL": "",
    "Maturity": "2037-10-21",
-   "Coupon": "5.5137"
+   "Coupon": "5.8373"
   },
   {
    "Name": "Golub Capital Partners Private Credit Fund CLO 5.4602% 10/26/2037",
@@ -785,7 +785,7 @@
    "Coupon": "5.8344"
   },
   {
-   "Name": "Cedar Funding XIX CLO Ltd 6.7522% 01/23/2038",
+   "Name": "Cedar Funding XIX CLO Ltd 7.068% 01/23/2038",
    "Ticker": "-",
    "Identifier": "15033CAJ1",
    "Weight": "0.81",
@@ -795,7 +795,20 @@
    "CUSIP": "15033CAJ1",
    "SEDOL": "BPBMZS2",
    "Maturity": "2038-01-23",
-   "Coupon": "6.7522"
+   "Coupon": "7.068"
+  },
+  {
+   "Name": "Palmer Square CLO 2026-3 Ltd 6.489% 10/20/2039",
+   "Ticker": "-",
+   "Identifier": "69688BAJ8",
+   "Weight": "0.57",
+   "Market Value": "",
+   "Shares Held": "350000",
+   "Asset Category": "Collateralized Loan Obligation",
+   "CUSIP": "69688BAJ8",
+   "SEDOL": "",
+   "Maturity": "2039-10-20",
+   "Coupon": "6.489"
   },
   {
    "Name": "Madison Park Funding LX Ltd 5.5602% 10/25/2037",
