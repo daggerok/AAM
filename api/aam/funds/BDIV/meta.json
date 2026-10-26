@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-25T03:17:58.568Z",
+ "generatedAt": "2026-10-26T19:29:33.886Z",
  "ticker": "BDIV",
  "name": "AAM Brentview Dividend Growth ETF",
  "category": "Equity",
@@ -472,8 +472,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 560,
-  "asOf": "Oct 23 2026",
+  "totalRows": 561,
+  "asOf": "Oct 26 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }
