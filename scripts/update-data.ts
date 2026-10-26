@@ -670,6 +670,22 @@ const HOLDINGS_GUARD_RELAX: Record<string, string[]> = {};
 /** Funds the issuer closed, each confirmed from an SEC filing or the issuer notice (`source`): never fetched or guarded, last published data kept, index row marked closed. */
 export const CLOSED_FUNDS: ClosedFund[] = [];
 const AAM_XLS_HEADERS=['Name','Ticker / Cusip','Identifier (SEDOL)','Sector','Quantity','Weight (%)','Maturity Date','Coupon (%)'];
+/**
+ * The export lists a security once per SEDOL: one CUSIP with two SEDOLs comes as two rows with the same name, quantity and
+ * weight (PFLD US Bancorp 902973AZ9 with BNVR6Y6 and BYZD562), so the position counts twice (PFLD 101.73% -> 100.10%).
+ * Rows that differ only in the SEDOL are one position: keep one row and list every SEDOL. Rows without a CUSIP are kept as is.
+ */
+export function collapseSedolDuplicates(rows: SheetRow[]): SheetRow[] {
+  const byKey = new Map<string, SheetRow>(), result: SheetRow[] = [];
+  for (const row of rows) {
+    const key = row.CUSIP ? JSON.stringify({ ...row, SEDOL: '' }) : '';
+    const first = key ? byKey.get(key) : undefined;
+    if (!first) { if (key) byKey.set(key, row); result.push(row); continue; }
+    const sedols = new Set(first.SEDOL.split(' ').concat(row.SEDOL).filter(Boolean));
+    first.SEDOL = Array.from(sedols).sort().join(' ');
+  }
+  return result;
+}
 export function parseHoldingsWorkbook(input: Uint8Array): SheetRow[] {
   const cells=readXlsCells(input);if(JSON.stringify(cells[0])!==JSON.stringify(AAM_XLS_HEADERS))throw new Error('AAM XLS: unexpected holdings headers');
   const scalar=(cell:ExcelCell):string=>typeof cell==='number'?normalizeNumberText(cell):cell==='-'?'':cell.trim();
@@ -679,8 +695,8 @@ export function parseHoldingsWorkbook(input: Uint8Array): SheetRow[] {
     const weight=numberOrNull(c[5]);if(!scalar(c[0])||weight===null)throw new Error('AAM XLS: missing name/weight');
     return {Name:scalar(c[0]),Ticker:ticker||'-',Identifier:cusip||sedol||'',Weight:scalar(c[5]),'Market Value':'','Shares Held':scalar(c[4]),'Asset Category':scalar(c[3]),CUSIP:cusip,SEDOL:sedol,Maturity:excelSerialDate(c[6]),Coupon:scalar(c[7])};
   });
-  // Deterministic ordering independent of issuer row-order changes; retain duplicates.
-  return result.sort((a,b)=>(numberOrNull(b.Weight)??0)-(numberOrNull(a.Weight)??0)||a.Name.localeCompare(b.Name)||a.Identifier.localeCompare(b.Identifier)||a.Ticker.localeCompare(b.Ticker)||JSON.stringify(a).localeCompare(JSON.stringify(b)));
+  // Deterministic ordering independent of issuer row-order changes.
+  return collapseSedolDuplicates(result).sort((a,b)=>(numberOrNull(b.Weight)??0)-(numberOrNull(a.Weight)??0)||a.Name.localeCompare(b.Name)||a.Identifier.localeCompare(b.Identifier)||a.Ticker.localeCompare(b.Ticker)||JSON.stringify(a).localeCompare(JSON.stringify(b)));
 }
 
 // Shared SEC identity/XML helpers from pinned JPMorgan (provider names substituted).
@@ -1541,6 +1557,14 @@ function officialRowFromOld(old:JsonRecord):OfficialReturnRow|null {
   const m=old.returns.monthEnd;
   return {asOfDate:dateTextToIso(m.asOfDate)||null,ytd:numberOrNull(m.ytd),yr1:numberOrNull(m.yr1),yr3:numberOrNull(m.yr3),yr5:numberOrNull(m.yr5),yr10:numberOrNull(m.yr10),sinceInception:numberOrNull(m.sinceInception)};
 }
+/**
+ * TER contract: `terValue` is the NET expense ratio (after the adviser's contractual fee waiver), `terGrossValue` the GROSS one.
+ * The fund page prints "0.49% (gross) 0.18% (net)" for a waived fund (CLOC, LODI) and one number otherwise (then net == gross).
+ * Without a fresh page the published net wins; an older meta.json kept the gross in `value`, so `net` is read first.
+ */
+export function terNet(detail:Pick<Detail,'netExpense'|'grossExpense'>|null,old:JsonRecord,oldIndex:JsonRecord):number|null {
+  return detail?detail.netExpense??detail.grossExpense:numberOrNull(old.expenseRatio?.net)??numberOrNull(old.expenseRatio?.value)??numberOrNull(oldIndex.terValue);
+}
 async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRecord,root:URL,client:ReturnType<typeof providerClient>,now:Date):Promise<{row:JsonRecord|null;providers:ProviderState;reason?:string}> {
   const dir=new URL(`funds/${fund.ticker}/`,root),old=await readJson(new URL('meta.json',dir))??{};
   // Validate every cached manifest before any write. A missing page is not zero holdings.
@@ -1551,7 +1575,7 @@ async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRe
   };
   const response=config.skipAam?null:await optional(`${fund.ticker} detail`,()=>client.detail(fund));
   const detail=response?.detail??null;if(detail){providers.detail='fresh';outputNote(`[ product  ] ${fund.ticker}: fresh official detail`);}
-  const aum=detail?.netAssets??numberOrNull(old.aum?.value)??numberOrNull(oldIndex.aumValue),ter=detail?.grossExpense??numberOrNull(old.expenseRatio?.value)??numberOrNull(oldIndex.terValue),sec=detail?.secYield??fund.secYield??numberOrNull(old.yields?.secYield);
+  const aum=detail?.netAssets??numberOrNull(old.aum?.value)??numberOrNull(oldIndex.aumValue),ter=terNet(detail,old,oldIndex),terGross=detail?.grossExpense??numberOrNull(old.expenseRatio?.gross),sec=detail?.secYield??fund.secYield??numberOrNull(old.yields?.secYield);
   if(!inRange(aum,config.aumRange)||!inRange(ter,config.terRange)||!inRange(sec,config.secYieldRange))return {row:null,providers,reason:'AUM/TER/SEC_YIELD'};
   let holdings=response?await optional(`${fund.ticker} official holdings`,()=>client.holdings(fund,response.html,response.detail)):null;
   if(holdings){providers.holdings='official';outputNote(`[ holdings ] ${fund.ticker}: ${holdings.rows.length} complete official XLS rows`);}
@@ -1614,7 +1638,7 @@ async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRe
     providerIds:fund,source:{fundPage:fund.fundPage,catalog:CATALOG_URL,holdingsDownload:fund.fundPage,holdingsMethod:'POST WebForms __EVENTTARGET=btnETFHoldingsExport (no direct query URL)',yahooChart:`${YAHOO_CHART_URL}/${fund.ticker}`,holdingsSource:holdings.source,historySource,provider:'AAM official catalog/detail HTML and full XLS exports; SEC EDGAR N-PORT-P holdings fallback; Yahoo Finance market history/dividends'},
     identifiers:{cusip:detail?.cusip??old.identifiers?.cusip??null,isin:detail?.isin??old.identifiers?.isin??null,indexTicker:old.identifiers?.indexTicker??null},
     inception:{fundInceptionDate:inception,shareClassInceptionDate:old.inception?.shareClassInceptionDate??null,exchange:detail?.exchange||chart?.exchangeName||old.inception?.exchange||''},
-    expenseRatio:{display:percent(ter),value:ter,gross:detail?.grossExpense??old.expenseRatio?.gross??null,net:detail?.netExpense??old.expenseRatio?.net??null},
+    expenseRatio:{display:percent(ter),value:ter,gross:terGross,net:ter},
     nav:{display:money(nav),value:nav,asOfDate:navDate?formatEdgarDate(navDate):old.nav?.asOfDate??'—'},
     marketPrice:{display:money(price),value:price,asOfDate:priceDate?formatEdgarDate(priceDate):old.marketPrice?.asOfDate??'—'},premiumDiscount:{display:percent(premium),value:premium},
     aum:{display:assets===null?'—':formatAumDisplay(assets),value:assets,asOfDate:detail?.aumAsOfDate?formatEdgarDate(detail.aumAsOfDate):old.aum?.asOfDate??(holdings.netAssets!==null&&holdings.netAssets!==undefined?holdings.asOfDate:null),source:detail?.netAssets!==null&&detail?.netAssets!==undefined?'aamlive.com official fund net assets':old.aum?.source??holdings.source},
@@ -1627,7 +1651,7 @@ async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRe
   await writeIfChanged(new URL('meta.json',dir),meta);
   await pruneStalePages(dir,'holdings',holdingsManifest);await pruneStalePages(dir,'history',historyManifest);
   const row={ticker:fund.ticker,name:meta.name,category:fund.category,fundPage:fund.fundPage,dataFile:`./funds/${fund.ticker}/meta.json`,cusip:meta.identifiers.cusip,isin:meta.identifiers.isin,
-    ter:meta.expenseRatio.display,terValue:ter,nav:meta.nav.display,navValue:nav,aum:meta.aum.display,aumValue:assets,asOfDate:meta.nav.asOfDate,inceptionDate:inception?formatEdgarDate(inception):'—',exchange:meta.inception.exchange,
+    ter:meta.expenseRatio.display,terValue:ter,terGross:percent(terGross),terGrossValue:terGross,nav:meta.nav.display,navValue:nav,aum:meta.aum.display,aumValue:assets,asOfDate:meta.nav.asOfDate,inceptionDate:inception?formatEdgarDate(inception):'—',exchange:meta.inception.exchange,
     closePrice:meta.marketPrice.display,closePriceValue:price,premiumDiscount:meta.premiumDiscount.display,premiumDiscountValue:premium,distributions:{frequency:frequency.frequency,exDate:latest?formatUsDate(latest.epoch):'—',dividend:latest?String(round(latest.amount,6)):'—'},returns:meta.returns,metrics:metric,holdings:holdings.rows.length,history:history.length};
   return {row,providers};
 }
