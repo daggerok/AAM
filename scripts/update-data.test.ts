@@ -12,6 +12,7 @@ import {
   parseFundTickerMap, parseCompanyTickerMap, parseNport, nportMatches, parseNportAccessions, parseEdgarAtomFilings, nportUrlFor, createTransport,
   isCertError, installSystemCa, systemCaActive,
   dateTextToIso, secFilingIsFresher, pruneStalePages, buildPages, writePages, readPreviousSheet, mergeHistory, mergeDividends, batchSelection, initializeCatalogSeed, validatePortfolioPreview, holdingsGuard, main,
+  CLOSED_FUNDS, closedFund,
 } from './update-data';
 import type { Fetcher } from './update-data';
 
@@ -228,7 +229,9 @@ describe('controls', () => {
     expect(readConfig({ AAM_TICKERS: 'spdv;pfld SPDV', MAX_RETRIES: '1', REQUEST_SLEEP: '', AAM_CONCURRENCY: '3' }, { CONCURRENCY: '7' }).tickers).toEqual(['PFLD', 'SPDV']);
     expect(readConfig({ AAM_CONCURRENCY: '3' }, { CONCURRENCY: '7' }).concurrency).toBe(3);
   });
+});
 
+describe('controls 2', () => {
   test('ranges: zero, negative and unbounded are allowed; garbage and inversion rejected; AUM presets and suffixes', () => {
     expect(parseRange('-5:0', 'X')).toEqual({ min: -5, max: 0 }); expect(parseRange(':', 'X')).toBeUndefined(); expect(parseRange('0:', 'X')).toEqual({ min: 0, max: undefined });
     for (const s of ['5', '2:1', 'a:2', '1:2:3']) expect(() => parseRange(s, 'X')).toThrow();
@@ -323,7 +326,9 @@ describe('parsing', () => {
     expect(excelSerialDate(1)).toBe('1900-01-01'); expect(excelSerialDate(61)).toBe('1900-03-01'); expect(excelSerialDate(50333)).toBe('2037-10-20');
     expect(excelSerialDate('-')).toBe(''); expect(() => excelSerialDate(-1)).toThrow();
   });
+});
 
+describe('parsing 2', () => {
   test('Yahoo chart: adjusted-close jitter rounded, zero volume kept, missing quote skipped, dividends sorted, cent boundary stays a real change', () => {
     const payload = { chart: { result: [{ meta: { longName: 'AAM sample' }, timestamp: [1751241600, 1751328000, 1751414400], indicators: { quote: [{ close: [25, 26, null], volume: [0, 100, null] }], adjclose: [{ adjclose: [24.910001, 25.989999, null] }] }, events: { dividends: { b: { date: 1751328000, amount: .1 }, a: { date: 1751241600, amount: .2 } } } }] } };
     const c = parseChart(payload);
@@ -374,7 +379,9 @@ describe('parsing', () => {
     expect(holdingsGuard(headers, allocation, 2, ['sum'])).toBeNull();
     expect(holdingsGuard(headers, rows, 5)).toContain('less than half');
   });
+});
 
+describe('parsing 3', () => {
   test('SEC: ticker maps, raw primary_doc N-PORT URLs, exact trust + series match, missing values null-like, no first-filing guess', () => {
     const table = parseFundTickerMap({ fields: ['symbol', 'cik', 'seriesId', 'classId'], data: [['SPDV', 1540305, 'S000000001', 'C1'], ['BAD', 0, '', '']] });
     expect(table.get('SPDV')).toEqual({ cik: '0001540305', seriesId: 'S000000001', classId: 'C1' }); expect(table.has('BAD')).toBe(false);
@@ -550,7 +557,9 @@ describe('pipeline', () => {
       expect(second.failed).toEqual([]); expect(await snapshot(dir)).toEqual(after);
     });
   });
+});
 
+describe('pipeline 2', () => {
   test('two runs on the same source data write zero changes even when Yahoo adjusted closes jitter across a cent boundary', async () => {
     await testFeed(async (dir, root, fetcher) => {
       // Yahoo float32 noise seen live: SPDV 2024-11-12 came back as 31.544998 and 31.545001 a minute apart
@@ -617,7 +626,9 @@ describe('pipeline', () => {
       expect((await Bun.file(new URL('funds/SPDV/holdings/001.json', root)).json()).headers.length).toBe(11);
     });
   });
+});
 
+describe('pipeline 3', () => {
   test('an export cut down to the top-holdings grid fails the holdings guard: the fund stays exactly as published and is reported failed', async () => {
     // the preview grid still matches, so only the guard notices that 3 of the 7 published rows came back
     const full: HoldingRow[] = [...HOLDINGS.SPDV, ...['A', 'B', 'C', 'D'].map((x): HoldingRow => [`Small Holding ${x}`, `SM${x}`, '', 'Industrials', 10, 0.01, '-', '-'])];
@@ -627,6 +638,56 @@ describe('pipeline', () => {
       expect(tickerOf(await Bun.file(new URL('index.json', root)).json(), 'SPDV').holdings).toBe(7);
       const result = await main({ ...integrationEnv, TICKERS: 'SPDV' }, { root, fetcher: exportOf(HOLDINGS.SPDV, base), now: new Date('2026-10-02T05:00:00Z') });
       expect(result.failed).toEqual(['SPDV']); expect(await snapshot(dir)).toEqual(before);
+    });
+  });
+
+  test('a new fund whose holdings fail the guard is reported failed and still gets a catalog-only row (dataFile null, full metrics key set) and no files', async () => {
+    // the preview rows still match, but an extra 60% row pushes the weight sum to 160
+    const broken: HoldingRow[] = [...HOLDINGS.SPDV, ['Extra Holding', 'XTRA', '', 'Industrials', 10, 60, '-', '-']];
+    await testFeed(async (dir, root, base) => {
+      await rm(dir + '/funds/SPDV', { recursive: true, force: true });
+      const seeded = await Bun.file(new URL('index.json', root)).json(); seeded.funds = seeded.funds.filter((f: { ticker: string }) => f.ticker !== 'SPDV');
+      await writeFile(dir + '/index.json', JSON.stringify(seeded));
+      const mock: Fetcher = async (url, init) => url === 'https://www.aamlive.com/ETF/Detail/SPDV' && init?.method === 'POST' ? new Response(new Uint8Array(xlsBytes(broken))) : base(url, init);
+      const result = await main({ ...integrationEnv, TICKERS: 'SPDV' }, { root, fetcher: mock, now: fixedNow });
+      expect(result.failed).toEqual(['SPDV']); expect(result.counts.funds).toBe(5);
+      const index = await Bun.file(new URL('index.json', root)).json(), row = tickerOf(index, 'SPDV');
+      expect(row).toMatchObject({ dataFile: null, holdings: 0, history: 0, name: 'AAM S&P 500 High Dividend Value ETF' });
+      expect(Object.keys(row.metrics)).toEqual(Object.keys(tickerOf(index, 'PFLD').metrics)); expect(row.metrics.returnsBasis).toBeTruthy(); expect(row.metrics.tr1y).toBeNull();
+      expect(Object.keys(await snapshot(dir)).filter(f => f.startsWith('funds/SPDV/'))).toEqual([]);
+    });
+  });
+
+  test('a closed fund is never fetched or reported failed: its files stay as published, its index row says closed, a rerun writes nothing', async () => {
+    const entry = { ticker: 'SPDV', closed: '2026-10-01', source: 'https://www.sec.gov/Archives/edgar/data/1540305/notice.htm' };
+    expect(() => closedFund([{ ...entry, closed: 'soon' }], 'SPDV')).toThrow('CLOSED_FUNDS');
+    expect(closedFund([entry], 'spdv')).toEqual(entry);
+    // published with 7 rows; the 3-row export would fail the guard if the fund were still processed
+    const full: HoldingRow[] = [...HOLDINGS.SPDV, ...['A', 'B', 'C', 'D'].map((x): HoldingRow => [`Small Holding ${x}`, `SM${x}`, '', 'Industrials', 10, 0.01, '-', '-'])];
+    await testFeed(async (dir, root, base) => {
+      await main(integrationEnv, { root, fetcher: async (url, init) => url === 'https://www.aamlive.com/ETF/Detail/SPDV' && init?.method === 'POST' ? new Response(new Uint8Array(xlsBytes(full))) : base(url, init), now: fixedNow });
+      const first = await snapshot(dir), calls: string[] = [];
+      const recording: Fetcher = async (url, init) => { calls.push(url); return base(url, init); };
+      CLOSED_FUNDS.push(entry);
+      try {
+        const result = await main({ ...integrationEnv, TICKERS: 'SPDV' }, { root, fetcher: recording, now: new Date('2026-10-02T05:00:00Z') });
+        expect(calls.filter(url => /spdv/i.test(url))).toEqual([]);
+        expect([result.failed, result.processed, result.skipped]).toEqual([[], [], []]);
+        const closed = await snapshot(dir);
+        for (const path of Object.keys(first)) if (path !== 'index.json') expect([path, closed[path]]).toEqual([path, first[path]]);
+        const rows = (await Bun.file(new URL('index.json', root)).json()).funds as Array<Record<string, any>>;
+        expect(rows.map(row => row.ticker)).toEqual(['BDIV', 'CLOC', 'PFLD', 'SAWS', 'SPDV']);
+        expect(rows.find(row => row.ticker === 'SPDV')).toMatchObject({ status: 'closed', closedDate: '2026-10-01', closedSource: entry.source, dataFile: './funds/SPDV/meta.json', holdings: 7 });
+        expect(rows.filter(row => row.status === 'closed')).toHaveLength(1);
+        await main(integrationEnv, { root, fetcher: base, now: new Date('2026-10-03T05:00:00Z') });
+        expect(await snapshot(dir)).toEqual(closed);
+        // the live catalog drops the closed fund: TICKERS still accepts it and its row survives unchanged
+        const delisted: Fetcher = async (url, init) => url === 'https://www.aamlive.com/ETF' ? new Response(catalogHtml(FUNDS.filter(f => f.ticker !== 'SPDV'))) : base(url, init);
+        const gone = await main({ ...integrationEnv, TICKERS: 'SPDV' }, { root, fetcher: delisted, now: new Date('2026-10-04T05:00:00Z') });
+        expect(gone.failed).toEqual([]); expect(await snapshot(dir)).toEqual(closed);
+      } finally {
+        CLOSED_FUNDS.splice(CLOSED_FUNDS.indexOf(entry), 1);
+      }
     });
   });
 
@@ -665,7 +726,9 @@ describe('pipeline', () => {
       expect(await Bun.file(new URL('update-state.json', root)).json()).toEqual({ cursor: 'PFLD' });
     });
   });
+});
 
+describe('pipeline 4', () => {
   test('one corrupt cached fund fails while the others continue; the failing batch does not advance the cursor', async () => {
     await testFeed(async (_dir, root, fetcher) => {
       await main(integrationEnv, { root, fetcher, now: fixedNow });
