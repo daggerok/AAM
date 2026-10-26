@@ -2,7 +2,7 @@
  "ticker": "PFLD",
  "page": 2,
  "pageSize": 250,
- "totalRows": 334,
+ "totalRows": 330,
  "headers": [
   "Name",
   "Ticker",
@@ -17,45 +17,6 @@
   "Coupon"
  ],
  "rows": [
-  {
-   "Name": "Citizens Financial Group Inc 7.4496% 01/07/2175",
-   "Ticker": "-",
-   "Identifier": "174610AQ8",
-   "Weight": "0.13",
-   "Market Value": "",
-   "Shares Held": "475000",
-   "Asset Category": "Banking",
-   "CUSIP": "174610AQ8",
-   "SEDOL": "BGHW226",
-   "Maturity": "2200-12-31",
-   "Coupon": "7.169"
-  },
-  {
-   "Name": "CoBank ACB 7.125% 01/01/2175",
-   "Ticker": "-",
-   "Identifier": "19075QAG7",
-   "Weight": "0.13",
-   "Market Value": "",
-   "Shares Held": "475000",
-   "Asset Category": "Banking",
-   "CUSIP": "19075QAG7",
-   "SEDOL": "",
-   "Maturity": "2200-12-31",
-   "Coupon": "7.125"
-  },
-  {
-   "Name": "CoBank ACB 7.25% 07/01/2175",
-   "Ticker": "-",
-   "Identifier": "19075QAF9",
-   "Weight": "0.13",
-   "Market Value": "",
-   "Shares Held": "475000",
-   "Asset Category": "Banking",
-   "CUSIP": "19075QAF9",
-   "SEDOL": "",
-   "Maturity": "2200-12-31",
-   "Coupon": "7.25"
-  },
   {
    "Name": "Morgan Stanley 7.3162% 03/15/2175",
    "Ticker": "-",
@@ -975,20 +936,7 @@
    "Shares Held": "9759",
    "Asset Category": "Real Estate",
    "CUSIP": "00489Q201",
-   "SEDOL": "BNKTVH1",
-   "Maturity": "2200-12-31",
-   "Coupon": "8.625"
-  },
-  {
-   "Name": "ACRES Commercial Realty Corp",
-   "Ticker": "-",
-   "Identifier": "00489Q201",
-   "Weight": "0.05",
-   "Market Value": "",
-   "Shares Held": "9759",
-   "Asset Category": "Real Estate",
-   "CUSIP": "00489Q201",
-   "SEDOL": "BNKTVK4",
+   "SEDOL": "BNKTVH1 BNKTVK4",
    "Maturity": "2200-12-31",
    "Coupon": "8.625"
   },

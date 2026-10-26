@@ -2,7 +2,7 @@
  "ticker": "PFLD",
  "page": 1,
  "pageSize": 250,
- "totalRows": 334,
+ "totalRows": 330,
  "headers": [
   "Name",
   "Ticker",
@@ -507,20 +507,7 @@
    "Shares Held": "2230000",
    "Asset Category": "Financial Services",
    "CUSIP": "064058AL4",
-   "SEDOL": "BLH3DP4",
-   "Maturity": "2200-12-31",
-   "Coupon": "3.75"
-  },
-  {
-   "Name": "Bank of New York Mellon Corp/The 3.75% 03/20/2175",
-   "Ticker": "-",
-   "Identifier": "064058AL4",
-   "Weight": "0.6",
-   "Market Value": "",
-   "Shares Held": "2230000",
-   "Asset Category": "Financial Services",
-   "CUSIP": "064058AL4",
-   "SEDOL": "BVMNLZ5",
+   "SEDOL": "BLH3DP4 BVMNLZ5",
    "Maturity": "2200-12-31",
    "Coupon": "3.75"
   },
@@ -572,20 +559,7 @@
    "Shares Held": "2060000",
    "Asset Category": "Energy",
    "CUSIP": "29273VBG4",
-   "SEDOL": "BPCPJR7",
-   "Maturity": "2056-02-15",
-   "Coupon": "6.5"
-  },
-  {
-   "Name": "Energy Transfer LP 6.5% 02/15/2056",
-   "Ticker": "-",
-   "Identifier": "29273VBG4",
-   "Weight": "0.55",
-   "Market Value": "",
-   "Shares Held": "2060000",
-   "Asset Category": "Energy",
-   "CUSIP": "29273VBG4",
-   "SEDOL": "BTXP112",
+   "SEDOL": "BPCPJR7 BTXP112",
    "Maturity": "2056-02-15",
    "Coupon": "6.5"
   },
@@ -988,20 +962,7 @@
    "Shares Held": "1585000",
    "Asset Category": "Banking",
    "CUSIP": "902973AZ9",
-   "SEDOL": "BNVR6Y6",
-   "Maturity": "2200-12-31",
-   "Coupon": "5.3"
-  },
-  {
-   "Name": "US Bancorp 5.3% 04/15/2175",
-   "Ticker": "-",
-   "Identifier": "902973AZ9",
-   "Weight": "0.43",
-   "Market Value": "",
-   "Shares Held": "1585000",
-   "Asset Category": "Banking",
-   "CUSIP": "902973AZ9",
-   "SEDOL": "BYZD562",
+   "SEDOL": "BNVR6Y6 BYZD562",
    "Maturity": "2200-12-31",
    "Coupon": "5.3"
   },
@@ -3266,6 +3227,45 @@
    "SEDOL": "BDC55T7",
    "Maturity": "2200-12-31",
    "Coupon": "7.015"
+  },
+  {
+   "Name": "Citizens Financial Group Inc 7.4496% 01/07/2175",
+   "Ticker": "-",
+   "Identifier": "174610AQ8",
+   "Weight": "0.13",
+   "Market Value": "",
+   "Shares Held": "475000",
+   "Asset Category": "Banking",
+   "CUSIP": "174610AQ8",
+   "SEDOL": "BGHW226",
+   "Maturity": "2200-12-31",
+   "Coupon": "7.169"
+  },
+  {
+   "Name": "CoBank ACB 7.125% 01/01/2175",
+   "Ticker": "-",
+   "Identifier": "19075QAG7",
+   "Weight": "0.13",
+   "Market Value": "",
+   "Shares Held": "475000",
+   "Asset Category": "Banking",
+   "CUSIP": "19075QAG7",
+   "SEDOL": "",
+   "Maturity": "2200-12-31",
+   "Coupon": "7.125"
+  },
+  {
+   "Name": "CoBank ACB 7.25% 07/01/2175",
+   "Ticker": "-",
+   "Identifier": "19075QAF9",
+   "Weight": "0.13",
+   "Market Value": "",
+   "Shares Held": "475000",
+   "Asset Category": "Banking",
+   "CUSIP": "19075QAF9",
+   "SEDOL": "",
+   "Maturity": "2200-12-31",
+   "Coupon": "7.25"
   }
  ]
 }
