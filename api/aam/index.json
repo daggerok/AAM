@@ -1,6 +1,6 @@
 {
- "generatedAt": "2026-10-26T05:18:41.203Z",
- "catalogReadAt": "2026-10-26T05:18:41.203Z",
+ "generatedAt": "2026-10-26T08:16:17.807Z",
+ "catalogReadAt": "2026-10-26T08:16:17.807Z",
  "source": {
   "provider": "AAM ETFs",
   "site": "https://www.aamlive.com",
@@ -456,6 +456,8 @@
    "isin": "US26922A5948",
    "ter": "0.29%",
    "terValue": 0.29,
+   "terGross": "0.29%",
+   "terGrossValue": 0.29,
    "nav": "$41.61",
    "navValue": 41.61,
    "aum": "$108.18 M",
