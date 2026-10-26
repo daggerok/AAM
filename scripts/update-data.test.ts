@@ -8,11 +8,11 @@ import {
   CONTROL_NAMES, CONTROL_DEFAULTS, readConfig, resolveControls, runtimeControls, parseRange, parseAumRange, createRequestGate,
   samePublishedContent, writeIfChanged, decodeEntities, parseCatalog, returnSlot, parseNavPerformance, parseDistributions,
   parseDetail, terNet, exportPostbackBody, readXlsCells, parseHoldingsWorkbook, excelSerialDate, parseChart, chartUrl, priceReturns, annualizedToTotal,
-  totalToAnnualized, indicatedYield, inferDistributionFrequency, deriveCatalogMetrics, dividendYieldBasisFor, withDividendYieldBasis, annualizedSinceInception, fundFilterReasons,
-  parseFundTickerMap, parseCompanyTickerMap, parseNport, nportMatches, parseNportAccessions, parseEdgarAtomFilings, nportUrlFor, createTransport,
+  totalToAnnualized, indicatedYield, inferDistributionFrequency, deriveCatalogMetrics, dividendYieldBasisFor, withDividendYieldBasis, fundFilterReasons,
+  parseSecFundTickers, parseSecCompanyNames, parseNportFiling, nportHoldingsSheet, nportTickers, nportIsFresh, createTransport,
   isCertError, installSystemCa, systemCaActive,
-  dateTextToIso, secFilingIsFresher, pruneStalePages, buildPages, writePages, readPreviousSheet, mergeHistory, mergeDividends, batchSelection, initializeCatalogSeed, validatePortfolioPreview, holdingsGuard, main,
-  CLOSED_FUNDS, closedFund,
+  dateTextToIso, toIsoDate, pruneStalePages, buildPages, writePages, readPreviousSheet, mergeHistory, mergeDividends, batchSelection, initializeCatalogSeed, validatePortfolioPreview, holdingsGuard, holdingsWeightCount, catalogOnlyRow, main,
+  CLOSED_FUNDS, HOLDINGS_GUARD_RELAX, closedFund,
 } from './update-data';
 import type { Fetcher } from './update-data';
 
@@ -388,32 +388,36 @@ describe('parsing 2', () => {
 });
 
 describe('parsing 3', () => {
-  test('SEC: ticker maps, raw primary_doc N-PORT URLs, exact trust + series match, missing values null-like, no first-filing guess', () => {
-    const table = parseFundTickerMap({ fields: ['symbol', 'cik', 'seriesId', 'classId'], data: [['SPDV', 1540305, 'S000000001', 'C1'], ['BAD', 0, '', '']] });
+  test('SEC EDGAR fallback (shared nport-reader): ticker map, N-PORT sheet in the XLS headers with empty missing numbers, no derivative identifiers, tickers only for U.S. equities', () => {
+    const table = parseSecFundTickers({ fields: ['symbol', 'cik', 'seriesId', 'classId'], data: [['SPDV', 1540305, 'S000000001', 'C1'], ['BAD', 0, '', '']] });
     expect(table.get('SPDV')).toEqual({ cik: '0001540305', seriesId: 'S000000001', classId: 'C1' }); expect(table.has('BAD')).toBe(false);
-    expect(parseCompanyTickerMap({ 0: { ticker: 'MSFT', title: 'Microsoft Corp' } }).get('MICROSOFT')).toBe('MSFT');
-    const url = 'https://www.sec.gov/Archives/edgar/data/1540305/000119312526000001/primary_doc.xml';
-    expect(nportUrlFor('0001540305', '0001193125-26-000001')).toBe(url);
-    expect(parseNportAccessions({ cik: '1540305', filings: { recent: { form: ['8-K', 'NPORT-P'], accessionNumber: ['x', '0001193125-26-000001'], filingDate: ['', '2026-08-01'], reportDate: ['', '2026-06-30'] } } })[0].url).toBe(url);
-    expect(parseEdgarAtomFilings('<feed><entry><filing-type>NPORT-P</filing-type><accession-number>0001193125-26-000001</accession-number><filing-href>https://www.sec.gov/Archives/edgar/data/1540305/a</filing-href><filing-date>2026-08-01</filing-date></entry></feed>')[0].url).toBe(url);
-    const parsed = parseNport(NPORT_XML), fund = parseCatalog(catalogHtml()).find(f => f.ticker === 'SPDV')!;
-    expect(parsed).toMatchObject({ regCik: '1540305', seriesId: 'S000000001', repPdDate: '2026-06-30', netAssets: 100000000 }); expect(parsed.holdings.length).toBe(5);
-    expect(parsed.holdings[1].Identifier).toBe('US0000000001'); expect(parsed.holdings[2]['Market Value']).toBe(''); expect(parsed.holdings[2].Weight).toBe('');
-    expect(nportMatches(fund, parsed, table.get('SPDV'))).toBe(true); expect(nportMatches(fund, parsed)).toBe(true);
-    expect(nportMatches(fund, { ...parsed, regCik: '999' })).toBe(false); expect(nportMatches(fund, { ...parsed, seriesName: 'Other AAM Fund' })).toBe(false);
-    expect(nportMatches(fund, { ...parsed, seriesId: 'S2' }, table.get('SPDV'))).toBe(false);
+    const xml = NPORT_XML.replace('</invstOrSecs>', `<invstOrSec><name>DJIA MINI E-CBOT</name><cusip>000000000</cusip><identifiers><other otherDesc="Bloomberg Identifier" value="BBG01VKPGXL9"/></identifiers><curCd>USD</curCd><valUSD>4913.74</valUSD><pctVal>0.005</pctVal><assetCat>DE</assetCat><derivativeInfo><futrDeriv derivCat="FUT"><descRefInstrmnt><otherRefInst><identifiers><cusip value="78462F103"/><ticker value="SPY"/></identifiers></otherRefInst></descRefInstrmnt></futrDeriv></derivativeInfo></invstOrSec></invstOrSecs>`)
+      .replace('</invstOrSecs>', '<invstOrSec><name>AMERICAN EXPRESS CO</name><cusip>025816DK2</cusip><identifiers><ticker value="AXP"/></identifiers><balance>10</balance><curCd>USD</curCd><valUSD>1000</valUSD><pctVal>0.001</pctVal><assetCat>EP</assetCat></invstOrSec></invstOrSecs>')
+      .replace('<assetCat>DBT</assetCat>', '<assetCat>DBT</assetCat><debtSec><maturityDt>2035-01-31</maturityDt><annualizedRt>6</annualizedRt></debtSec>');
+    const filing = parseNportFiling(xml);
+    expect([filing.regCik, filing.seriesId, filing.repPdDate, filing.netAssets, filing.positions.length]).toEqual(['1540305', 'S000000001', '2026-06-30', 100000000, 7]);
+    const rows = nportHoldingsSheet(filing, nportTickers(filing.positions, parseSecCompanyNames({ 0: { ticker: 'MSFT', title: 'Microsoft Corp' }, 1: { ticker: 'WRONG', title: 'Bond Issuer 6% 2035' } })));
+    expect(Object.keys(rows[0])).toEqual(['Name', 'Ticker', 'Identifier', 'Weight', 'Market Value', 'Shares Held', 'Asset Category', 'CUSIP', 'SEDOL', 'Maturity', 'Coupon']);
+    expect(rows[0]).toEqual({ Name: 'Microsoft Corp', Ticker: 'MSFT', Identifier: '594918104', Weight: '50', 'Market Value': '50000', 'Shares Held': '100', 'Asset Category': 'EC', CUSIP: '594918104', SEDOL: '', Maturity: '', Coupon: '' });
+    // the bond and the preferred (filed under its issuer's common ticker AXP) keep no stock ticker, the future its own id (not SPY's),
+    // a missing weight and value stay empty (never 0), sorted by weight like the XLS
+    expect(rows.map(r => [r.Name.slice(0, 7), r.Ticker, r.Identifier, r.Weight, r['Market Value'], r.Maturity, r.Coupon])).toEqual([
+      ['Microso', 'MSFT', '594918104', '50', '50000', '', ''], ['Bond Is', '-', 'US0000000001', '39.9', '99000', '2035-01-31', '6'], ['Apple I', '-', '037833100', '6', '6000', '', ''],
+      ['Cash an', '-', '', '4.1', '4100', '', ''], ['DJIA MI', '-', 'BBG01VKPGXL9', '0.005', '4913.74', '', ''], ['AMERICA', '-', '025816DK2', '0.001', '1000', '', ''], ['Unknown', '-', '', '', '', '', '']]);
   });
 
-  test('N-PORT freshness: replaces published holdings only when newer; no published rows always accepts', () => {
-    expect(secFilingIsFresher('2026-06-30', '2026-10-01', true)).toBe(false); expect(secFilingIsFresher('2026-10-01', '2026-10-01', true)).toBe(false);
-    expect(secFilingIsFresher('2026-10-02', '2026-10-01', true)).toBe(true); expect(secFilingIsFresher(null, '2026-10-01', true)).toBe(false);
-    expect(secFilingIsFresher('2026-06-30', null, false)).toBe(true); expect(secFilingIsFresher(null, null, false)).toBe(true);
+  test('N-PORT freshness: a report replaces published holdings only when strictly newer; nothing published accepts any report', () => {
+    expect(nportIsFresh('2026-06-30', '2026-10-01', 3)).toBe(false); expect(nportIsFresh('2026-10-01', '2026-10-01', 3)).toBe(false);
+    expect(nportIsFresh('2026-10-02', '2026-10-01', 3)).toBe(true); expect(nportIsFresh('', '2026-10-01', 3)).toBe(false);
+    expect(nportIsFresh('2026-06-30', null, 0)).toBe(true); expect(nportIsFresh('', null, 0)).toBe(true);
+    expect(nportIsFresh('2026-06-30', null, 3)).toBe(false); // published rows without a date cannot be compared: keep them
   });
 
-  test('month-name dates are read as UTC: same output east and west of UTC', () => {
-    for (const tz of ['Europe/Berlin', 'Pacific/Kiritimati', 'America/Los_Angeles', 'UTC']) {
+  test('dates: month-name and U.S. dates are the same calendar day in every time zone', () => {
+    for (const tz of ['Asia/Tokyo', 'Pacific/Kiritimati', 'America/Los_Angeles', 'UTC']) {
       process.env.TZ = tz;
-      expect(dateTextToIso('Oct 01 2026')).toBe('2026-10-01'); expect(dateTextToIso('06/30/2026')).toBe('2026-06-30'); expect(dateTextToIso('2026-06-30T00:00:00Z')).toBe('2026-06-30'); expect(dateTextToIso('garbage')).toBe('');
+      expect(['Oct 01 2026', 'October 1, 2026', '01 Oct 2026', '10/01/2026', '2026-10-01', '2026-10-01T00:00:00Z'].map(raw => toIsoDate(raw))).toEqual(Array(6).fill('2026-10-01'));
+      expect(toIsoDate('not a date')).toBe('not a date'); expect(dateTextToIso('Oct 01 2026')).toBe('2026-10-01'); expect(dateTextToIso('garbage')).toBe('');
       const merged = mergeHistory([{ Date: 'Oct 01 2026', Close: '1', 'Adj Close': '1', Volume: '0' }], [{ date: '2026-10-01', close: 2, adjClose: 2, volume: 0 }]);
       expect(merged.length).toBe(1); expect(merged[0].Close).toBe('2');
     }
@@ -427,11 +431,27 @@ describe('metrics', () => {
     const asOf = new Date('2026-06-30T00:00:00Z'), r = priceReturns(days, asOf);
     expect(r.yr1).toBe(20); expect(r.ytd).toBe(9.09); expect(r.cagr3y).toBeNull(); expect(r.cagr5y).toBeNull(); expect(r.cagr10y).toBeNull();
     expect(priceReturns(days, asOf, '2025-12-31').yr1).toBeNull();
-    expect(annualizedSinceInception(3.68, '2025-10-22', '2026-06-30')).toBeNull(); expect(annualizedSinceInception(5, '2020-01-01', '2026-06-30')).toBe(5);
     for (const [start, end] of [[0, 10], [-1, 10], [10, 0], [10, -1]]) {
       const bad = priceReturns([{ date: '2023-06-30', close: start, adjClose: start, volume: 0 }, { date: '2026-06-30', close: end, adjClose: end, volume: 0 }], asOf);
       for (const [key, value] of Object.entries(bad)) if (key !== 'asOfDate') expect(value).toBeNull();
     }
+  });
+
+  test('a fund younger than its horizon publishes no 1y, 3y, 5y or since-inception return, official or derived (calendar anniversary)', async () => {
+    await testFeed(async (_dir, root, base) => {
+      // official table as of 2026-06-30 lists every tenor; the fund started 2025-07-01, one day short of its first anniversary
+      const young: Fetcher = async (url, init) => url === 'https://www.aamlive.com/ETF/Detail/SPDV' && init?.method !== 'POST' ? new Response(detailHtml('SPDV', { ...FACTS.SPDV, Inception: '07/01/2025' })) : base(url, init);
+      await main({ ...integrationEnv, TICKERS: 'SPDV' }, { root, fetcher: young, now: fixedNow });
+      const m = tickerOf(await Bun.file(new URL('index.json', root)).json(), 'SPDV').metrics;
+      expect([m.ytd, m.tr1y, m.tr3y, m.cagr3y, m.cagr5y, m.siAnn, m.performanceAsOf]).toEqual([13.21, null, null, null, null, null, '2026-06-30']);
+      const meta = await Bun.file(new URL('funds/SPDV/meta.json', root)).json();
+      expect([meta.returns.monthEnd.yr1, meta.returns.quarterEnd.yr1, meta.returns.quarterEnd.sinceInception]).toEqual([null, null, null]);
+      // on its anniversary the 1-year and since-inception returns appear; 3 and 5 years stay null
+      const year: Fetcher = async (url, init) => url === 'https://www.aamlive.com/ETF/Detail/SPDV' && init?.method !== 'POST' ? new Response(detailHtml('SPDV', { ...FACTS.SPDV, Inception: '06/30/2025' })) : base(url, init);
+      await main({ ...integrationEnv, TICKERS: 'SPDV' }, { root, fetcher: year, now: fixedNow });
+      const n = tickerOf(await Bun.file(new URL('index.json', root)).json(), 'SPDV').metrics;
+      expect([n.tr1y, n.cagr3y, n.siAnn]).toEqual([23.18, null, 9.16]);
+    });
   });
 
   test('TER: terValue is the net ratio after the fee waiver, terGrossValue the gross; one published ratio is both', () => {
@@ -443,7 +463,9 @@ describe('metrics', () => {
     expect(terNet(null, { expenseRatio: { value: .49, gross: .49, net: .18 } }, { terValue: .49 })).toBe(.18);
     expect(terNet(null, {}, { terValue: .29 })).toBe(.29); expect(terNet(null, {}, {})).toBeNull();
   });
+});
 
+describe('metrics 2', () => {
   test('official and derived values keep units; a known zero stays 0, unknown stays null', () => {
     expect(annualizedToTotal(10, 3)).toBe(33.1); expect(totalToAnnualized(33.1, 3)).toBe(10); expect(annualizedToTotal(null, 5)).toBeNull();
     expect(indicatedYield(.1, 12, 24)).toBe(5); expect(indicatedYield(.1, 12, 0)).toBeNull();
@@ -781,10 +803,10 @@ describe('pipeline 4', () => {
   test('invalid controls fail before ANY fetch; an unknown ticker fails before per-fund calls', async () => {
     const source = offlineIssuer();
     await expect(main({ MAX_FETCHES: 'garbage' }, { fetcher: source.fetcher })).rejects.toThrow(); await expect(main({ MAX_RETRIES: '0' }, { fetcher: source.fetcher })).rejects.toThrow('MAX_RETRIES'); expect(source.seen).toEqual([]);
-    await testFeed(async (_dir, root, fetcher) => { await expect(main({ ...integrationEnv, TICKERS: 'NOTREAL' }, { root, fetcher, now: fixedNow })).rejects.toThrow('TICKERS not in catalog'); });
+    await testFeed(async (_dir, root, fetcher) => { await expect(main({ ...integrationEnv, TICKERS: 'NOTREAL' }, { root, fetcher, now: fixedNow })).rejects.toThrow('TICKERS: NOTREAL not in the AAM catalog or published feed; nothing was fetched or written'); });
   });
 
-  test('run hygiene: leftover .tmp files are removed, soft deadline starts no new fund but still writes the index, NEW FUNDS goes to the step summary', async () => {
+  test('run hygiene: leftover .tmp files are removed, soft deadline starts no new fund but still writes the index', async () => {
     await testFeed(async (dir, root, fetcher) => {
       await writeFile(dir + '/funds/PFLD/meta.json.tmp', '{'); await writeFile(dir + '/other.json.tmp', '{');
       await main({ ...integrationEnv, TICKERS: 'SPDV' }, { root, fetcher, now: fixedNow });
@@ -795,23 +817,103 @@ describe('pipeline 4', () => {
       const index = await Bun.file(new URL('index.json', root)).json(); expect(index.funds.length).toBe(5);
       const state = await Bun.file(new URL('update-state.json', root)).json(); expect(Object.values(state.scopes)[0]).toBe(summary.processed.at(-1)!);
     });
-    await testFeed(async (dir, root, fetcher) => {
-      const index = await Bun.file(new URL('index.json', root)).json(); index.funds = index.funds.filter((f: { ticker: string }) => f.ticker !== 'SAWS');
-      await writeFile(dir + '/index.json', JSON.stringify(index)); const summaryFile = dir + '-summary.md';
-      try { await main({ ...integrationEnv, TICKERS: 'SPDV', GITHUB_STEP_SUMMARY: summaryFile }, { root, fetcher, now: fixedNow }); expect(await readFile(summaryFile, 'utf8')).toBe('NEW FUNDS: SAWS\n'); }
-      finally { await rm(summaryFile, { force: true }); }
-    });
   });
 
-  test('derived returns use the fresh single-basis window, never old rows from another adjusted-close basis', async () => {
-    await testFeed(async (_dir, root, base) => {
+  test('a HISTORY_RANGE window that does not join the published history (another price basis) keeps the fund as published', async () => {
+    await testFeed(async (dir, root, base) => {
       await main({ ...integrationEnv, TICKERS: 'SPDV' }, { root, fetcher: base, now: fixedNow });
+      const before = await snapshot(dir);
       const rebased: Fetcher = async (url, init) => url.includes('finance/chart/SPDV')
         ? Response.json({ chart: { result: [{ meta: { regularMarketPrice: 52, regularMarketTime: 1782777600 }, timestamp: [1782691200, 1782777600], indicators: { quote: [{ close: [50, 52], volume: [1, 1] }], adjclose: [{ adjclose: [50, 52] }] } }] } })
         : base(url, init);
-      await main({ ...integrationEnv, TICKERS: 'SPDV', HISTORY_RANGE: '1y' }, { root, fetcher: rebased, now: fixedNow });
-      const meta = await Bun.file(new URL('funds/SPDV/meta.json', root)).json();
-      expect(meta.history.totalRows).toBeGreaterThan(2); expect(meta.returns.monthEnd.mo1).toBeNull();
+      const result = await main({ ...integrationEnv, TICKERS: 'SPDV', HISTORY_RANGE: '1y' }, { root, fetcher: rebased, now: fixedNow });
+      expect(result.providers.SPDV.warnings.join()).toContain('does not join the published history'); expect(await snapshot(dir)).toEqual(before);
+    });
+  });
+});
+
+describe('pipeline 5', () => {
+  test('a HISTORY_RANGE run after a full run keeps the older history and writes nothing (Q25)', async () => {
+    // the 1y window brings only the last day: without the older published days mo1, qtd and the derived returns would vanish
+    const windowed = (base: Fetcher, days: number): Fetcher => async (url, init) => {
+      const response = await base(url, init);
+      if (!/finance\/chart\//.test(url)) return response;
+      const payload = await response.json(), result = payload.chart.result[0];
+      result.timestamp = result.timestamp.slice(-days);
+      result.indicators.quote[0].close = result.indicators.quote[0].close.slice(-days);
+      result.indicators.quote[0].volume = result.indicators.quote[0].volume.slice(-days);
+      result.indicators.adjclose[0].adjclose = result.indicators.adjclose[0].adjclose.slice(-days);
+      return Response.json(payload);
+    };
+    await testFeed(async (dir, root, base) => {
+      await main(integrationEnv, { root, fetcher: base, now: fixedNow });
+      const first = await snapshot(dir);
+      const result = await main({ ...integrationEnv, HISTORY_RANGE: '1y' }, { root, fetcher: windowed(base, 1), now: new Date('2026-10-01T06:00:00Z') });
+      expect(result.failed).toEqual([]); expect(result.providers.SPDV.history).toBe('yahoo');
+      expect(await snapshot(dir)).toEqual(first);
+      expect((await Bun.file(new URL('funds/SPDV/meta.json', root)).json()).history.totalRows).toBe(3);
+    });
+  });
+
+  test('a relaxed guard still keeps numeric published weights from an all-blank N-PORT sheet (Q24)', async () => {
+    await testFeed(async (dir, root, base) => {
+      await main({ ...integrationEnv, TICKERS: 'SPDV' }, { root, fetcher: base, now: fixedNow });
+      const first = await snapshot(dir);
+      // the export is down and a newer N-PORT report carries no pctVal at all
+      const blank = NPORT_XML.replace(/<pctVal>[^<]*<\/pctVal>/g, '').replace('<repPdDate>2026-06-30', '<repPdDate>2026-12-31');
+      const mock: Fetcher = async (url, init) => (init?.method === 'POST' ? new Response('invalid XLS') : sec(blank)(url) ?? base(url, init));
+      HOLDINGS_GUARD_RELAX.SPDV = ['numeric', 'sum'];
+      try {
+        const result = await main({ ...integrationEnv, TICKERS: 'SPDV' }, { root, fetcher: mock, now: new Date('2027-01-15T05:00:00Z') });
+        expect(result.failed).toEqual(['SPDV']);
+      } finally {
+        delete HOLDINGS_GUARD_RELAX.SPDV;
+      }
+      expect(await snapshot(dir)).toEqual(first);
+      expect(holdingsWeightCount(['Name', 'Weight'], [['A', ''], ['B', '2']])).toBe(1);
+    });
+  });
+
+  test('TICKERS outside the live catalog stops the run before any fund request; a stale catalog-only row is dropped (Q27)', async () => {
+    await testFeed(async (dir, root, base) => {
+      const index = await Bun.file(new URL('index.json', root)).json();
+      index.funds.push(catalogOnlyRow({ ticker: 'NOPE', name: 'NOPE', category: 'Equity', fundPage: '', inception: null, nav: null, secYield: null, asOfDate: null }));
+      await writeFile(dir + '/index.json', JSON.stringify(index));
+      const before = await snapshot(dir), calls: string[] = [];
+      const recording: Fetcher = async (url, init) => { calls.push(url); return base(url, init); };
+      await expect(main({ ...integrationEnv, TICKERS: 'NOPE' }, { root, fetcher: recording, now: fixedNow })).rejects.toThrow('TICKERS: NOPE not in the AAM catalog or published feed; nothing was fetched or written');
+      expect(calls).toEqual(['https://www.aamlive.com/ETF']); expect(await snapshot(dir)).toEqual(before);
+      await main(integrationEnv, { root, fetcher: base, now: fixedNow });
+      expect((await Bun.file(new URL('index.json', root)).json()).funds.map((row: { ticker: string }) => row.ticker)).toEqual(['BDIV', 'CLOC', 'PFLD', 'SAWS', 'SPDV']);
+    });
+  });
+
+  test('NEW FUNDS announces a fund on its first successful publish, a failed new fund as not published yet (Q28)', async () => {
+    await testFeed(async (dir, root, base) => {
+      // SPDV was listed before but never published (catalog-only row); NEWF is new in the live catalog and no source answers it
+      const fund = parseCatalog(catalogHtml()).find(f => f.ticker === 'SPDV')!;
+      await rm(dir + '/funds/SPDV', { recursive: true, force: true });
+      const index = await Bun.file(new URL('index.json', root)).json();
+      index.funds = index.funds.map((row: { ticker: string }) => (row.ticker === 'SPDV' ? catalogOnlyRow(fund) : row));
+      await writeFile(dir + '/index.json', JSON.stringify(index));
+      const newFund = { ticker: 'NEWF', name: 'AAM New Fund ETF', category: 'Equity', inception: '10/01/2026', secYield: '1.00%', nav: '$25.00' };
+      const fetcher: Fetcher = async (url, init) => url === 'https://www.aamlive.com/ETF' ? new Response(catalogHtml([...FUNDS, newFund])) : base(url, init);
+      const summaryFile = dir + '-summary.md', lines: string[] = [], log = console.log;
+      console.log = (...args: unknown[]) => { if (/^NEW FUNDS/.test(String(args[0]))) lines.push(String(args[0])); };
+      try {
+        const env = { ...integrationEnv, TICKERS: 'SPDV NEWF', SKIP_YAHOO: 'true', GITHUB_STEP_SUMMARY: summaryFile };
+        await main(env, { root, fetcher, now: fixedNow });
+        expect(lines).toEqual(['NEW FUNDS: SPDV', 'NEW FUNDS (not published yet): NEWF']);
+        expect(await readFile(summaryFile, 'utf8')).toBe('### NEW FUNDS\n\nNEW FUNDS: SPDV\nNEW FUNDS (not published yet): NEWF\n');
+        lines.length = 0;
+        await main(env, { root, fetcher, now: new Date('2026-10-02T05:00:00Z') });
+        expect(lines).toEqual([]);
+        // NEWF's first successful read (Yahoo answers) announces it
+        await main({ ...env, TICKERS: 'NEWF', SKIP_YAHOO: 'false' }, { root, fetcher, now: new Date('2026-10-03T05:00:00Z') });
+        expect(lines).toEqual(['NEW FUNDS: NEWF']);
+      } finally {
+        console.log = log; await rm(summaryFile, { force: true });
+      }
     });
   });
 });
