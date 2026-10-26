@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-25T03:17:58.568Z",
+ "generatedAt": "2026-10-26T05:18:41.203Z",
  "ticker": "PFLD",
  "name": "AAM Low Duration Preferred & Income Securities ETF",
  "category": "Preferred & Hybrid Securities",
@@ -1190,7 +1190,7 @@
    "holdings/002.json"
   ],
   "pageSize": 250,
-  "totalRows": 334,
+  "totalRows": 330,
   "asOfDate": "2026-10-26",
   "asOf": "Oct 26 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",

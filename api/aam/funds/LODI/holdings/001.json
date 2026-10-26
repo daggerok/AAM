@@ -2,7 +2,7 @@
  "ticker": "LODI",
  "page": 1,
  "pageSize": 250,
- "totalRows": 225,
+ "totalRows": 223,
  "headers": [
   "Name",
   "Ticker",
@@ -988,20 +988,7 @@
    "Shares Held": "510000",
    "Asset Category": "Corporate Bond - Domestic",
    "CUSIP": "38141GZR8",
-   "SEDOL": "BMGDC88",
-   "Maturity": "2028-03-15",
-   "Coupon": "3.615"
-  },
-  {
-   "Name": "Goldman Sachs Group Inc/The 3.615% 03/15/2028",
-   "Ticker": "-",
-   "Identifier": "38141GZR8",
-   "Weight": "0.47",
-   "Market Value": "",
-   "Shares Held": "510000",
-   "Asset Category": "Corporate Bond - Domestic",
-   "CUSIP": "38141GZR8",
-   "SEDOL": "BPDJGX3",
+   "SEDOL": "BMGDC88 BPDJGX3",
    "Maturity": "2028-03-15",
    "Coupon": "3.615"
   },
@@ -2314,20 +2301,7 @@
    "Shares Held": "250000",
    "Asset Category": "Corporate Bond - Domestic",
    "CUSIP": "517834AJ6",
-   "SEDOL": "BQ1JDG4",
-   "Maturity": "2027-06-01",
-   "Coupon": "5.9"
-  },
-  {
-   "Name": "Las Vegas Sands Corp 5.9% 06/01/2027",
-   "Ticker": "-",
-   "Identifier": "517834AJ6",
-   "Weight": "0.23",
-   "Market Value": "",
-   "Shares Held": "250000",
-   "Asset Category": "Corporate Bond - Domestic",
-   "CUSIP": "517834AJ6",
-   "SEDOL": "BSCCFM6",
+   "SEDOL": "BQ1JDG4 BSCCFM6",
    "Maturity": "2027-06-01",
    "Coupon": "5.9"
   },

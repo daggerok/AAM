@@ -1,6 +1,6 @@
 {
- "generatedAt": "2026-10-25T03:17:58.568Z",
- "catalogReadAt": "2026-10-25T03:17:58.568Z",
+ "generatedAt": "2026-10-26T05:18:41.203Z",
+ "catalogReadAt": "2026-10-26T05:18:41.203Z",
  "source": {
   "provider": "AAM ETFs",
   "site": "https://www.aamlive.com",
@@ -10,7 +10,7 @@
  },
  "counts": {
   "funds": 10,
-  "holdings": 1191,
+  "holdings": 1185,
   "history": 7790
  },
  "funds": [
@@ -93,8 +93,10 @@
    "dataFile": "./funds/CLOC/meta.json",
    "cusip": "268961844",
    "isin": "US2689618443",
-   "ter": "0.49%",
-   "terValue": 0.49,
+   "ter": "0.18%",
+   "terValue": 0.18,
+   "terGross": "0.49%",
+   "terGrossValue": 0.49,
    "nav": "$24.93",
    "navValue": 24.93,
    "aum": "$61.08 M",
@@ -164,8 +166,10 @@
    "dataFile": "./funds/LODI/meta.json",
    "cusip": "26922B428",
    "isin": "US26922B4288",
-   "ter": "0.39%",
-   "terValue": 0.39,
+   "ter": "0.15%",
+   "terValue": 0.15,
+   "terGross": "0.39%",
+   "terGrossValue": 0.39,
    "nav": "$24.94",
    "navValue": 24.94,
    "aum": "$108.48 M",
@@ -224,7 +228,7 @@
     "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)",
     "performanceAsOf": "2026-09-30"
    },
-   "holdings": 225,
+   "holdings": 223,
    "history": 473
   },
   {
@@ -237,6 +241,8 @@
    "isin": "US26922A1988",
    "ter": "0.45%",
    "terValue": 0.45,
+   "terGross": "0.45%",
+   "terGrossValue": 0.45,
    "nav": "$19.11",
    "navValue": 19.11,
    "aum": "$371.67 M",
@@ -295,7 +301,7 @@
     "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)",
     "performanceAsOf": "2026-09-30"
    },
-   "holdings": 334,
+   "holdings": 330,
    "history": 1740
   },
   {

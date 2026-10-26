@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-25T03:17:58.568Z",
+ "generatedAt": "2026-10-26T05:18:41.203Z",
  "ticker": "LODI",
  "name": "AAM SLC Low Duration Income ETF",
  "category": "Fixed Income",
@@ -35,8 +35,8 @@
   "exchange": "NYSE Arca"
  },
  "expenseRatio": {
-  "display": "0.39%",
-  "value": 0.39,
+  "display": "0.15%",
+  "value": 0.15,
   "gross": 0.39,
   "net": 0.15
  },
@@ -409,7 +409,7 @@
    "holdings/001.json"
   ],
   "pageSize": 250,
-  "totalRows": 225,
+  "totalRows": 223,
   "asOfDate": "2026-10-26",
   "asOf": "Oct 26 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",

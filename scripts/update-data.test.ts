@@ -7,7 +7,7 @@ import { createHash } from 'node:crypto';
 import {
   CONTROL_NAMES, CONTROL_DEFAULTS, readConfig, resolveControls, runtimeControls, parseRange, parseAumRange, createRequestGate,
   samePublishedContent, writeIfChanged, decodeEntities, parseCatalog, returnSlot, parseNavPerformance, parseDistributions,
-  parseDetail, exportPostbackBody, readXlsCells, parseHoldingsWorkbook, excelSerialDate, parseChart, chartUrl, priceReturns, annualizedToTotal,
+  parseDetail, terNet, exportPostbackBody, readXlsCells, parseHoldingsWorkbook, excelSerialDate, parseChart, chartUrl, priceReturns, annualizedToTotal,
   totalToAnnualized, indicatedYield, inferDistributionFrequency, deriveCatalogMetrics, dividendYieldBasisFor, withDividendYieldBasis, annualizedSinceInception, fundFilterReasons,
   parseFundTickerMap, parseCompanyTickerMap, parseNport, nportMatches, parseNportAccessions, parseEdgarAtomFilings, nportUrlFor, createTransport,
   isCertError, installSystemCa, systemCaActive,
@@ -349,6 +349,12 @@ describe('parsing 2', () => {
     expect(rows.every(r => r['Market Value'] === '')).toBe(true); expect(parseHoldingsWorkbook(xlsBytes(HOLDINGS.SPDV))).toEqual(rows);
     expect(rows[0]).toMatchObject({ Name: 'Skyworks Solutions Inc', Ticker: 'SWKS', Identifier: '2961053', Weight: '97.08', 'Shares Held': '29953' });
     expect(parseHoldingsWorkbook(xlsBytes(HOLDINGS.PFLD))[0]).toMatchObject({ Ticker: '-', CUSIP: '48128AAJ2', Maturity: '2037-10-20', Coupon: '6.5' });
+    // AAM-2: the export repeats a security once per SEDOL (PFLD US Bancorp 902973AZ9): one position, both SEDOLs kept
+    const bancorp = ['US Bancorp 5.3% 04/15/2175', '902973AZ9', 'BYZD562', 'Banking', 1585000, 0.43, 109939, 5.3];
+    const twice = parseHoldingsWorkbook(xlsBytes([HOLDINGS.PFLD[0], bancorp, [...bancorp.slice(0, 2), 'BNVR6Y6', ...bancorp.slice(3)], HOLDINGS.PFLD[1]]));
+    expect(twice.map(r => [r.CUSIP || r.Name, r.SEDOL, r.Weight])).toEqual([['48128AAJ2', '', '98.75'], ['Bank Capital Security', '', '1.25'], ['902973AZ9', 'BNVR6Y6 BYZD562', '0.43']]);
+    const lots = parseHoldingsWorkbook(xlsBytes([bancorp, [...bancorp.slice(0, 4), 1000, 0.01, ...bancorp.slice(6)]])); // another quantity is another row
+    expect(lots.length).toBe(2);
   });
 
   test('XLS fails closed on HTML, truncation, cyclic FAT, unsupported cells and bad headers; preview must match the workbook', () => {
@@ -426,6 +432,16 @@ describe('metrics', () => {
       const bad = priceReturns([{ date: '2023-06-30', close: start, adjClose: start, volume: 0 }, { date: '2026-06-30', close: end, adjClose: end, volume: 0 }], asOf);
       for (const [key, value] of Object.entries(bad)) if (key !== 'asOfDate') expect(value).toBeNull();
     }
+  });
+
+  test('TER: terValue is the net ratio after the fee waiver, terGrossValue the gross; one published ratio is both', () => {
+    const cloc = parseDetail(detailHtml('CLOC'), 'CLOC'), spdv = parseDetail(detailHtml('SPDV'), 'SPDV');
+    expect(terNet(cloc, {}, {})).toBe(.18); expect(cloc.grossExpense).toBe(.49); // "0.49% (gross) 0.18% (net)" (497K 2026-03-02: 0.31% waived)
+    expect(terNet(spdv, {}, {})).toBe(.29); expect(spdv.grossExpense).toBe(.29);
+    expect(terNet({ netExpense: null, grossExpense: .5 }, {}, {})).toBe(.5);
+    // no fresh page: the published net wins over the value an older run filled with the gross
+    expect(terNet(null, { expenseRatio: { value: .49, gross: .49, net: .18 } }, { terValue: .49 })).toBe(.18);
+    expect(terNet(null, {}, { terValue: .29 })).toBe(.29); expect(terNet(null, {}, {})).toBeNull();
   });
 
   test('official and derived values keep units; a known zero stays 0, unknown stays null', () => {
@@ -549,6 +565,9 @@ describe('pipeline', () => {
       }
       for (const f of old.funds.filter((f: { ticker: string }) => !summary.processed.includes(f.ticker))) { expect(tickerOf(index, f.ticker)).toEqual(f); expect(after[`funds/${f.ticker}/meta.json`]).toBe(before[`funds/${f.ticker}/meta.json`]); }
       expect((await Bun.file(new URL('funds/CLOC/meta.json', root)).json()).yields.secYield).toBe(5.77);
+      expect((await Bun.file(new URL('funds/CLOC/meta.json', root)).json()).expenseRatio).toEqual({ display: '0.18%', value: .18, gross: .49, net: .18 });
+      expect(tickerOf(index, 'CLOC')).toMatchObject({ ter: '0.18%', terValue: .18, terGross: '0.49%', terGrossValue: .49 });
+      expect(tickerOf(index, 'SPDV')).toMatchObject({ ter: '0.29%', terValue: .29, terGross: '0.29%', terGrossValue: .29 });
       for (const f of old.funds) expect(f.metrics).toMatchObject({ dividendYield: null, dividendYieldBasis: null }); // placeholder rows
       const keys = index.funds.map((r: { metrics: object }) => Object.keys(r.metrics).join()); expect(new Set(keys).size).toBe(1);
       const one = await main({ ...integrationEnv, TICKERS: 'SPDV' }, { root, fetcher, now: new Date('2026-10-01T05:30:00Z') });
