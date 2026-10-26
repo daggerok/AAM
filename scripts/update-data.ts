@@ -1731,7 +1731,10 @@ export async function main(env:Record<string,string|undefined>=process.env,optio
       if(clock()-startedAt>deadlineMs){deadlineHit=true;return;}
       const i=next++;if(i>=queue.length)return;const fund=queue[i],before=await reporter.before(fund.ticker);
       try {
-        const result=await processFund(fund,config,oldFunds.get(fund.ticker)??{},root,client,now);summary.providers[fund.ticker]=result.providers;
+        // A catalog-only row (dataFile null: new fund, nothing published yet) is not published state: a fund that no source answers
+        // then fails and keeps that row instead of being reported as updated with it (open-items etfs Q19).
+        const published=oldFunds.get(fund.ticker),previousRow=published?.dataFile?published:{};
+        const result=await processFund(fund,config,previousRow,root,client,now);summary.providers[fund.ticker]=result.providers;
         if(result.row){results.set(fund.ticker,result.row);summary.processed.push(fund.ticker);}else summary.skipped.push(fund.ticker);
         await reporter.result(fund.ticker,before,result.row?undefined:'skipped',result.reason);
       }catch(error){summary.failed.push(fund.ticker);await reporter.result(fund.ticker,before,'failed',errorMessage(error));}

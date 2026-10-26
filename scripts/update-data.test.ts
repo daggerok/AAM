@@ -748,6 +748,25 @@ describe('pipeline 3', () => {
 });
 
 describe('pipeline 4', () => {
+  test('a new fund that no source answers is reported failed and keeps its catalog-only row; the next run does not read that row as published', async () => {
+    await testFeed(async (dir, root, base) => {
+      const newFund = { ticker: 'NEWF', name: 'AAM New Fund ETF', category: 'Equity', inception: '10/01/2026', secYield: '1.00%', nav: '$25.00' };
+      // NEWF is in the live catalog only: no detail page, no export and no SEC filing in the offline issuer, and Yahoo is skipped
+      const fetcher: Fetcher = async (url, init) => url === 'https://www.aamlive.com/ETF' ? new Response(catalogHtml([...FUNDS, newFund])) : base(url, init);
+      const env = { ...integrationEnv, TICKERS: 'NEWF', SKIP_YAHOO: 'true' };
+      const first = await main(env, { root, fetcher, now: fixedNow });
+      expect(first.failed).toEqual(['NEWF']);
+      const row = tickerOf(await Bun.file(new URL('index.json', root)).json(), 'NEWF');
+      expect(row).toMatchObject({ dataFile: null, holdings: 0, history: 0 });
+      const before = await snapshot(dir);
+      // the catalog-only row is no published state: the fund fails again, nothing is written, no meta.json appears
+      const second = await main(env, { root, fetcher, now: new Date('2026-10-02T05:00:00Z') });
+      expect(second.failed).toEqual(['NEWF']); expect(second.processed).toEqual([]);
+      expect(await snapshot(dir)).toEqual(before);
+      expect(await Bun.file(new URL('funds/NEWF/meta.json', root)).exists()).toBe(false);
+    });
+  });
+
   test('one corrupt cached fund fails while the others continue; the failing batch does not advance the cursor', async () => {
     await testFeed(async (_dir, root, fetcher) => {
       await main(integrationEnv, { root, fetcher, now: fixedNow });
