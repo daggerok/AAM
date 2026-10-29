@@ -585,7 +585,11 @@ describe('pipeline', () => {
         expect(meta.returns).toMatchObject({ derivedFrom: row.metrics.returnsBasis, performanceAsOf: '2026-06-30' });
         expect(row.metrics.dividendYieldBasis).toBe(row.metrics.dividendYield === null ? null : 'indicated');
       }
-      for (const f of old.funds.filter((f: { ticker: string }) => !summary.processed.includes(f.ticker))) { expect(tickerOf(index, f.ticker)).toEqual(f); expect(after[`funds/${f.ticker}/meta.json`]).toBe(before[`funds/${f.ticker}/meta.json`]); }
+      // untouched rows stay as published; the 52-week keys are added to every row from its history pages (range-52w block)
+      const RANGE_KEYS = ['week52Low', 'week52High', 'range52w', 'range52wClose', 'range52wAsOf', 'range52wSince', 'range52wBasis'];
+      const rangeless = (row: { metrics?: Record<string, unknown> }) => ({ ...row, metrics: Object.fromEntries(Object.entries(row.metrics ?? {}).filter(([k]) => !RANGE_KEYS.includes(k))) });
+      for (const row of index.funds) expect(Object.keys(row.metrics)).toEqual(expect.arrayContaining(RANGE_KEYS));
+      for (const f of old.funds.filter((f: { ticker: string }) => !summary.processed.includes(f.ticker))) { expect(rangeless(tickerOf(index, f.ticker))).toEqual(rangeless(f)); expect(after[`funds/${f.ticker}/meta.json`]).toBe(before[`funds/${f.ticker}/meta.json`]); }
       expect((await Bun.file(new URL('funds/CLOC/meta.json', root)).json()).yields.secYield).toBe(5.77);
       expect((await Bun.file(new URL('funds/CLOC/meta.json', root)).json()).expenseRatio).toEqual({ display: '0.18%', value: .18, gross: .49, net: .18 });
       expect(tickerOf(index, 'CLOC')).toMatchObject({ ter: '0.18%', terValue: .18, terGross: '0.49%', terGrossValue: .49 });
