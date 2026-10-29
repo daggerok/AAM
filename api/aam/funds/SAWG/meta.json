@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-25T03:17:58.568Z",
+ "generatedAt": "2026-10-29T19:13:01.536Z",
  "ticker": "SAWG",
  "name": "AAM Sawgrass U.S. Large Cap Quality Growth ETF",
  "category": "Equity",
@@ -11,8 +11,8 @@
   "fundPage": "https://www.aamlive.com/ETF/Detail/SAWG",
   "inception": "2024-07-30",
   "secYield": 0.22,
-  "nav": 24.48,
-  "asOfDate": "2026-10-23"
+  "nav": 24.94,
+  "asOfDate": "2026-10-28"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/SAWG",
@@ -41,28 +41,28 @@
   "net": 0.49
  },
  "nav": {
-  "display": "$24.48",
-  "value": 24.48,
-  "asOfDate": "Oct 23 2026"
+  "display": "$24.94",
+  "value": 24.94,
+  "asOfDate": "Oct 28 2026"
  },
  "marketPrice": {
-  "display": "$24.51",
-  "value": 24.51,
-  "asOfDate": "Oct 23 2026"
+  "display": "$24.96",
+  "value": 24.96,
+  "asOfDate": "Oct 28 2026"
  },
  "premiumDiscount": {
-  "display": "0.12%",
-  "value": 0.12
+  "display": "0.08%",
+  "value": 0.08
  },
  "aum": {
-  "display": "$2.94 M",
-  "value": 2938140,
-  "asOfDate": "Oct 23 2026",
+  "display": "$2.99 M",
+  "value": 2992884,
+  "asOfDate": "Oct 28 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
-  "dividendYield": 0.25,
-  "dividendYieldText": "0.25%",
+  "dividendYield": 0.24,
+  "dividendYieldText": "0.24%",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
   "secYield": 0.22,
   "secYieldText": "0.22%",
@@ -150,8 +150,8 @@
   ],
   "pageSize": 250,
   "totalRows": 44,
-  "asOfDate": "2026-10-26",
-  "asOf": "Oct 26 2026",
+  "asOfDate": "2026-10-29",
+  "asOf": "Oct 29 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },
@@ -160,8 +160,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 561,
-  "asOf": "Oct 23 2026",
+  "totalRows": 565,
+  "asOf": "Oct 29 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

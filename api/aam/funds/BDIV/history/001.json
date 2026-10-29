@@ -2,7 +2,7 @@
  "ticker": "BDIV",
  "page": 1,
  "pageSize": 1000,
- "totalRows": 561,
+ "totalRows": 564,
  "headers": [
   "Date",
   "Close",
@@ -3372,9 +3372,27 @@
   },
   {
    "Date": "Oct 26 2026",
-   "Close": "25.130899",
+   "Close": "25.131001",
    "Adj Close": "25.13",
-   "Volume": "170"
+   "Volume": "200"
+  },
+  {
+   "Date": "Oct 27 2026",
+   "Close": "25.136",
+   "Adj Close": "25.14",
+   "Volume": "900"
+  },
+  {
+   "Date": "Oct 28 2026",
+   "Close": "25.141001",
+   "Adj Close": "25.14",
+   "Volume": "100"
+  },
+  {
+   "Date": "Oct 29 2026",
+   "Close": "25.200001",
+   "Adj Close": "25.2",
+   "Volume": "856"
   }
  ]
 }

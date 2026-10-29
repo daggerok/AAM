@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-26T05:18:41.203Z",
+ "generatedAt": "2026-10-29T19:13:01.536Z",
  "ticker": "PFLD",
  "name": "AAM Low Duration Preferred & Income Securities ETF",
  "category": "Preferred & Hybrid Securities",
@@ -11,8 +11,8 @@
   "fundPage": "https://www.aamlive.com/ETF/Detail/PFLD",
   "inception": "2019-11-19",
   "secYield": 6.06,
-  "nav": 19.11,
-  "asOfDate": "2026-10-23"
+  "nav": 19.14,
+  "asOfDate": "2026-10-28"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/PFLD",
@@ -41,23 +41,23 @@
   "net": 0.45
  },
  "nav": {
-  "display": "$19.11",
-  "value": 19.11,
-  "asOfDate": "Oct 23 2026"
+  "display": "$19.14",
+  "value": 19.14,
+  "asOfDate": "Oct 28 2026"
  },
  "marketPrice": {
   "display": "$19.10",
   "value": 19.1,
-  "asOfDate": "Oct 23 2026"
+  "asOfDate": "Oct 28 2026"
  },
  "premiumDiscount": {
-  "display": "-0.05%",
-  "value": -0.05
+  "display": "-0.21%",
+  "value": -0.21
  },
  "aum": {
-  "display": "$371.67 M",
-  "value": 371666160,
-  "asOfDate": "Oct 23 2026",
+  "display": "$372.31 M",
+  "value": 372308010,
+  "asOfDate": "Oct 28 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
@@ -1191,8 +1191,8 @@
   ],
   "pageSize": 250,
   "totalRows": 330,
-  "asOfDate": "2026-10-26",
-  "asOf": "Oct 26 2026",
+  "asOfDate": "2026-10-29",
+  "asOf": "Oct 29 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },
@@ -1202,8 +1202,8 @@
    "history/002.json"
   ],
   "pageSize": 1000,
-  "totalRows": 1740,
-  "asOf": "Oct 23 2026",
+  "totalRows": 1744,
+  "asOf": "Oct 29 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

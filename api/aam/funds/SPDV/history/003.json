@@ -2,7 +2,7 @@
  "ticker": "SPDV",
  "page": 3,
  "pageSize": 1000,
- "totalRows": 2237,
+ "totalRows": 2241,
  "headers": [
   "Date",
   "Close",
@@ -1431,6 +1431,30 @@
    "Close": "41.592999",
    "Adj Close": "41.59",
    "Volume": "9500"
+  },
+  {
+   "Date": "Oct 26 2026",
+   "Close": "41.568001",
+   "Adj Close": "41.57",
+   "Volume": "24700"
+  },
+  {
+   "Date": "Oct 27 2026",
+   "Close": "41.403",
+   "Adj Close": "41.4",
+   "Volume": "6000"
+  },
+  {
+   "Date": "Oct 28 2026",
+   "Close": "41.147999",
+   "Adj Close": "41.15",
+   "Volume": "4000"
+  },
+  {
+   "Date": "Oct 29 2026",
+   "Close": "41.400002",
+   "Adj Close": "41.4",
+   "Volume": "5747"
   }
  ]
 }

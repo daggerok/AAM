@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-25T03:17:58.568Z",
+ "generatedAt": "2026-10-29T19:13:01.536Z",
  "ticker": "TIIV",
  "name": "AAM Todd International Intrinsic Value ETF",
  "category": "Equity",
@@ -11,8 +11,8 @@
   "fundPage": "https://www.aamlive.com/ETF/Detail/TIIV",
   "inception": "2025-07-24",
   "secYield": 2.37,
-  "nav": 29.39,
-  "asOfDate": "2026-10-23"
+  "nav": 29.47,
+  "asOfDate": "2026-10-28"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/TIIV",
@@ -41,28 +41,28 @@
   "net": 0.54
  },
  "nav": {
-  "display": "$29.39",
-  "value": 29.39,
-  "asOfDate": "Oct 23 2026"
- },
- "marketPrice": {
   "display": "$29.47",
   "value": 29.47,
-  "asOfDate": "Oct 23 2026"
+  "asOfDate": "Oct 28 2026"
+ },
+ "marketPrice": {
+  "display": "$29.66",
+  "value": 29.66,
+  "asOfDate": "Oct 28 2026"
  },
  "premiumDiscount": {
-  "display": "0.27%",
-  "value": 0.27
+  "display": "0.64%",
+  "value": 0.64
  },
  "aum": {
-  "display": "$31.57 M",
-  "value": 31565529.24,
-  "asOfDate": "Oct 23 2026",
+  "display": "$31.95 M",
+  "value": 31949594.18,
+  "asOfDate": "Oct 28 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
-  "dividendYield": 2.17,
-  "dividendYieldText": "2.17%",
+  "dividendYield": 2.16,
+  "dividendYieldText": "2.16%",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
   "secYield": 2.37,
   "secYieldText": "2.37%",
@@ -150,8 +150,8 @@
   ],
   "pageSize": 250,
   "totalRows": 66,
-  "asOfDate": "2026-10-26",
-  "asOf": "Oct 26 2026",
+  "asOfDate": "2026-10-29",
+  "asOf": "Oct 29 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },
@@ -160,8 +160,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 315,
-  "asOf": "Oct 23 2026",
+  "totalRows": 319,
+  "asOf": "Oct 29 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

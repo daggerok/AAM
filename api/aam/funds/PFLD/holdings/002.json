@@ -122,19 +122,6 @@
    "Coupon": "6"
   },
   {
-   "Name": "AGNC Investment Corp",
-   "Ticker": "-",
-   "Identifier": "00123Q609",
-   "Weight": "0.11",
-   "Market Value": "",
-   "Shares Held": "16064",
-   "Asset Category": "Real Estate",
-   "CUSIP": "00123Q609",
-   "SEDOL": "BJBT6K0",
-   "Maturity": "2200-12-31",
-   "Coupon": "6.875"
-  },
-  {
    "Name": "BAC Capital Trust XIV 4.5562% 09/15/2175",
    "Ticker": "-",
    "Identifier": "05518VAA3",
@@ -226,6 +213,19 @@
    "Coupon": "6.5"
   },
   {
+   "Name": "AGNC Investment Corp",
+   "Ticker": "-",
+   "Identifier": "00123Q609",
+   "Weight": "0.1",
+   "Market Value": "",
+   "Shares Held": "16064",
+   "Asset Category": "Real Estate",
+   "CUSIP": "00123Q609",
+   "SEDOL": "BJBT6K0",
+   "Maturity": "2200-12-31",
+   "Coupon": "6.875"
+  },
+  {
    "Name": "BRC Group Holdings Inc",
    "Ticker": "-",
    "Identifier": "05580M835",
@@ -239,17 +239,17 @@
    "Coupon": "6"
   },
   {
-   "Name": "Chimera Investment Corp",
+   "Name": "FMC Corp 8.45% 11/01/2055",
    "Ticker": "-",
-   "Identifier": "16934Q604",
+   "Identifier": "302491AZ8",
    "Weight": "0.1",
    "Market Value": "",
-   "Shares Held": "16632",
-   "Asset Category": "Real Estate",
-   "CUSIP": "16934Q604",
-   "SEDOL": "BHRS1F7",
-   "Maturity": "2200-12-31",
-   "Coupon": "8"
+   "Shares Held": "1280000",
+   "Asset Category": "Basic Industry",
+   "CUSIP": "302491AZ8",
+   "SEDOL": "BRJF1M3",
+   "Maturity": "2055-11-01",
+   "Coupon": "8.45"
   },
   {
    "Name": "PennyMac Mortgage Investment Trust",
@@ -291,6 +291,19 @@
    "Coupon": "7.875"
   },
   {
+   "Name": "Arbor Realty Trust Inc",
+   "Ticker": "-",
+   "Identifier": "038923850",
+   "Weight": "0.09",
+   "Market Value": "",
+   "Shares Held": "19407",
+   "Asset Category": "Real Estate",
+   "CUSIP": "038923850",
+   "SEDOL": "BLR4KW3",
+   "Maturity": "2200-12-31",
+   "Coupon": "6.25"
+  },
+  {
    "Name": "Atlanticus Holdings Corp",
    "Ticker": "-",
    "Identifier": "04914Y409",
@@ -302,6 +315,19 @@
    "SEDOL": "BQ7WWQ0",
    "Maturity": "2029-01-31",
    "Coupon": "9.25"
+  },
+  {
+   "Name": "Chimera Investment Corp",
+   "Ticker": "-",
+   "Identifier": "16934Q604",
+   "Weight": "0.09",
+   "Market Value": "",
+   "Shares Held": "16632",
+   "Asset Category": "Real Estate",
+   "CUSIP": "16934Q604",
+   "SEDOL": "BHRS1F7",
+   "Maturity": "2200-12-31",
+   "Coupon": "8"
   },
   {
    "Name": "Compass Diversified Holdings",
@@ -328,19 +354,6 @@
    "SEDOL": "2613741",
    "Maturity": "2038-08-01",
    "Coupon": "7.5"
-  },
-  {
-   "Name": "FMC Corp 8.45% 11/01/2055",
-   "Ticker": "-",
-   "Identifier": "302491AZ8",
-   "Weight": "0.09",
-   "Market Value": "",
-   "Shares Held": "1280000",
-   "Asset Category": "Basic Industry",
-   "CUSIP": "302491AZ8",
-   "SEDOL": "BRJF1M3",
-   "Maturity": "2055-11-01",
-   "Coupon": "8.45"
   },
   {
    "Name": "Invesco Mortgage Capital Inc",
@@ -371,19 +384,6 @@
   {
    "Name": "Adamas Trust Inc",
    "Ticker": "-",
-   "Identifier": "649604865",
-   "Weight": "0.08",
-   "Market Value": "",
-   "Shares Held": "11894",
-   "Asset Category": "Real Estate",
-   "CUSIP": "649604865",
-   "SEDOL": "BMC4Z64",
-   "Maturity": "2200-12-31",
-   "Coupon": "6.875"
-  },
-  {
-   "Name": "Adamas Trust Inc",
-   "Ticker": "-",
    "Identifier": "649604881",
    "Weight": "0.08",
    "Market Value": "",
@@ -406,19 +406,6 @@
    "SEDOL": "BNC35P7",
    "Maturity": "2200-12-31",
    "Coupon": "7.75"
-  },
-  {
-   "Name": "Arbor Realty Trust Inc",
-   "Ticker": "-",
-   "Identifier": "038923850",
-   "Weight": "0.08",
-   "Market Value": "",
-   "Shares Held": "19407",
-   "Asset Category": "Real Estate",
-   "CUSIP": "038923850",
-   "SEDOL": "BLR4KW3",
-   "Maturity": "2200-12-31",
-   "Coupon": "6.25"
   },
   {
    "Name": "Atlanticus Holdings Corp",
@@ -538,17 +525,17 @@
    "Coupon": "8.25"
   },
   {
-   "Name": "Bread Financial Holdings Inc",
+   "Name": "Adamas Trust Inc",
    "Ticker": "-",
-   "Identifier": "018581603",
+   "Identifier": "649604865",
    "Weight": "0.07",
    "Market Value": "",
-   "Shares Held": "9989",
-   "Asset Category": "Financial Services",
-   "CUSIP": "018581603",
-   "SEDOL": "BSNNTN7",
+   "Shares Held": "11894",
+   "Asset Category": "Real Estate",
+   "CUSIP": "649604865",
+   "SEDOL": "BMC4Z64",
    "Maturity": "2200-12-31",
-   "Coupon": "8.875"
+   "Coupon": "6.875"
   },
   {
    "Name": "Chimera Investment Corp",
@@ -707,6 +694,19 @@
    "Coupon": "0"
   },
   {
+   "Name": "Bread Financial Holdings Inc",
+   "Ticker": "-",
+   "Identifier": "018581603",
+   "Weight": "0.06",
+   "Market Value": "",
+   "Shares Held": "9989",
+   "Asset Category": "Financial Services",
+   "CUSIP": "018581603",
+   "SEDOL": "BSNNTN7",
+   "Maturity": "2200-12-31",
+   "Coupon": "8.875"
+  },
+  {
    "Name": "CION Investment Corp",
    "Ticker": "-",
    "Identifier": "17259U402",
@@ -770,19 +770,6 @@
    "SEDOL": "BTY4T25",
    "Maturity": "2031-05-01",
    "Coupon": "7.125"
-  },
-  {
-   "Name": "Goldman Sachs Group Inc/The",
-   "Ticker": "-",
-   "Identifier": "38144X609",
-   "Weight": "0.06",
-   "Market Value": "",
-   "Shares Held": "10624",
-   "Asset Category": "Financial Services",
-   "CUSIP": "38144X609",
-   "SEDOL": "B0N0V47",
-   "Maturity": "2200-12-31",
-   "Coupon": "0"
   },
   {
    "Name": "Granite Point Mortgage Trust Inc",
@@ -963,6 +950,19 @@
    "Asset Category": "Banking",
    "CUSIP": "060505625",
    "SEDOL": "B06H0T3",
+   "Maturity": "2200-12-31",
+   "Coupon": "0"
+  },
+  {
+   "Name": "Goldman Sachs Group Inc/The",
+   "Ticker": "-",
+   "Identifier": "38144X609",
+   "Weight": "0.05",
+   "Market Value": "",
+   "Shares Held": "10624",
+   "Asset Category": "Financial Services",
+   "CUSIP": "38144X609",
+   "SEDOL": "B0N0V47",
    "Maturity": "2200-12-31",
    "Coupon": "0"
   },

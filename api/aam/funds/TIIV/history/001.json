@@ -2,7 +2,7 @@
  "ticker": "TIIV",
  "page": 1,
  "pageSize": 1000,
- "totalRows": 315,
+ "totalRows": 319,
  "headers": [
   "Date",
   "Close",
@@ -1899,6 +1899,30 @@
    "Close": "29.469",
    "Adj Close": "29.47",
    "Volume": "2200"
+  },
+  {
+   "Date": "Oct 26 2026",
+   "Close": "29.481001",
+   "Adj Close": "29.48",
+   "Volume": "100"
+  },
+  {
+   "Date": "Oct 27 2026",
+   "Close": "29.628",
+   "Adj Close": "29.63",
+   "Volume": "2100"
+  },
+  {
+   "Date": "Oct 28 2026",
+   "Close": "29.66",
+   "Adj Close": "29.66",
+   "Volume": "2900"
+  },
+  {
+   "Date": "Oct 29 2026",
+   "Close": "29.66",
+   "Adj Close": "29.66",
+   "Volume": "80"
   }
  ]
 }

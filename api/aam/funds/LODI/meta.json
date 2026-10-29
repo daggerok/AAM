@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-26T05:18:41.203Z",
+ "generatedAt": "2026-10-29T19:13:01.536Z",
  "ticker": "LODI",
  "name": "AAM SLC Low Duration Income ETF",
  "category": "Fixed Income",
@@ -10,9 +10,9 @@
   "category": "Fixed Income",
   "fundPage": "https://www.aamlive.com/ETF/Detail/LODI",
   "inception": "2024-12-03",
-  "secYield": 5.29,
-  "nav": 24.94,
-  "asOfDate": "2026-10-23"
+  "secYield": 5.31,
+  "nav": 24.93,
+  "asOfDate": "2026-10-28"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/LODI",
@@ -41,34 +41,34 @@
   "net": 0.15
  },
  "nav": {
-  "display": "$24.94",
-  "value": 24.94,
-  "asOfDate": "Oct 23 2026"
+  "display": "$24.93",
+  "value": 24.93,
+  "asOfDate": "Oct 28 2026"
  },
  "marketPrice": {
-  "display": "$25.01",
-  "value": 25.01,
-  "asOfDate": "Oct 23 2026"
+  "display": "$25.00",
+  "value": 25,
+  "asOfDate": "Oct 28 2026"
  },
  "premiumDiscount": {
   "display": "0.28%",
   "value": 0.28
  },
  "aum": {
-  "display": "$108.48 M",
-  "value": 108477255,
-  "asOfDate": "Oct 23 2026",
+  "display": "$108.43 M",
+  "value": 108431580,
+  "asOfDate": "Oct 28 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
   "dividendYield": 5.28,
   "dividendYieldText": "5.28%",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
-  "secYield": 5.29,
-  "secYieldText": "5.29%",
+  "secYield": 5.31,
+  "secYieldText": "5.31%",
   "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
-  "subsidizedSecYield": 5.58,
-  "unsubsidizedSecYield": 5.29
+  "subsidizedSecYield": 5.59,
+  "unsubsidizedSecYield": 5.31
  },
  "officialReturns": {
   "asOfDate": "2026-09-30",
@@ -409,9 +409,9 @@
    "holdings/001.json"
   ],
   "pageSize": 250,
-  "totalRows": 223,
-  "asOfDate": "2026-10-26",
-  "asOf": "Oct 26 2026",
+  "totalRows": 222,
+  "asOfDate": "2026-10-29",
+  "asOf": "Oct 29 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },
@@ -420,8 +420,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 473,
-  "asOf": "Oct 23 2026",
+  "totalRows": 477,
+  "asOf": "Oct 29 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-25T03:17:58.568Z",
+ "generatedAt": "2026-10-29T19:13:01.536Z",
  "ticker": "TRFM",
  "name": "AAM Transformers ETF",
  "category": "Equity",
@@ -10,9 +10,9 @@
   "category": "Equity",
   "fundPage": "https://www.aamlive.com/ETF/Detail/TRFM",
   "inception": "2022-07-11",
-  "secYield": 0.12,
-  "nav": 54.36,
-  "asOfDate": "2026-10-23"
+  "secYield": 0.13,
+  "nav": 56.67,
+  "asOfDate": "2026-10-28"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/TRFM",
@@ -41,34 +41,34 @@
   "net": 0.49
  },
  "nav": {
-  "display": "$54.36",
-  "value": 54.36,
-  "asOfDate": "Oct 23 2026"
+  "display": "$56.67",
+  "value": 56.67,
+  "asOfDate": "Oct 28 2026"
  },
  "marketPrice": {
-  "display": "$54.34",
-  "value": 54.34,
-  "asOfDate": "Oct 23 2026"
+  "display": "$56.75",
+  "value": 56.75,
+  "asOfDate": "Oct 28 2026"
  },
  "premiumDiscount": {
-  "display": "-0.04%",
-  "value": -0.04
+  "display": "0.14%",
+  "value": 0.14
  },
  "aum": {
-  "display": "$319.34 M",
-  "value": 319337387.5,
-  "asOfDate": "Oct 23 2026",
+  "display": "$332.93 M",
+  "value": 332934487.5,
+  "asOfDate": "Oct 28 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
-  "dividendYield": 0.15,
-  "dividendYieldText": "0.15%",
+  "dividendYield": 0.14,
+  "dividendYieldText": "0.14%",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
-  "secYield": 0.12,
-  "secYieldText": "0.12%",
+  "secYield": 0.13,
+  "secYieldText": "0.13%",
   "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
-  "subsidizedSecYield": 0.12,
-  "unsubsidizedSecYield": 0.12
+  "subsidizedSecYield": 0.13,
+  "unsubsidizedSecYield": 0.13
  },
  "officialReturns": {
   "asOfDate": "2026-09-30",
@@ -164,8 +164,8 @@
   ],
   "pageSize": 250,
   "totalRows": 270,
-  "asOfDate": "2026-10-26",
-  "asOf": "Oct 26 2026",
+  "asOfDate": "2026-10-29",
+  "asOf": "Oct 29 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },
@@ -175,8 +175,8 @@
    "history/002.json"
   ],
   "pageSize": 1000,
-  "totalRows": 1077,
-  "asOf": "Oct 23 2026",
+  "totalRows": 1081,
+  "asOf": "Oct 29 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }
