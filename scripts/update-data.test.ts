@@ -856,6 +856,15 @@ describe('pipeline 5', () => {
       expect(result.failed).toEqual([]); expect(result.providers.SPDV.history).toBe('yahoo');
       expect(await snapshot(dir)).toEqual(first);
       expect((await Bun.file(new URL('funds/SPDV/meta.json', root)).json()).history.totalRows).toBe(3);
+      // a truncated default-range (`max`) answer never shrinks the history either (Yahoo served 2 bars for Franklin DVAL and USFI on 2026-10-29):
+      // one that joins the published days keeps them all, one that does not join keeps the fund as published
+      await main(integrationEnv, { root, fetcher: windowed(base, 2), now: new Date('2026-10-01T06:00:00Z') });
+      expect(await snapshot(dir)).toEqual(first);
+      const lone: Fetcher = async (url, init) => url.includes('finance/chart/SPDV')
+        ? Response.json({ chart: { result: [{ meta: { regularMarketPrice: 52, regularMarketTime: 1790000000 }, timestamp: [1790000000], indicators: { quote: [{ close: [52], volume: [1] }], adjclose: [{ adjclose: [52] }] } }] } })
+        : base(url, init);
+      await main({ ...integrationEnv, TICKERS: 'SPDV' }, { root, fetcher: lone, now: new Date('2026-10-01T06:00:00Z') });
+      expect((await Bun.file(new URL('funds/SPDV/meta.json', root)).json()).history.totalRows).toBe(3);
     });
   });
 

@@ -1307,10 +1307,11 @@ async function processFund(fund:CatalogFund,config:UpdaterConfig,oldIndex:JsonRe
   if(holdingsProblem)throw new Error(`holdings guard: ${holdingsProblem}; ${old.ticker?'kept the previous complete data':'no data published for this fund yet'}`);
   const chart=config.skipYahoo?null:await optional(`${fund.ticker} Yahoo history`,async()=>{
     const fetched=await client.chart(fund.ticker,now);
-    if(config.historyRange==='max')return fetched;
-    // A HISTORY_RANGE window never shrinks the published history (and with it 3y, 5y, 10y and since inception; shared windowed-chart block, Q25)
+    // A fresh chart never shrinks the published history (and with it 3y, 5y, 10y and since inception; shared windowed-chart block, Q25):
+    // this covers a HISTORY_RANGE window and also a truncated `max` answer (2026-10-29: Yahoo returned 2 bars for Franklin DVAL and USFI).
+    // A full `max` answer starts at inception, so nothing published is older and the chart comes back unchanged
     const merged=mergeWindowedChart(fetched,oldHistory.rows,Array.isArray(old.distributions?.rows)?old.distributions.rows:[]);
-    if(!merged)throw new Error(`chart window does not join the published history (${config.historyRange})`);
+    if(!merged)throw new Error(`chart does not join the published history (${config.historyRange}, ${fetched.days.length} days)`);
     return merged;
   });
   if(chart?.days.length){providers.history='yahoo';outputNote(`[ chart    ] ${fund.ticker}: ${chart.days.length} fresh Yahoo daily bars`);}
