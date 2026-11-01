@@ -2,7 +2,7 @@
  "ticker": "SAWG",
  "page": 1,
  "pageSize": 1000,
- "totalRows": 565,
+ "totalRows": 566,
  "headers": [
   "Date",
   "Close",
@@ -3398,7 +3398,13 @@
    "Date": "Oct 29 2026",
    "Close": "24.709999",
    "Adj Close": "24.71",
-   "Volume": "422"
+   "Volume": "400"
+  },
+  {
+   "Date": "Oct 30 2026",
+   "Close": "24.306999",
+   "Adj Close": "24.31",
+   "Volume": "500"
   }
  ]
 }
