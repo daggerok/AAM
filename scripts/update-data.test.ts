@@ -587,8 +587,12 @@ describe('pipeline', () => {
       }
       // untouched rows stay as published; the 52-week keys are added to every row from its history pages (range-52w block)
       const RANGE_KEYS = ['week52Low', 'week52High', 'range52w', 'range52wClose', 'range52wAsOf', 'range52wSince', 'range52wBasis'];
-      const rangeless = (row: { metrics?: Record<string, unknown> }) => ({ ...row, metrics: Object.fromEntries(Object.entries(row.metrics ?? {}).filter(([k]) => !RANGE_KEYS.includes(k))) });
+      const SWING_KEYS = ['pctFrom52wHigh', 'athPrice', 'athDate', 'athBasis', 'pctFromAth', 'volatility1y', 'sigmaFromMean60d', 'high60d', 'low60d'];
+      const rangeless = (row: { metrics?: Record<string, unknown> }) => ({ ...row, metrics: Object.fromEntries(Object.entries(row.metrics ?? {}).filter(([k]) => !RANGE_KEYS.includes(k) && !SWING_KEYS.includes(k))) });
       for (const row of index.funds) expect(Object.keys(row.metrics)).toEqual(expect.arrayContaining(RANGE_KEYS));
+      // the swing keys from the Close column of the same pages (shared swing block), in front of returnsBasis and performanceAsOf
+      for (const row of index.funds) expect(Object.keys(row.metrics).slice(-11, -2)).toEqual(SWING_KEYS);
+      expect([typeof tickerOf(index, 'SPDV').metrics.athPrice, tickerOf(index, 'SPDV').metrics.athBasis]).toEqual(['number', expect.stringMatching(/^daily closes since \d{4}-\d{2}-\d{2}$/)]);
       for (const f of old.funds.filter((f: { ticker: string }) => !summary.processed.includes(f.ticker))) { expect(rangeless(tickerOf(index, f.ticker))).toEqual(rangeless(f)); expect(after[`funds/${f.ticker}/meta.json`]).toBe(before[`funds/${f.ticker}/meta.json`]); }
       expect((await Bun.file(new URL('funds/CLOC/meta.json', root)).json()).yields.secYield).toBe(5.77);
       expect((await Bun.file(new URL('funds/CLOC/meta.json', root)).json()).expenseRatio).toEqual({ display: '0.18%', value: .18, gross: .49, net: .18 });

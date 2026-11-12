@@ -73,6 +73,13 @@ Each fund carries a derived `metrics` object that powers the catalog columns sha
 - `dividendYield` - indicated yield (latest distribution × payments per year ÷ market price), not a published trailing yield
 - `dividendYieldBasis` - code for the definition behind `dividendYield`, `null` exactly when `dividendYield` is null (table below)
 - `secYield` - published 30-day SEC yield (unsubsidized where separately published); `-` otherwise
+- Swing metrics (shared `swing` block, the formulas of the Stocks feed) from the split-adjusted, not dividend-adjusted daily `Close` column of the published history, with the last close as the price; `null` (never `0`) when the history is too short:
+  - `pctFrom52wHigh` - last close against the highest close of the last 52 weeks, in percent
+  - `athPrice`, `athDate`, `athBasis` - highest close of the whole history, its date and the history it covers (`daily closes since <first date>`)
+  - `pctFromAth` - last close against `athPrice`, in percent
+  - `volatility1y` - annualized volatility of the last 252 daily log returns, in percent (needs 253 closes)
+  - `sigmaFromMean60d` - distance of the last close from the mean of the last 60 closes, in sample standard deviations
+  - `high60d`, `low60d` - highest and lowest of the last 60 closes
 - `returnsBasis` - mandatory non-empty label of how the returns were computed: `official AAM NAV total returns (aamlive.com ...)`, the same plus a note that missing metrics are estimated from Yahoo adjusted market prices at the same reporting date, or `derived from Yahoo adjusted market-price closes (estimate)` when AAM publishes no returns; never empty or `-`
 - `performanceAsOf` - mandatory ISO `YYYY-MM-DD` date the returns are as of: the performance-table date from aamlive.com, or the last Yahoo close date when derived; not the NAV date; `null` only when truly unknown
 
