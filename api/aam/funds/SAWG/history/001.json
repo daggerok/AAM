@@ -2,7 +2,7 @@
  "ticker": "SAWG",
  "page": 1,
  "pageSize": 1000,
- "totalRows": 566,
+ "totalRows": 576,
  "headers": [
   "Date",
   "Close",
@@ -3405,6 +3405,66 @@
    "Close": "24.306999",
    "Adj Close": "24.31",
    "Volume": "500"
+  },
+  {
+   "Date": "Nov 02 2026",
+   "Close": "24.247999",
+   "Adj Close": "24.25",
+   "Volume": "100"
+  },
+  {
+   "Date": "Nov 03 2026",
+   "Close": "24.375",
+   "Adj Close": "24.38",
+   "Volume": "100"
+  },
+  {
+   "Date": "Nov 04 2026",
+   "Close": "24.780001",
+   "Adj Close": "24.78",
+   "Volume": "100"
+  },
+  {
+   "Date": "Nov 05 2026",
+   "Close": "23.636999",
+   "Adj Close": "23.64",
+   "Volume": "100"
+  },
+  {
+   "Date": "Nov 06 2026",
+   "Close": "23.813",
+   "Adj Close": "23.81",
+   "Volume": "100"
+  },
+  {
+   "Date": "Nov 09 2026",
+   "Close": "24.497",
+   "Adj Close": "24.5",
+   "Volume": "100"
+  },
+  {
+   "Date": "Nov 10 2026",
+   "Close": "24.478001",
+   "Adj Close": "24.48",
+   "Volume": "3000"
+  },
+  {
+   "Date": "Nov 11 2026",
+   "Close": "24.83",
+   "Adj Close": "24.83",
+   "Volume": "600"
+  },
+  {
+   "Date": "Nov 12 2026",
+   "Close": "24.796",
+   "Adj Close": "24.8",
+   "Volume": "400"
+  },
+  {
+   "Date": "Nov 13 2026",
+   "Close": "24.615",
+   "Adj Close": "24.61",
+   "Volume": "600"
   }
  ]
 }

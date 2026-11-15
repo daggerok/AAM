@@ -2,7 +2,7 @@
  "ticker": "BDIV",
  "page": 1,
  "pageSize": 1000,
- "totalRows": 565,
+ "totalRows": 575,
  "headers": [
   "Date",
   "Close",
@@ -3399,6 +3399,66 @@
    "Close": "25.17",
    "Adj Close": "25.17",
    "Volume": "1300"
+  },
+  {
+   "Date": "Nov 02 2026",
+   "Close": "25.120001",
+   "Adj Close": "25.12",
+   "Volume": "5600"
+  },
+  {
+   "Date": "Nov 03 2026",
+   "Close": "25.063999",
+   "Adj Close": "25.06",
+   "Volume": "200"
+  },
+  {
+   "Date": "Nov 04 2026",
+   "Close": "25.594",
+   "Adj Close": "25.59",
+   "Volume": "100"
+  },
+  {
+   "Date": "Nov 05 2026",
+   "Close": "24.884001",
+   "Adj Close": "24.88",
+   "Volume": "600"
+  },
+  {
+   "Date": "Nov 06 2026",
+   "Close": "24.801001",
+   "Adj Close": "24.8",
+   "Volume": "3000"
+  },
+  {
+   "Date": "Nov 09 2026",
+   "Close": "25.309999",
+   "Adj Close": "25.31",
+   "Volume": "4000"
+  },
+  {
+   "Date": "Nov 10 2026",
+   "Close": "25.386",
+   "Adj Close": "25.39",
+   "Volume": "800"
+  },
+  {
+   "Date": "Nov 11 2026",
+   "Close": "25.59",
+   "Adj Close": "25.59",
+   "Volume": "1400"
+  },
+  {
+   "Date": "Nov 12 2026",
+   "Close": "25.655001",
+   "Adj Close": "25.66",
+   "Volume": "4200"
+  },
+  {
+   "Date": "Nov 13 2026",
+   "Close": "25.68",
+   "Adj Close": "25.68",
+   "Volume": "4200"
   }
  ]
 }

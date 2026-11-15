@@ -2,7 +2,7 @@
  "ticker": "PFLD",
  "page": 2,
  "pageSize": 1000,
- "totalRows": 1745,
+ "totalRows": 1755,
  "headers": [
   "Date",
   "Close",
@@ -4479,6 +4479,66 @@
    "Close": "19.040001",
    "Adj Close": "19.04",
    "Volume": "74900"
+  },
+  {
+   "Date": "Nov 02 2026",
+   "Close": "19.07",
+   "Adj Close": "19.07",
+   "Volume": "57000"
+  },
+  {
+   "Date": "Nov 03 2026",
+   "Close": "19.08",
+   "Adj Close": "19.08",
+   "Volume": "78800"
+  },
+  {
+   "Date": "Nov 04 2026",
+   "Close": "19.110001",
+   "Adj Close": "19.11",
+   "Volume": "102000"
+  },
+  {
+   "Date": "Nov 05 2026",
+   "Close": "19.08",
+   "Adj Close": "19.08",
+   "Volume": "224800"
+  },
+  {
+   "Date": "Nov 06 2026",
+   "Close": "19.15",
+   "Adj Close": "19.15",
+   "Volume": "118200"
+  },
+  {
+   "Date": "Nov 09 2026",
+   "Close": "19.129999",
+   "Adj Close": "19.13",
+   "Volume": "37700"
+  },
+  {
+   "Date": "Nov 10 2026",
+   "Close": "19.1",
+   "Adj Close": "19.1",
+   "Volume": "61200"
+  },
+  {
+   "Date": "Nov 11 2026",
+   "Close": "19.1",
+   "Adj Close": "19.1",
+   "Volume": "30000"
+  },
+  {
+   "Date": "Nov 12 2026",
+   "Close": "19.07",
+   "Adj Close": "19.07",
+   "Volume": "33000"
+  },
+  {
+   "Date": "Nov 13 2026",
+   "Close": "19.004999",
+   "Adj Close": "19",
+   "Volume": "68900"
   }
  ]
 }

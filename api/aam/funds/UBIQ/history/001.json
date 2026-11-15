@@ -2,7 +2,7 @@
  "ticker": "UBIQ",
  "page": 1,
  "pageSize": 1000,
- "totalRows": 19,
+ "totalRows": 29,
  "headers": [
   "Date",
   "Close",
@@ -123,6 +123,66 @@
    "Close": "25.57",
    "Adj Close": "25.57",
    "Volume": "8400"
+  },
+  {
+   "Date": "Nov 02 2026",
+   "Close": "25.85",
+   "Adj Close": "25.85",
+   "Volume": "13800"
+  },
+  {
+   "Date": "Nov 03 2026",
+   "Close": "25.639999",
+   "Adj Close": "25.64",
+   "Volume": "11600"
+  },
+  {
+   "Date": "Nov 04 2026",
+   "Close": "26.790001",
+   "Adj Close": "26.79",
+   "Volume": "3000"
+  },
+  {
+   "Date": "Nov 05 2026",
+   "Close": "26.299999",
+   "Adj Close": "26.3",
+   "Volume": "21400"
+  },
+  {
+   "Date": "Nov 06 2026",
+   "Close": "26.059999",
+   "Adj Close": "26.06",
+   "Volume": "100100"
+  },
+  {
+   "Date": "Nov 09 2026",
+   "Close": "26.5",
+   "Adj Close": "26.5",
+   "Volume": "12000"
+  },
+  {
+   "Date": "Nov 10 2026",
+   "Close": "26.59",
+   "Adj Close": "26.59",
+   "Volume": "7600"
+  },
+  {
+   "Date": "Nov 11 2026",
+   "Close": "26.700001",
+   "Adj Close": "26.7",
+   "Volume": "23500"
+  },
+  {
+   "Date": "Nov 12 2026",
+   "Close": "26.58",
+   "Adj Close": "26.58",
+   "Volume": "6200"
+  },
+  {
+   "Date": "Nov 13 2026",
+   "Close": "26.76",
+   "Adj Close": "26.76",
+   "Volume": "7800"
   }
  ]
 }

@@ -2,7 +2,7 @@
  "ticker": "TIIV",
  "page": 1,
  "pageSize": 1000,
- "totalRows": 320,
+ "totalRows": 330,
  "headers": [
   "Date",
   "Close",
@@ -1929,6 +1929,66 @@
    "Close": "29.207001",
    "Adj Close": "29.21",
    "Volume": "2500"
+  },
+  {
+   "Date": "Nov 02 2026",
+   "Close": "29.253",
+   "Adj Close": "29.25",
+   "Volume": "3200"
+  },
+  {
+   "Date": "Nov 03 2026",
+   "Close": "29.139999",
+   "Adj Close": "29.14",
+   "Volume": "2100"
+  },
+  {
+   "Date": "Nov 04 2026",
+   "Close": "29.775",
+   "Adj Close": "29.77",
+   "Volume": "100"
+  },
+  {
+   "Date": "Nov 05 2026",
+   "Close": "29.193001",
+   "Adj Close": "29.19",
+   "Volume": "100"
+  },
+  {
+   "Date": "Nov 06 2026",
+   "Close": "28.962999",
+   "Adj Close": "28.96",
+   "Volume": "100"
+  },
+  {
+   "Date": "Nov 09 2026",
+   "Close": "29.562",
+   "Adj Close": "29.56",
+   "Volume": "100"
+  },
+  {
+   "Date": "Nov 10 2026",
+   "Close": "29.483",
+   "Adj Close": "29.48",
+   "Volume": "100"
+  },
+  {
+   "Date": "Nov 11 2026",
+   "Close": "29.583",
+   "Adj Close": "29.58",
+   "Volume": "100"
+  },
+  {
+   "Date": "Nov 12 2026",
+   "Close": "29.469",
+   "Adj Close": "29.47",
+   "Volume": "100"
+  },
+  {
+   "Date": "Nov 13 2026",
+   "Close": "29.434999",
+   "Adj Close": "29.43",
+   "Volume": "100"
   }
  ]
 }
