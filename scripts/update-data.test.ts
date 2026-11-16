@@ -588,14 +588,21 @@ describe('pipeline', () => {
       // untouched rows stay as published; the 52-week keys are added to every row from its history pages (range-52w block)
       const RANGE_KEYS = ['week52Low', 'week52High', 'range52w', 'range52wClose', 'range52wAsOf', 'range52wSince', 'range52wBasis'];
       const SWING_KEYS = ['pctFrom52wHigh', 'athPrice', 'athDate', 'athBasis', 'pctFromAth', 'volatility1y', 'sigmaFromMean60d', 'high60d', 'low60d'];
-      const rangeless = (row: { metrics?: Record<string, unknown> }) => ({ ...row, metrics: Object.fromEntries(Object.entries(row.metrics ?? {}).filter(([k]) => !RANGE_KEYS.includes(k) && !SWING_KEYS.includes(k) && !DIVIDEND_KEYS.includes(k))) });
+      const rangeless = (row: { metrics?: Record<string, unknown> }) => ({ ...row, metrics: Object.fromEntries(Object.entries(row.metrics ?? {}).filter(([k]) => !RANGE_KEYS.includes(k) && !SWING_KEYS.includes(k) && !DIVIDEND_KEYS.includes(k) && !BENCHMARK_KEYS.includes(k))) });
       for (const row of index.funds) expect(Object.keys(row.metrics)).toEqual(expect.arrayContaining(RANGE_KEYS));
       // the swing keys from the Close column of the same pages (shared swing block), in front of returnsBasis and performanceAsOf
-      for (const row of index.funds) expect(Object.keys(row.metrics).slice(-17, -8)).toEqual(SWING_KEYS);
+      for (const row of index.funds) expect(Object.keys(row.metrics).slice(-51, -42)).toEqual(SWING_KEYS);
       // the six dividend keys of the dividends block follow the swing keys; the updated fund reads its own daily chart: dividendRate 0.35 (the 0.1 of the older event counts too: the 12 months end at the last bar), the five growth keys null (never 0)
-      const DIVIDEND_KEYS = ['dividendRate', 'dividendGrowth', 'dividendGrowth3y', 'dividendGrowth5y', 'dividendStreak', 'dividendCut10y'];
-      for (const row of index.funds) expect(Object.keys(row.metrics).slice(-8, -2)).toEqual(DIVIDEND_KEYS);
-      expect(DIVIDEND_KEYS.map((key) => tickerOf(index, 'SPDV').metrics[key])).toEqual([0.35, null, null, null, null, null]);
+      const DIVIDEND_KEYS = ['dividendRate', 'dividendGrowth', 'dividendGrowth3y', 'dividendGrowth5y', 'dividendStreak', 'dividendCut10y', 'paymentsPerYear', 'payFrequency'];
+      // the 32 benchmark keys of the benchmark block (SPY and QQQ) sit between the dividend keys and returnsBasis, performanceAsOf
+      const BENCHMARK_KEYS = ['perf1y', 'perf3y', 'perf5y', 'perf10y', 'perfSi', 'maxDrawdown1y', 'maxDrawdown3y', 'maxDrawdown5y', 'maxDrawdown10y',
+        'vsSpy1y', 'vsSpy3y', 'vsSpy5y', 'vsSpy10y', 'beta1ySpy', 'corr1ySpy', 'upCapture3ySpy', 'downCapture3ySpy', 'relStrength3mSpy', 'stressReturnSpy', 'stressBasisSpy',
+        'vsQqq1y', 'vsQqq3y', 'vsQqq5y', 'vsQqq10y', 'beta1yQqq', 'corr1yQqq', 'upCapture3yQqq', 'downCapture3yQqq', 'relStrength3mQqq', 'stressReturnQqq', 'stressBasisQqq', 'benchmarkAsOf'];
+      for (const row of index.funds) expect(Object.keys(row.metrics).slice(-42, -34)).toEqual(DIVIDEND_KEYS);
+      for (const row of index.funds) expect(Object.keys(row.metrics).slice(-34, -2)).toEqual(BENCHMARK_KEYS);
+      expect(DIVIDEND_KEYS.map((key) => tickerOf(index, 'SPDV').metrics[key])).toEqual([0.35, null, null, null, null, null, 2, 'semiannual']);
+      // three mocked bars over 15 months (the benchmarks answer the same ones; two events in the last 12 months: semiannual): the 1y horizon has a bar, so perf1y is 8.33 and vsSpy1y 0 against the same bars; the longer horizons and the 252-return statistics are null (never 0), the common date is set; a row without a chart has no common date
+      expect([tickerOf(index, 'SPDV').metrics.perf1y, tickerOf(index, 'SPDV').metrics.vsSpy1y, tickerOf(index, 'SPDV').metrics.beta1ySpy, tickerOf(index, 'SPDV').metrics.benchmarkAsOf]).toEqual([8.33, 0, null, '2026-06-30']);
       expect([typeof tickerOf(index, 'SPDV').metrics.athPrice, tickerOf(index, 'SPDV').metrics.athBasis]).toEqual(['number', expect.stringMatching(/^daily closes since \d{4}-\d{2}-\d{2}$/)]);
       for (const f of old.funds.filter((f: { ticker: string }) => !summary.processed.includes(f.ticker))) { expect(rangeless(tickerOf(index, f.ticker))).toEqual(rangeless(f)); expect(after[`funds/${f.ticker}/meta.json`]).toBe(before[`funds/${f.ticker}/meta.json`]); }
       expect((await Bun.file(new URL('funds/CLOC/meta.json', root)).json()).yields.secYield).toBe(5.77);
@@ -970,6 +977,8 @@ describe('network', () => {
       // the dividends block asks once for the dividend events of the updated fund (daily chart from 0 without pre/post), HISTORY_RANGE does not touch it, and never for an unselected fund
       expect(seen.filter(u => /chart\/SPDV\?period1=0&.*includePrePost=false/.test(u))).toHaveLength(1);
       expect(seen.some(u => /chart\/CLOC\?period1=0&.*includePrePost=false/.test(u))).toBe(false);
+      // the benchmark block adds exactly the SPY and the QQQ chart to the run, no request per fund
+      expect(seen.filter(u => /chart\/[^?]+\?period1=0&.*includePrePost=false/.test(u)).map(u => /chart\/([^?]+)/.exec(u)?.[1]).sort()).toEqual(['QQQ', 'SPDV', 'SPY']);
       expect(Number(/period1=(\d+)/.exec(chart)![1])).toBe(Math.floor(fixedNow.getTime() / 1000 - 2 * 365.25 * 86400));
     });
   });
