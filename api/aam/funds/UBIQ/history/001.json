@@ -2,7 +2,7 @@
  "ticker": "UBIQ",
  "page": 1,
  "pageSize": 1000,
- "totalRows": 29,
+ "totalRows": 30,
  "headers": [
   "Date",
   "Close",
@@ -183,6 +183,12 @@
    "Close": "26.76",
    "Adj Close": "26.76",
    "Volume": "7800"
+  },
+  {
+   "Date": "Nov 16 2026",
+   "Close": "26.6884",
+   "Adj Close": "26.69",
+   "Volume": "438"
   }
  ]
 }
