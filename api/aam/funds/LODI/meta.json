@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-16T16:22:40.589Z",
+ "generatedAt": "2026-11-19T08:26:57.469Z",
  "ticker": "LODI",
  "name": "AAM SLC Low Duration Income ETF",
  "category": "Fixed Income",
@@ -11,8 +11,8 @@
   "fundPage": "https://www.aamlive.com/ETF/Detail/LODI",
   "inception": "2024-12-03",
   "secYield": 5.33,
-  "nav": 24.84,
-  "asOfDate": "2026-11-13"
+  "nav": 24.87,
+  "asOfDate": "2026-11-17"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/LODI",
@@ -41,28 +41,28 @@
   "net": 0.15
  },
  "nav": {
-  "display": "$24.84",
-  "value": 24.84,
-  "asOfDate": "Nov 13 2026"
- },
- "marketPrice": {
   "display": "$24.87",
   "value": 24.87,
-  "asOfDate": "Nov 13 2026"
+  "asOfDate": "Nov 17 2026"
+ },
+ "marketPrice": {
+  "display": "$24.90",
+  "value": 24.9,
+  "asOfDate": "Nov 17 2026"
  },
  "premiumDiscount": {
   "display": "0.12%",
   "value": 0.12
  },
  "aum": {
-  "display": "$109.30 M",
-  "value": 109298200,
-  "asOfDate": "Nov 13 2026",
+  "display": "$109.44 M",
+  "value": 109441200,
+  "asOfDate": "Nov 17 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
-  "dividendYield": 5.31,
-  "dividendYieldText": "5.31%",
+  "dividendYield": 5.3,
+  "dividendYieldText": "5.30%",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
   "secYield": 5.33,
   "secYieldText": "5.33%",
@@ -423,8 +423,8 @@
   ],
   "pageSize": 250,
   "totalRows": 222,
-  "asOfDate": "2026-11-16",
-  "asOf": "Nov 16 2026",
+  "asOfDate": "2026-11-19",
+  "asOf": "Nov 19 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },
@@ -433,8 +433,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 489,
-  "asOf": "Nov 16 2026",
+  "totalRows": 491,
+  "asOf": "Nov 18 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-16T16:22:40.589Z",
+ "generatedAt": "2026-11-19T08:26:57.469Z",
  "ticker": "TRFM",
  "name": "AAM Transformers ETF",
  "category": "Equity",
@@ -10,9 +10,9 @@
   "category": "Equity",
   "fundPage": "https://www.aamlive.com/ETF/Detail/TRFM",
   "inception": "2022-07-11",
-  "secYield": 0.17,
-  "nav": 52.48,
-  "asOfDate": "2026-11-13"
+  "secYield": 0.19,
+  "nav": 50.15,
+  "asOfDate": "2026-11-17"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/TRFM",
@@ -41,34 +41,34 @@
   "net": 0.49
  },
  "nav": {
-  "display": "$52.48",
-  "value": 52.48,
-  "asOfDate": "Nov 13 2026"
+  "display": "$50.15",
+  "value": 50.15,
+  "asOfDate": "Nov 17 2026"
  },
  "marketPrice": {
-  "display": "$52.53",
-  "value": 52.53,
-  "asOfDate": "Nov 13 2026"
+  "display": "$50.07",
+  "value": 50.07,
+  "asOfDate": "Nov 17 2026"
  },
  "premiumDiscount": {
-  "display": "0.10%",
-  "value": 0.1
+  "display": "-0.16%",
+  "value": -0.16
  },
  "aum": {
-  "display": "$305.71 M",
-  "value": 305706485,
-  "asOfDate": "Nov 13 2026",
+  "display": "$293.39 M",
+  "value": 293388615,
+  "asOfDate": "Nov 17 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
-  "dividendYield": 0.15,
-  "dividendYieldText": "0.15%",
+  "dividendYield": 0.16,
+  "dividendYieldText": "0.16%",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
-  "secYield": 0.17,
-  "secYieldText": "0.17%",
+  "secYield": 0.19,
+  "secYieldText": "0.19%",
   "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
-  "subsidizedSecYield": 0.17,
-  "unsubsidizedSecYield": 0.17
+  "subsidizedSecYield": 0.19,
+  "unsubsidizedSecYield": 0.19
  },
  "officialReturns": {
   "asOfDate": "2026-09-30",
@@ -164,8 +164,8 @@
   ],
   "pageSize": 250,
   "totalRows": 270,
-  "asOfDate": "2026-11-16",
-  "asOf": "Nov 16 2026",
+  "asOfDate": "2026-11-19",
+  "asOf": "Nov 19 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },
@@ -175,8 +175,8 @@
    "history/002.json"
   ],
   "pageSize": 1000,
-  "totalRows": 1093,
-  "asOf": "Nov 16 2026",
+  "totalRows": 1095,
+  "asOf": "Nov 18 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

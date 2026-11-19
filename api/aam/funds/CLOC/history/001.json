@@ -2,7 +2,7 @@
  "ticker": "CLOC",
  "page": 1,
  "pageSize": 1000,
- "totalRows": 268,
+ "totalRows": 270,
  "headers": [
   "Date",
   "Close",
@@ -1614,9 +1614,21 @@
   },
   {
    "Date": "Nov 16 2026",
+   "Close": "24.975",
+   "Adj Close": "24.98",
+   "Volume": "2500"
+  },
+  {
+   "Date": "Nov 17 2026",
+   "Close": "24.975",
+   "Adj Close": "24.98",
+   "Volume": "21500"
+  },
+  {
+   "Date": "Nov 18 2026",
    "Close": "24.99",
    "Adj Close": "24.99",
-   "Volume": "765"
+   "Volume": "3900"
   }
  ]
 }

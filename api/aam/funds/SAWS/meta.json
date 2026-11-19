@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-16T16:22:40.589Z",
+ "generatedAt": "2026-11-19T08:26:57.469Z",
  "ticker": "SAWS",
  "name": "AAM Sawgrass U.S. Small Cap Quality Growth ETF",
  "category": "Equity",
@@ -10,9 +10,9 @@
   "category": "Equity",
   "fundPage": "https://www.aamlive.com/ETF/Detail/SAWS",
   "inception": "2024-07-30",
-  "secYield": -0.04,
-  "nav": 22.03,
-  "asOfDate": "2026-11-13"
+  "secYield": -0.05,
+  "nav": 21.55,
+  "asOfDate": "2026-11-17"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/SAWS",
@@ -41,34 +41,34 @@
   "net": 0.55
  },
  "nav": {
-  "display": "$22.03",
-  "value": 22.03,
-  "asOfDate": "Nov 13 2026"
+  "display": "$21.55",
+  "value": 21.55,
+  "asOfDate": "Nov 17 2026"
  },
  "marketPrice": {
-  "display": "$22.05",
-  "value": 22.05,
-  "asOfDate": "Nov 13 2026"
+  "display": "$21.54",
+  "value": 21.54,
+  "asOfDate": "Nov 17 2026"
  },
  "premiumDiscount": {
-  "display": "0.09%",
-  "value": 0.09
+  "display": "-0.05%",
+  "value": -0.05
  },
  "aum": {
-  "display": "$6.83 M",
-  "value": 6830292,
-  "asOfDate": "Nov 13 2026",
+  "display": "$6.68 M",
+  "value": 6680438,
+  "asOfDate": "Nov 17 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
   "dividendYield": 0.02,
   "dividendYieldText": "0.02%",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
-  "secYield": -0.04,
-  "secYieldText": "-0.04%",
+  "secYield": -0.05,
+  "secYieldText": "-0.05%",
   "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
-  "subsidizedSecYield": -0.04,
-  "unsubsidizedSecYield": -0.04
+  "subsidizedSecYield": -0.05,
+  "unsubsidizedSecYield": -0.05
  },
  "officialReturns": {
   "asOfDate": "2026-09-30",
@@ -150,8 +150,8 @@
   ],
   "pageSize": 250,
   "totalRows": 73,
-  "asOfDate": "2026-11-16",
-  "asOf": "Nov 16 2026",
+  "asOfDate": "2026-11-19",
+  "asOf": "Nov 19 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },
@@ -160,8 +160,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 577,
-  "asOf": "Nov 16 2026",
+  "totalRows": 579,
+  "asOf": "Nov 18 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

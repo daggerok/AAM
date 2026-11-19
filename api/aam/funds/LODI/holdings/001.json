@@ -34,14 +34,27 @@
    "Name": "Cash & Other",
    "Ticker": "-",
    "Identifier": "",
-   "Weight": "3.65",
+   "Weight": "3.41",
    "Market Value": "",
-   "Shares Held": "3988135.47",
+   "Shares Held": "3729383.28",
    "Asset Category": "Cash & Other",
    "CUSIP": "",
    "SEDOL": "",
    "Maturity": "",
    "Coupon": ""
+  },
+  {
+   "Name": "COLT 2026-5 Mortgage Loan Trust 6.6428% 07/27/2071",
+   "Ticker": "-",
+   "Identifier": "19689HAL4",
+   "Weight": "1.24",
+   "Market Value": "",
+   "Shares Held": "1395000",
+   "Asset Category": "Commercial MBS",
+   "CUSIP": "19689HAL4",
+   "SEDOL": "",
+   "Maturity": "2071-07-27",
+   "Coupon": "6.6428"
   },
   {
    "Name": "CPS Auto Receivables Trust 2026-B 5.2% 07/15/2032",
@@ -57,19 +70,6 @@
    "Coupon": "5.2"
   },
   {
-   "Name": "COLT 2026-5 Mortgage Loan Trust 6.6428% 07/27/2071",
-   "Ticker": "-",
-   "Identifier": "19689HAL4",
-   "Weight": "1.23",
-   "Market Value": "",
-   "Shares Held": "1395000",
-   "Asset Category": "Commercial MBS",
-   "CUSIP": "19689HAL4",
-   "SEDOL": "",
-   "Maturity": "2071-07-27",
-   "Coupon": "6.6428"
-  },
-  {
    "Name": "Corebridge Financial Inc 6.875% 12/15/2052",
    "Ticker": "-",
    "Identifier": "21871XAP4",
@@ -81,6 +81,19 @@
    "SEDOL": "BPYS2Z3",
    "Maturity": "2052-12-15",
    "Coupon": "6.875"
+  },
+  {
+   "Name": "HGI Re-REMIC Trust 2026-FRR2 6.25% 04/01/2058",
+   "Ticker": "-",
+   "Identifier": "427940AA9",
+   "Weight": "1.08",
+   "Market Value": "",
+   "Shares Held": "1200000",
+   "Asset Category": "Commercial MBS",
+   "CUSIP": "427940AA9",
+   "SEDOL": "",
+   "Maturity": "2058-04-01",
+   "Coupon": "6.25"
   },
   {
    "Name": "Prudential Financial Inc 4.5% 09/15/2047",
@@ -148,32 +161,6 @@
    "Coupon": "4"
   },
   {
-   "Name": "Santander Drive Auto Receivables Trust 2024-2 6.28% 08/15/2031",
-   "Ticker": "-",
-   "Identifier": "80286YAF9",
-   "Weight": "0.93",
-   "Market Value": "",
-   "Shares Held": "1000000",
-   "Asset Category": "Asset Backed Security",
-   "CUSIP": "80286YAF9",
-   "SEDOL": "",
-   "Maturity": "2031-08-15",
-   "Coupon": "6.28"
-  },
-  {
-   "Name": "CIFC Funding 2019-III Ltd 5.8612% 01/16/2038",
-   "Ticker": "-",
-   "Identifier": "12554VBC9",
-   "Weight": "0.92",
-   "Market Value": "",
-   "Shares Held": "1000000",
-   "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "12554VBC9",
-   "SEDOL": "",
-   "Maturity": "2038-01-16",
-   "Coupon": "5.8612"
-  },
-  {
    "Name": "CPS Auto Receivables Trust 2024-A 6.13% 04/15/2030",
    "Ticker": "-",
    "Identifier": "22411CAD2",
@@ -187,10 +174,36 @@
    "Coupon": "6.13"
   },
   {
+   "Name": "Santander Drive Auto Receivables Trust 2024-2 6.28% 08/15/2031",
+   "Ticker": "-",
+   "Identifier": "80286YAF9",
+   "Weight": "0.92",
+   "Market Value": "",
+   "Shares Held": "1000000",
+   "Asset Category": "Asset Backed Security",
+   "CUSIP": "80286YAF9",
+   "SEDOL": "",
+   "Maturity": "2031-08-15",
+   "Coupon": "6.28"
+  },
+  {
+   "Name": "CIFC Funding 2019-III Ltd 5.8612% 01/16/2038",
+   "Ticker": "-",
+   "Identifier": "12554VBC9",
+   "Weight": "0.91",
+   "Market Value": "",
+   "Shares Held": "1000000",
+   "Asset Category": "Collateralized Loan Obligation",
+   "CUSIP": "12554VBC9",
+   "SEDOL": "",
+   "Maturity": "2038-01-16",
+   "Coupon": "5.8612"
+  },
+  {
    "Name": "Golub Capital Partners Clo 45M Ltd 5.7044% 07/20/2037",
    "Ticker": "-",
    "Identifier": "381931AC8",
-   "Weight": "0.92",
+   "Weight": "0.91",
    "Market Value": "",
    "Shares Held": "1000000",
    "Asset Category": "Collateralized Loan Obligation",
@@ -198,19 +211,6 @@
    "SEDOL": "",
    "Maturity": "2037-07-20",
    "Coupon": "5.7044"
-  },
-  {
-   "Name": "Antares CLO 2019-2 LTD 5.528% 07/23/2038",
-   "Ticker": "-",
-   "Identifier": "03665YAY1",
-   "Weight": "0.89",
-   "Market Value": "",
-   "Shares Held": "970000",
-   "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "03665YAY1",
-   "SEDOL": "",
-   "Maturity": "2038-07-23",
-   "Coupon": "5.528"
   },
   {
    "Name": "Citadel Finance LLC 4.75% 02/14/2029",
@@ -224,6 +224,19 @@
    "SEDOL": "BVJ1G80",
    "Maturity": "2029-02-14",
    "Coupon": "4.75"
+  },
+  {
+   "Name": "Antares CLO 2019-2 LTD 5.528% 07/23/2038",
+   "Ticker": "-",
+   "Identifier": "03665YAY1",
+   "Weight": "0.88",
+   "Market Value": "",
+   "Shares Held": "970000",
+   "Asset Category": "Collateralized Loan Obligation",
+   "CUSIP": "03665YAY1",
+   "SEDOL": "",
+   "Maturity": "2038-07-23",
+   "Coupon": "5.528"
   },
   {
    "Name": "Madison Park Funding XXXVI Ltd 6.5925% 04/15/2035",
@@ -291,7 +304,7 @@
    "Coupon": "1.3277"
   },
   {
-   "Name": "MAD Commercial Mortgage Trust 2025-11MD 5.6306% 10/15/2042",
+   "Name": "MAD Commercial Mortgage Trust 2025-11MD 5.8183% 10/15/2042",
    "Ticker": "-",
    "Identifier": "55616AAE7",
    "Weight": "0.83",
@@ -301,7 +314,7 @@
    "CUSIP": "55616AAE7",
    "SEDOL": "",
    "Maturity": "2042-10-15",
-   "Coupon": "5.6306"
+   "Coupon": "5.8183"
   },
   {
    "Name": "BlackRock Shasta CLO XIII LLC 5.8925% 07/15/2036",
@@ -486,6 +499,19 @@
    "Coupon": "7.2402"
   },
   {
+   "Name": "Benchmark 2022-B35 Mortgage Trust 4.4416% 05/15/2055",
+   "Ticker": "-",
+   "Identifier": "08163RBU9",
+   "Weight": "0.65",
+   "Market Value": "",
+   "Shares Held": "845000",
+   "Asset Category": "Commercial MBS",
+   "CUSIP": "08163RBU9",
+   "SEDOL": "",
+   "Maturity": "2055-05-15",
+   "Coupon": "4.4416"
+  },
+  {
    "Name": "Expand Energy Corp 5.375% 02/01/2029",
    "Ticker": "-",
    "Identifier": "845467AR0",
@@ -499,19 +525,6 @@
    "Coupon": "5.375"
   },
   {
-   "Name": "Benchmark 2022-B35 Mortgage Trust 4.4416% 05/15/2055",
-   "Ticker": "-",
-   "Identifier": "08163RBU9",
-   "Weight": "0.64",
-   "Market Value": "",
-   "Shares Held": "845000",
-   "Asset Category": "Commercial MBS",
-   "CUSIP": "08163RBU9",
-   "SEDOL": "",
-   "Maturity": "2055-05-15",
-   "Coupon": "4.4416"
-  },
-  {
    "Name": "Benchmark 2025-V16 Mortgage Trust 5.952% 08/15/2058",
    "Ticker": "-",
    "Identifier": "08164RAG0",
@@ -523,19 +536,6 @@
    "SEDOL": "",
    "Maturity": "2058-08-15",
    "Coupon": "5.952"
-  },
-  {
-   "Name": "FS Commercial Mortgage Trust 2023-4SZN 7.5437% 11/10/2039",
-   "Ticker": "-",
-   "Identifier": "30334RAC8",
-   "Weight": "0.61",
-   "Market Value": "",
-   "Shares Held": "670000",
-   "Asset Category": "Commercial MBS",
-   "CUSIP": "30334RAC8",
-   "SEDOL": "",
-   "Maturity": "2039-11-10",
-   "Coupon": "7.5437"
   },
   {
    "Name": "SoFi Consumer Loan Program 2026-3 5.64% 06/25/2035",
@@ -655,7 +655,7 @@
    "Coupon": "6.55"
   },
   {
-   "Name": "VEGAS 2024-GCS 6.2165% 07/10/2036",
+   "Name": "VEGAS 2024-GCS 6.4237% 07/10/2036",
    "Ticker": "-",
    "Identifier": "92254BAA3",
    "Weight": "0.56",
@@ -665,7 +665,7 @@
    "CUSIP": "92254BAA3",
    "SEDOL": "",
    "Maturity": "2036-07-10",
-   "Coupon": "6.2165"
+   "Coupon": "6.4237"
   },
   {
    "Name": "Antares CLO 2023-1 Ltd 5.774% 07/25/2037",
@@ -1006,7 +1006,7 @@
    "Coupon": "3.615"
   },
   {
-   "Name": "JW Commercial Mortgage Trust 2026-MRCO 6.3747% 06/15/2039",
+   "Name": "JW Commercial Mortgage Trust 2026-MRCO 6.407% 06/15/2039",
    "Ticker": "-",
    "Identifier": "481948AG2",
    "Weight": "0.46",
@@ -1149,7 +1149,7 @@
    "Coupon": "7.75"
   },
   {
-   "Name": "BRCK Trust 2025-830B 6.202% 12/10/2042",
+   "Name": "BRCK Trust 2025-830B 6.4087% 12/10/2042",
    "Ticker": "-",
    "Identifier": "10635AAJ8",
    "Weight": "0.44",
@@ -1159,7 +1159,7 @@
    "CUSIP": "10635AAJ8",
    "SEDOL": "",
    "Maturity": "2042-12-10",
-   "Coupon": "6.202"
+   "Coupon": "6.4087"
   },
   {
    "Name": "SoFi Consumer Loan Program 2025-4 Trust 5.27% 08/25/2035",
@@ -1175,7 +1175,7 @@
    "Coupon": "5.27"
   },
   {
-   "Name": "VEGAS 2024-GCS 6.2165% 07/10/2036",
+   "Name": "VEGAS 2024-GCS 6.4237% 07/10/2036",
    "Ticker": "-",
    "Identifier": "92254BAC9",
    "Weight": "0.44",
@@ -1185,7 +1185,7 @@
    "CUSIP": "92254BAC9",
    "SEDOL": "BTQJ188",
    "Maturity": "2036-07-10",
-   "Coupon": "6.2165"
+   "Coupon": "6.4237"
   },
   {
    "Name": "Verus Securitization Trust 2026-2 5.047% 02/25/2071",
@@ -1214,7 +1214,20 @@
    "Coupon": "5.25"
   },
   {
-   "Name": "GS Mortgage Securities Trust 2017-GS8 4.3122% 11/10/2050",
+   "Name": "CPS Auto Receivables Trust 2026-A 4.98% 06/15/2032",
+   "Ticker": "-",
+   "Identifier": "22410MAD1",
+   "Weight": "0.43",
+   "Market Value": "",
+   "Shares Held": "480000",
+   "Asset Category": "Asset Backed Security",
+   "CUSIP": "22410MAD1",
+   "SEDOL": "",
+   "Maturity": "2032-06-15",
+   "Coupon": "4.98"
+  },
+  {
+   "Name": "GS Mortgage Securities Trust 2017-GS8 4.4557% 11/10/2050",
    "Ticker": "-",
    "Identifier": "36254KAU6",
    "Weight": "0.43",
@@ -1224,7 +1237,7 @@
    "CUSIP": "36254KAU6",
    "SEDOL": "",
    "Maturity": "2050-11-10",
-   "Coupon": "4.3122"
+   "Coupon": "4.4557"
   },
   {
    "Name": "SoFi Consumer Loan Program Trust 2026-1 5.06% 12/26/2035",
@@ -1279,19 +1292,6 @@
    "Coupon": "3"
   },
   {
-   "Name": "CPS Auto Receivables Trust 2026-A 4.98% 06/15/2032",
-   "Ticker": "-",
-   "Identifier": "22410MAD1",
-   "Weight": "0.42",
-   "Market Value": "",
-   "Shares Held": "480000",
-   "Asset Category": "Asset Backed Security",
-   "CUSIP": "22410MAD1",
-   "SEDOL": "",
-   "Maturity": "2032-06-15",
-   "Coupon": "4.98"
-  },
-  {
    "Name": "UBS Commercial Mortgage Trust 2017-C3 4.092% 08/15/2050",
    "Ticker": "-",
    "Identifier": "90276GAX0",
@@ -1344,7 +1344,7 @@
    "Coupon": "5.655"
   },
   {
-   "Name": "FIVE 2023-V1 Mortgage Trust 6.4111% 02/10/2056",
+   "Name": "FIVE 2023-V1 Mortgage Trust 6.6246% 02/10/2056",
    "Ticker": "-",
    "Identifier": "337964AG5",
    "Weight": "0.41",
@@ -1354,7 +1354,7 @@
    "CUSIP": "337964AG5",
    "SEDOL": "",
    "Maturity": "2056-02-10",
-   "Coupon": "6.4111"
+   "Coupon": "6.6246"
   },
   {
    "Name": "American National Group Inc 5.75% 10/01/2029",
@@ -1370,7 +1370,7 @@
    "Coupon": "5.75"
   },
   {
-   "Name": "BBCMS 2018-TALL Mortgage Trust 5.5705% 03/15/2037",
+   "Name": "BBCMS 2018-TALL Mortgage Trust 5.6025% 03/15/2037",
    "Ticker": "-",
    "Identifier": "05548WAG2",
    "Weight": "0.4",
@@ -1461,32 +1461,6 @@
    "Coupon": "4.75"
   },
   {
-   "Name": "Pagaya AI Debt Grantor Trust 2024-11 6.307% 07/15/2032",
-   "Ticker": "-",
-   "Identifier": "69544AAD7",
-   "Weight": "0.39",
-   "Market Value": "",
-   "Shares Held": "422091.37",
-   "Asset Category": "Asset Backed Security",
-   "CUSIP": "69544AAD7",
-   "SEDOL": "",
-   "Maturity": "2032-07-15",
-   "Coupon": "6.307"
-  },
-  {
-   "Name": "Affirm Asset Securitization Trust 2024-X2 6.08% 12/17/2029",
-   "Ticker": "-",
-   "Identifier": "00833QAD7",
-   "Weight": "0.38",
-   "Market Value": "",
-   "Shares Held": "413135.43",
-   "Asset Category": "Asset Backed Security",
-   "CUSIP": "00833QAD7",
-   "SEDOL": "",
-   "Maturity": "2029-12-17",
-   "Coupon": "6.08"
-  },
-  {
    "Name": "Bravo Residential Funding Trust 2025-NQM9 5.043% 09/25/2065",
    "Ticker": "-",
    "Identifier": "10569WAC5",
@@ -1513,20 +1487,7 @@
    "Coupon": "5.7425"
   },
   {
-   "Name": "Foundation Finance Trust 2025-3 5.71% 08/15/2052",
-   "Ticker": "-",
-   "Identifier": "35042TAD4",
-   "Weight": "0.38",
-   "Market Value": "",
-   "Shares Held": "425805.46",
-   "Asset Category": "Asset Backed Security",
-   "CUSIP": "35042TAD4",
-   "SEDOL": "BVSWFG5",
-   "Maturity": "2052-08-15",
-   "Coupon": "5.71"
-  },
-  {
-   "Name": "Hudson Yards 2025-SPRL Mortgage Trust 6.6782% 01/13/2040",
+   "Name": "Hudson Yards 2025-SPRL Mortgage Trust 6.9008% 01/13/2040",
    "Ticker": "-",
    "Identifier": "44855PAJ7",
    "Weight": "0.37",
@@ -1536,23 +1497,10 @@
    "CUSIP": "44855PAJ7",
    "SEDOL": "",
    "Maturity": "2040-01-13",
-   "Coupon": "6.6782"
+   "Coupon": "6.9008"
   },
   {
-   "Name": "HOWL Securities Trust 2026-HIO1 1% 07/25/2056",
-   "Ticker": "-",
-   "Identifier": "442935AA0",
-   "Weight": "0.36",
-   "Market Value": "",
-   "Shares Held": "403975.87",
-   "Asset Category": "Asset Backed Security",
-   "CUSIP": "442935AA0",
-   "SEDOL": "",
-   "Maturity": "2056-07-25",
-   "Coupon": "1"
-  },
-  {
-   "Name": "MAD Commercial Mortgage Trust 2025-11MD 6.3592% 10/15/2042",
+   "Name": "MAD Commercial Mortgage Trust 2025-11MD 6.5712% 10/15/2042",
    "Ticker": "-",
    "Identifier": "55616AAG2",
    "Weight": "0.36",
@@ -1562,7 +1510,20 @@
    "CUSIP": "55616AAG2",
    "SEDOL": "",
    "Maturity": "2042-10-15",
-   "Coupon": "6.3592"
+   "Coupon": "6.5712"
+  },
+  {
+   "Name": "Pagaya AI Debt Grantor Trust 2024-11 6.307% 07/15/2032",
+   "Ticker": "-",
+   "Identifier": "69544AAD7",
+   "Weight": "0.36",
+   "Market Value": "",
+   "Shares Held": "395001.62",
+   "Asset Category": "Asset Backed Security",
+   "CUSIP": "69544AAD7",
+   "SEDOL": "",
+   "Maturity": "2032-07-15",
+   "Coupon": "6.307"
   },
   {
    "Name": "Wells Fargo Commercial Mortgage Trust 2016-C37 3.1317% 12/15/2049",
@@ -1604,7 +1565,7 @@
    "Coupon": "5.6"
   },
   {
-   "Name": "Citigroup Commercial Mortgage Trust 2016-C1 4.7429% 05/10/2049",
+   "Name": "Citigroup Commercial Mortgage Trust 2016-C1 4.9008% 05/10/2049",
    "Ticker": "-",
    "Identifier": "17290YAA6",
    "Weight": "0.35",
@@ -1614,7 +1575,20 @@
    "CUSIP": "17290YAA6",
    "SEDOL": "",
    "Maturity": "2049-05-10",
-   "Coupon": "4.7429"
+   "Coupon": "4.9008"
+  },
+  {
+   "Name": "Foundation Finance Trust 2025-3 5.71% 08/15/2052",
+   "Ticker": "-",
+   "Identifier": "35042TAD4",
+   "Weight": "0.35",
+   "Market Value": "",
+   "Shares Held": "413937.9",
+   "Asset Category": "Asset Backed Security",
+   "CUSIP": "35042TAD4",
+   "SEDOL": "BVSWFG5",
+   "Maturity": "2052-08-15",
+   "Coupon": "5.71"
   },
   {
    "Name": "Glencore Funding LLC 4.907% 04/01/2028",
@@ -1628,6 +1602,19 @@
    "SEDOL": "BMHSF05",
    "Maturity": "2028-04-01",
    "Coupon": "4.907"
+  },
+  {
+   "Name": "HOWL Securities Trust 2026-HIO1 1% 07/25/2056",
+   "Ticker": "-",
+   "Identifier": "442935AA0",
+   "Weight": "0.35",
+   "Market Value": "",
+   "Shares Held": "403975.87",
+   "Asset Category": "Asset Backed Security",
+   "CUSIP": "442935AA0",
+   "SEDOL": "",
+   "Maturity": "2056-07-25",
+   "Coupon": "1"
   },
   {
    "Name": "COLT 2025-12 Mortgage Loan Trust 5.681% 01/26/2071",
@@ -1656,7 +1643,7 @@
    "Coupon": "5.51"
   },
   {
-   "Name": "Hudson Yards 2025-SPRL Mortgage Trust 6.3396% 01/13/2040",
+   "Name": "Hudson Yards 2025-SPRL Mortgage Trust 6.5509% 01/13/2040",
    "Ticker": "-",
    "Identifier": "44855PAG3",
    "Weight": "0.34",
@@ -1666,7 +1653,7 @@
    "CUSIP": "44855PAG3",
    "SEDOL": "",
    "Maturity": "2040-01-13",
-   "Coupon": "6.3396"
+   "Coupon": "6.5509"
   },
   {
    "Name": "Ally Financial Inc 5.737% 05/15/2029",
@@ -1773,10 +1760,23 @@
    "Coupon": "7.643"
   },
   {
+   "Name": "Affirm Asset Securitization Trust 2024-X2 6.08% 12/17/2029",
+   "Ticker": "-",
+   "Identifier": "00833QAD7",
+   "Weight": "0.32",
+   "Market Value": "",
+   "Shares Held": "344844.45",
+   "Asset Category": "Asset Backed Security",
+   "CUSIP": "00833QAD7",
+   "SEDOL": "",
+   "Maturity": "2029-12-17",
+   "Coupon": "6.08"
+  },
+  {
    "Name": "AGL CLO 11 Ltd 5.9925% 10/15/2038",
    "Ticker": "-",
    "Identifier": "00851TAW6",
-   "Weight": "0.32",
+   "Weight": "0.31",
    "Market Value": "",
    "Shares Held": "345000",
    "Asset Category": "Collateralized Loan Obligation",
@@ -1929,7 +1929,7 @@
    "Coupon": "5.25"
   },
   {
-   "Name": "BBCMS 2018-TALL Mortgage Trust 4.844% 03/15/2037",
+   "Name": "BBCMS 2018-TALL Mortgage Trust 4.876% 03/15/2037",
    "Ticker": "-",
    "Identifier": "05548WAA5",
    "Weight": "0.28",
@@ -2085,7 +2085,7 @@
    "Coupon": "6.0662"
   },
   {
-   "Name": "FIVE 2023-V1 Mortgage Trust 6.4111% 02/10/2056",
+   "Name": "FIVE 2023-V1 Mortgage Trust 6.6246% 02/10/2056",
    "Ticker": "-",
    "Identifier": "337964AP5",
    "Weight": "0.26",
@@ -2095,7 +2095,7 @@
    "CUSIP": "337964AP5",
    "SEDOL": "",
    "Maturity": "2056-02-10",
-   "Coupon": "6.4111"
+   "Coupon": "6.6246"
   },
   {
    "Name": "CBAMR 2019-11R Ltd 5.8844% 03/20/2038",
@@ -2163,19 +2163,6 @@
    "Coupon": "6.46"
   },
   {
-   "Name": "Drive Auto Receivables Trust 2025-S1 6.26% 06/16/2029",
-   "Ticker": "-",
-   "Identifier": "26210HAB9",
-   "Weight": "0.24",
-   "Market Value": "",
-   "Shares Held": "259761.72",
-   "Asset Category": "Asset Backed Security",
-   "CUSIP": "26210HAB9",
-   "SEDOL": "",
-   "Maturity": "2029-06-16",
-   "Coupon": "6.26"
-  },
-  {
    "Name": "Madison Park Funding XXII Ltd 5.9925% 01/15/2038",
    "Ticker": "-",
    "Identifier": "55819XBN1",
@@ -2187,32 +2174,6 @@
    "SEDOL": "BNTGRG4",
    "Maturity": "2038-01-15",
    "Coupon": "5.9925"
-  },
-  {
-   "Name": "Pagaya AI Debt Grantor Trust 2025-R3 5.655% 01/18/2033",
-   "Ticker": "-",
-   "Identifier": "69549EAD4",
-   "Weight": "0.24",
-   "Market Value": "",
-   "Shares Held": "266262.86",
-   "Asset Category": "Asset Backed Security",
-   "CUSIP": "69549EAD4",
-   "SEDOL": "",
-   "Maturity": "2033-01-18",
-   "Coupon": "5.655"
-  },
-  {
-   "Name": "Sempra 6.625% 04/01/2055",
-   "Ticker": "-",
-   "Identifier": "816851BU2",
-   "Weight": "0.24",
-   "Market Value": "",
-   "Shares Held": "260000",
-   "Asset Category": "Corporate Bond - Domestic",
-   "CUSIP": "816851BU2",
-   "SEDOL": "BRWLG90",
-   "Maturity": "2055-04-01",
-   "Coupon": "6.625"
   },
   {
    "Name": "VICI Properties LP / VICI Note Co Inc 3.75% 02/15/2027",
@@ -2241,6 +2202,19 @@
    "Coupon": "5.19"
   },
   {
+   "Name": "Drive Auto Receivables Trust 2025-S1 6.26% 06/16/2029",
+   "Ticker": "-",
+   "Identifier": "26210HAB9",
+   "Weight": "0.23",
+   "Market Value": "",
+   "Shares Held": "254156.61",
+   "Asset Category": "Asset Backed Security",
+   "CUSIP": "26210HAB9",
+   "SEDOL": "",
+   "Maturity": "2029-06-16",
+   "Coupon": "6.26"
+  },
+  {
    "Name": "GAM RE-REMIC Trust 2022-FRR3 0% 01/27/2052",
    "Ticker": "-",
    "Identifier": "36459DCN9",
@@ -2265,6 +2239,19 @@
    "SEDOL": "BQ1JDG4 BSCCFM6",
    "Maturity": "2027-06-01",
    "Coupon": "5.9"
+  },
+  {
+   "Name": "Sempra 6.625% 04/01/2055",
+   "Ticker": "-",
+   "Identifier": "816851BU2",
+   "Weight": "0.23",
+   "Market Value": "",
+   "Shares Held": "260000",
+   "Asset Category": "Corporate Bond - Domestic",
+   "CUSIP": "816851BU2",
+   "SEDOL": "BRWLG90",
+   "Maturity": "2055-04-01",
+   "Coupon": "6.625"
   },
   {
    "Name": "Synchrony Financial 5.45% 10/15/2030",
@@ -2319,6 +2306,19 @@
    "Coupon": "7.1"
   },
   {
+   "Name": "Pagaya AI Debt Grantor Trust 2025-R3 5.655% 01/18/2033",
+   "Ticker": "-",
+   "Identifier": "69549EAD4",
+   "Weight": "0.22",
+   "Market Value": "",
+   "Shares Held": "243669.47",
+   "Asset Category": "Asset Backed Security",
+   "CUSIP": "69549EAD4",
+   "SEDOL": "",
+   "Maturity": "2033-01-18",
+   "Coupon": "5.655"
+  },
+  {
    "Name": "Synchrony Financial 5.019% 07/29/2029",
    "Ticker": "-",
    "Identifier": "87165BAX1",
@@ -2358,7 +2358,7 @@
    "Coupon": "2.84"
   },
   {
-   "Name": "OWS Real Estate Finance LLC 7.925% 08/15/2034",
+   "Name": "OWS Real Estate Finance LLC 7.957% 08/15/2034",
    "Ticker": "-",
    "Identifier": "67121XAA8",
    "Weight": "0.21",
@@ -2368,10 +2368,10 @@
    "CUSIP": "67121XAA8",
    "SEDOL": "",
    "Maturity": "2034-08-15",
-   "Coupon": "7.925"
+   "Coupon": "7.957"
   },
   {
-   "Name": "RIDE 2025-SHRE 6.7467% 02/14/2047",
+   "Name": "RIDE 2025-SHRE 6.9716% 02/14/2047",
    "Ticker": "-",
    "Identifier": "765692AG3",
    "Weight": "0.21",
@@ -2381,7 +2381,7 @@
    "CUSIP": "765692AG3",
    "SEDOL": "",
    "Maturity": "2047-02-14",
-   "Coupon": "6.7467"
+   "Coupon": "6.9716"
   },
   {
    "Name": "Santander Drive Auto Receivables Trust 2026-1 4.75% 04/15/2032",
@@ -2527,19 +2527,6 @@
    "Coupon": "6.0573"
   },
   {
-   "Name": "Affirm Asset Securitization Trust 2025-X1 6.11% 04/15/2030",
-   "Ticker": "-",
-   "Identifier": "00834MAD5",
-   "Weight": "0.17",
-   "Market Value": "",
-   "Shares Held": "189784.42",
-   "Asset Category": "Asset Backed Security",
-   "CUSIP": "00834MAD5",
-   "SEDOL": "",
-   "Maturity": "2030-04-15",
-   "Coupon": "6.11"
-  },
-  {
    "Name": "Exeter Automobile Receivables Trust 2023-5 7.13% 02/15/2030",
    "Ticker": "-",
    "Identifier": "30168DAF3",
@@ -2566,6 +2553,19 @@
    "Coupon": "5.63"
   },
   {
+   "Name": "American Credit Acceptance Receivables Trust 2026-4 6.27% 10/12/2033",
+   "Ticker": "-",
+   "Identifier": "024955AG1",
+   "Weight": "0.16",
+   "Market Value": "",
+   "Shares Held": "170000",
+   "Asset Category": "Asset Backed Security",
+   "CUSIP": "024955AG1",
+   "SEDOL": "",
+   "Maturity": "2033-10-12",
+   "Coupon": "6.27"
+  },
+  {
    "Name": "Research-Driven Pagaya Motor Asset Trust 2026-2 5.62% 02/26/2035",
    "Ticker": "-",
    "Identifier": "76091HAD4",
@@ -2577,19 +2577,6 @@
    "SEDOL": "BMWDSR3",
    "Maturity": "2035-02-26",
    "Coupon": "5.62"
-  },
-  {
-   "Name": "American Credit Acceptance Receivables Trust 2026-4 6.27% 10/12/2033",
-   "Ticker": "-",
-   "Identifier": "024955AG1",
-   "Weight": "0.15",
-   "Market Value": "",
-   "Shares Held": "170000",
-   "Asset Category": "Asset Backed Security",
-   "CUSIP": "024955AG1",
-   "SEDOL": "",
-   "Maturity": "2033-10-12",
-   "Coupon": "6.27"
   },
   {
    "Name": "Exeter Automobile Receivables Trust 2026-1 5% 05/17/2032",
@@ -2644,6 +2631,19 @@
    "Coupon": "5.976"
   },
   {
+   "Name": "Affirm Asset Securitization Trust 2025-X1 6.11% 04/15/2030",
+   "Ticker": "-",
+   "Identifier": "00834MAD5",
+   "Weight": "0.14",
+   "Market Value": "",
+   "Shares Held": "156116.58",
+   "Asset Category": "Asset Backed Security",
+   "CUSIP": "00834MAD5",
+   "SEDOL": "",
+   "Maturity": "2030-04-15",
+   "Coupon": "6.11"
+  },
+  {
    "Name": "Sierra Timeshare 2025-3 Receivables Funding LLC 4.98% 08/22/2044",
    "Ticker": "-",
    "Identifier": "82650FAC1",
@@ -2696,7 +2696,7 @@
    "Coupon": "6.739"
   },
   {
-   "Name": "BRCK Trust 2025-830B 5.1845% 12/10/2042",
+   "Name": "BRCK Trust 2025-830B 5.3573% 12/10/2042",
    "Ticker": "-",
    "Identifier": "10635AAE9",
    "Weight": "0.12",
@@ -2706,20 +2706,7 @@
    "CUSIP": "10635AAE9",
    "SEDOL": "",
    "Maturity": "2042-12-10",
-   "Coupon": "5.1845"
-  },
-  {
-   "Name": "Pagaya AI Debt Grantor Trust 2025-R2 5.802% 10/15/2032",
-   "Ticker": "-",
-   "Identifier": "69544VAD1",
-   "Weight": "0.12",
-   "Market Value": "",
-   "Shares Held": "136860.53",
-   "Asset Category": "Asset Backed Security",
-   "CUSIP": "69544VAD1",
-   "SEDOL": "",
-   "Maturity": "2032-10-15",
-   "Coupon": "5.802"
+   "Coupon": "5.3573"
   },
   {
    "Name": "Wells Fargo Commercial Mortgage Trust 2018-C47 3% 09/15/2061",
@@ -2735,7 +2722,7 @@
    "Coupon": "3"
   },
   {
-   "Name": "ALA Trust 2025-OANA 6.0171% 06/15/2040",
+   "Name": "ALA Trust 2025-OANA 6.0491% 06/15/2040",
    "Ticker": "-",
    "Identifier": "009920AE9",
    "Weight": "0.11",
@@ -2753,7 +2740,7 @@
    "Identifier": "35042PAD2",
    "Weight": "0.11",
    "Market Value": "",
-   "Shares Held": "121161.89",
+   "Shares Held": "117896.84",
    "Asset Category": "Asset Backed Security",
    "CUSIP": "35042PAD2",
    "SEDOL": "",
@@ -2761,12 +2748,25 @@
    "Coupon": "5.73"
   },
   {
+   "Name": "Pagaya AI Debt Grantor Trust 2025-R2 5.802% 10/15/2032",
+   "Ticker": "-",
+   "Identifier": "69544VAD1",
+   "Weight": "0.11",
+   "Market Value": "",
+   "Shares Held": "126443.19",
+   "Asset Category": "Asset Backed Security",
+   "CUSIP": "69544VAD1",
+   "SEDOL": "",
+   "Maturity": "2032-10-15",
+   "Coupon": "5.802"
+  },
+  {
    "Name": "Foundation Finance Trust 2021-1 4.96% 05/15/2041",
    "Ticker": "-",
    "Identifier": "35041LAD2",
    "Weight": "0.1",
    "Market Value": "",
-   "Shares Held": "112842.69",
+   "Shares Held": "109212.84",
    "Asset Category": "Asset Backed Security",
    "CUSIP": "35041LAD2",
    "SEDOL": "",
@@ -2779,7 +2779,7 @@
    "Identifier": "69547DAE6",
    "Weight": "0.1",
    "Market Value": "",
-   "Shares Held": "114290.39",
+   "Shares Held": "108418.27",
    "Asset Category": "Asset Backed Security",
    "CUSIP": "69547DAE6",
    "SEDOL": "",
@@ -2800,12 +2800,25 @@
    "Coupon": "3.75"
   },
   {
+   "Name": "MVW 2024-1 LLC 6.2% 02/20/2043",
+   "Ticker": "-",
+   "Identifier": "62847RAC1",
+   "Weight": "0.08",
+   "Market Value": "",
+   "Shares Held": "82118.9",
+   "Asset Category": "Asset Backed Security",
+   "CUSIP": "62847RAC1",
+   "SEDOL": "",
+   "Maturity": "2043-02-20",
+   "Coupon": "6.2"
+  },
+  {
    "Name": "Pagaya AI Debt Grantor Trust 2025-3 6.988% 12/15/2032",
    "Ticker": "-",
    "Identifier": "69544TAE4",
    "Weight": "0.08",
    "Market Value": "",
-   "Shares Held": "91904.03",
+   "Shares Held": "87026.99",
    "Asset Category": "Asset Backed Security",
    "CUSIP": "69544TAE4",
    "SEDOL": "",
@@ -2839,19 +2852,6 @@
    "Coupon": "1.94"
   },
   {
-   "Name": "MVW 2024-1 LLC 6.2% 02/20/2043",
-   "Ticker": "-",
-   "Identifier": "62847RAC1",
-   "Weight": "0.07",
-   "Market Value": "",
-   "Shares Held": "82118.9",
-   "Asset Category": "Asset Backed Security",
-   "CUSIP": "62847RAC1",
-   "SEDOL": "",
-   "Maturity": "2043-02-20",
-   "Coupon": "6.2"
-  },
-  {
    "Name": "Pagaya AI Debt Grantor Trust 2025-5 5.865% 03/15/2033",
    "Ticker": "-",
    "Identifier": "69548WAE3",
@@ -2870,7 +2870,7 @@
    "Identifier": "69544NAE7",
    "Weight": "0.06",
    "Market Value": "",
-   "Shares Held": "64150.29",
+   "Shares Held": "60327.61",
    "Asset Category": "Asset Backed Security",
    "CUSIP": "69544NAE7",
    "SEDOL": "",
@@ -2891,7 +2891,7 @@
    "Coupon": "5.08"
   },
   {
-   "Name": "Citigroup Commercial Mortgage Trust 2016-C1 4.7429% 05/10/2049",
+   "Name": "Citigroup Commercial Mortgage Trust 2016-C1 4.9008% 05/10/2049",
    "Ticker": "-",
    "Identifier": "17290YAV0",
    "Weight": "0.02",
@@ -2901,7 +2901,7 @@
    "CUSIP": "17290YAV0",
    "SEDOL": "BD6CBQ3",
    "Maturity": "2049-05-10",
-   "Coupon": "4.7429"
+   "Coupon": "4.9008"
   }
  ]
 }

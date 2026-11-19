@@ -21,9 +21,9 @@
    "Name": "Cash & Other",
    "Ticker": "-",
    "Identifier": "",
-   "Weight": "3.82",
+   "Weight": "3.87",
    "Market Value": "",
-   "Shares Held": "2375734.34",
+   "Shares Held": "2408378.1",
    "Asset Category": "Cash & Other",
    "CUSIP": "",
    "SEDOL": "",
@@ -109,19 +109,6 @@
    "Coupon": "6.674"
   },
   {
-   "Name": "Silver Point SCF CLO V Ltd 5.7844% 04/20/2038",
-   "Ticker": "-",
-   "Identifier": "827916AC1",
-   "Weight": "2.41",
-   "Market Value": "",
-   "Shares Held": "1500000",
-   "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "827916AC1",
-   "SEDOL": "",
-   "Maturity": "2038-04-20",
-   "Coupon": "5.7844"
-  },
-  {
    "Name": "Golub Capital Partners CLO 59M Ltd 5.6844% 04/20/2037",
    "Ticker": "-",
    "Identifier": "381936AC7",
@@ -133,6 +120,19 @@
    "SEDOL": "",
    "Maturity": "2037-04-20",
    "Coupon": "5.6844"
+  },
+  {
+   "Name": "Silver Point SCF CLO V Ltd 5.7844% 04/20/2038",
+   "Ticker": "-",
+   "Identifier": "827916AC1",
+   "Weight": "2.4",
+   "Market Value": "",
+   "Shares Held": "1500000",
+   "Asset Category": "Collateralized Loan Obligation",
+   "CUSIP": "827916AC1",
+   "SEDOL": "",
+   "Maturity": "2038-04-20",
+   "Coupon": "5.7844"
   },
   {
    "Name": "Palmer Square CLO 2021-3 Ltd 6.8425% 10/15/2038",
@@ -276,19 +276,6 @@
    "SEDOL": "",
    "Maturity": "2037-01-20",
    "Coupon": "5.8344"
-  },
-  {
-   "Name": "Ballyrock CLO 28 Ltd 6.8844% 01/20/2038",
-   "Ticker": "-",
-   "Identifier": "05876HAJ1",
-   "Weight": "1.61",
-   "Market Value": "",
-   "Shares Held": "1000000",
-   "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "05876HAJ1",
-   "SEDOL": "BPLJJR0",
-   "Maturity": "2038-01-20",
-   "Coupon": "6.8844"
   },
   {
    "Name": "Benefit Street Partners Clo XXXVII Ltd 6.924% 01/25/2038",
@@ -460,17 +447,17 @@
    "Coupon": "5.254"
   },
   {
-   "Name": "Bain Capital Credit CLO 2024-4 Ltd 7.168% 10/23/2037",
+   "Name": "Ballyrock CLO 28 Ltd 6.8844% 01/20/2038",
    "Ticker": "-",
-   "Identifier": "05685VAJ1",
+   "Identifier": "05876HAJ1",
    "Weight": "1.6",
    "Market Value": "",
    "Shares Held": "1000000",
    "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "05685VAJ1",
-   "SEDOL": "BL9XNW9",
-   "Maturity": "2037-10-23",
-   "Coupon": "7.168"
+   "CUSIP": "05876HAJ1",
+   "SEDOL": "BPLJJR0",
+   "Maturity": "2038-01-20",
+   "Coupon": "6.8844"
   },
   {
    "Name": "Captree Park CLO Ltd 7.3344% 07/20/2037",
@@ -497,6 +484,19 @@
    "SEDOL": "",
    "Maturity": "2035-10-15",
    "Coupon": "8.2925"
+  },
+  {
+   "Name": "Bain Capital Credit CLO 2024-4 Ltd 7.168% 10/23/2037",
+   "Ticker": "-",
+   "Identifier": "05685VAJ1",
+   "Weight": "1.59",
+   "Market Value": "",
+   "Shares Held": "1000000",
+   "Asset Category": "Collateralized Loan Obligation",
+   "CUSIP": "05685VAJ1",
+   "SEDOL": "BL9XNW9",
+   "Maturity": "2037-10-23",
+   "Coupon": "7.168"
   },
   {
    "Name": "Bridge Street CLO V Ltd 6.9344% 04/20/2038",
@@ -554,7 +554,7 @@
    "Name": "HPS Loan Management 2024-22 Ltd 6.9844% 10/20/2037",
    "Ticker": "-",
    "Identifier": "40444YAJ4",
-   "Weight": "1.53",
+   "Weight": "1.52",
    "Market Value": "",
    "Shares Held": "950000",
    "Asset Category": "Collateralized Loan Obligation",
