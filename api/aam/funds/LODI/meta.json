@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-19T08:26:57.469Z",
+ "generatedAt": "2026-11-20T21:40:29.773Z",
  "ticker": "LODI",
  "name": "AAM SLC Low Duration Income ETF",
  "category": "Fixed Income",
@@ -11,8 +11,8 @@
   "fundPage": "https://www.aamlive.com/ETF/Detail/LODI",
   "inception": "2024-12-03",
   "secYield": 5.33,
-  "nav": 24.87,
-  "asOfDate": "2026-11-17"
+  "nav": 24.9,
+  "asOfDate": "2026-11-19"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/LODI",
@@ -41,23 +41,23 @@
   "net": 0.15
  },
  "nav": {
-  "display": "$24.87",
-  "value": 24.87,
-  "asOfDate": "Nov 17 2026"
- },
- "marketPrice": {
   "display": "$24.90",
   "value": 24.9,
-  "asOfDate": "Nov 17 2026"
+  "asOfDate": "Nov 19 2026"
+ },
+ "marketPrice": {
+  "display": "$24.92",
+  "value": 24.92,
+  "asOfDate": "Nov 19 2026"
  },
  "premiumDiscount": {
-  "display": "0.12%",
-  "value": 0.12
+  "display": "0.08%",
+  "value": 0.08
  },
  "aum": {
-  "display": "$109.44 M",
-  "value": 109441200,
-  "asOfDate": "Nov 17 2026",
+  "display": "$109.55 M",
+  "value": 109549880,
+  "asOfDate": "Nov 19 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
@@ -67,7 +67,7 @@
   "secYield": 5.33,
   "secYieldText": "5.33%",
   "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
-  "subsidizedSecYield": 5.58,
+  "subsidizedSecYield": 5.57,
   "unsubsidizedSecYield": 5.33
  },
  "officialReturns": {
@@ -422,9 +422,9 @@
    "holdings/001.json"
   ],
   "pageSize": 250,
-  "totalRows": 222,
-  "asOfDate": "2026-11-19",
-  "asOf": "Nov 19 2026",
+  "totalRows": 224,
+  "asOfDate": "2026-11-20",
+  "asOf": "Nov 20 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },
@@ -433,8 +433,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 491,
-  "asOf": "Nov 18 2026",
+  "totalRows": 493,
+  "asOf": "Nov 20 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

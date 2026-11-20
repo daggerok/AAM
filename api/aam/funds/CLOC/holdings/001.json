@@ -21,9 +21,9 @@
    "Name": "Cash & Other",
    "Ticker": "-",
    "Identifier": "",
-   "Weight": "3.87",
+   "Weight": "3.89",
    "Market Value": "",
-   "Shares Held": "2408378.1",
+   "Shares Held": "2419003.78",
    "Asset Category": "Cash & Other",
    "CUSIP": "",
    "SEDOL": "",
@@ -278,6 +278,19 @@
    "Coupon": "5.8344"
   },
   {
+   "Name": "Ballyrock CLO 28 Ltd 6.8844% 01/20/2038",
+   "Ticker": "-",
+   "Identifier": "05876HAJ1",
+   "Weight": "1.61",
+   "Market Value": "",
+   "Shares Held": "1000000",
+   "Asset Category": "Collateralized Loan Obligation",
+   "CUSIP": "05876HAJ1",
+   "SEDOL": "BPLJJR0",
+   "Maturity": "2038-01-20",
+   "Coupon": "6.8844"
+  },
+  {
    "Name": "Benefit Street Partners Clo XXXVII Ltd 6.924% 01/25/2038",
    "Ticker": "-",
    "Identifier": "08182TAG4",
@@ -445,19 +458,6 @@
    "SEDOL": "BTJTM59",
    "Maturity": "2038-04-25",
    "Coupon": "5.254"
-  },
-  {
-   "Name": "Ballyrock CLO 28 Ltd 6.8844% 01/20/2038",
-   "Ticker": "-",
-   "Identifier": "05876HAJ1",
-   "Weight": "1.6",
-   "Market Value": "",
-   "Shares Held": "1000000",
-   "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "05876HAJ1",
-   "SEDOL": "BPLJJR0",
-   "Maturity": "2038-01-20",
-   "Coupon": "6.8844"
   },
   {
    "Name": "Captree Park CLO Ltd 7.3344% 07/20/2037",

@@ -2,7 +2,7 @@
  "ticker": "TRFM",
  "page": 2,
  "pageSize": 1000,
- "totalRows": 1095,
+ "totalRows": 1097,
  "headers": [
   "Date",
   "Close",
@@ -579,6 +579,18 @@
    "Close": "50.43",
    "Adj Close": "50.43",
    "Volume": "40100"
+  },
+  {
+   "Date": "Nov 19 2026",
+   "Close": "49.341",
+   "Adj Close": "49.34",
+   "Volume": "14900"
+  },
+  {
+   "Date": "Nov 20 2026",
+   "Close": "46.170601",
+   "Adj Close": "46.17",
+   "Volume": "28306"
   }
  ]
 }

@@ -2,7 +2,7 @@
  "ticker": "SAWS",
  "page": 1,
  "pageSize": 1000,
- "totalRows": 579,
+ "totalRows": 581,
  "headers": [
   "Date",
   "Close",
@@ -3483,6 +3483,18 @@
    "Close": "21.487",
    "Adj Close": "21.49",
    "Volume": "200"
+  },
+  {
+   "Date": "Nov 19 2026",
+   "Close": "20.724001",
+   "Adj Close": "20.72",
+   "Volume": "10200"
+  },
+  {
+   "Date": "Nov 20 2026",
+   "Close": "20.133801",
+   "Adj Close": "20.13",
+   "Volume": "4962"
   }
  ]
 }

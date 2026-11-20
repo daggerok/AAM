@@ -148,6 +148,19 @@
    "Coupon": "5.25"
   },
   {
+   "Name": "M&T Bank Corp",
+   "Ticker": "-",
+   "Identifier": "55261F872",
+   "Weight": "0.12",
+   "Market Value": "",
+   "Shares Held": "16383",
+   "Asset Category": "Banking",
+   "CUSIP": "55261F872",
+   "SEDOL": "BPQT641",
+   "Maturity": "2200-12-31",
+   "Coupon": "5.625"
+  },
+  {
    "Name": "Rithm Capital Corp",
    "Ticker": "-",
    "Identifier": "64828T409",
@@ -198,19 +211,6 @@
    "SEDOL": "BRJF1M3",
    "Maturity": "2055-11-01",
    "Coupon": "8.45"
-  },
-  {
-   "Name": "M&T Bank Corp",
-   "Ticker": "-",
-   "Identifier": "55261F872",
-   "Weight": "0.11",
-   "Market Value": "",
-   "Shares Held": "16383",
-   "Asset Category": "Banking",
-   "CUSIP": "55261F872",
-   "SEDOL": "BPQT641",
-   "Maturity": "2200-12-31",
-   "Coupon": "5.625"
   },
   {
    "Name": "Tennessee Valley Authority",
@@ -707,6 +707,19 @@
    "Coupon": "7.125"
   },
   {
+   "Name": "Innovative Industrial Properties Inc",
+   "Ticker": "-",
+   "Identifier": "45781V200",
+   "Weight": "0.06",
+   "Market Value": "",
+   "Shares Held": "8800",
+   "Asset Category": "Real Estate",
+   "CUSIP": "45781V200",
+   "SEDOL": "BZ7M229",
+   "Maturity": "2200-12-31",
+   "Coupon": "9"
+  },
+  {
    "Name": "Invesco Mortgage Capital Inc",
    "Ticker": "-",
    "Identifier": "46131B506",
@@ -926,19 +939,6 @@
    "SEDOL": "B0N0V47",
    "Maturity": "2200-12-31",
    "Coupon": "0"
-  },
-  {
-   "Name": "Innovative Industrial Properties Inc",
-   "Ticker": "-",
-   "Identifier": "45781V200",
-   "Weight": "0.05",
-   "Market Value": "",
-   "Shares Held": "8800",
-   "Asset Category": "Real Estate",
-   "CUSIP": "45781V200",
-   "SEDOL": "BZ7M229",
-   "Maturity": "2200-12-31",
-   "Coupon": "9"
   },
   {
    "Name": "Merchants Bancorp/IN",

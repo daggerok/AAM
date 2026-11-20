@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-19T08:26:57.469Z",
+ "generatedAt": "2026-11-20T21:40:29.773Z",
  "ticker": "BDIV",
  "name": "AAM Brentview Dividend Growth ETF",
  "category": "Equity",
@@ -10,9 +10,9 @@
   "category": "Equity",
   "fundPage": "https://www.aamlive.com/ETF/Detail/BDIV",
   "inception": "2024-07-30",
-  "secYield": 1.19,
-  "nav": 25.07,
-  "asOfDate": "2026-11-17"
+  "secYield": 1.21,
+  "nav": 24.62,
+  "asOfDate": "2026-11-19"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/BDIV",
@@ -41,34 +41,34 @@
   "net": 0.49
  },
  "nav": {
-  "display": "$25.07",
-  "value": 25.07,
-  "asOfDate": "Nov 17 2026"
+  "display": "$24.62",
+  "value": 24.62,
+  "asOfDate": "Nov 19 2026"
  },
  "marketPrice": {
-  "display": "$25.06",
-  "value": 25.06,
-  "asOfDate": "Nov 17 2026"
+  "display": "$24.65",
+  "value": 24.65,
+  "asOfDate": "Nov 19 2026"
  },
  "premiumDiscount": {
-  "display": "-0.04%",
-  "value": -0.04
+  "display": "0.12%",
+  "value": 0.12
  },
  "aum": {
-  "display": "$7.27 M",
-  "value": 7271634,
-  "asOfDate": "Nov 17 2026",
+  "display": "$7.14 M",
+  "value": 7140931,
+  "asOfDate": "Nov 19 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
-  "dividendYield": 0.96,
-  "dividendYieldText": "0.96%",
+  "dividendYield": 0.97,
+  "dividendYieldText": "0.97%",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
-  "secYield": 1.19,
-  "secYieldText": "1.19%",
+  "secYield": 1.21,
+  "secYieldText": "1.21%",
   "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
-  "subsidizedSecYield": 1.19,
-  "unsubsidizedSecYield": 1.19
+  "subsidizedSecYield": 1.21,
+  "unsubsidizedSecYield": 1.21
  },
  "officialReturns": {
   "asOfDate": "2026-09-30",
@@ -475,8 +475,8 @@
   ],
   "pageSize": 250,
   "totalRows": 36,
-  "asOfDate": "2026-11-19",
-  "asOf": "Nov 19 2026",
+  "asOfDate": "2026-11-20",
+  "asOf": "Nov 20 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },
@@ -485,8 +485,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 578,
-  "asOf": "Nov 18 2026",
+  "totalRows": 580,
+  "asOf": "Nov 20 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

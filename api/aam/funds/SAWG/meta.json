@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-19T08:26:57.469Z",
+ "generatedAt": "2026-11-20T21:40:29.773Z",
  "ticker": "SAWG",
  "name": "AAM Sawgrass U.S. Large Cap Quality Growth ETF",
  "category": "Equity",
@@ -10,9 +10,9 @@
   "category": "Equity",
   "fundPage": "https://www.aamlive.com/ETF/Detail/SAWG",
   "inception": "2024-07-30",
-  "secYield": 0.27,
-  "nav": 23.91,
-  "asOfDate": "2026-11-17"
+  "secYield": 0.28,
+  "nav": 23.44,
+  "asOfDate": "2026-11-19"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/SAWG",
@@ -41,34 +41,34 @@
   "net": 0.49
  },
  "nav": {
-  "display": "$23.91",
-  "value": 23.91,
-  "asOfDate": "Nov 17 2026"
+  "display": "$23.44",
+  "value": 23.44,
+  "asOfDate": "Nov 19 2026"
  },
  "marketPrice": {
-  "display": "$23.92",
-  "value": 23.92,
-  "asOfDate": "Nov 17 2026"
+  "display": "$23.48",
+  "value": 23.48,
+  "asOfDate": "Nov 19 2026"
  },
  "premiumDiscount": {
-  "display": "0.04%",
-  "value": 0.04
+  "display": "0.17%",
+  "value": 0.17
  },
  "aum": {
-  "display": "$2.87 M",
-  "value": 2869344,
-  "asOfDate": "Nov 17 2026",
+  "display": "$2.81 M",
+  "value": 2812956,
+  "asOfDate": "Nov 19 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
-  "dividendYield": 0.25,
-  "dividendYieldText": "0.25%",
+  "dividendYield": 0.26,
+  "dividendYieldText": "0.26%",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
-  "secYield": 0.27,
-  "secYieldText": "0.27%",
+  "secYield": 0.28,
+  "secYieldText": "0.28%",
   "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
-  "subsidizedSecYield": 0.27,
-  "unsubsidizedSecYield": 0.27
+  "subsidizedSecYield": 0.28,
+  "unsubsidizedSecYield": 0.28
  },
  "officialReturns": {
   "asOfDate": "2026-09-30",
@@ -150,8 +150,8 @@
   ],
   "pageSize": 250,
   "totalRows": 45,
-  "asOfDate": "2026-11-19",
-  "asOf": "Nov 19 2026",
+  "asOfDate": "2026-11-20",
+  "asOf": "Nov 20 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },
@@ -160,8 +160,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 579,
-  "asOf": "Nov 18 2026",
+  "totalRows": 580,
+  "asOf": "Nov 19 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

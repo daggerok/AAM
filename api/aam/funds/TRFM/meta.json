@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-19T08:26:57.469Z",
+ "generatedAt": "2026-11-20T21:40:29.773Z",
  "ticker": "TRFM",
  "name": "AAM Transformers ETF",
  "category": "Equity",
@@ -11,8 +11,8 @@
   "fundPage": "https://www.aamlive.com/ETF/Detail/TRFM",
   "inception": "2022-07-11",
   "secYield": 0.19,
-  "nav": 50.15,
-  "asOfDate": "2026-11-17"
+  "nav": 49.33,
+  "asOfDate": "2026-11-19"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/TRFM",
@@ -41,23 +41,23 @@
   "net": 0.49
  },
  "nav": {
-  "display": "$50.15",
-  "value": 50.15,
-  "asOfDate": "Nov 17 2026"
+  "display": "$49.33",
+  "value": 49.33,
+  "asOfDate": "Nov 19 2026"
  },
  "marketPrice": {
-  "display": "$50.07",
-  "value": 50.07,
-  "asOfDate": "Nov 17 2026"
+  "display": "$49.34",
+  "value": 49.34,
+  "asOfDate": "Nov 19 2026"
  },
  "premiumDiscount": {
-  "display": "-0.16%",
-  "value": -0.16
+  "display": "0.02%",
+  "value": 0.02
  },
  "aum": {
-  "display": "$293.39 M",
-  "value": 293388615,
-  "asOfDate": "Nov 17 2026",
+  "display": "$288.60 M",
+  "value": 288597465,
+  "asOfDate": "Nov 19 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
@@ -164,8 +164,8 @@
   ],
   "pageSize": 250,
   "totalRows": 270,
-  "asOfDate": "2026-11-19",
-  "asOf": "Nov 19 2026",
+  "asOfDate": "2026-11-20",
+  "asOf": "Nov 20 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },
@@ -175,8 +175,8 @@
    "history/002.json"
   ],
   "pageSize": 1000,
-  "totalRows": 1095,
-  "asOf": "Nov 18 2026",
+  "totalRows": 1097,
+  "asOf": "Nov 20 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }
