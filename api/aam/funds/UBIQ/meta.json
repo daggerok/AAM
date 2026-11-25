@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-25T06:45:11.457Z",
+ "generatedAt": "2026-11-25T23:16:23.939Z",
  "ticker": "UBIQ",
  "name": "AAM Ubiquitous ETF",
  "category": "Equity",
@@ -10,9 +10,9 @@
   "category": "Equity",
   "fundPage": "https://www.aamlive.com/ETF/Detail/UBIQ",
   "inception": "2026-10-05",
-  "secYield": 1.15,
-  "nav": 25.68,
-  "asOfDate": "2026-11-23"
+  "secYield": 1.14,
+  "nav": 25.92,
+  "asOfDate": "2026-11-24"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/UBIQ",
@@ -41,40 +41,40 @@
   "net": 0.49
  },
  "nav": {
-  "display": "$25.68",
-  "value": 25.68,
-  "asOfDate": "Nov 23 2026"
+  "display": "$25.92",
+  "value": 25.92,
+  "asOfDate": "Nov 24 2026"
  },
  "marketPrice": {
-  "display": "$25.70",
-  "value": 25.7,
-  "asOfDate": "Nov 23 2026"
+  "display": "$25.91",
+  "value": 25.91,
+  "asOfDate": "Nov 24 2026"
  },
  "premiumDiscount": {
-  "display": "0.08%",
-  "value": 0.08
+  "display": "-0.04%",
+  "value": -0.04
  },
  "aum": {
-  "display": "$46.48 M",
-  "value": 46482067,
-  "asOfDate": "Nov 23 2026",
+  "display": "$46.92 M",
+  "value": 46921897,
+  "asOfDate": "Nov 24 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
   "dividendYield": null,
   "dividendYieldText": "—",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
-  "secYield": 1.15,
-  "secYieldText": "1.15%",
+  "secYield": 1.14,
+  "secYieldText": "1.14%",
   "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
-  "subsidizedSecYield": 1.15,
-  "unsubsidizedSecYield": 1.15
+  "subsidizedSecYield": 1.14,
+  "unsubsidizedSecYield": 1.14
  },
  "officialReturns": null,
  "returns": {
   "monthEnd": {
-   "asOfDate": "Nov 24 2026",
-   "mo1": 0.82,
+   "asOfDate": "Nov 25 2026",
+   "mo1": 1.67,
    "qtd": null,
    "ytd": null,
    "yr1": null,
@@ -85,7 +85,7 @@
   },
   "quarterEnd": null,
   "derivedFrom": "derived from Yahoo adjusted market-price closes (estimate), not official NAV returns",
-  "performanceAsOf": "2026-11-24"
+  "performanceAsOf": "2026-11-25"
  },
  "distributions": {
   "frequency": "Annually",
@@ -116,8 +116,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 36,
-  "asOf": "Nov 24 2026",
+  "totalRows": 37,
+  "asOf": "Nov 25 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

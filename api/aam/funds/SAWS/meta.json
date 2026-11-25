@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-25T06:45:11.457Z",
+ "generatedAt": "2026-11-25T23:16:23.939Z",
  "ticker": "SAWS",
  "name": "AAM Sawgrass U.S. Small Cap Quality Growth ETF",
  "category": "Equity",
@@ -11,8 +11,8 @@
   "fundPage": "https://www.aamlive.com/ETF/Detail/SAWS",
   "inception": "2024-07-30",
   "secYield": -0.06,
-  "nav": 20.94,
-  "asOfDate": "2026-11-23"
+  "nav": 20.87,
+  "asOfDate": "2026-11-24"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/SAWS",
@@ -41,23 +41,23 @@
   "net": 0.55
  },
  "nav": {
-  "display": "$20.94",
-  "value": 20.94,
-  "asOfDate": "Nov 23 2026"
+  "display": "$20.87",
+  "value": 20.87,
+  "asOfDate": "Nov 24 2026"
  },
  "marketPrice": {
-  "display": "$20.93",
-  "value": 20.93,
-  "asOfDate": "Nov 23 2026"
+  "display": "$20.87",
+  "value": 20.87,
+  "asOfDate": "Nov 24 2026"
  },
  "premiumDiscount": {
-  "display": "-0.05%",
-  "value": -0.05
+  "display": "0.00%",
+  "value": 0
  },
  "aum": {
-  "display": "$6.49 M",
-  "value": 6492392,
-  "asOfDate": "Nov 23 2026",
+  "display": "$6.47 M",
+  "value": 6470351,
+  "asOfDate": "Nov 24 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
@@ -160,8 +160,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 583,
-  "asOf": "Nov 24 2026",
+  "totalRows": 584,
+  "asOf": "Nov 25 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }
