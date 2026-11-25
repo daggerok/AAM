@@ -18,19 +18,6 @@
  ],
  "rows": [
   {
-   "Name": "Citizens Financial Group Inc 7.4496% 01/07/2175",
-   "Ticker": "-",
-   "Identifier": "174610AQ8",
-   "Weight": "0.13",
-   "Market Value": "",
-   "Shares Held": "475000",
-   "Asset Category": "Banking",
-   "CUSIP": "174610AQ8",
-   "SEDOL": "BGHW226",
-   "Maturity": "2200-12-31",
-   "Coupon": "7.45"
-  },
-  {
    "Name": "CoBank ACB 7.125% 01/01/2175",
    "Ticker": "-",
    "Identifier": "19075QAG7",
@@ -122,6 +109,19 @@
    "Coupon": "5.35"
   },
   {
+   "Name": "Western Alliance Bancorp",
+   "Ticker": "-",
+   "Identifier": "957638406",
+   "Weight": "0.13",
+   "Market Value": "",
+   "Shares Held": "20139",
+   "Asset Category": "Banking",
+   "CUSIP": "957638406",
+   "SEDOL": "BNZJSP3",
+   "Maturity": "2200-12-31",
+   "Coupon": "4.25"
+  },
+  {
    "Name": "BAC Capital Trust XIV 4.5562% 09/15/2175",
    "Ticker": "-",
    "Identifier": "05518VAA3",
@@ -133,32 +133,6 @@
    "SEDOL": "BG48PD9",
    "Maturity": "2200-12-31",
    "Coupon": "4.556"
-  },
-  {
-   "Name": "BRC Group Holdings Inc",
-   "Ticker": "-",
-   "Identifier": "05580M819",
-   "Weight": "0.12",
-   "Market Value": "",
-   "Shares Held": "26947",
-   "Asset Category": "Financial Services",
-   "CUSIP": "05580M819",
-   "SEDOL": "BMCHWS4",
-   "Maturity": "2028-08-31",
-   "Coupon": "5.25"
-  },
-  {
-   "Name": "M&T Bank Corp",
-   "Ticker": "-",
-   "Identifier": "55261F872",
-   "Weight": "0.12",
-   "Market Value": "",
-   "Shares Held": "16383",
-   "Asset Category": "Banking",
-   "CUSIP": "55261F872",
-   "SEDOL": "BPQT641",
-   "Maturity": "2200-12-31",
-   "Coupon": "5.625"
   },
   {
    "Name": "Rithm Capital Corp",
@@ -187,6 +161,19 @@
    "Coupon": "6"
   },
   {
+   "Name": "BRC Group Holdings Inc",
+   "Ticker": "-",
+   "Identifier": "05580M819",
+   "Weight": "0.11",
+   "Market Value": "",
+   "Shares Held": "26947",
+   "Asset Category": "Financial Services",
+   "CUSIP": "05580M819",
+   "SEDOL": "BMCHWS4",
+   "Maturity": "2028-08-31",
+   "Coupon": "5.25"
+  },
+  {
    "Name": "Chimera Investment Corp",
    "Ticker": "-",
    "Identifier": "16934Q406",
@@ -200,17 +187,17 @@
    "Coupon": "8"
   },
   {
-   "Name": "FMC Corp 8.45% 11/01/2055",
+   "Name": "M&T Bank Corp",
    "Ticker": "-",
-   "Identifier": "302491AZ8",
+   "Identifier": "55261F872",
    "Weight": "0.11",
    "Market Value": "",
-   "Shares Held": "1180000",
-   "Asset Category": "Basic Industry",
-   "CUSIP": "302491AZ8",
-   "SEDOL": "BRJF1M3",
-   "Maturity": "2055-11-01",
-   "Coupon": "8.45"
+   "Shares Held": "16383",
+   "Asset Category": "Banking",
+   "CUSIP": "55261F872",
+   "SEDOL": "BPQT641",
+   "Maturity": "2200-12-31",
+   "Coupon": "5.625"
   },
   {
    "Name": "Tennessee Valley Authority",
@@ -250,6 +237,19 @@
    "SEDOL": "BJBT6K0",
    "Maturity": "2200-12-31",
    "Coupon": "6.875"
+  },
+  {
+   "Name": "FMC Corp 8.45% 11/01/2055",
+   "Ticker": "-",
+   "Identifier": "302491AZ8",
+   "Weight": "0.1",
+   "Market Value": "",
+   "Shares Held": "1180000",
+   "Asset Category": "Basic Industry",
+   "CUSIP": "302491AZ8",
+   "SEDOL": "BRJF1M3",
+   "Maturity": "2055-11-01",
+   "Coupon": "8.45"
   },
   {
    "Name": "MFA Financial Inc",
@@ -369,19 +369,6 @@
    "Coupon": "8.25"
   },
   {
-   "Name": "Atlanticus Holdings Corp",
-   "Ticker": "-",
-   "Identifier": "04914Y409",
-   "Weight": "0.07",
-   "Market Value": "",
-   "Shares Held": "9447",
-   "Asset Category": "Financial Services",
-   "CUSIP": "04914Y409",
-   "SEDOL": "BQ7WWQ0",
-   "Maturity": "2029-01-31",
-   "Coupon": "9.25"
-  },
-  {
    "Name": "Bank of America Corp",
    "Ticker": "-",
    "Identifier": "060505583",
@@ -406,19 +393,6 @@
    "SEDOL": "BGHCHV0",
    "Maturity": "2200-12-31",
    "Coupon": "7.75"
-  },
-  {
-   "Name": "Compass Diversified Holdings",
-   "Ticker": "-",
-   "Identifier": "20451Q302",
-   "Weight": "0.07",
-   "Market Value": "",
-   "Shares Held": "10847",
-   "Asset Category": "Financial Services",
-   "CUSIP": "20451Q302",
-   "SEDOL": "BYWSZQ0",
-   "Maturity": "2200-12-31",
-   "Coupon": "7.875"
   },
   {
    "Name": "Ellington Financial Inc",
@@ -497,19 +471,6 @@
    "SEDOL": "BNDSDV3",
    "Maturity": "2028-11-15",
    "Coupon": "8.25"
-  },
-  {
-   "Name": "PennyMac Mortgage Investment Trust",
-   "Ticker": "-",
-   "Identifier": "70931T707",
-   "Weight": "0.07",
-   "Market Value": "",
-   "Shares Held": "9762",
-   "Asset Category": "Real Estate",
-   "CUSIP": "70931T707",
-   "SEDOL": "BS2KLW2",
-   "Maturity": "2030-02-15",
-   "Coupon": "9"
   },
   {
    "Name": "Seapeak LLC",
@@ -603,6 +564,19 @@
    "Coupon": "6.125"
   },
   {
+   "Name": "Atlanticus Holdings Corp",
+   "Ticker": "-",
+   "Identifier": "04914Y409",
+   "Weight": "0.06",
+   "Market Value": "",
+   "Shares Held": "9447",
+   "Asset Category": "Financial Services",
+   "CUSIP": "04914Y409",
+   "SEDOL": "BQ7WWQ0",
+   "Maturity": "2029-01-31",
+   "Coupon": "9.25"
+  },
+  {
    "Name": "BRC Group Holdings Inc",
    "Ticker": "-",
    "Identifier": "05580M835",
@@ -668,6 +642,19 @@
    "Coupon": "7.5"
   },
   {
+   "Name": "Compass Diversified Holdings",
+   "Ticker": "-",
+   "Identifier": "20451Q302",
+   "Weight": "0.06",
+   "Market Value": "",
+   "Shares Held": "10847",
+   "Asset Category": "Financial Services",
+   "CUSIP": "20451Q302",
+   "SEDOL": "BYWSZQ0",
+   "Maturity": "2200-12-31",
+   "Coupon": "7.875"
+  },
+  {
    "Name": "ConnectOne Bancorp Inc",
    "Ticker": "-",
    "Identifier": "20786W503",
@@ -705,19 +692,6 @@
    "SEDOL": "BTY4T25",
    "Maturity": "2031-05-01",
    "Coupon": "7.125"
-  },
-  {
-   "Name": "Innovative Industrial Properties Inc",
-   "Ticker": "-",
-   "Identifier": "45781V200",
-   "Weight": "0.06",
-   "Market Value": "",
-   "Shares Held": "8800",
-   "Asset Category": "Real Estate",
-   "CUSIP": "45781V200",
-   "SEDOL": "BZ7M229",
-   "Maturity": "2200-12-31",
-   "Coupon": "9"
   },
   {
    "Name": "Invesco Mortgage Capital Inc",
@@ -783,6 +757,19 @@
    "SEDOL": "BMHSYD1",
    "Maturity": "2200-12-31",
    "Coupon": "7"
+  },
+  {
+   "Name": "PennyMac Mortgage Investment Trust",
+   "Ticker": "-",
+   "Identifier": "70931T707",
+   "Weight": "0.06",
+   "Market Value": "",
+   "Shares Held": "9762",
+   "Asset Category": "Real Estate",
+   "CUSIP": "70931T707",
+   "SEDOL": "BS2KLW2",
+   "Maturity": "2030-02-15",
+   "Coupon": "9"
   },
   {
    "Name": "PennyMac Mortgage Investment Trust",
@@ -941,6 +928,19 @@
    "Coupon": "0"
   },
   {
+   "Name": "Innovative Industrial Properties Inc",
+   "Ticker": "-",
+   "Identifier": "45781V200",
+   "Weight": "0.05",
+   "Market Value": "",
+   "Shares Held": "8800",
+   "Asset Category": "Real Estate",
+   "CUSIP": "45781V200",
+   "SEDOL": "BZ7M229",
+   "Maturity": "2200-12-31",
+   "Coupon": "9"
+  },
+  {
    "Name": "Merchants Bancorp/IN",
    "Ticker": "-",
    "Identifier": "58844R884",
@@ -1019,19 +1019,6 @@
    "Coupon": "8.625"
   },
   {
-   "Name": "Arbor Realty Trust Inc",
-   "Ticker": "-",
-   "Identifier": "038923850",
-   "Weight": "0.04",
-   "Market Value": "",
-   "Shares Held": "18914",
-   "Asset Category": "Real Estate",
-   "CUSIP": "038923850",
-   "SEDOL": "BLR4KW3",
-   "Maturity": "2200-12-31",
-   "Coupon": "6.25"
-  },
-  {
    "Name": "Bank of America Corp",
    "Ticker": "-",
    "Identifier": "060505591",
@@ -1084,6 +1071,32 @@
    "Coupon": "8"
   },
   {
+   "Name": "Arbor Realty Trust Inc",
+   "Ticker": "-",
+   "Identifier": "038923850",
+   "Weight": "0.03",
+   "Market Value": "",
+   "Shares Held": "18914",
+   "Asset Category": "Real Estate",
+   "CUSIP": "038923850",
+   "SEDOL": "BLR4KW3",
+   "Maturity": "2200-12-31",
+   "Coupon": "6.25"
+  },
+  {
+   "Name": "Granite Point Mortgage Trust Inc",
+   "Ticker": "-",
+   "Identifier": "38741L305",
+   "Weight": "0.03",
+   "Market Value": "",
+   "Shares Held": "16753",
+   "Asset Category": "Real Estate",
+   "CUSIP": "38741L305",
+   "SEDOL": "BP4BX15",
+   "Maturity": "2200-12-31",
+   "Coupon": "7"
+  },
+  {
    "Name": "Redwood Trust Inc",
    "Ticker": "-",
    "Identifier": "758075857",
@@ -1108,19 +1121,6 @@
    "SEDOL": "BN7G4K9",
    "Maturity": "2200-12-31",
    "Coupon": "9"
-  },
-  {
-   "Name": "Granite Point Mortgage Trust Inc",
-   "Ticker": "-",
-   "Identifier": "38741L305",
-   "Weight": "0.02",
-   "Market Value": "",
-   "Shares Held": "16753",
-   "Asset Category": "Real Estate",
-   "CUSIP": "38741L305",
-   "SEDOL": "BP4BX15",
-   "Maturity": "2200-12-31",
-   "Coupon": "7"
   }
  ]
 }

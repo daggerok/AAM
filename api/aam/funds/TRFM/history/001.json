@@ -2,7 +2,7 @@
  "ticker": "TRFM",
  "page": 1,
  "pageSize": 1000,
- "totalRows": 1097,
+ "totalRows": 1099,
  "headers": [
   "Date",
   "Close",

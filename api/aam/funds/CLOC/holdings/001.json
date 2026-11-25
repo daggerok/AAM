@@ -2,7 +2,7 @@
  "ticker": "CLOC",
  "page": 1,
  "pageSize": 250,
- "totalRows": 63,
+ "totalRows": 61,
  "headers": [
   "Name",
   "Ticker",
@@ -21,9 +21,9 @@
    "Name": "Cash & Other",
    "Ticker": "-",
    "Identifier": "",
-   "Weight": "3.89",
+   "Weight": "7.22",
    "Market Value": "",
-   "Shares Held": "2419003.78",
+   "Shares Held": "4490811.24",
    "Asset Category": "Cash & Other",
    "CUSIP": "",
    "SEDOL": "",
@@ -34,7 +34,7 @@
    "Name": "Apidos Loan Fund 2024-1 Ltd 6.774% 10/25/2038",
    "Ticker": "-",
    "Identifier": "037986AW6",
-   "Weight": "2.49",
+   "Weight": "2.48",
    "Market Value": "",
    "Shares Held": "1550000",
    "Asset Category": "Collateralized Loan Obligation",
@@ -42,19 +42,6 @@
    "SEDOL": "",
    "Maturity": "2038-10-25",
    "Coupon": "6.774"
-  },
-  {
-   "Name": "Maranon Loan Funding 2025-1 Ltd 9.1425% 10/15/2037",
-   "Ticker": "-",
-   "Identifier": "56575UAQ3",
-   "Weight": "2.45",
-   "Market Value": "",
-   "Shares Held": "1525000",
-   "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "56575UAQ3",
-   "SEDOL": "",
-   "Maturity": "2037-10-15",
-   "Coupon": "9.1425"
   },
   {
    "Name": "Cerberus Loan Funding 50 LLC 6.6425% 07/15/2037",
@@ -203,7 +190,7 @@
    "Name": "Madison Park Funding LXXIII Ltd 6.8662% 10/17/2038",
    "Ticker": "-",
    "Identifier": "55823HAJ0",
-   "Weight": "2",
+   "Weight": "1.99",
    "Market Value": "",
    "Shares Held": "1250000",
    "Asset Category": "Collateralized Loan Obligation",
@@ -216,7 +203,7 @@
    "Name": "CIFC Funding 2023-I Ltd 6.6425% 10/15/2038",
    "Ticker": "-",
    "Identifier": "12575RAS9",
-   "Weight": "1.93",
+   "Weight": "1.92",
    "Market Value": "",
    "Shares Held": "1200000",
    "Asset Category": "Collateralized Loan Obligation",
@@ -564,19 +551,6 @@
    "Coupon": "6.9844"
   },
   {
-   "Name": "Eldridge CLO 2025-1 Ltd 7.0344% 10/20/2038",
-   "Ticker": "-",
-   "Identifier": "284913AJ9",
-   "Weight": "1.46",
-   "Market Value": "",
-   "Shares Held": "900000",
-   "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "284913AJ9",
-   "SEDOL": "",
-   "Maturity": "2038-10-20",
-   "Coupon": "6.6252"
-  },
-  {
    "Name": "Symphony CLO 40 Ltd 6.6889% 01/05/2038",
    "Ticker": "-",
    "Identifier": "871989AV1",
@@ -588,6 +562,19 @@
    "SEDOL": "BTRV9X4",
    "Maturity": "2038-01-05",
    "Coupon": "6.6889"
+  },
+  {
+   "Name": "Eldridge CLO 2025-1 Ltd 7.0344% 10/20/2038",
+   "Ticker": "-",
+   "Identifier": "284913AJ9",
+   "Weight": "1.45",
+   "Market Value": "",
+   "Shares Held": "900000",
+   "Asset Category": "Collateralized Loan Obligation",
+   "CUSIP": "284913AJ9",
+   "SEDOL": "",
+   "Maturity": "2038-10-20",
+   "Coupon": "6.6252"
   },
   {
    "Name": "OHA Credit Funding 25 Ltd 6.4344% 04/20/2039",
@@ -681,19 +668,6 @@
    "Coupon": "6.0425"
   },
   {
-   "Name": "Voya CLO 2022-1 Ltd 5.8344% 04/20/2035",
-   "Ticker": "-",
-   "Identifier": "92918UAN1",
-   "Weight": "0.81",
-   "Market Value": "",
-   "Shares Held": "500000",
-   "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "92918UAN1",
-   "SEDOL": "",
-   "Maturity": "2035-04-20",
-   "Coupon": "5.8344"
-  },
-  {
    "Name": "Aimco CLO 19 Ltd 6.9344% 10/20/2037",
    "Ticker": "-",
    "Identifier": "00140HAD5",
@@ -718,32 +692,6 @@
    "SEDOL": "BVPCWH8",
    "Maturity": "2038-04-15",
    "Coupon": "6.7925"
-  },
-  {
-   "Name": "CARLYLE US CLO 2017-3 Ltd 5.8373% 10/21/2037",
-   "Ticker": "-",
-   "Identifier": "14314FBC1",
-   "Weight": "0.8",
-   "Market Value": "",
-   "Shares Held": "500000",
-   "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "14314FBC1",
-   "SEDOL": "",
-   "Maturity": "2037-10-21",
-   "Coupon": "5.8373"
-  },
-  {
-   "Name": "Cedar Funding XIX CLO Ltd 7.068% 01/23/2038",
-   "Ticker": "-",
-   "Identifier": "15033CAJ1",
-   "Weight": "0.8",
-   "Market Value": "",
-   "Shares Held": "500000",
-   "Asset Category": "Collateralized Loan Obligation",
-   "CUSIP": "15033CAJ1",
-   "SEDOL": "BPBMZS2",
-   "Maturity": "2038-01-23",
-   "Coupon": "7.068"
   },
   {
    "Name": "Golub Capital Partners Private Credit Fund CLO 5.724% 10/26/2037",
@@ -796,6 +744,32 @@
    "SEDOL": "BNNGQ63",
    "Maturity": "2038-01-15",
    "Coupon": "6.5925"
+  },
+  {
+   "Name": "Voya CLO 2022-1 Ltd 5.8344% 04/20/2035",
+   "Ticker": "-",
+   "Identifier": "92918UAN1",
+   "Weight": "0.8",
+   "Market Value": "",
+   "Shares Held": "500000",
+   "Asset Category": "Collateralized Loan Obligation",
+   "CUSIP": "92918UAN1",
+   "SEDOL": "",
+   "Maturity": "2035-04-20",
+   "Coupon": "5.8344"
+  },
+  {
+   "Name": "Cedar Funding XIX CLO Ltd 7.068% 01/23/2038",
+   "Ticker": "-",
+   "Identifier": "15033CAJ1",
+   "Weight": "0.79",
+   "Market Value": "",
+   "Shares Held": "500000",
+   "Asset Category": "Collateralized Loan Obligation",
+   "CUSIP": "15033CAJ1",
+   "SEDOL": "BPBMZS2",
+   "Maturity": "2038-01-23",
+   "Coupon": "7.068"
   },
   {
    "Name": "Palmer Square CLO 2026-3 Ltd 6.489% 10/20/2039",
