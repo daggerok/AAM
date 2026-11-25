@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-25T03:45:29.142Z",
+ "generatedAt": "2026-11-25T06:45:11.457Z",
  "ticker": "CLOC",
  "name": "AAM Crescent CLO ETF",
  "category": "Fixed Income",
@@ -279,9 +279,9 @@
    "holdings/001.json"
   ],
   "pageSize": 250,
-  "totalRows": 61,
-  "asOfDate": "2026-11-24",
-  "asOf": "Nov 24 2026",
+  "totalRows": 59,
+  "asOfDate": "2026-11-25",
+  "asOf": "Nov 25 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },

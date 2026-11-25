@@ -34,9 +34,9 @@
    "Name": "Cash & Other",
    "Ticker": "-",
    "Identifier": "",
-   "Weight": "2.1",
+   "Weight": "2.12",
    "Market Value": "",
-   "Shares Held": "2310119.07",
+   "Shares Held": "2325962.82",
    "Asset Category": "Cash & Other",
    "CUSIP": "",
    "SEDOL": "",
@@ -86,7 +86,7 @@
    "Name": "HGI Re-REMIC Trust 2026-FRR2 6.25% 04/01/2058",
    "Ticker": "-",
    "Identifier": "427940AA9",
-   "Weight": "1.07",
+   "Weight": "1.08",
    "Market Value": "",
    "Shares Held": "1200000",
    "Asset Category": "Commercial MBS",
@@ -109,19 +109,6 @@
    "Coupon": "4.5"
   },
   {
-   "Name": "GLS Auto Receivables Issuer Trust 2025-1 7.19% 03/15/2032",
-   "Ticker": "-",
-   "Identifier": "36271KAN1",
-   "Weight": "1.05",
-   "Market Value": "",
-   "Shares Held": "1150000",
-   "Asset Category": "Asset Backed Security",
-   "CUSIP": "36271KAN1",
-   "SEDOL": "",
-   "Maturity": "2032-03-15",
-   "Coupon": "7.19"
-  },
-  {
    "Name": "Research-Driven Pagaya Motor Asset Trust 2026-1 6.52% 01/25/2035",
    "Ticker": "-",
    "Identifier": "76100KAF1",
@@ -133,6 +120,19 @@
    "SEDOL": "",
    "Maturity": "2035-01-25",
    "Coupon": "6.52"
+  },
+  {
+   "Name": "GLS Auto Receivables Issuer Trust 2025-1 7.19% 03/15/2032",
+   "Ticker": "-",
+   "Identifier": "36271KAN1",
+   "Weight": "1.04",
+   "Market Value": "",
+   "Shares Held": "1150000",
+   "Asset Category": "Asset Backed Security",
+   "CUSIP": "36271KAN1",
+   "SEDOL": "",
+   "Maturity": "2032-03-15",
+   "Coupon": "7.19"
   },
   {
    "Name": "Verus Securitization Trust 2025-8 5.731% 09/25/2070",
@@ -915,19 +915,6 @@
    "Coupon": "4.125"
   },
   {
-   "Name": "PTCM Re-REMIC Trust 2026-FRR3 6.15% 11/27/2056",
-   "Ticker": "-",
-   "Identifier": "69384YAC0",
-   "Weight": "0.48",
-   "Market Value": "",
-   "Shares Held": "523758.47",
-   "Asset Category": "Commercial MBS",
-   "CUSIP": "69384YAC0",
-   "SEDOL": "",
-   "Maturity": "2056-11-27",
-   "Coupon": "6.15"
-  },
-  {
    "Name": "Verus Securitization Trust 2026-2 4.844% 02/25/2071",
    "Ticker": "-",
    "Identifier": "92490GAL2",
@@ -1134,6 +1121,19 @@
    "SEDOL": "",
    "Maturity": "2049-12-27",
    "Coupon": "0"
+  },
+  {
+   "Name": "PTCM Re-REMIC Trust 2026-FRR3 6.15% 11/27/2056",
+   "Ticker": "-",
+   "Identifier": "69384YAC0",
+   "Weight": "0.45",
+   "Market Value": "",
+   "Shares Held": "523758.47",
+   "Asset Category": "Commercial MBS",
+   "CUSIP": "69384YAC0",
+   "SEDOL": "",
+   "Maturity": "2056-11-27",
+   "Coupon": "6.15"
   },
   {
    "Name": "Santander Holdings USA Inc 5.353% 09/06/2030",

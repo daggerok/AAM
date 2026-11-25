@@ -135,6 +135,19 @@
    "Coupon": "4.556"
   },
   {
+   "Name": "M&T Bank Corp",
+   "Ticker": "-",
+   "Identifier": "55261F872",
+   "Weight": "0.12",
+   "Market Value": "",
+   "Shares Held": "16383",
+   "Asset Category": "Banking",
+   "CUSIP": "55261F872",
+   "SEDOL": "BPQT641",
+   "Maturity": "2200-12-31",
+   "Coupon": "5.625"
+  },
+  {
    "Name": "Rithm Capital Corp",
    "Ticker": "-",
    "Identifier": "64828T409",
@@ -187,17 +200,17 @@
    "Coupon": "8"
   },
   {
-   "Name": "M&T Bank Corp",
+   "Name": "FMC Corp 8.45% 11/01/2055",
    "Ticker": "-",
-   "Identifier": "55261F872",
+   "Identifier": "302491AZ8",
    "Weight": "0.11",
    "Market Value": "",
-   "Shares Held": "16383",
-   "Asset Category": "Banking",
-   "CUSIP": "55261F872",
-   "SEDOL": "BPQT641",
-   "Maturity": "2200-12-31",
-   "Coupon": "5.625"
+   "Shares Held": "1180000",
+   "Asset Category": "Basic Industry",
+   "CUSIP": "302491AZ8",
+   "SEDOL": "BRJF1M3",
+   "Maturity": "2055-11-01",
+   "Coupon": "8.45"
   },
   {
    "Name": "Tennessee Valley Authority",
@@ -237,19 +250,6 @@
    "SEDOL": "BJBT6K0",
    "Maturity": "2200-12-31",
    "Coupon": "6.875"
-  },
-  {
-   "Name": "FMC Corp 8.45% 11/01/2055",
-   "Ticker": "-",
-   "Identifier": "302491AZ8",
-   "Weight": "0.1",
-   "Market Value": "",
-   "Shares Held": "1180000",
-   "Asset Category": "Basic Industry",
-   "CUSIP": "302491AZ8",
-   "SEDOL": "BRJF1M3",
-   "Maturity": "2055-11-01",
-   "Coupon": "8.45"
   },
   {
    "Name": "MFA Financial Inc",
@@ -512,19 +512,6 @@
    "Coupon": "7.875"
   },
   {
-   "Name": "Truist Financial Corp",
-   "Ticker": "-",
-   "Identifier": "89832Q810",
-   "Weight": "0.07",
-   "Market Value": "",
-   "Shares Held": "14062",
-   "Asset Category": "Banking",
-   "CUSIP": "89832Q810",
-   "SEDOL": "BKMF2F1",
-   "Maturity": "2200-12-31",
-   "Coupon": "4"
-  },
-  {
    "Name": "Adamas Trust Inc",
    "Ticker": "-",
    "Identifier": "649604865",
@@ -735,19 +722,6 @@
   {
    "Name": "Old National Bancorp/IN",
    "Ticker": "-",
-   "Identifier": "68003D204",
-   "Weight": "0.06",
-   "Market Value": "",
-   "Shares Held": "8780",
-   "Asset Category": "Banking",
-   "CUSIP": "68003D204",
-   "SEDOL": "BMHSY20",
-   "Maturity": "2200-12-31",
-   "Coupon": "7"
-  },
-  {
-   "Name": "Old National Bancorp/IN",
-   "Ticker": "-",
    "Identifier": "68003D303",
    "Weight": "0.06",
    "Market Value": "",
@@ -835,6 +809,19 @@
    "SEDOL": "BF4VQJ4",
    "Maturity": "2200-12-31",
    "Coupon": "8.5"
+  },
+  {
+   "Name": "Truist Financial Corp",
+   "Ticker": "-",
+   "Identifier": "89832Q810",
+   "Weight": "0.06",
+   "Market Value": "",
+   "Shares Held": "14062",
+   "Asset Category": "Banking",
+   "CUSIP": "89832Q810",
+   "SEDOL": "BKMF2F1",
+   "Maturity": "2200-12-31",
+   "Coupon": "4"
   },
   {
    "Name": "Valley National Bancorp",
@@ -952,6 +939,19 @@
    "SEDOL": "BQ0QJ57",
    "Maturity": "2200-12-31",
    "Coupon": "8.25"
+  },
+  {
+   "Name": "Old National Bancorp/IN",
+   "Ticker": "-",
+   "Identifier": "68003D204",
+   "Weight": "0.05",
+   "Market Value": "",
+   "Shares Held": "8780",
+   "Asset Category": "Banking",
+   "CUSIP": "68003D204",
+   "SEDOL": "BMHSY20",
+   "Maturity": "2200-12-31",
+   "Coupon": "7"
   },
   {
    "Name": "Ready Capital Corp",

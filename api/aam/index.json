@@ -1,6 +1,6 @@
 {
- "generatedAt": "2026-11-25T03:45:29.142Z",
- "catalogReadAt": "2026-11-25T03:45:29.142Z",
+ "generatedAt": "2026-11-25T06:45:11.457Z",
+ "catalogReadAt": "2026-11-25T06:45:11.457Z",
  "source": {
   "provider": "AAM ETFs",
   "site": "https://www.aamlive.com",
@@ -10,7 +10,7 @@
  },
  "counts": {
   "funds": 10,
-  "holdings": 1188,
+  "holdings": 1186,
   "history": 8010
  },
  "funds": [
@@ -83,8 +83,8 @@
     "secYieldText": "1.21%",
     "week52Low": 22.327,
     "week52High": 25.68,
-    "range52w": 71.3,
-    "range52wClose": 24.7176,
+    "range52w": 71.31,
+    "range52wClose": 24.718,
     "range52wAsOf": "2026-11-24",
     "range52wSince": null,
     "range52wBasis": "Close",
@@ -269,7 +269,7 @@
     "returnsBasis": "official AAM NAV total returns (aamlive.com dated performance table)",
     "performanceAsOf": "2026-09-30"
    },
-   "holdings": 61,
+   "holdings": 59,
    "history": 274
   },
   {
@@ -729,7 +729,7 @@
     "week52Low": 20.134,
     "week52High": 26.045,
     "range52w": 12.52,
-    "range52wClose": 20.8741,
+    "range52wClose": 20.874,
     "range52wAsOf": "2026-11-24",
     "range52wSince": null,
     "range52wBasis": "Close",
@@ -987,7 +987,7 @@
     "week52Low": 26.454,
     "week52High": 31.03,
     "range52w": 28.67,
-    "range52wClose": 27.7659,
+    "range52wClose": 27.766,
     "range52wAsOf": "2026-11-24",
     "range52wSince": null,
     "range52wBasis": "Close",
@@ -1012,7 +1012,7 @@
     "perf3y": null,
     "perf5y": null,
     "perf10y": null,
-    "perfSi": 10.97,
+    "perfSi": 10.98,
     "maxDrawdown1y": -12.64,
     "maxDrawdown3y": null,
     "maxDrawdown5y": null,
@@ -1025,7 +1025,7 @@
     "corr1ySpy": 0.78,
     "upCapture3ySpy": null,
     "downCapture3ySpy": null,
-    "relStrength3mSpy": -3.62,
+    "relStrength3mSpy": -3.61,
     "stressReturnSpy": -10.73,
     "stressBasisSpy": "SPY -11% 2026-10-06 to 2026-11-20",
     "vsQqq1y": 3.72,
