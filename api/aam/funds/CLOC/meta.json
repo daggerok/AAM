@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-26T09:34:27.482Z",
+ "generatedAt": "2026-11-26T21:20:31.104Z",
  "ticker": "CLOC",
  "name": "AAM Crescent CLO ETF",
  "category": "Fixed Income",
@@ -11,8 +11,8 @@
   "fundPage": "https://www.aamlive.com/ETF/Detail/CLOC",
   "inception": "2025-10-22",
   "secYield": 6.05,
-  "nav": 24.89,
-  "asOfDate": "2026-11-24"
+  "nav": 24.9,
+  "asOfDate": "2026-11-25"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/CLOC",
@@ -41,23 +41,23 @@
   "net": 0.18
  },
  "nav": {
-  "display": "$24.89",
-  "value": 24.89,
-  "asOfDate": "Nov 24 2026"
+  "display": "$24.90",
+  "value": 24.9,
+  "asOfDate": "Nov 25 2026"
  },
  "marketPrice": {
   "display": "$25.02",
   "value": 25.02,
-  "asOfDate": "Nov 24 2026"
+  "asOfDate": "Nov 25 2026"
  },
  "premiumDiscount": {
-  "display": "0.52%",
-  "value": 0.52
+  "display": "0.48%",
+  "value": 0.48
  },
  "aum": {
-  "display": "$62.23 M",
-  "value": 62233250,
-  "asOfDate": "Nov 24 2026",
+  "display": "$62.25 M",
+  "value": 62253250,
+  "asOfDate": "Nov 25 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
@@ -67,7 +67,7 @@
   "secYield": 6.05,
   "secYieldText": "6.05%",
   "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
-  "subsidizedSecYield": 6.37,
+  "subsidizedSecYield": 6.36,
   "unsubsidizedSecYield": 6.05
  },
  "officialReturns": {

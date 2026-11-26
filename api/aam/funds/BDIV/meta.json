@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-26T09:34:27.482Z",
+ "generatedAt": "2026-11-26T21:20:31.104Z",
  "ticker": "BDIV",
  "name": "AAM Brentview Dividend Growth ETF",
  "category": "Equity",
@@ -10,9 +10,9 @@
   "category": "Equity",
   "fundPage": "https://www.aamlive.com/ETF/Detail/BDIV",
   "inception": "2024-07-30",
-  "secYield": 1.21,
-  "nav": 24.73,
-  "asOfDate": "2026-11-24"
+  "secYield": 1.2,
+  "nav": 24.75,
+  "asOfDate": "2026-11-25"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/BDIV",
@@ -41,34 +41,34 @@
   "net": 0.49
  },
  "nav": {
-  "display": "$24.73",
-  "value": 24.73,
-  "asOfDate": "Nov 24 2026"
+  "display": "$24.75",
+  "value": 24.75,
+  "asOfDate": "Nov 25 2026"
  },
  "marketPrice": {
-  "display": "$24.72",
-  "value": 24.72,
-  "asOfDate": "Nov 24 2026"
+  "display": "$24.79",
+  "value": 24.79,
+  "asOfDate": "Nov 25 2026"
  },
  "premiumDiscount": {
-  "display": "-0.04%",
-  "value": -0.04
+  "display": "0.16%",
+  "value": 0.16
  },
  "aum": {
-  "display": "$7.17 M",
-  "value": 7171091,
-  "asOfDate": "Nov 24 2026",
+  "display": "$7.18 M",
+  "value": 7178718,
+  "asOfDate": "Nov 25 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
   "dividendYield": 0.97,
   "dividendYieldText": "0.97%",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
-  "secYield": 1.21,
-  "secYieldText": "1.21%",
+  "secYield": 1.2,
+  "secYieldText": "1.20%",
   "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
-  "subsidizedSecYield": 1.21,
-  "unsubsidizedSecYield": 1.21
+  "subsidizedSecYield": 1.2,
+  "unsubsidizedSecYield": 1.2
  },
  "officialReturns": {
   "asOfDate": "2026-09-30",

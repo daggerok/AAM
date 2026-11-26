@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-26T09:34:27.482Z",
+ "generatedAt": "2026-11-26T21:20:31.104Z",
  "ticker": "LODI",
  "name": "AAM SLC Low Duration Income ETF",
  "category": "Fixed Income",
@@ -11,8 +11,8 @@
   "fundPage": "https://www.aamlive.com/ETF/Detail/LODI",
   "inception": "2024-12-03",
   "secYield": 5.32,
-  "nav": 24.95,
-  "asOfDate": "2026-11-24"
+  "nav": 24.97,
+  "asOfDate": "2026-11-25"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/LODI",
@@ -41,23 +41,23 @@
   "net": 0.15
  },
  "nav": {
-  "display": "$24.95",
-  "value": 24.95,
-  "asOfDate": "Nov 24 2026"
+  "display": "$24.97",
+  "value": 24.97,
+  "asOfDate": "Nov 25 2026"
  },
  "marketPrice": {
   "display": "$25.02",
   "value": 25.02,
-  "asOfDate": "Nov 24 2026"
+  "asOfDate": "Nov 25 2026"
  },
  "premiumDiscount": {
-  "display": "0.28%",
-  "value": 0.28
+  "display": "0.20%",
+  "value": 0.2
  },
  "aum": {
-  "display": "$109.77 M",
-  "value": 109772960,
-  "asOfDate": "Nov 24 2026",
+  "display": "$109.85 M",
+  "value": 109854800,
+  "asOfDate": "Nov 25 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
@@ -67,7 +67,7 @@
   "secYield": 5.32,
   "secYieldText": "5.32%",
   "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
-  "subsidizedSecYield": 5.57,
+  "subsidizedSecYield": 5.56,
   "unsubsidizedSecYield": 5.32
  },
  "officialReturns": {
