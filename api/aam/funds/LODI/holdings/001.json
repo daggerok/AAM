@@ -34,9 +34,9 @@
    "Name": "Cash & Other",
    "Ticker": "-",
    "Identifier": "",
-   "Weight": "2.12",
+   "Weight": "2.15",
    "Market Value": "",
-   "Shares Held": "2325962.82",
+   "Shares Held": "2358889.38",
    "Asset Category": "Cash & Other",
    "CUSIP": "",
    "SEDOL": "",
@@ -86,7 +86,7 @@
    "Name": "HGI Re-REMIC Trust 2026-FRR2 6.25% 04/01/2058",
    "Ticker": "-",
    "Identifier": "427940AA9",
-   "Weight": "1.08",
+   "Weight": "1.07",
    "Market Value": "",
    "Shares Held": "1200000",
    "Asset Category": "Commercial MBS",
@@ -109,6 +109,19 @@
    "Coupon": "4.5"
   },
   {
+   "Name": "GLS Auto Receivables Issuer Trust 2025-1 7.19% 03/15/2032",
+   "Ticker": "-",
+   "Identifier": "36271KAN1",
+   "Weight": "1.05",
+   "Market Value": "",
+   "Shares Held": "1150000",
+   "Asset Category": "Asset Backed Security",
+   "CUSIP": "36271KAN1",
+   "SEDOL": "",
+   "Maturity": "2032-03-15",
+   "Coupon": "7.19"
+  },
+  {
    "Name": "Research-Driven Pagaya Motor Asset Trust 2026-1 6.52% 01/25/2035",
    "Ticker": "-",
    "Identifier": "76100KAF1",
@@ -120,19 +133,6 @@
    "SEDOL": "",
    "Maturity": "2035-01-25",
    "Coupon": "6.52"
-  },
-  {
-   "Name": "GLS Auto Receivables Issuer Trust 2025-1 7.19% 03/15/2032",
-   "Ticker": "-",
-   "Identifier": "36271KAN1",
-   "Weight": "1.04",
-   "Market Value": "",
-   "Shares Held": "1150000",
-   "Asset Category": "Asset Backed Security",
-   "CUSIP": "36271KAN1",
-   "SEDOL": "",
-   "Maturity": "2032-03-15",
-   "Coupon": "7.19"
   },
   {
    "Name": "Verus Securitization Trust 2025-8 5.731% 09/25/2070",
@@ -291,6 +291,19 @@
    "Coupon": "6.99"
   },
   {
+   "Name": "MAD Commercial Mortgage Trust 2025-11MD 5.8183% 10/15/2042",
+   "Ticker": "-",
+   "Identifier": "55616AAE7",
+   "Weight": "0.84",
+   "Market Value": "",
+   "Shares Held": "940000",
+   "Asset Category": "Commercial MBS",
+   "CUSIP": "55616AAE7",
+   "SEDOL": "",
+   "Maturity": "2042-10-15",
+   "Coupon": "5.8183"
+  },
+  {
    "Name": "NRG Energy Inc 4.45% 06/15/2029",
    "Ticker": "-",
    "Identifier": "629377CL4",
@@ -315,19 +328,6 @@
    "SEDOL": "",
    "Maturity": "2050-11-27",
    "Coupon": "1.3277"
-  },
-  {
-   "Name": "MAD Commercial Mortgage Trust 2025-11MD 5.8183% 10/15/2042",
-   "Ticker": "-",
-   "Identifier": "55616AAE7",
-   "Weight": "0.83",
-   "Market Value": "",
-   "Shares Held": "940000",
-   "Asset Category": "Commercial MBS",
-   "CUSIP": "55616AAE7",
-   "SEDOL": "",
-   "Maturity": "2042-10-15",
-   "Coupon": "5.8183"
   },
   {
    "Name": "BlackRock Shasta CLO XIII LLC 5.8925% 07/15/2036",
@@ -658,7 +658,7 @@
    "Name": "BOFAS Re-REMIC Trust 2026-FRR7 1.3049% 07/27/2052",
    "Ticker": "-",
    "Identifier": "05620CBJ0",
-   "Weight": "0.56",
+   "Weight": "0.57",
    "Market Value": "",
    "Shares Held": "750000",
    "Asset Category": "Commercial MBS",
@@ -733,7 +733,7 @@
    "Coupon": "5.821"
   },
   {
-   "Name": "Wells Fargo Commercial Mortgage Trust 2016-C37 4.2567% 12/15/2049",
+   "Name": "Wells Fargo Commercial Mortgage Trust 2016-C37 4.6235% 12/15/2049",
    "Ticker": "-",
    "Identifier": "95000PAK0",
    "Weight": "0.54",
@@ -743,7 +743,7 @@
    "CUSIP": "95000PAK0",
    "SEDOL": "",
    "Maturity": "2049-12-15",
-   "Coupon": "4.2567"
+   "Coupon": "4.6235"
   },
   {
    "Name": "Bridgecrest Lending Auto Securitization Trust 2025-3 6.62% 05/17/2032",
@@ -967,19 +967,6 @@
    "Coupon": "7.39"
   },
   {
-   "Name": "BRAVO 2024-NQM6 7.9979% 08/01/2064",
-   "Ticker": "-",
-   "Identifier": "05613JAH9",
-   "Weight": "0.46",
-   "Market Value": "",
-   "Shares Held": "500000",
-   "Asset Category": "Commercial MBS",
-   "CUSIP": "05613JAH9",
-   "SEDOL": "",
-   "Maturity": "2064-08-01",
-   "Coupon": "7.9979"
-  },
-  {
    "Name": "Exeter Automobile Receivables Trust 2025-2 7.81% 10/15/2032",
    "Ticker": "-",
    "Identifier": "30168JAG8",
@@ -1056,6 +1043,19 @@
    "SEDOL": "BVCK9H4",
    "Maturity": "2030-01-30",
    "Coupon": "5.375"
+  },
+  {
+   "Name": "BRAVO 2024-NQM6 7.9979% 08/01/2064",
+   "Ticker": "-",
+   "Identifier": "05613JAH9",
+   "Weight": "0.45",
+   "Market Value": "",
+   "Shares Held": "500000",
+   "Asset Category": "Commercial MBS",
+   "CUSIP": "05613JAH9",
+   "SEDOL": "",
+   "Maturity": "2064-08-01",
+   "Coupon": "7.9979"
   },
   {
    "Name": "CPS Auto Receivables Trust 2025-C 6.59% 02/15/2033",
@@ -1344,19 +1344,6 @@
    "Coupon": "6.75"
   },
   {
-   "Name": "COLT 2024-5 Mortgage Loan Trust 5.655% 08/25/2069",
-   "Ticker": "-",
-   "Identifier": "19685AAD1",
-   "Weight": "0.41",
-   "Market Value": "",
-   "Shares Held": "450000",
-   "Asset Category": "Commercial MBS",
-   "CUSIP": "19685AAD1",
-   "SEDOL": "",
-   "Maturity": "2069-08-25",
-   "Coupon": "5.655"
-  },
-  {
    "Name": "FIVE 2023-V1 Mortgage Trust 6.6246% 02/10/2056",
    "Ticker": "-",
    "Identifier": "337964AG5",
@@ -1420,6 +1407,19 @@
    "SEDOL": "",
    "Maturity": "2057-12-15",
    "Coupon": "4.5"
+  },
+  {
+   "Name": "COLT 2024-5 Mortgage Loan Trust 5.655% 08/25/2069",
+   "Ticker": "-",
+   "Identifier": "19685AAD1",
+   "Weight": "0.4",
+   "Market Value": "",
+   "Shares Held": "450000",
+   "Asset Category": "Commercial MBS",
+   "CUSIP": "19685AAD1",
+   "SEDOL": "",
+   "Maturity": "2069-08-25",
+   "Coupon": "5.655"
   },
   {
    "Name": "Point Au Roche Park CLO Ltd 5.7844% 01/20/2039",
@@ -1552,19 +1552,6 @@
    "Coupon": "9.476"
   },
   {
-   "Name": "Wells Fargo Commercial Mortgage Trust 2016-C37 3.1317% 12/15/2049",
-   "Ticker": "-",
-   "Identifier": "95000PAX2",
-   "Weight": "0.36",
-   "Market Value": "",
-   "Shares Held": "400000",
-   "Asset Category": "Commercial MBS",
-   "CUSIP": "95000PAX2",
-   "SEDOL": "BVSVTK4",
-   "Maturity": "2049-12-15",
-   "Coupon": "3.1317"
-  },
-  {
    "Name": "Wells Fargo Commercial Mortgage Trust 2018-C47 5.0776% 09/15/2061",
    "Ticker": "-",
    "Identifier": "95002DBX6",
@@ -1641,6 +1628,19 @@
    "SEDOL": "",
    "Maturity": "2056-07-25",
    "Coupon": "1"
+  },
+  {
+   "Name": "Wells Fargo Commercial Mortgage Trust 2016-C37 3.4985% 12/15/2049",
+   "Ticker": "-",
+   "Identifier": "95000PAX2",
+   "Weight": "0.35",
+   "Market Value": "",
+   "Shares Held": "400000",
+   "Asset Category": "Commercial MBS",
+   "CUSIP": "95000PAX2",
+   "SEDOL": "BVSVTK4",
+   "Maturity": "2049-12-15",
+   "Coupon": "3.4985"
   },
   {
    "Name": "COLT 2025-12 Mortgage Loan Trust 5.681% 01/26/2071",

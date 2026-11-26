@@ -135,19 +135,6 @@
    "Coupon": "4.556"
   },
   {
-   "Name": "M&T Bank Corp",
-   "Ticker": "-",
-   "Identifier": "55261F872",
-   "Weight": "0.12",
-   "Market Value": "",
-   "Shares Held": "16383",
-   "Asset Category": "Banking",
-   "CUSIP": "55261F872",
-   "SEDOL": "BPQT641",
-   "Maturity": "2200-12-31",
-   "Coupon": "5.625"
-  },
-  {
    "Name": "Rithm Capital Corp",
    "Ticker": "-",
    "Identifier": "64828T409",
@@ -200,17 +187,17 @@
    "Coupon": "8"
   },
   {
-   "Name": "FMC Corp 8.45% 11/01/2055",
+   "Name": "M&T Bank Corp",
    "Ticker": "-",
-   "Identifier": "302491AZ8",
+   "Identifier": "55261F872",
    "Weight": "0.11",
    "Market Value": "",
-   "Shares Held": "1180000",
-   "Asset Category": "Basic Industry",
-   "CUSIP": "302491AZ8",
-   "SEDOL": "BRJF1M3",
-   "Maturity": "2055-11-01",
-   "Coupon": "8.45"
+   "Shares Held": "16383",
+   "Asset Category": "Banking",
+   "CUSIP": "55261F872",
+   "SEDOL": "BPQT641",
+   "Maturity": "2200-12-31",
+   "Coupon": "5.625"
   },
   {
    "Name": "Tennessee Valley Authority",
@@ -250,6 +237,19 @@
    "SEDOL": "BJBT6K0",
    "Maturity": "2200-12-31",
    "Coupon": "6.875"
+  },
+  {
+   "Name": "FMC Corp 8.45% 11/01/2055",
+   "Ticker": "-",
+   "Identifier": "302491AZ8",
+   "Weight": "0.1",
+   "Market Value": "",
+   "Shares Held": "1180000",
+   "Asset Category": "Basic Industry",
+   "CUSIP": "302491AZ8",
+   "SEDOL": "BRJF1M3",
+   "Maturity": "2055-11-01",
+   "Coupon": "8.45"
   },
   {
    "Name": "MFA Financial Inc",
@@ -393,19 +393,6 @@
    "SEDOL": "BGHCHV0",
    "Maturity": "2200-12-31",
    "Coupon": "7.75"
-  },
-  {
-   "Name": "Ellington Financial Inc",
-   "Ticker": "-",
-   "Identifier": "28852N307",
-   "Weight": "0.07",
-   "Market Value": "",
-   "Shares Held": "9819",
-   "Asset Category": "Real Estate",
-   "CUSIP": "28852N307",
-   "SEDOL": "BN7LLV4",
-   "Maturity": "2200-12-31",
-   "Coupon": "6.25"
   },
   {
    "Name": "GasLog Partners LP",
@@ -666,6 +653,19 @@
    "SEDOL": "BKLB1T7",
    "Maturity": "2200-12-31",
    "Coupon": "6.9"
+  },
+  {
+   "Name": "Ellington Financial Inc",
+   "Ticker": "-",
+   "Identifier": "28852N307",
+   "Weight": "0.06",
+   "Market Value": "",
+   "Shares Held": "9819",
+   "Asset Category": "Real Estate",
+   "CUSIP": "28852N307",
+   "SEDOL": "BN7LLV4",
+   "Maturity": "2200-12-31",
+   "Coupon": "6.25"
   },
   {
    "Name": "Gladstone Investment Corp",
@@ -1113,7 +1113,7 @@
    "Name": "Soluna Holdings Inc",
    "Ticker": "-",
    "Identifier": "583543202",
-   "Weight": "0.03",
+   "Weight": "0.02",
    "Market Value": "",
    "Shares Held": "10064",
    "Asset Category": "Technology & Electronics",

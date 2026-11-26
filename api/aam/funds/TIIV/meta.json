@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-25T23:16:23.939Z",
+ "generatedAt": "2026-11-26T09:34:27.482Z",
  "ticker": "TIIV",
  "name": "AAM Todd International Intrinsic Value ETF",
  "category": "Equity",
@@ -150,8 +150,8 @@
   ],
   "pageSize": 250,
   "totalRows": 65,
-  "asOfDate": "2026-11-25",
-  "asOf": "Nov 25 2026",
+  "asOfDate": "2026-11-27",
+  "asOf": "Nov 27 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },
