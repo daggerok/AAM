@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-26T21:20:31.104Z",
+ "generatedAt": "2026-11-27T22:53:46.829Z",
  "ticker": "SAWS",
  "name": "AAM Sawgrass U.S. Small Cap Quality Growth ETF",
  "category": "Equity",
@@ -160,8 +160,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 584,
-  "asOf": "Nov 25 2026",
+  "totalRows": 585,
+  "asOf": "Nov 27 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }

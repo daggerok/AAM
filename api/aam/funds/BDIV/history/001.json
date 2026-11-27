@@ -2,7 +2,7 @@
  "ticker": "BDIV",
  "page": 1,
  "pageSize": 1000,
- "totalRows": 583,
+ "totalRows": 584,
  "headers": [
   "Date",
   "Close",
@@ -3507,6 +3507,12 @@
    "Close": "24.788",
    "Adj Close": "24.79",
    "Volume": "600"
+  },
+  {
+   "Date": "Nov 27 2026",
+   "Close": "24.9256",
+   "Adj Close": "24.93",
+   "Volume": "395"
   }
  ]
 }

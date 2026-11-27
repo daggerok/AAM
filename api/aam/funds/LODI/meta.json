@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-26T21:20:31.104Z",
+ "generatedAt": "2026-11-27T22:53:46.829Z",
  "ticker": "LODI",
  "name": "AAM SLC Low Duration Income ETF",
  "category": "Fixed Income",
@@ -433,8 +433,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 496,
-  "asOf": "Nov 25 2026",
+  "totalRows": 497,
+  "asOf": "Nov 27 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }
