@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-28T08:56:00.869Z",
+ "generatedAt": "2026-11-28T12:23:19.904Z",
  "ticker": "UBIQ",
  "name": "AAM Ubiquitous ETF",
  "category": "Equity",
@@ -10,9 +10,9 @@
   "category": "Equity",
   "fundPage": "https://www.aamlive.com/ETF/Detail/UBIQ",
   "inception": "2026-10-05",
-  "secYield": 1.14,
-  "nav": 26.05,
-  "asOfDate": "2026-11-25"
+  "secYield": 1.12,
+  "nav": 26.48,
+  "asOfDate": "2026-11-27"
  },
  "source": {
   "fundPage": "https://www.aamlive.com/ETF/Detail/UBIQ",
@@ -41,34 +41,34 @@
   "net": 0.49
  },
  "nav": {
-  "display": "$26.05",
-  "value": 26.05,
-  "asOfDate": "Nov 25 2026"
+  "display": "$26.48",
+  "value": 26.48,
+  "asOfDate": "Nov 27 2026"
  },
  "marketPrice": {
-  "display": "$26.13",
-  "value": 26.13,
-  "asOfDate": "Nov 25 2026"
+  "display": "$26.46",
+  "value": 26.46,
+  "asOfDate": "Nov 27 2026"
  },
  "premiumDiscount": {
-  "display": "0.31%",
-  "value": 0.31
+  "display": "-0.08%",
+  "value": -0.08
  },
  "aum": {
-  "display": "$47.15 M",
-  "value": 47147966,
-  "asOfDate": "Nov 25 2026",
+  "display": "$47.93 M",
+  "value": 47926628,
+  "asOfDate": "Nov 27 2026",
   "source": "aamlive.com official fund net assets"
  },
  "yields": {
   "dividendYield": null,
   "dividendYieldText": "—",
   "dividendYieldKind": "indicated: latest distribution x payments per year / market price (not trailing yield)",
-  "secYield": 1.14,
-  "secYieldText": "1.14%",
+  "secYield": 1.12,
+  "secYieldText": "1.12%",
   "secYieldKind": "30-day SEC yield, unsubsidized where separately published",
-  "subsidizedSecYield": 1.14,
-  "unsubsidizedSecYield": 1.14
+  "subsidizedSecYield": 1.12,
+  "unsubsidizedSecYield": 1.12
  },
  "officialReturns": null,
  "returns": {
