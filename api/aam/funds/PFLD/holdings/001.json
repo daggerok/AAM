@@ -21,9 +21,9 @@
    "Name": "Cash & Other",
    "Ticker": "-",
    "Identifier": "",
-   "Weight": "1.71",
+   "Weight": "1.3",
    "Market Value": "",
-   "Shares Held": "6168889.49",
+   "Shares Held": "4675262.8",
    "Asset Category": "Cash & Other",
    "CUSIP": "",
    "SEDOL": "",
@@ -34,7 +34,7 @@
    "Name": "JPMorgan Chase & Co 6.5% 04/01/2175",
    "Ticker": "-",
    "Identifier": "48128AAJ2",
-   "Weight": "1.27",
+   "Weight": "1.28",
    "Market Value": "",
    "Shares Held": "4610000",
    "Asset Category": "Banking",
@@ -47,7 +47,7 @@
    "Name": "JPMorgan Chase & Co 6.1% 07/01/2175",
    "Ticker": "-",
    "Identifier": "48128BAR2",
-   "Weight": "1.24",
+   "Weight": "1.25",
    "Market Value": "",
    "Shares Held": "4610000",
    "Asset Category": "Banking",
@@ -60,7 +60,7 @@
    "Name": "BP Capital Markets PLC 4.875% 12/22/2174",
    "Ticker": "-",
    "Identifier": "05565QDV7",
-   "Weight": "1.1",
+   "Weight": "1.11",
    "Market Value": "",
    "Shares Held": "4130000",
    "Asset Category": "Energy",
@@ -86,7 +86,7 @@
    "Name": "CVS Health Corp 7% 03/10/2055",
    "Ticker": "-",
    "Identifier": "126650EH9",
-   "Weight": "1.03",
+   "Weight": "1.04",
    "Market Value": "",
    "Shares Held": "3680000",
    "Asset Category": "Healthcare",
@@ -151,7 +151,7 @@
    "Name": "Charles Schwab Corp/The 4% 03/01/2175",
    "Ticker": "-",
    "Identifier": "808513BJ3",
-   "Weight": "0.92",
+   "Weight": "0.93",
    "Market Value": "",
    "Shares Held": "3670000",
    "Asset Category": "Financial Services",
@@ -187,6 +187,19 @@
    "Coupon": "6.85"
   },
   {
+   "Name": "Verizon Communications Inc 6.05% 05/14/2058",
+   "Ticker": "-",
+   "Identifier": "92343VHP2",
+   "Weight": "0.87",
+   "Market Value": "",
+   "Shares Held": "3300000",
+   "Asset Category": "Telecommunications",
+   "CUSIP": "92343VHP2",
+   "SEDOL": "BQB86M8",
+   "Maturity": "2058-05-14",
+   "Coupon": "6.05"
+  },
+  {
    "Name": "Verizon Communications Inc 6.6% 02/15/2059",
    "Ticker": "-",
    "Identifier": "92343VJL9",
@@ -200,17 +213,17 @@
    "Coupon": "6.6"
   },
   {
-   "Name": "Verizon Communications Inc 6.05% 05/14/2058",
+   "Name": "Bank of America Corp 6.25% 10/26/2175",
    "Ticker": "-",
-   "Identifier": "92343VHP2",
-   "Weight": "0.86",
+   "Identifier": "06055HAK9",
+   "Weight": "0.82",
    "Market Value": "",
-   "Shares Held": "3300000",
-   "Asset Category": "Telecommunications",
-   "CUSIP": "92343VHP2",
-   "SEDOL": "BQB86M8",
-   "Maturity": "2058-05-14",
-   "Coupon": "6.05"
+   "Shares Held": "2980000",
+   "Asset Category": "Banking",
+   "CUSIP": "06055HAK9",
+   "SEDOL": "BSML2K0",
+   "Maturity": "2200-12-31",
+   "Coupon": "6.25"
   },
   {
    "Name": "Citigroup Inc 6.875% 11/15/2175",
@@ -226,19 +239,6 @@
    "Coupon": "6.875"
   },
   {
-   "Name": "Bank of America Corp 6.25% 10/26/2175",
-   "Ticker": "-",
-   "Identifier": "06055HAK9",
-   "Weight": "0.81",
-   "Market Value": "",
-   "Shares Held": "2980000",
-   "Asset Category": "Banking",
-   "CUSIP": "06055HAK9",
-   "SEDOL": "BSML2K0",
-   "Maturity": "2200-12-31",
-   "Coupon": "6.25"
-  },
-  {
    "Name": "Goldman Sachs Group Inc/The 6.85% 08/10/2175",
    "Ticker": "-",
    "Identifier": "38141GC28",
@@ -252,19 +252,6 @@
    "Coupon": "6.85"
   },
   {
-   "Name": "Wells Fargo & Co 6.55% 12/15/2174",
-   "Ticker": "-",
-   "Identifier": "95002YAG8",
-   "Weight": "0.8",
-   "Market Value": "",
-   "Shares Held": "2900000",
-   "Asset Category": "Banking",
-   "CUSIP": "95002YAG8",
-   "SEDOL": "",
-   "Maturity": "2200-12-31",
-   "Coupon": "6.55"
-  },
-  {
    "Name": "Wells Fargo & Co 7.625% 09/15/2175",
    "Ticker": "-",
    "Identifier": "95002YAA1",
@@ -276,6 +263,19 @@
    "SEDOL": "",
    "Maturity": "2200-12-31",
    "Coupon": "7.625"
+  },
+  {
+   "Name": "Wells Fargo & Co 6.55% 12/15/2174",
+   "Ticker": "-",
+   "Identifier": "95002YAG8",
+   "Weight": "0.79",
+   "Market Value": "",
+   "Shares Held": "2900000",
+   "Asset Category": "Banking",
+   "CUSIP": "95002YAG8",
+   "SEDOL": "",
+   "Maturity": "2200-12-31",
+   "Coupon": "6.55"
   },
   {
    "Name": "Citigroup Inc 6.625% 05/15/2175",
@@ -320,7 +320,7 @@
    "Name": "American Express Co 6.45% 09/15/2175",
    "Ticker": "-",
    "Identifier": "025816EV7",
-   "Weight": "0.72",
+   "Weight": "0.73",
    "Market Value": "",
    "Shares Held": "2650000",
    "Asset Category": "Financial Services",
@@ -328,6 +328,19 @@
    "SEDOL": "BT6MKC4",
    "Maturity": "2200-12-31",
    "Coupon": "6.45"
+  },
+  {
+   "Name": "PNC Financial Services Group Inc/The 6.25% 06/15/2175",
+   "Ticker": "-",
+   "Identifier": "693475BP9",
+   "Weight": "0.69",
+   "Market Value": "",
+   "Shares Held": "2480000",
+   "Asset Category": "Banking",
+   "CUSIP": "693475BP9",
+   "SEDOL": "",
+   "Maturity": "2200-12-31",
+   "Coupon": "6.25"
   },
   {
    "Name": "PNC Financial Services Group Inc/The 7.151% 12/15/2174",
@@ -382,6 +395,19 @@
    "Coupon": "5.3"
   },
   {
+   "Name": "US Bancorp 3.7% 01/15/2175",
+   "Ticker": "-",
+   "Identifier": "902973BC9",
+   "Weight": "0.69",
+   "Market Value": "",
+   "Shares Held": "2475000",
+   "Asset Category": "Banking",
+   "CUSIP": "902973BC9",
+   "SEDOL": "BQKX602",
+   "Maturity": "2200-12-31",
+   "Coupon": "3.7"
+  },
+  {
    "Name": "NextEra Energy Capital Holdings Inc 6.375% 08/15/2055",
    "Ticker": "-",
    "Identifier": "65339KDE7",
@@ -395,32 +421,6 @@
    "Coupon": "6.375"
   },
   {
-   "Name": "PNC Financial Services Group Inc/The 6.25% 06/15/2175",
-   "Ticker": "-",
-   "Identifier": "693475BP9",
-   "Weight": "0.68",
-   "Market Value": "",
-   "Shares Held": "2480000",
-   "Asset Category": "Banking",
-   "CUSIP": "693475BP9",
-   "SEDOL": "",
-   "Maturity": "2200-12-31",
-   "Coupon": "6.25"
-  },
-  {
-   "Name": "US Bancorp 3.7% 01/15/2175",
-   "Ticker": "-",
-   "Identifier": "902973BC9",
-   "Weight": "0.68",
-   "Market Value": "",
-   "Shares Held": "2475000",
-   "Asset Category": "Banking",
-   "CUSIP": "902973BC9",
-   "SEDOL": "BQKX602",
-   "Maturity": "2200-12-31",
-   "Coupon": "3.7"
-  },
-  {
    "Name": "Bank of America Corp 7.2% 01/27/2175",
    "Ticker": "-",
    "Identifier": "06055HAN3",
@@ -432,6 +432,19 @@
    "SEDOL": "",
    "Maturity": "2200-12-31",
    "Coupon": "7.2"
+  },
+  {
+   "Name": "PG&E Corp 7.375% 03/15/2055",
+   "Ticker": "-",
+   "Identifier": "69331CAM0",
+   "Weight": "0.67",
+   "Market Value": "",
+   "Shares Held": "2400000",
+   "Asset Category": "Utility",
+   "CUSIP": "69331CAM0",
+   "SEDOL": "BQXJKM7",
+   "Maturity": "2055-03-15",
+   "Coupon": "7.375"
   },
   {
    "Name": "American Electric Power Co Inc 5.8% 03/15/2056",
@@ -471,19 +484,6 @@
    "SEDOL": "",
    "Maturity": "2200-12-31",
    "Coupon": "6.1"
-  },
-  {
-   "Name": "PG&E Corp 7.375% 03/15/2055",
-   "Ticker": "-",
-   "Identifier": "69331CAM0",
-   "Weight": "0.66",
-   "Market Value": "",
-   "Shares Held": "2400000",
-   "Asset Category": "Utility",
-   "CUSIP": "69331CAM0",
-   "SEDOL": "BQXJKM7",
-   "Maturity": "2055-03-15",
-   "Coupon": "7.375"
   },
   {
    "Name": "Goldman Sachs Group Inc/The 7.5% 02/10/2175",
@@ -528,7 +528,7 @@
    "Name": "Citigroup Inc 6.95% 05/15/2175",
    "Ticker": "-",
    "Identifier": "17327CAV5",
-   "Weight": "0.61",
+   "Weight": "0.62",
    "Market Value": "",
    "Shares Held": "2230000",
    "Asset Category": "Banking",
@@ -616,6 +616,19 @@
    "Coupon": "7.125"
   },
   {
+   "Name": "JPMorgan Chase & Co 6.9076% 05/01/2175",
+   "Ticker": "-",
+   "Identifier": "48128BAD3",
+   "Weight": "0.54",
+   "Market Value": "",
+   "Shares Held": "1920000",
+   "Asset Category": "Banking",
+   "CUSIP": "48128BAD3",
+   "SEDOL": "BF7PB43",
+   "Maturity": "2200-12-31",
+   "Coupon": "6.653"
+  },
+  {
    "Name": "Energy Transfer LP 6.5% 02/15/2056",
    "Ticker": "-",
    "Identifier": "29273VBG4",
@@ -627,19 +640,6 @@
    "SEDOL": "BPCPJR7 BTXP112",
    "Maturity": "2056-02-15",
    "Coupon": "6.5"
-  },
-  {
-   "Name": "JPMorgan Chase & Co 6.9076% 05/01/2175",
-   "Ticker": "-",
-   "Identifier": "48128BAD3",
-   "Weight": "0.53",
-   "Market Value": "",
-   "Shares Held": "1920000",
-   "Asset Category": "Banking",
-   "CUSIP": "48128BAD3",
-   "SEDOL": "BF7PB43",
-   "Maturity": "2200-12-31",
-   "Coupon": "6.653"
   },
   {
    "Name": "Prudential Financial Inc 6% 09/01/2052",
@@ -720,6 +720,32 @@
    "Coupon": "6.875"
   },
   {
+   "Name": "Dominion Energy Inc 6.875% 02/01/2055",
+   "Ticker": "-",
+   "Identifier": "25746UDT3",
+   "Weight": "0.47",
+   "Market Value": "",
+   "Shares Held": "1650000",
+   "Asset Category": "Utility",
+   "CUSIP": "25746UDT3",
+   "SEDOL": "BS6Q8D6",
+   "Maturity": "2055-02-01",
+   "Coupon": "6.875"
+  },
+  {
+   "Name": "Enterprise Products Operating LLC 5.25% 08/16/2077",
+   "Ticker": "-",
+   "Identifier": "29379VBN2",
+   "Weight": "0.47",
+   "Market Value": "",
+   "Shares Held": "1685000",
+   "Asset Category": "Energy",
+   "CUSIP": "29379VBN2",
+   "SEDOL": "BF47Q58",
+   "Maturity": "2077-08-16",
+   "Coupon": "5.25"
+  },
+  {
    "Name": "NextEra Energy Capital Holdings Inc 6.7% 09/01/2054",
    "Ticker": "-",
    "Identifier": "65339KCW8",
@@ -744,6 +770,19 @@
    "SEDOL": "",
    "Maturity": "2200-12-31",
    "Coupon": "6"
+  },
+  {
+   "Name": "Sempra 4.125% 04/01/2052",
+   "Ticker": "-",
+   "Identifier": "816851BM0",
+   "Weight": "0.47",
+   "Market Value": "",
+   "Shares Held": "1685000",
+   "Asset Category": "Utility",
+   "CUSIP": "816851BM0",
+   "SEDOL": "BMVVWC1",
+   "Maturity": "2052-04-01",
+   "Coupon": "4.125"
   },
   {
    "Name": "Bell Telephone Co of Canada or Bell Canada 6.875% 09/15/2055",
@@ -772,32 +811,6 @@
    "Coupon": "6.75"
   },
   {
-   "Name": "Dominion Energy Inc 6.875% 02/01/2055",
-   "Ticker": "-",
-   "Identifier": "25746UDT3",
-   "Weight": "0.46",
-   "Market Value": "",
-   "Shares Held": "1650000",
-   "Asset Category": "Utility",
-   "CUSIP": "25746UDT3",
-   "SEDOL": "BS6Q8D6",
-   "Maturity": "2055-02-01",
-   "Coupon": "6.875"
-  },
-  {
-   "Name": "Enterprise Products Operating LLC 5.25% 08/16/2077",
-   "Ticker": "-",
-   "Identifier": "29379VBN2",
-   "Weight": "0.46",
-   "Market Value": "",
-   "Shares Held": "1685000",
-   "Asset Category": "Energy",
-   "CUSIP": "29379VBN2",
-   "SEDOL": "BF47Q58",
-   "Maturity": "2077-08-16",
-   "Coupon": "5.25"
-  },
-  {
    "Name": "General Motors Financial Co Inc 5.75% 03/30/2175",
    "Ticker": "-",
    "Identifier": "37045XCA2",
@@ -811,17 +824,17 @@
    "Coupon": "5.75"
   },
   {
-   "Name": "Sempra 4.125% 04/01/2052",
+   "Name": "Phillips 66 Co 5.875% 03/15/2056",
    "Ticker": "-",
-   "Identifier": "816851BM0",
+   "Identifier": "718547AZ5",
    "Weight": "0.46",
    "Market Value": "",
    "Shares Held": "1685000",
-   "Asset Category": "Utility",
-   "CUSIP": "816851BM0",
-   "SEDOL": "BMVVWC1",
-   "Maturity": "2052-04-01",
-   "Coupon": "4.125"
+   "Asset Category": "Energy",
+   "CUSIP": "718547AZ5",
+   "SEDOL": "BQTWXV0",
+   "Maturity": "2056-03-15",
+   "Coupon": "5.875"
   },
   {
    "Name": "US Bancorp 7.2% 01/15/2175",
@@ -861,6 +874,19 @@
    "SEDOL": "BN0ZM87",
    "Maturity": "2200-12-31",
    "Coupon": "4.7"
+  },
+  {
+   "Name": "Ally Financial Inc 7.1% 08/15/2175",
+   "Ticker": "-",
+   "Identifier": "02005NCB4",
+   "Weight": "0.45",
+   "Market Value": "",
+   "Shares Held": "1650000",
+   "Asset Category": "Financial Services",
+   "CUSIP": "02005NCB4",
+   "SEDOL": "BVH9P12",
+   "Maturity": "2200-12-31",
+   "Coupon": "7.1"
   },
   {
    "Name": "Citigroup Inc 7.625% 02/15/2175",
@@ -915,19 +941,6 @@
    "Coupon": "6.85"
   },
   {
-   "Name": "Phillips 66 Co 5.875% 03/15/2056",
-   "Ticker": "-",
-   "Identifier": "718547AZ5",
-   "Weight": "0.45",
-   "Market Value": "",
-   "Shares Held": "1685000",
-   "Asset Category": "Energy",
-   "CUSIP": "718547AZ5",
-   "SEDOL": "BQTWXV0",
-   "Maturity": "2056-03-15",
-   "Coupon": "5.875"
-  },
-  {
    "Name": "Truist Financial Corp 5.1% 03/01/2175",
    "Ticker": "-",
    "Identifier": "89832QAF6",
@@ -939,19 +952,6 @@
    "SEDOL": "",
    "Maturity": "2200-12-31",
    "Coupon": "5.1"
-  },
-  {
-   "Name": "Ally Financial Inc 7.1% 08/15/2175",
-   "Ticker": "-",
-   "Identifier": "02005NCB4",
-   "Weight": "0.44",
-   "Market Value": "",
-   "Shares Held": "1650000",
-   "Asset Category": "Financial Services",
-   "CUSIP": "02005NCB4",
-   "SEDOL": "BVH9P12",
-   "Maturity": "2200-12-31",
-   "Coupon": "7.1"
   },
   {
    "Name": "Dominion Energy Inc 6.15% 12/15/2056",
@@ -993,6 +993,19 @@
    "Coupon": "6"
   },
   {
+   "Name": "Prudential Financial Inc 5.7% 09/15/2048",
+   "Ticker": "-",
+   "Identifier": "744320BF8",
+   "Weight": "0.44",
+   "Market Value": "",
+   "Shares Held": "1585000",
+   "Asset Category": "Insurance",
+   "CUSIP": "744320BF8",
+   "SEDOL": "BGHCHW1",
+   "Maturity": "2048-09-15",
+   "Coupon": "5.7"
+  },
+  {
    "Name": "US Bancorp 5.3% 04/15/2175",
    "Ticker": "-",
    "Identifier": "902973AZ9",
@@ -1017,19 +1030,6 @@
    "SEDOL": "BMVPFL3",
    "Maturity": "2080-07-15",
    "Coupon": "5.75"
-  },
-  {
-   "Name": "Prudential Financial Inc 5.7% 09/15/2048",
-   "Ticker": "-",
-   "Identifier": "744320BF8",
-   "Weight": "0.43",
-   "Market Value": "",
-   "Shares Held": "1585000",
-   "Asset Category": "Insurance",
-   "CUSIP": "744320BF8",
-   "SEDOL": "BGHCHW1",
-   "Maturity": "2048-09-15",
-   "Coupon": "5.7"
   },
   {
    "Name": "AES Corp/The 7.6% 01/15/2055",
@@ -1191,7 +1191,7 @@
    "Name": "Goldman Sachs Group Inc/The",
    "Ticker": "-",
    "Identifier": "38144G804",
-   "Weight": "0.36",
+   "Weight": "0.37",
    "Market Value": "",
    "Shares Held": "75509",
    "Asset Category": "Financial Services",
@@ -1199,6 +1199,19 @@
    "SEDOL": "B15CKS5",
    "Maturity": "2200-12-31",
    "Coupon": "0"
+  },
+  {
+   "Name": "Aegon Ltd 5.5% 04/11/2048",
+   "Ticker": "-",
+   "Identifier": "007924AJ2",
+   "Weight": "0.36",
+   "Market Value": "",
+   "Shares Held": "1290000",
+   "Asset Category": "Insurance",
+   "CUSIP": "007924AJ2",
+   "SEDOL": "BFBFTW3",
+   "Maturity": "2048-04-11",
+   "Coupon": "5.5"
   },
   {
    "Name": "Morgan Stanley",
@@ -1238,19 +1251,6 @@
    "SEDOL": "BWPJHP9",
    "Maturity": "2056-12-03",
    "Coupon": "5.75"
-  },
-  {
-   "Name": "Aegon Ltd 5.5% 04/11/2048",
-   "Ticker": "-",
-   "Identifier": "007924AJ2",
-   "Weight": "0.35",
-   "Market Value": "",
-   "Shares Held": "1290000",
-   "Asset Category": "Insurance",
-   "CUSIP": "007924AJ2",
-   "SEDOL": "BFBFTW3",
-   "Maturity": "2048-04-11",
-   "Coupon": "5.5"
   },
   {
    "Name": "AerCap Ireland Capital DAC / AerCap Global Aviation Trust 6.95% 03/10/2055",
@@ -1383,6 +1383,19 @@
    "Coupon": "3.875"
   },
   {
+   "Name": "Annaly Capital Management Inc",
+   "Ticker": "-",
+   "Identifier": "035710870",
+   "Weight": "0.33",
+   "Market Value": "",
+   "Shares Held": "45707",
+   "Asset Category": "Real Estate",
+   "CUSIP": "035710870",
+   "SEDOL": "BD0B1Y4",
+   "Maturity": "2200-12-31",
+   "Coupon": "6.95"
+  },
+  {
    "Name": "Charles Schwab Corp/The 5% 06/01/2175",
    "Ticker": "-",
    "Identifier": "808513CB9",
@@ -1433,6 +1446,19 @@
    "SEDOL": "BYWF668",
    "Maturity": "2078-02-15",
    "Coupon": "5.375"
+  },
+  {
+   "Name": "NiSource Inc 6.25% 04/15/2057",
+   "Ticker": "-",
+   "Identifier": "65473PBC8",
+   "Weight": "0.33",
+   "Market Value": "",
+   "Shares Held": "1200000",
+   "Asset Category": "Utility",
+   "CUSIP": "65473PBC8",
+   "SEDOL": "C04SC80",
+   "Maturity": "2057-04-15",
+   "Coupon": "6.25"
   },
   {
    "Name": "Prudential Financial Inc 4.5% 09/15/2047",
@@ -1487,19 +1513,6 @@
    "Coupon": "7"
   },
   {
-   "Name": "Annaly Capital Management Inc",
-   "Ticker": "-",
-   "Identifier": "035710870",
-   "Weight": "0.32",
-   "Market Value": "",
-   "Shares Held": "45707",
-   "Asset Category": "Real Estate",
-   "CUSIP": "035710870",
-   "SEDOL": "BD0B1Y4",
-   "Maturity": "2200-12-31",
-   "Coupon": "6.95"
-  },
-  {
    "Name": "CenterPoint Energy Inc 5.95% 04/01/2056",
    "Ticker": "-",
    "Identifier": "15189TBS5",
@@ -1539,19 +1552,6 @@
    "Coupon": "6.25"
   },
   {
-   "Name": "NiSource Inc 6.25% 04/15/2057",
-   "Ticker": "-",
-   "Identifier": "65473PBC8",
-   "Weight": "0.32",
-   "Market Value": "",
-   "Shares Held": "1200000",
-   "Asset Category": "Utility",
-   "CUSIP": "65473PBC8",
-   "SEDOL": "C04SC80",
-   "Maturity": "2057-04-15",
-   "Coupon": "6.25"
-  },
-  {
    "Name": "Prudential Financial Inc 3.7% 10/01/2050",
    "Ticker": "-",
    "Identifier": "744320BH4",
@@ -1576,6 +1576,19 @@
    "SEDOL": "BVLJFJ6",
    "Maturity": "2055-10-15",
    "Coupon": "6.625"
+  },
+  {
+   "Name": "Alliant Energy Corp 5.75% 04/01/2056",
+   "Ticker": "-",
+   "Identifier": "018802AF5",
+   "Weight": "0.31",
+   "Market Value": "",
+   "Shares Held": "1140000",
+   "Asset Category": "Utility",
+   "CUSIP": "018802AF5",
+   "SEDOL": "BRWFZ62",
+   "Maturity": "2056-04-01",
+   "Coupon": "5.75"
   },
   {
    "Name": "Citigroup Inc 6.5% 05/15/2175",
@@ -1615,19 +1628,6 @@
    "SEDOL": "BMG9SY4",
    "Maturity": "2052-10-15",
    "Coupon": "7.125"
-  },
-  {
-   "Name": "Alliant Energy Corp 5.75% 04/01/2056",
-   "Ticker": "-",
-   "Identifier": "018802AF5",
-   "Weight": "0.3",
-   "Market Value": "",
-   "Shares Held": "1140000",
-   "Asset Category": "Utility",
-   "CUSIP": "018802AF5",
-   "SEDOL": "BRWFZ62",
-   "Maturity": "2056-04-01",
-   "Coupon": "5.75"
   },
   {
    "Name": "Energy Transfer LP 6.55% 01/15/2057",
@@ -1708,6 +1708,19 @@
    "Coupon": "6.4"
   },
   {
+   "Name": "Fifth Third Bancorp 7.3692% 12/31/2174",
+   "Ticker": "-",
+   "Identifier": "316773CM0",
+   "Weight": "0.28",
+   "Market Value": "",
+   "Shares Held": "990000",
+   "Asset Category": "Banking",
+   "CUSIP": "316773CM0",
+   "SEDOL": "B98D1W2",
+   "Maturity": "2200-12-31",
+   "Coupon": "7.369"
+  },
+  {
    "Name": "Apollo Global Management Inc",
    "Ticker": "-",
    "Identifier": "03769M205",
@@ -1734,17 +1747,30 @@
    "Coupon": "5.875"
   },
   {
-   "Name": "Fifth Third Bancorp 7.3692% 12/31/2174",
+   "Name": "HA Sustainable Infrastructure Capital Inc 7.125% 11/15/2056",
    "Ticker": "-",
-   "Identifier": "316773CM0",
+   "Identifier": "41068XAH3",
    "Weight": "0.27",
    "Market Value": "",
-   "Shares Held": "990000",
-   "Asset Category": "Banking",
-   "CUSIP": "316773CM0",
-   "SEDOL": "B98D1W2",
+   "Shares Held": "980000",
+   "Asset Category": "Financial Services",
+   "CUSIP": "41068XAH3",
+   "SEDOL": "BTY5070",
+   "Maturity": "2056-11-15",
+   "Coupon": "7.125"
+  },
+  {
+   "Name": "Jackson Financial Inc",
+   "Ticker": "-",
+   "Identifier": "46817M206",
+   "Weight": "0.27",
+   "Market Value": "",
+   "Shares Held": "37960",
+   "Asset Category": "Insurance",
+   "CUSIP": "46817M206",
+   "SEDOL": "BMW6VL7",
    "Maturity": "2200-12-31",
-   "Coupon": "7.369"
+   "Coupon": "8"
   },
   {
    "Name": "NextEra Energy Capital Holdings Inc 3.8% 03/15/2082",
@@ -1784,32 +1810,6 @@
    "SEDOL": "BMHR7V7",
    "Maturity": "2200-12-31",
    "Coupon": "6.625"
-  },
-  {
-   "Name": "HA Sustainable Infrastructure Capital Inc 7.125% 11/15/2056",
-   "Ticker": "-",
-   "Identifier": "41068XAH3",
-   "Weight": "0.26",
-   "Market Value": "",
-   "Shares Held": "980000",
-   "Asset Category": "Financial Services",
-   "CUSIP": "41068XAH3",
-   "SEDOL": "BTY5070",
-   "Maturity": "2056-11-15",
-   "Coupon": "7.125"
-  },
-  {
-   "Name": "Jackson Financial Inc",
-   "Ticker": "-",
-   "Identifier": "46817M206",
-   "Weight": "0.26",
-   "Market Value": "",
-   "Shares Held": "37960",
-   "Asset Category": "Insurance",
-   "CUSIP": "46817M206",
-   "SEDOL": "BMW6VL7",
-   "Maturity": "2200-12-31",
-   "Coupon": "8"
   },
   {
    "Name": "KeyCorp",
@@ -2033,6 +2033,19 @@
    "Coupon": "6.875"
   },
   {
+   "Name": "Southern Co Gas Capital Corp 6.05% 09/15/2056",
+   "Ticker": "-",
+   "Identifier": "8426EPAL2",
+   "Weight": "0.23",
+   "Market Value": "",
+   "Shares Held": "825000",
+   "Asset Category": "Utility",
+   "CUSIP": "8426EPAL2",
+   "SEDOL": "BTY0TV2",
+   "Maturity": "2056-09-15",
+   "Coupon": "6.05"
+  },
+  {
    "Name": "State Street Corp 6.35% 12/15/2174",
    "Ticker": "-",
    "Identifier": "857477DJ9",
@@ -2148,6 +2161,19 @@
    "SEDOL": "BRK15B7",
    "Maturity": "2055-05-15",
    "Coupon": "6.7"
+  },
+  {
+   "Name": "CMS Energy Corp 4.75% 06/01/2050",
+   "Ticker": "-",
+   "Identifier": "125896BU3",
+   "Weight": "0.22",
+   "Market Value": "",
+   "Shares Held": "810000",
+   "Asset Category": "Utility",
+   "CUSIP": "125896BU3",
+   "SEDOL": "BLD8NV9",
+   "Maturity": "2050-06-01",
+   "Coupon": "4.75"
   },
   {
    "Name": "Duke Energy Corp 3.25% 01/15/2082",
@@ -2306,17 +2332,30 @@
    "Coupon": "6.75"
   },
   {
-   "Name": "Southern Co Gas Capital Corp 6.05% 09/15/2056",
+   "Name": "Regions Financial Corp",
    "Ticker": "-",
-   "Identifier": "8426EPAL2",
+   "Identifier": "7591EP860",
    "Weight": "0.22",
    "Market Value": "",
-   "Shares Held": "825000",
-   "Asset Category": "Utility",
-   "CUSIP": "8426EPAL2",
-   "SEDOL": "BTY0TV2",
-   "Maturity": "2056-09-15",
-   "Coupon": "6.05"
+   "Shares Held": "31215",
+   "Asset Category": "Banking",
+   "CUSIP": "7591EP860",
+   "SEDOL": "BNM9HL5",
+   "Maturity": "2200-12-31",
+   "Coupon": "6.95"
+  },
+  {
+   "Name": "Synchrony Financial",
+   "Ticker": "-",
+   "Identifier": "87165B400",
+   "Weight": "0.22",
+   "Market Value": "",
+   "Shares Held": "31213",
+   "Asset Category": "Financial Services",
+   "CUSIP": "87165B400",
+   "SEDOL": "BSNWT01",
+   "Maturity": "2200-12-31",
+   "Coupon": "8.25"
   },
   {
    "Name": "Synchrony Financial 7.25% 08/15/2175",
@@ -2343,6 +2382,19 @@
    "SEDOL": "BVPPF56",
    "Maturity": "2056-10-17",
    "Coupon": "6.125"
+  },
+  {
+   "Name": "Truist Financial Corp 5.125% 06/15/2175",
+   "Ticker": "-",
+   "Identifier": "89832QAC3",
+   "Weight": "0.22",
+   "Market Value": "",
+   "Shares Held": "780000",
+   "Asset Category": "Banking",
+   "CUSIP": "89832QAC3",
+   "SEDOL": "BKP9CW7",
+   "Maturity": "2200-12-31",
+   "Coupon": "5.125"
   },
   {
    "Name": "Truist Financial Corp 6.25% 09/15/2175",
@@ -2436,17 +2488,17 @@
    "Coupon": "7.5"
   },
   {
-   "Name": "CMS Energy Corp 4.75% 06/01/2050",
+   "Name": "DENTSPLY SIRONA Inc 8.375% 09/12/2055",
    "Ticker": "-",
-   "Identifier": "125896BU3",
+   "Identifier": "24906PAB5",
    "Weight": "0.21",
    "Market Value": "",
-   "Shares Held": "810000",
-   "Asset Category": "Utility",
-   "CUSIP": "125896BU3",
-   "SEDOL": "BLD8NV9",
-   "Maturity": "2050-06-01",
-   "Coupon": "4.75"
+   "Shares Held": "895000",
+   "Asset Category": "Healthcare",
+   "CUSIP": "24906PAB5",
+   "SEDOL": "BVH6ZM4",
+   "Maturity": "2055-09-12",
+   "Coupon": "8.375"
   },
   {
    "Name": "General Motors Financial Co Inc 5.7% 03/30/2175",
@@ -2488,56 +2540,69 @@
    "Coupon": "5.65"
   },
   {
-   "Name": "Regions Financial Corp",
+   "Name": "PartnerRe Finance B LLC 4.5% 10/01/2050",
    "Ticker": "-",
-   "Identifier": "7591EP860",
+   "Identifier": "70213BAC5",
    "Weight": "0.21",
    "Market Value": "",
-   "Shares Held": "31215",
-   "Asset Category": "Banking",
-   "CUSIP": "7591EP860",
-   "SEDOL": "BNM9HL5",
-   "Maturity": "2200-12-31",
-   "Coupon": "6.95"
+   "Shares Held": "795000",
+   "Asset Category": "Insurance",
+   "CUSIP": "70213BAC5",
+   "SEDOL": "BMY5736",
+   "Maturity": "2050-10-01",
+   "Coupon": "4.5"
   },
   {
-   "Name": "Synchrony Financial",
+   "Name": "Regions Financial Corp",
    "Ticker": "-",
-   "Identifier": "87165B400",
+   "Identifier": "7591EP704",
    "Weight": "0.21",
    "Market Value": "",
    "Shares Held": "31213",
-   "Asset Category": "Financial Services",
-   "CUSIP": "87165B400",
-   "SEDOL": "BSNWT01",
+   "Asset Category": "Banking",
+   "CUSIP": "7591EP704",
+   "SEDOL": "BJMXZX7",
    "Maturity": "2200-12-31",
-   "Coupon": "8.25"
+   "Coupon": "5.7"
   },
   {
-   "Name": "Truist Financial Corp 5.125% 06/15/2175",
+   "Name": "Wintrust Financial Corp",
    "Ticker": "-",
-   "Identifier": "89832QAC3",
+   "Identifier": "97650W702",
    "Weight": "0.21",
    "Market Value": "",
-   "Shares Held": "780000",
+   "Shares Held": "28883",
    "Asset Category": "Banking",
-   "CUSIP": "89832QAC3",
-   "SEDOL": "BKP9CW7",
+   "CUSIP": "97650W702",
+   "SEDOL": "BVK4BN8",
    "Maturity": "2200-12-31",
-   "Coupon": "5.125"
+   "Coupon": "7.875"
   },
   {
-   "Name": "DENTSPLY SIRONA Inc 8.375% 09/12/2055",
+   "Name": "American Electric Power Co Inc 7.05% 12/15/2054",
    "Ticker": "-",
-   "Identifier": "24906PAB5",
+   "Identifier": "025537AZ4",
    "Weight": "0.2",
    "Market Value": "",
-   "Shares Held": "895000",
-   "Asset Category": "Healthcare",
-   "CUSIP": "24906PAB5",
-   "SEDOL": "BVH6ZM4",
-   "Maturity": "2055-09-12",
-   "Coupon": "8.375"
+   "Shares Held": "690000",
+   "Asset Category": "Utility",
+   "CUSIP": "025537AZ4",
+   "SEDOL": "BPBS8Y7",
+   "Maturity": "2054-12-15",
+   "Coupon": "7.05"
+  },
+  {
+   "Name": "CenterPoint Energy Inc 7% 02/15/2055",
+   "Ticker": "-",
+   "Identifier": "15189TBH9",
+   "Weight": "0.2",
+   "Market Value": "",
+   "Shares Held": "690000",
+   "Asset Category": "Utility",
+   "CUSIP": "15189TBH9",
+   "SEDOL": "BMYDZ69",
+   "Maturity": "2055-02-15",
+   "Coupon": "7"
   },
   {
    "Name": "Edison International 7.875% 06/15/2054",
@@ -2551,6 +2616,32 @@
    "SEDOL": "BM92RL0",
    "Maturity": "2054-06-15",
    "Coupon": "7.875"
+  },
+  {
+   "Name": "Energy Transfer LP 7.125% 10/01/2054",
+   "Ticker": "-",
+   "Identifier": "29273VBC3",
+   "Weight": "0.2",
+   "Market Value": "",
+   "Shares Held": "695000",
+   "Asset Category": "Energy",
+   "CUSIP": "29273VBC3",
+   "SEDOL": "BRK23F0",
+   "Maturity": "2054-10-01",
+   "Coupon": "7.125"
+  },
+  {
+   "Name": "Fifth Third Bancorp",
+   "Ticker": "-",
+   "Identifier": "316773605",
+   "Weight": "0.2",
+   "Market Value": "",
+   "Shares Held": "27689",
+   "Asset Category": "Banking",
+   "CUSIP": "316773605",
+   "SEDOL": "BH58353",
+   "Maturity": "2200-12-31",
+   "Coupon": "6.625"
   },
   {
    "Name": "Flagstar Bank NA",
@@ -2592,30 +2683,17 @@
    "Coupon": "4"
   },
   {
-   "Name": "PartnerRe Finance B LLC 4.5% 10/01/2050",
+   "Name": "National Rural Utilities Cooperative Finance Corp 7.125% 09/15/2053",
    "Ticker": "-",
-   "Identifier": "70213BAC5",
+   "Identifier": "637432PB5",
    "Weight": "0.2",
    "Market Value": "",
-   "Shares Held": "795000",
-   "Asset Category": "Insurance",
-   "CUSIP": "70213BAC5",
-   "SEDOL": "BMY5736",
-   "Maturity": "2050-10-01",
-   "Coupon": "4.5"
-  },
-  {
-   "Name": "Regions Financial Corp",
-   "Ticker": "-",
-   "Identifier": "7591EP704",
-   "Weight": "0.2",
-   "Market Value": "",
-   "Shares Held": "31213",
-   "Asset Category": "Banking",
-   "CUSIP": "7591EP704",
-   "SEDOL": "BJMXZX7",
-   "Maturity": "2200-12-31",
-   "Coupon": "5.7"
+   "Shares Held": "690000",
+   "Asset Category": "Financial Services",
+   "CUSIP": "637432PB5",
+   "SEDOL": "BRRDR21",
+   "Maturity": "2053-09-15",
+   "Coupon": "7.125"
   },
   {
    "Name": "Rithm Capital Corp",
@@ -2657,19 +2735,6 @@
    "Coupon": "7.625"
   },
   {
-   "Name": "Wintrust Financial Corp",
-   "Ticker": "-",
-   "Identifier": "97650W702",
-   "Weight": "0.2",
-   "Market Value": "",
-   "Shares Held": "28883",
-   "Asset Category": "Banking",
-   "CUSIP": "97650W702",
-   "SEDOL": "BVK4BN8",
-   "Maturity": "2200-12-31",
-   "Coupon": "7.875"
-  },
-  {
    "Name": "AGNC Investment Corp",
    "Ticker": "-",
    "Identifier": "00123Q807",
@@ -2681,19 +2746,6 @@
    "SEDOL": "BK71BY6",
    "Maturity": "2200-12-31",
    "Coupon": "6.5"
-  },
-  {
-   "Name": "American Electric Power Co Inc 7.05% 12/15/2054",
-   "Ticker": "-",
-   "Identifier": "025537AZ4",
-   "Weight": "0.19",
-   "Market Value": "",
-   "Shares Held": "690000",
-   "Asset Category": "Utility",
-   "CUSIP": "025537AZ4",
-   "SEDOL": "BPBS8Y7",
-   "Maturity": "2054-12-15",
-   "Coupon": "7.05"
   },
   {
    "Name": "Assurant Inc 7% 03/27/2048",
@@ -2709,19 +2761,6 @@
    "Coupon": "7"
   },
   {
-   "Name": "CenterPoint Energy Inc 7% 02/15/2055",
-   "Ticker": "-",
-   "Identifier": "15189TBH9",
-   "Weight": "0.19",
-   "Market Value": "",
-   "Shares Held": "690000",
-   "Asset Category": "Utility",
-   "CUSIP": "15189TBH9",
-   "SEDOL": "BMYDZ69",
-   "Maturity": "2055-02-15",
-   "Coupon": "7"
-  },
-  {
    "Name": "CoBank ACB 4.25% 04/01/2175",
    "Ticker": "-",
    "Identifier": "19075QAD4",
@@ -2733,45 +2772,6 @@
    "SEDOL": "",
    "Maturity": "2200-12-31",
    "Coupon": "4.25"
-  },
-  {
-   "Name": "Energy Transfer LP 7.125% 10/01/2054",
-   "Ticker": "-",
-   "Identifier": "29273VBC3",
-   "Weight": "0.19",
-   "Market Value": "",
-   "Shares Held": "695000",
-   "Asset Category": "Energy",
-   "CUSIP": "29273VBC3",
-   "SEDOL": "BRK23F0",
-   "Maturity": "2054-10-01",
-   "Coupon": "7.125"
-  },
-  {
-   "Name": "Fifth Third Bancorp",
-   "Ticker": "-",
-   "Identifier": "316773605",
-   "Weight": "0.19",
-   "Market Value": "",
-   "Shares Held": "27689",
-   "Asset Category": "Banking",
-   "CUSIP": "316773605",
-   "SEDOL": "BH58353",
-   "Maturity": "2200-12-31",
-   "Coupon": "6.625"
-  },
-  {
-   "Name": "National Rural Utilities Cooperative Finance Corp 7.125% 09/15/2053",
-   "Ticker": "-",
-   "Identifier": "637432PB5",
-   "Weight": "0.19",
-   "Market Value": "",
-   "Shares Held": "690000",
-   "Asset Category": "Financial Services",
-   "CUSIP": "637432PB5",
-   "SEDOL": "BRRDR21",
-   "Maturity": "2053-09-15",
-   "Coupon": "7.125"
   },
   {
    "Name": "Puget Energy Inc 7% 09/15/2056",
@@ -2904,6 +2904,19 @@
    "Coupon": "4.823"
   },
   {
+   "Name": "Sempra 6.625% 04/01/2055",
+   "Ticker": "-",
+   "Identifier": "816851BU2",
+   "Weight": "0.18",
+   "Market Value": "",
+   "Shares Held": "635000",
+   "Asset Category": "Utility",
+   "CUSIP": "816851BU2",
+   "SEDOL": "BRWLG90",
+   "Maturity": "2055-04-01",
+   "Coupon": "6.625"
+  },
+  {
    "Name": "US Bancorp",
    "Ticker": "-",
    "Identifier": "902973866",
@@ -2969,19 +2982,6 @@
    "Coupon": "6.45"
   },
   {
-   "Name": "Sempra 6.625% 04/01/2055",
-   "Ticker": "-",
-   "Identifier": "816851BU2",
-   "Weight": "0.17",
-   "Market Value": "",
-   "Shares Held": "635000",
-   "Asset Category": "Utility",
-   "CUSIP": "816851BU2",
-   "SEDOL": "BRWLG90",
-   "Maturity": "2055-04-01",
-   "Coupon": "6.625"
-  },
-  {
    "Name": "Citizens Financial Group Inc",
    "Ticker": "-",
    "Identifier": "174610808",
@@ -2993,6 +2993,19 @@
    "SEDOL": "BRT81P5",
    "Maturity": "2200-12-31",
    "Coupon": "6.5"
+  },
+  {
+   "Name": "Lincoln National Corp",
+   "Ticker": "-",
+   "Identifier": "534187885",
+   "Weight": "0.16",
+   "Market Value": "",
+   "Shares Held": "21586",
+   "Asset Category": "Insurance",
+   "CUSIP": "534187885",
+   "SEDOL": "BP398R1",
+   "Maturity": "2200-12-31",
+   "Coupon": "9"
   },
   {
    "Name": "Paramount Global 6.25% 02/28/2057",
@@ -3097,19 +3110,6 @@
    "SEDOL": "BQMS207",
    "Maturity": "2200-12-31",
    "Coupon": "6.875"
-  },
-  {
-   "Name": "Lincoln National Corp",
-   "Ticker": "-",
-   "Identifier": "534187885",
-   "Weight": "0.15",
-   "Market Value": "",
-   "Shares Held": "21586",
-   "Asset Category": "Insurance",
-   "CUSIP": "534187885",
-   "SEDOL": "BP398R1",
-   "Maturity": "2200-12-31",
-   "Coupon": "9"
   },
   {
    "Name": "Morgan Stanley 5.875% 03/15/2175",

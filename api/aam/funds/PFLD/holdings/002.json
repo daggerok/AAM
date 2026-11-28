@@ -135,6 +135,19 @@
    "Coupon": "4.556"
   },
   {
+   "Name": "M&T Bank Corp",
+   "Ticker": "-",
+   "Identifier": "55261F872",
+   "Weight": "0.12",
+   "Market Value": "",
+   "Shares Held": "16383",
+   "Asset Category": "Banking",
+   "CUSIP": "55261F872",
+   "SEDOL": "BPQT641",
+   "Maturity": "2200-12-31",
+   "Coupon": "5.625"
+  },
+  {
    "Name": "Rithm Capital Corp",
    "Ticker": "-",
    "Identifier": "64828T409",
@@ -185,19 +198,6 @@
    "SEDOL": "BYYPKL9",
    "Maturity": "2200-12-31",
    "Coupon": "8"
-  },
-  {
-   "Name": "M&T Bank Corp",
-   "Ticker": "-",
-   "Identifier": "55261F872",
-   "Weight": "0.11",
-   "Market Value": "",
-   "Shares Held": "16383",
-   "Asset Category": "Banking",
-   "CUSIP": "55261F872",
-   "SEDOL": "BPQT641",
-   "Maturity": "2200-12-31",
-   "Coupon": "5.625"
   },
   {
    "Name": "Tennessee Valley Authority",
@@ -395,6 +395,19 @@
    "Coupon": "7.75"
   },
   {
+   "Name": "Ellington Financial Inc",
+   "Ticker": "-",
+   "Identifier": "28852N307",
+   "Weight": "0.07",
+   "Market Value": "",
+   "Shares Held": "9819",
+   "Asset Category": "Real Estate",
+   "CUSIP": "28852N307",
+   "SEDOL": "BN7LLV4",
+   "Maturity": "2200-12-31",
+   "Coupon": "6.25"
+  },
+  {
    "Name": "GasLog Partners LP",
    "Ticker": "-",
    "Identifier": "Y2687W116",
@@ -432,19 +445,6 @@
    "SEDOL": "BMYXVW7",
    "Maturity": "2028-11-01",
    "Coupon": "4.875"
-  },
-  {
-   "Name": "Midland States Bancorp Inc",
-   "Ticker": "-",
-   "Identifier": "597742303",
-   "Weight": "0.07",
-   "Market Value": "",
-   "Shares Held": "9369",
-   "Asset Category": "Banking",
-   "CUSIP": "597742303",
-   "SEDOL": "BJN53Y9",
-   "Maturity": "2200-12-31",
-   "Coupon": "7.75"
   },
   {
    "Name": "New Mountain Finance Corp",
@@ -657,15 +657,15 @@
   {
    "Name": "Ellington Financial Inc",
    "Ticker": "-",
-   "Identifier": "28852N307",
+   "Identifier": "28852N406",
    "Weight": "0.06",
    "Market Value": "",
-   "Shares Held": "9819",
+   "Shares Held": "8127",
    "Asset Category": "Real Estate",
-   "CUSIP": "28852N307",
-   "SEDOL": "BN7LLV4",
+   "CUSIP": "28852N406",
+   "SEDOL": "BR1GY03",
    "Maturity": "2200-12-31",
-   "Coupon": "6.25"
+   "Coupon": "8.625"
   },
   {
    "Name": "Gladstone Investment Corp",
@@ -718,6 +718,19 @@
    "SEDOL": "BPRBVL8",
    "Maturity": "2029-02-15",
    "Coupon": "8.875"
+  },
+  {
+   "Name": "Midland States Bancorp Inc",
+   "Ticker": "-",
+   "Identifier": "597742303",
+   "Weight": "0.06",
+   "Market Value": "",
+   "Shares Held": "9369",
+   "Asset Category": "Banking",
+   "CUSIP": "597742303",
+   "SEDOL": "BJN53Y9",
+   "Maturity": "2200-12-31",
+   "Coupon": "7.75"
   },
   {
    "Name": "Old National Bancorp/IN",
@@ -889,19 +902,6 @@
    "Coupon": "0"
   },
   {
-   "Name": "Ellington Financial Inc",
-   "Ticker": "-",
-   "Identifier": "28852N406",
-   "Weight": "0.05",
-   "Market Value": "",
-   "Shares Held": "8127",
-   "Asset Category": "Real Estate",
-   "CUSIP": "28852N406",
-   "SEDOL": "BR1GY03",
-   "Maturity": "2200-12-31",
-   "Coupon": "8.625"
-  },
-  {
    "Name": "Goldman Sachs Group Inc/The",
    "Ticker": "-",
    "Identifier": "38144X609",
@@ -1019,6 +1019,19 @@
    "Coupon": "8.625"
   },
   {
+   "Name": "Arbor Realty Trust Inc",
+   "Ticker": "-",
+   "Identifier": "038923850",
+   "Weight": "0.04",
+   "Market Value": "",
+   "Shares Held": "18914",
+   "Asset Category": "Real Estate",
+   "CUSIP": "038923850",
+   "SEDOL": "BLR4KW3",
+   "Maturity": "2200-12-31",
+   "Coupon": "6.25"
+  },
+  {
    "Name": "Bank of America Corp",
    "Ticker": "-",
    "Identifier": "060505591",
@@ -1069,19 +1082,6 @@
    "SEDOL": "BP96H02",
    "Maturity": "2031-08-31",
    "Coupon": "8"
-  },
-  {
-   "Name": "Arbor Realty Trust Inc",
-   "Ticker": "-",
-   "Identifier": "038923850",
-   "Weight": "0.03",
-   "Market Value": "",
-   "Shares Held": "18914",
-   "Asset Category": "Real Estate",
-   "CUSIP": "038923850",
-   "SEDOL": "BLR4KW3",
-   "Maturity": "2200-12-31",
-   "Coupon": "6.25"
   },
   {
    "Name": "Granite Point Mortgage Trust Inc",

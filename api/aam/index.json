@@ -1,6 +1,6 @@
 {
- "generatedAt": "2026-11-28T02:59:06.130Z",
- "catalogReadAt": "2026-11-28T02:59:06.130Z",
+ "generatedAt": "2026-11-28T08:56:00.869Z",
+ "catalogReadAt": "2026-11-28T08:56:00.869Z",
  "source": {
   "provider": "AAM ETFs",
   "site": "https://www.aamlive.com",
@@ -39,7 +39,7 @@
    "premiumDiscountValue": 0.16,
    "distributions": {
     "frequency": "Monthly",
-    "exDate": "10/30/2026",
+    "exDate": "11/30/2026",
     "dividend": "0.02"
    },
    "returns": {
@@ -83,8 +83,8 @@
     "secYieldText": "1.20%",
     "week52Low": 22.327,
     "week52High": 25.68,
-    "range52w": 77.5,
-    "range52wClose": 24.9256,
+    "range52w": 77.51,
+    "range52wClose": 24.926,
     "range52wAsOf": "2026-11-27",
     "range52wSince": null,
     "range52wBasis": "Close",
@@ -168,7 +168,7 @@
    "premiumDiscountValue": 0.48,
    "distributions": {
     "frequency": "Monthly",
-    "exDate": "10/30/2026",
+    "exDate": "11/30/2026",
     "dividend": "0.13"
    },
    "returns": {
@@ -297,7 +297,7 @@
    "premiumDiscountValue": 0.2,
    "distributions": {
     "frequency": "Monthly",
-    "exDate": "10/30/2026",
+    "exDate": "11/30/2026",
     "dividend": "0.11"
    },
    "returns": {
@@ -426,7 +426,7 @@
    "premiumDiscountValue": 0.05,
    "distributions": {
     "frequency": "Monthly",
-    "exDate": "10/30/2026",
+    "exDate": "11/30/2026",
     "dividend": "0.09"
    },
    "returns": {
@@ -813,7 +813,7 @@
    "premiumDiscountValue": 0.24,
    "distributions": {
     "frequency": "Monthly",
-    "exDate": "10/30/2026",
+    "exDate": "11/30/2026",
     "dividend": "0.115"
    },
    "returns": {

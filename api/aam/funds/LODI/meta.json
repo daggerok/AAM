@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-27T22:53:46.829Z",
+ "generatedAt": "2026-11-28T08:56:00.869Z",
  "ticker": "LODI",
  "name": "AAM SLC Low Duration Income ETF",
  "category": "Fixed Income",
@@ -251,6 +251,12 @@
     "0.11",
     "2026-10-30",
     "2026-11-03"
+   ],
+   [
+    "11/30/2026",
+    "0.11",
+    "2026-11-30",
+    "2026-12-02"
    ]
   ],
   "events": [
@@ -414,6 +420,13 @@
     "exDate": "2026-10-30",
     "recordDate": "2026-10-30",
     "payDate": "2026-11-03"
+   },
+   {
+    "epoch": 1795996800,
+    "amount": 0.11,
+    "exDate": "2026-11-30",
+    "recordDate": "2026-11-30",
+    "payDate": "2026-12-02"
    }
   ]
  },
@@ -423,8 +436,8 @@
   ],
   "pageSize": 250,
   "totalRows": 224,
-  "asOfDate": "2026-11-27",
-  "asOf": "Nov 27 2026",
+  "asOfDate": "2026-11-30",
+  "asOf": "Nov 30 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },

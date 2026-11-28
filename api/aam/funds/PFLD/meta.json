@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-27T22:53:46.829Z",
+ "generatedAt": "2026-11-28T08:56:00.869Z",
  "ticker": "PFLD",
  "name": "AAM Low Duration Preferred & Income Securities ETF",
  "category": "Preferred & Hybrid Securities",
@@ -611,6 +611,12 @@
     "0.09",
     "2026-10-30",
     "2026-11-03"
+   ],
+   [
+    "11/30/2026",
+    "0.09",
+    "2026-11-30",
+    "2026-12-02"
    ]
   ],
   "events": [
@@ -1194,6 +1200,13 @@
     "exDate": "2026-10-30",
     "recordDate": "2026-10-30",
     "payDate": "2026-11-03"
+   },
+   {
+    "epoch": 1795996800,
+    "amount": 0.09,
+    "exDate": "2026-11-30",
+    "recordDate": "2026-11-30",
+    "payDate": "2026-12-02"
    }
   ]
  },
@@ -1204,8 +1217,8 @@
   ],
   "pageSize": 250,
   "totalRows": 335,
-  "asOfDate": "2026-11-27",
-  "asOf": "Nov 27 2026",
+  "asOfDate": "2026-11-30",
+  "asOf": "Nov 30 2026",
   "source": "aamlive.com full holdings XLS (fresh WebForms export POST)",
   "status": "available"
  },
