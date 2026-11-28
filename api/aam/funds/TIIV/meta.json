@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-26T21:20:31.104Z",
+ "generatedAt": "2026-11-28T02:59:06.130Z",
  "ticker": "TIIV",
  "name": "AAM Todd International Intrinsic Value ETF",
  "category": "Equity",
@@ -160,8 +160,8 @@
    "history/001.json"
   ],
   "pageSize": 1000,
-  "totalRows": 338,
-  "asOf": "Nov 25 2026",
+  "totalRows": 339,
+  "asOf": "Nov 27 2026",
   "source": "Yahoo Finance daily market-price closes / adjusted closes (not official NAV)",
   "status": "available"
  }
